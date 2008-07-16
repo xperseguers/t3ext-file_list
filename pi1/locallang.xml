@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for plugin &quot;tx_filelist_pi1&quot;</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="filename">Filename</label>
+			<label index="info">Info</label>
+			<label index="files_in_directory">Files</label>
+			<label index="last_modification">Modified</label>
+			<label index="filesize">Filesize</label>
+			<label index="no_files">There are no files in the directory!</label>
+			<label index="file_in_directory">File</label>
+			<label index="back">Back</label>
+			<label index="new_icon">new</label>
+			<label index="new_text">New</label>
+			<label index="asc">Sort ascending</label>
+			<label index="desc">Sort descending</label>
+			<label index="submit_button_label">Click here to submit value</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="filename">Dateiname</label>
+			<label index="info">Info</label>
+			<label index="files_in_directory">Dateien</label>
+			<label index="last_modification">Ge_ae_ndert</label>
+			<label index="filesize">Dateigr_oe_sse</label>
+			<label index="no_files">Keine Dateien im Verzeichnis!</label>
+			<label index="file_in_directory">Datei</label>
+			<label index="back">Zurueck</label>
+			<label index="new_icon">neu</label>
+			<label index="new_text">Neu</label>
+			<label index="asc">Aufsteigend sortieren</label>
+			<label index="desc">Absteigend sortieren</label>
+			<label index="submit_button_label">Click here to submit value</label>
+		</languageKey>
+	</data>
+</T3locallang>
