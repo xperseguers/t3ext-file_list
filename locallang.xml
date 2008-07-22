@@ -7,11 +7,11 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="pi1_title">File List</label>
-			<label index="pi1_plus_wiz_description"> Adds a frontend plugin which shows a list of files in a specified directory (like apache). </label>
+			<label index="pi1_plus_wiz_description"> Adds a frontend plugin which shows a list of files and folders inside a specified directory. </label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="pi1_title">Dateiliste</label>
-			<label index="pi1_plus_wiz_description">Stellt Dateien eines Verzeichnisses grafisch dar (ähnlich wie Apache).</label>
+			<label index="pi1_plus_wiz_description">Stellt Dateien und Ordner eines Verzeichnisses grafisch dar.</label>
 		</languageKey>
 	</data>
 </T3locallang>

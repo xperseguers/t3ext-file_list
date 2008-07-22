@@ -38,7 +38,6 @@
  *  402:     function fileicon($fn)
  *  442:     function file_size($fn)
  *  460:     function file_create_date($fn)
- *  471:     function ansi_html($ansi)
  *  487:     function getUidRootLineForClosestTemplate($id)
  *  521:     function show_new($fn, $days_show_new, $iconpath)
  *  544:     function fe_sort($order_by, $order_seq, $pid, $iconpath)
@@ -243,19 +242,19 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$content = "<br /><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"" .$this->pi_getClassName("table"). "\">\n";
 			$content = $content. "<tr class=\"" .$this->pi_getClassName("header-tr"). "\">\n";
 			$content = $content. "<td width=\"30\" class=\"" .$this->pi_getClassName("header-icon"). "\"></td>\n"; //Icon
-			$content = $content. "<td align=\"left\" valign=\"middle\" class=\"" .$this->pi_getClassName("header-filename"). "\">" .$this->ansi_html(htmlspecialchars($this->pi_getLL("filename")));  // Filename
+			$content = $content. "<td align=\"left\" valign=\"middle\" class=\"" .$this->pi_getClassName("header-filename"). "\">" .htmlspecialchars($this->pi_getLL("filename"));  // Filename
 			if ($fe_show_sort) {
 				$content = $content.$this->fe_sort("name", "desc", $pid, $iconpath);
 				$content = $content.$this->fe_sort("name", "asc", $pid, $iconpath);
 			}
 			$content = $content. "</td>\n";
-			$content = $content. "<td align=\"left\" valign=\"middle\" class=\"" .$this->pi_getClassName("header-info"). "\">" .$this->ansi_html(htmlspecialchars($this->pi_getLL("info"))); //Info
+			$content = $content. "<td align=\"left\" valign=\"middle\" class=\"" .$this->pi_getClassName("header-info"). "\">" .htmlspecialchars($this->pi_getLL("info")); //Info
 			if ($fe_show_sort) {
 				$content = $content.$this->fe_sort("size", "desc", $pid, $iconpath);
 				$content = $content.$this->fe_sort("size", "asc", $pid, $iconpath);
 			}
 			$content = $content. "</td>\n";
-			$content = $content. "<td align=\"left\" valign=\"middle\" class=\"" .$this->pi_getClassName("header-last_modification"). "\">" .$this->ansi_html(htmlspecialchars($this->pi_getLL("last_modification"))); //Last modification
+			$content = $content. "<td align=\"left\" valign=\"middle\" class=\"" .$this->pi_getClassName("header-last_modification"). "\">" .htmlspecialchars($this->pi_getLL("last_modification")); //Last modification
 			if ($fe_show_sort) {
 				$content = $content.$this->fe_sort("date", "desc", $pid, $iconpath);
 				$content = $content.$this->fe_sort("date", "asc", $pid, $iconpath);
@@ -306,7 +305,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 						$content = $content. "\">" .$tx_folders[$d]["files_name"]. "</a></td>";
 						$content = $content. "<td class=\"" .$this->pi_getClassName("info"). "\"><font size=\"1\">";
 						$file_counte = $this->filecounter($temp_path.$tx_folders[$d]["files_name"]);
-						$content = $content.$file_counte. " " .$this->ansi_html(htmlspecialchars($this->pi_getLL("files_in_directory"))). "</font></td>";
+						$content = $content.$file_counte. " " .htmlspecialchars($this->pi_getLL("files_in_directory")). "</font></td>";
 						$content = $content. "<td class=\"" .$this->pi_getClassName("last_modification"). "\"><font size=\"1\">";
 						$content = $content.t3lib_BEfunc::datetime(@filemtime($temp_path.$tx_folders[$d]["files_name"]));
 						$content = $content. "</font></td>";
@@ -463,22 +462,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * UTF-8-Transforming for german contents
-	 *
-	 * @param	string		text from locallang.xml
-	 * @return	string		right text-character
-	 */
-	function ansi_html($ansi) {
-		$ansi = ereg_replace("_Ae_", "&Auml;", $ansi);
-		$ansi = ereg_replace("_Oe_", "&Ouml;", $ansi);
-		$ansi = ereg_replace("_Ue_", "&Uuml;", $ansi);
-		$ansi = ereg_replace("_ae_", "&auml;", $ansi);
-		$ansi = ereg_replace("_oe_", "&ouml;", $ansi);
-		$ansi = ereg_replace("_ue_", "&uuml;", $ansi);
-		return $ansi;
-	}
-
-	/**
 	 * Returns the uid
 	 *
 	 * @param	integer		pid
@@ -548,10 +531,10 @@ class tx_filelist_pi1 extends tslib_pibase {
 		}
 		$temp_content = $temp_content. "&tx_file_list-order_by=" .$order_by. "&tx_file_list-order_sequence=" .$order_seq. "\"><img src=\"" .$iconpath;
 		if ($order_seq == "asc") {
-			$temp_content = $temp_content. "up.gif\" alt=\"" .$this->ansi_html(htmlspecialchars($this->pi_getLL("asc"))). "\" border=\"0\"></a>";
+			$temp_content = $temp_content. "up.gif\" alt=\"" .htmlspecialchars($this->pi_getLL("asc")). "\" border=\"0\"></a>";
 		}
 		if ($order_seq == "desc") {
-			$temp_content = $temp_content. "down.gif\" alt=\"" .$this->ansi_html(htmlspecialchars($this->pi_getLL("desc"))). "\" border=\"0\"></a>";
+			$temp_content = $temp_content. "down.gif\" alt=\"" .htmlspecialchars($this->pi_getLL("desc")). "\" border=\"0\"></a>";
 		}
 		return $temp_content;
 	}

@@ -24,16 +24,16 @@
 			<label index="filename">Dateiname</label>
 			<label index="info">Info</label>
 			<label index="files_in_directory">Dateien</label>
-			<label index="last_modification">Ge_ae_ndert</label>
-			<label index="filesize">Dateigr_oe_sse</label>
+			<label index="last_modification">Geändert</label>
+			<label index="filesize">Dateigrösse</label>
 			<label index="no_files">Keine Dateien im Verzeichnis!</label>
 			<label index="file_in_directory">Datei</label>
-			<label index="back">Zurueck</label>
+			<label index="back">Zurück</label>
 			<label index="new_icon">neu</label>
 			<label index="new_text">Neu</label>
 			<label index="asc">Aufsteigend sortieren</label>
 			<label index="desc">Absteigend sortieren</label>
-			<label index="submit_button_label">Click here to submit value</label>
+			<label index="submit_button_label">Hier klicken um zu bestätigen</label>
 		</languageKey>
 	</data>
 </T3locallang>
