@@ -1,3 +1,7 @@
+2008-08-04 Moreno Feltscher  <moreno@luagsh.ch>
+
+	* #1080: Code cleanup (TYPO3 CGL)
+
 2008-07-23 Moreno Feltscher  <moreno@luagsh.ch>
 
 	* Fixed Bug #1082: Some characters (umlauts) aren't dislayed properly in locallang.xml
