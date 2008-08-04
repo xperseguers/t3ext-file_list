@@ -1,7 +1,11 @@
-08-07-17 Moreno Feltscher  <moreno@luagsh.ch>
+2008-07-23 Moreno Feltscher  <moreno@luagsh.ch>
+
+	* Fixed Bug #1082: Some characters (umlauts) aren't dislayed properly in locallang.xml
+
+2008-07-17 Moreno Feltscher  <moreno@luagsh.ch>
 
 	* Initial commit to Forge-SVN
 
-06-04-26 Moreno Feltscher  <moreno@luagsh.ch>
+2006-04-26 Moreno Feltscher  <moreno@luagsh.ch>
 
 	* Initial release
