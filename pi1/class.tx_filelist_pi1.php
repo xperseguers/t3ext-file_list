@@ -307,13 +307,17 @@ class tx_filelist_pi1 extends tslib_pibase {
 					$content .= t3lib_BEfunc::datetime(@filemtime($temp_path.$tx_files[$f]['files_name'])) . '</font></td>';
 
 					if (t3lib_extMgm::isLoaded('indexed_search')) {		// Is indexed search engine on? When yes select some data from a indexed search table
-						$query = 'SELECT * FROM index_phash WHERE data_filename = \'' . $tx_files[$f]['files_path']. '\'';
-						$res = mysql_query($query);
+						$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+							'*',
+							'index_phash',
+							'date_filename = \'' . $GLOBALS[TYPO3_DB]->fullQuoteStr($tx_files[$f]['files_path'], 'index_phash') . '\''
+						);
 						$out = array();
-						while ($row = mysql_fetch_array($res)) {
+						while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 							array_push($out, $row['item_crdate']);
 						}
 					}
+					
 					if (t3lib_extMgm::isLoaded('indexed_search')) {		// Is indexed search engine on?
 
 						// If there are more then one entries in the index-database delete them all
