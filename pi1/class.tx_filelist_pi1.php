@@ -207,7 +207,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 				/* Sort End */
 
 				// Preparing the table
-			$content = '<br /><table border="0" cellspacing="0" cellpadding="0" class="' . $this->pi_getClassName('table'). '">';
+			$content = '<table border="0" cellspacing="0" cellpadding="0" class="' . $this->pi_getClassName('table') . '">';
 			$content .= '<tr class="' . $this->pi_getClassName('header-tr') . '">';
 			$content .= '<td width="30" class="' . $this->pi_getClassName('header-icon') . '"></td>'; //Icon
 			$content .= '<td align="left" valign="middle" class="' . $this->pi_getClassName('header-filename') . '">' . htmlspecialchars($this->pi_getLL('filename'));  // Filename
@@ -291,7 +291,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 					$content .= '</td><td valign="bottom" class="' . $this->pi_getClassName('filename') . '">';
 					$content .= '<a href="' . $tx_files[$f]['files_path'] . '" target="_blank">' . $tx_files[$f]['files_name'] . '</a> ';
 					$content .= $this->show_new($tx_files[$f]['files_path'], $days_show_new, $iconpath) . '</td>';
-					$content .= '<td><font size="1">' . $this->file_size($tx_files[$f]['files_path']) . '</font></td>';
+					$content .= '<td><font size="1">' . self::getHRFileSize($tx_files[$f]['files_path']) . '</font></td>';
 					$content .= '<td class="' . $this->pi_getClassName('last_modification') . '"><font size="1">';
 					$content .= t3lib_BEfunc::datetime(@filemtime($temp_path.$tx_files[$f]['files_name'])) . '</font></td>';
 
@@ -389,21 +389,26 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Returns the size of a file
+	 * Returns a human-readable size of a file.
 	 *
 	 * @param	string		Path to the specified file
 	 * @return	string		Size of the file
 	 */
-	protected function file_size($fn) {
-		$sizetags = array('bytes', 'KB', 'MB', 'GB', 'TB');
-		$filesize = @filesize($fn);
-		for ($i=0; $i<count($sizetags); $i++) {
-			if ($filesize >= 1024)
-				$filesize /= 1024;
-			else
-				break;
+	protected static function getHRFileSize($filename) {
+		$units = array(
+			'0' => $this->pi_getLL('units.bytes'),
+			'1' => $this->pi_getLL('units.KB'),
+			'2' => $this->pi_getLL('units.MB'),
+			'3' => $this->pi_getLL('units.GB'),
+			'4' => $this->pi_getLL('units.TB'),
+		);
+		$filesize = @filesize($filename);
+		for ($offset = 0; $filesize >= 1024; $offset++) {
+			$filesize /= 1024;
 		}
-		return ceil($filesize) . ' ' . $sizetags[$i];
+		$decimalPlaces = ($offset < 2) ? 0 : $offset - 1;
+		$format = '%.' . $decimalPlaces . 'f %s';
+		return sprintf($format, $filesize, $units[$offset]);
 	}
 
 	/**

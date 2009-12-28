@@ -19,6 +19,13 @@
 			<label index="asc">Sort ascending</label>
 			<label index="desc">Sort descending</label>
 			<label index="submit_button_label">Click here to submit value</label>
+
+			<!-- Size units -->
+			<label index="units.bytes">bytes</label>
+			<label index="units.KB">KB</label>
+			<label index="units.MB">MB</label>
+			<label index="units.GB">GB</label>
+			<label index="units.TB">TB</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="filename">Dateiname</label>
