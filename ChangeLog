@@ -1,5 +1,6 @@
 2009-12-28  Xavier Perseguers  <typo3@perseguers.ch>
 
+	* Localized filesize units
 	* Fixed bug #1019: Integrate EXT:rgfolderselector
 
 2008-08-05  Moreno Feltscher  <moreno@luagsh.ch>
