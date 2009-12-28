@@ -10,7 +10,7 @@ $tempColumns = array(
 		'config' => array(
 			'type' => 'input',
 			'size' => '48',
-			'eval' => 'required',
+			'eval' => 'required,trim',
 		)
 	),
 	'tx_filelist_order_by' => array(        
