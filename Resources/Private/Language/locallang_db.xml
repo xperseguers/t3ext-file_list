@@ -6,31 +6,9 @@
     </meta>
     <data type="array">
         <languageKey index="default" type="array">
-            <label index="tt_content.tx_filelist_path">Path to the directory (example: fileadmin/directory1/)</label>
-            <label index="tt_content.tx_filelist_path_wizards.link.title">Folder Selector</label>
-            <label index="tt_content.tx_filelist_order_by.I.0">Name</label>
-            <label index="tt_content.tx_filelist_order_by.I.1">Date</label>
-            <label index="tt_content.tx_filelist_order_by.I.2">Size</label>
-            <label index="tt_content.tx_filelist_order_by">Order Files by:</label>
-            <label index="tt_content.tx_filelist_order_sort.I.0">Ascending</label>
-            <label index="tt_content.tx_filelist_order_sort.I.1">Descending</label>
-            <label index="tt_content.tx_filelist_order_sort">Sort sequence:</label>
-            <label index="tt_content.tx_filelist_show_new">Days to have &quot;new&quot; (nothing = disable):</label>
-			<label index="tt_content.tx_filelist_fe_user_sort">Users can sort on FE:</label>
             <label index="tt_content.list_type_pi1">File List</label>
         </languageKey>
         <languageKey index="de" type="array">
-            <label index="tt_content.tx_filelist_path">Pfad zum Verzeichnis (Beispiel: fileadmin/directory1/)</label>
-            <label index="tt_content.tx_filelist_path_wizards.link.title">Verzeichnis-Selektor</label>
-            <label index="tt_content.tx_filelist_order_by.I.0">Name</label>
-            <label index="tt_content.tx_filelist_order_by.I.1">Datum</label>
-            <label index="tt_content.tx_filelist_order_by.I.2">Groesse</label>
-            <label index="tt_content.tx_filelist_order_by">Ordne Dateien nach:</label>
-            <label index="tt_content.tx_filelist_order_sort.I.0">Aufsteigend</label>
-            <label index="tt_content.tx_filelist_order_sort.I.1">Absteigend</label>
-            <label index="tt_content.tx_filelist_order_sort">Sortierreihenfolge:</label>
-            <label index="tt_content.tx_filelist_show_new">Anzahl Tage um &quot;neu&quot; zu sein (leer = ausgeschaltet):</label>
-			<label index="tt_content.tx_filelist_fe_user_sort">Sortieren auf FE erlauben:</label>
             <label index="tt_content.list_type_pi1">Dateiliste</label>
         </languageKey>
     </data>

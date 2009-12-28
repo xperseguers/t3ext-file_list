@@ -1,0 +1,98 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<ROOT>
+		<type>array</type>
+		<el>
+			<path>
+				<TCEforms>
+					<exclude>1</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.path</label>
+					<config>
+						<type>input</type>
+						<size>48</size>
+						<eval>required,trim</eval>
+						<wizards type="array">
+							<_PADDING>2</_PADDING>
+							<link type="array">
+								<type>popup</type>
+								<title>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.path.wizards.link.title</title>
+								<icon>link_popup.gif</icon>
+								<script>browse_links.php?mode=wizard&amp;act=folder</script>
+								<params type="array">
+									<blindLinkOptions>page,url,mail,spec,file</blindLinkOptions>
+								</params>
+								<JSopenParams>height=500,width=400,status=0,menubar=0,scrollbars=1</JSopenParams>
+							</link>
+						</wizards>
+					</config>
+				</TCEforms>
+			</path>
+			<order_by>
+				<TCEforms>
+					<exclude>0</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.order_by</label>
+					<config>
+						<type>select</type>
+						<items type="array">
+							<numIndex index="0" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.order_by.name</numIndex>
+								<numIndex index="1">name</numIndex>
+							</numIndex>
+							<numIndex index="1" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.order_by.date</numIndex>
+								<numIndex index="1">date</numIndex>
+							</numIndex>
+							<numIndex index="2" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.order_by.size</numIndex>
+								<numIndex index="1">size</numIndex>
+							</numIndex>
+						</items>
+						<default>name</default>
+					</config>
+				</TCEforms>
+			</order_by>
+			<sort_direction>
+				<TCEforms>
+					<exclude>0</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.sort_direction</label>
+					<config>
+						<type>select</type>
+						<items type="array">
+							<numIndex index="0" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.sort_direction.asc</numIndex>
+								<numIndex index="1">asc</numIndex>
+							</numIndex>
+							<numIndex index="1" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.sort_direction.desc</numIndex>
+								<numIndex index="1">desc</numIndex>
+							</numIndex>
+						</items>
+						<default>asc</default>
+					</config>
+				</TCEforms>
+			</sort_direction>
+			<new_duration>
+				<TCEforms>
+					<exclude>1</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.new_duration</label>
+					<config>
+						<type>input</type>
+						<size>4</size>
+						<eval>int,trim</eval>
+					</config>
+				</TCEforms>
+			</new_duration>
+			<fe_sort>
+				<TCEforms>
+					<exclude>1</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.fe_sort</label>
+					<config>
+						<type>check</type>
+					</config>
+				</TCEforms>
+			</fe_sort>
+		</el>
+	</ROOT>
+</T3DataStructure>

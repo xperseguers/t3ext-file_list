@@ -6,6 +6,20 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<!-- FlexForm labels -->
+			<label index="pi_flexform.path">Path to the directory (example: fileadmin/directory1/)</label>
+            <label index="pi_flexform.path.wizards.link.title">Folder Selector</label>
+            <label index="pi_flexform.order_by">Order files by:</label>
+            <label index="pi_flexform.order_by.name">Name</label>
+            <label index="pi_flexform.order_by.date">Date</label>
+            <label index="pi_flexform.order_by.size">Size</label>
+            <label index="pi_flexform.sort_direction">Sort sequence:</label>
+            <label index="pi_flexform.sort_direction.asc">Ascending</label>
+            <label index="pi_flexform.sort_direction.desc">Descending</label>            
+            <label index="pi_flexform.new_duration">Days to have &quot;new&quot; (0 = disable):</label>
+			<label index="pi_flexform.fe_sort">Users can sort on FE:</label>
+			
+			<!-- Table labels -->
 			<label index="filename">Filename</label>
 			<label index="info">Info</label>
 			<label index="files_in_directory">Files</label>
@@ -28,6 +42,20 @@
 			<label index="units.TB">TB</label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<!-- FlexForm labels -->
+			<label index="pi_flexform.path">Pfad zum Verzeichnis (Beispiel: fileadmin/directory1/)</label>
+            <label index="pi_flexform.path.wizards.link.title">Verzeichnis-Selektor</label>
+            <label index="pi_flexform.order_by">Ordne Dateien nach:</label>
+            <label index="pi_flexform.order_by.name">Name</label>
+            <label index="pi_flexform.order_by.date">Datum</label>
+            <label index="pi_flexform.order_by.size">Grösse</label>
+            <label index="pi_flexform.sort_direction">Sortierreihenfolge:</label>
+            <label index="pi_flexform.sort_direction.asc">Aufsteigend</label>
+            <label index="pi_flexform.sort_direction.desc">Absteigend</label>            
+            <label index="pi_flexform.new_duration">Anzahl Tage um &quot;neu&quot; zu sein (0 = ausgeschaltet):</label>
+			<label index="pi_flexform.fe_sort">Sortieren auf FE erlauben:</label>
+			
+			<!-- Table labels -->
 			<label index="filename">Dateiname</label>
 			<label index="info">Info</label>
 			<label index="files_in_directory">Dateien</label>

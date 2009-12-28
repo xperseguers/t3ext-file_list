@@ -38,69 +38,33 @@ if (t3lib_extMgm::isLoaded('indexed_search')) {		// Is indexed search engine loa
  * @version     SVN: $Id$
  */
 class tx_filelist_pi1 extends tslib_pibase {
-	public $prefixId = 'tx_filelist_pi1';		// Same as class name
+	
+	// Members coming from tslib_pibase
+	public $prefixId = 'tx_filelist_pi1';
 	public $scriptRelPath = 'pi1/class.tx_filelist_pi1.php';
 	public $extKey = 'file_list';
 
 	/**
+	 * @var array
+	 */
+	protected $settings;
+	
+	/**
 	 * Main-function, returns output
 	 *
-	 * @param	string		$content: The PlugIn content
-	 * @param	array		$conf: The PlugIn configuration
+	 * @param	string		$content: The Plugin content
+	 * @param	array		$settings: The Plugin configuration
 	 * @return	The	content that is displayed on the website
 	 */
-	public function main($content, $conf) {
-		$this->conf = $conf;
+	public function main($content, array $settings) {
+		$this->init($settings);
 		$this->pi_setPiVarDefaults();
-		$this->error = 0;		// Disable Filelist if an error occurred
-		$this->pi_loadLL();
-		$this->pi_USER_INT_obj = 1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
-		$path_to_dir = $this->cObj->data['tx_filelist_path'];		// Specified path to directory from frontent-plugin
-		$days_show_new = $this->cObj->data['tx_filelist_show_new'];		// Read out the count of days for having 'new'
-		settype($days_show_new, 'integer');		// Set variable-type to'integer
-
-		$fe_show_sort = ($this->cObj->data['tx_filelist_fe_user_sort'] == '1');
-		$iconpath = t3lib_extMgm::siteRelPath('file_list') . 'pi1/icons/';	// Path where all the icons are
-
-			// Prepare the variable $files_order_by and $folders_order_by (for sorting by)
-		if (!isset($this->cObj->data['tx_filelist_order_by']) || $this->cObj->data['tx_filelist_order_by'] == '') {
-			$files_order_by = 'files_name';
-		}
-		else {
-			switch ($this->cObj->data['tx_filelist_order_by']) {
-				case 0:
-					$files_order_by = 'files_name';
-					break;
-				case 1:
-					$files_order_by = 'files_date';
-					break;
-				case 2:
-					$files_order_by = 'files_size';
-					break;
-			}
-		}
-		$folders_order_by = $files_order_by;
-
-			// Prepare the variable $files_sort_sequence and $folders_sort_sequence (for sort-sequence)
-		if (!isset($this->cObj->data['tx_filelist_order_sort']) || $this->cObj->data['tx_filelist_order_sort'] == '') {
-			$files_sort_sequence = 'SORT_ASC';
-		}
-		else {
-			switch ($this->cObj->data['tx_filelist_order_sort']) {
-				case 0:
-					$files_sort_sequence = SORT_ASC;
-					break;
-				case 1:
-					$files_sort_sequence = SORT_DESC;
-					break;
-			}
-		}
-		$folders_sort_sequence = $files_sort_sequence;
-
+	
 			// Preparing some arrays
 		$tx_folders = array();
 		$tx_files = array();
 
+		/*
 			// Gets the pid
 		$config['pid_list'] = trim($this->cObj->stdWrap($this->conf['pid_list'], $this->conf['pid_list.']));
 		$config['pid_list'] = $config['pid_list'] ? implode(t3lib_div::intExplode(',', $config['pid_list']), ',') : $GLOBALS['TSFE']->id;
@@ -112,69 +76,63 @@ class tx_filelist_pi1 extends tslib_pibase {
 		list($uid) = explode(',', $config['uid_list']);
 
 		$rl = $this->getUidRootLineForClosestTemplate($pid);
+		*/
 
 			// Preparing the path to the directory
-		if (substr($path_to_dir, -1, 1) != '/') {
-			$path_to_dir = $path_to_dir . '/';
+		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']);
+		$this->settings['path'] = $pathOptions[0];
+		if (substr($this->settings['path'], -1, 1) !== '/') {
+			$this->settings['path'] .= '/';
 		}
 			// Is the directory readable?
-		if (!@is_readable($path_to_dir)) {
-			$content = 'Could not open ' . $path_to_dir;
+		if (!@is_readable($this->settings['path'])) {
+			$content = 'Could not open ' . $this->settings['path'];
 		}
 			// Checking get-parameters
 		if (!t3lib_div::_GET('tx_file_list-path')) {
-			$temp_path = $path_to_dir;
+			$temp_path = $this->settings['path'];
 		}
 		else {
-			if ((substr(t3lib_div::_GET('tx_file_list-path'), 0, 2) != '..') && (!preg_match('/\./', t3lib_div::_GET('tx_file_list-path')))) {
-				$temp_path = $path_to_dir . t3lib_div::_GET('tx_file_list-path');
-				if (substr(t3lib_div::_GET('tx_file_list-path'), -1, 1) != '/') {
-					$temp_path = $temp_path. '/';
+			if ((substr(t3lib_div::_GET('tx_file_list-path'), 0, 2) !== '..') && (!preg_match('/\./', t3lib_div::_GET('tx_file_list-path')))) {
+				$temp_path = $this->settings['path'] . t3lib_div::_GET('tx_file_list-path');
+				if (substr(t3lib_div::_GET('tx_file_list-path'), -1, 1) !== '/') {
+					$temp_path .= '/';
 				}
-				if (substr($temp_path, -3, 3) == '%2F' || substr($temp_path, -4, 3) == '%2F') {
+				if (substr($temp_path, -3, 3) === '%2F' || substr($temp_path, -4, 3) === '%2F') {
 					$temp_path = preg_replace('/%2F/', '', $temp_path);
 				}
 			}
 			else {
-				$temp_path = $path_to_dir;
+				$temp_path = $this->settings['path'];
 			}
 		}
 
-		if (t3lib_div::_GET('tx_file_list-order_by') && t3lib_div::_GET('tx_file_list-order_sequence')) {
-			$files_order_by = 'files_' . t3lib_div::_GET('tx_file_list-order_by');
-			if (t3lib_div::_GET('tx_file_list-order_by') == 'name') {
-				$folders_order_by = 'files_' . t3lib_div::_GET('tx_file_list-order_by');
-			}
-			if (t3lib_div::_GET('tx_file_list-order_sequence') == 'asc') {
-				$files_sort_sequence = SORT_ASC;
-				if (t3lib_div::_GET('tx_file_list-order_by') == 'name') {
-					$folders_sort_sequence = SORT_ASC;
-				}
-			}
-			elseif (t3lib_div::_GET('tx_file_list-order_sequence') == 'desc') {
-				$files_sort_sequence = SORT_DESC;
-				if (t3lib_div::_GET('tx_file_list-order_by') == 'name') {
-					$folders_sort_sequence = SORT_DESC;
-				}
+		if ($this->settings['fe_sort'] && t3lib_div::_GET('tx_file_list-order_sequence')) {
+			$this->settings['sort_direction'] = t3lib_div::_GET('tx_file_list-order_sequence'); 
+		}
+		if ($this->settings['fe_sort'] && t3lib_div::_GET('tx_file_list-order_by')) {
+			$this->settings['order_by'] = t3lib_div::_GET('tx_file_list-order_by');
+			if (!t3lib_div::inList('name,date,size', $this->settings['order_by'])) {
+				$this->settings['order_by'] = 'name';
 			}
 		}
 
 			// Open the directory and read out all folders and files (/write them to an array)
 		$open = @opendir($temp_path);
 		while ($dir_content = @readdir($open)) {
-			if ($dir_content != '.' && $dir_content != 'thumb' && $dir_content != '..') {
+			if ($dir_content != '.' && $dir_content !== 'thumb' && $dir_content !== '..') {
 				if (is_dir($temp_path . '/' . $dir_content)) {
 					$tx_folders[] = array(
-						'files_name' => $dir_content,
-						'files_path' => $temp_path.$dir_content
+						'name' => $dir_content,
+						'path' => $temp_path . $dir_content
 					);
 				}
-				elseif (is_file($temp_path . '/' .$dir_content)) {
+				elseif (is_file($temp_path . '/' . $dir_content)) {
 					$tx_files[] = array(
-						'files_name' => $dir_content,
-						'files_date' => filemtime($temp_path.$dir_content),
-						'files_size' => filesize($temp_path.$dir_content),
-						'files_path' => $temp_path.$dir_content
+						'name' => $dir_content,
+						'date' => filemtime($temp_path . $dir_content),
+						'size' => filesize($temp_path . $dir_content),
+						'path' => $temp_path . $dir_content
 					);
 				}
 			}
@@ -183,26 +141,24 @@ class tx_filelist_pi1 extends tslib_pibase {
 		@closedir($open);
 
 			// Are there any files in the directory?
-		if ((count($tx_files) == 0) && (count($tx_folders) < 0)) {
+		if ((count($tx_files) == 0) && (count($tx_folders) == 0)) {
 			$content = $this->pi_getClassName('no_files');
 		}
 		else {
 				/* Sort Start */
-			if (count($tx_folders) != 0 && $folders_order_by == 'files_name') {
+			if (count($tx_folders) > 0 && $this->settings['order_by'] === 'name') {
 				foreach ($tx_folders as $tx_key => $tx_row) {
-					$files_name[$tx_key] = $tx_row['files_name'];
-					$files_path[$tx_key] = $tx_row['files_name'];
+					$sortArr[$tx_key] = $tx_row['name'];
 				}
-				$ok_sort = array_multisort($$folders_order_by, $folders_sort_sequence, $tx_folders);
+				$direction = $this->settings['sort_direction'] === 'asc' ? SORT_ASC : SORT_DESC;
+				$ok_sort = array_multisort($sortArr, $direction, $tx_folders);
 			}
-			if (count($tx_files) != 0) {
+			if (count($tx_files) > 0) {
 				foreach ($tx_files as $tx_key => $tx_row) {
-					$files_name[$tx_key] = $tx_row['files_name'];
-			        $files_date[$tx_key] = $tx_row['files_date'];
-					$files_size[$tx_key] = $tx_row['files_size'];
-			        $files_path[$tx_key] = $tx_row['files_path'];
+					$sortArr[$tx_key] = $tx_row[$this->settings['order_by']];
 				}
-				$ok_sort = array_multisort($$files_order_by, $files_sort_sequence, $tx_files);
+				$direction = $this->settings['sort_direction'] === 'asc' ? SORT_ASC : SORT_DESC;
+				$ok_sort = array_multisort($sortArr, $direction, $tx_files);
 			}
 				/* Sort End */
 
@@ -211,71 +167,70 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$content .= '<tr class="' . $this->pi_getClassName('header-tr') . '">';
 			$content .= '<td width="30" class="' . $this->pi_getClassName('header-icon') . '"></td>'; //Icon
 			$content .= '<td align="left" valign="middle" class="' . $this->pi_getClassName('header-filename') . '">' . htmlspecialchars($this->pi_getLL('filename'));  // Filename
-			if ($fe_show_sort) {
-				$content .= $this->fe_sort('name', 'desc', $pid, $iconpath);
-				$content .= $this->fe_sort('name', 'asc', $pid, $iconpath);
+			if ($this->settings['fe_sort']) {
+				$content .= $this->fe_sort('name', 'desc');
+				$content .= $this->fe_sort('name', 'asc');
 			}
 			$content .= '</td>';
 			$content .= '<td align="left" valign="middle" class="' . $this->pi_getClassName('header-info') . '">' . htmlspecialchars($this->pi_getLL('info')); //Info
-			if ($fe_show_sort) {
-				$content .= $this->fe_sort('size', 'desc', $pid, $iconpath);
-				$content .= $this->fe_sort('size', 'asc', $pid, $iconpath);
+			if ($this->settings['fe_sort']) {
+				$content .= $this->fe_sort('size', 'desc');
+				$content .= $this->fe_sort('size', 'asc');
 			}
 			$content .= '</td>';
 			$content .= '<td align="left" valign="middle" class="' . $this->pi_getClassName('header-last_modification') . '">' . htmlspecialchars($this->pi_getLL('last_modification')); //Last modification
-			if ($fe_show_sort) {
-				$content .= $this->fe_sort('date', 'desc', $pid, $iconpath);
-				$content .= $this->fe_sort('date', 'asc', $pid, $iconpath);
+			if ($this->settings['fe_sort']) {
+				$content .= $this->fe_sort('date', 'desc');
+				$content .= $this->fe_sort('date', 'asc');
 			}
 			$content .= '</td>';
 			$content .= '</tr>';
-
 
 			if (count($tx_folders) >= 0) {
 
 					// Put '..' on the start of the array
 				$temp_tx_folders = array_reverse($tx_folders);
 				$temp_tx_folders[] = array(
-					'files_name' => '..',
-					'files_path' => $temp_path. '..'
+					'name' => '..',
+					'path' => $temp_path . '..'
 				);
 				$tx_folders = array_reverse($temp_tx_folders);
 
 					// Displays the folders in a table
 				for ($d = 0; $d < count($tx_folders); $d++) {
-					if (!(!t3lib_div::_GET('tx_file_list-path') && $tx_folders[$d]['files_name'] == '..')) {
+					if (!(!t3lib_div::_GET('tx_file_list-path') && $tx_folders[$d]['name'] === '..')) {
 						$content .= '<tr class="' .$this->pi_getClassName('tr') . '">';
 						$content .= '<td class="' .$this->pi_getClassName('icon') . '">';
-						if ($tx_folders[$d]['files_name'] == '..') {
-							$content .= '<img src="' . $iconpath . 'move_up.png" alt="' . $tx_folders[$d]['files_name'] . '"';
+						if ($tx_folders[$d]['name'] === '..') {
+							$content .= '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $tx_folders[$d]['name'] . '"';
 						}
 						else {
-							$content .= '<img src="' . $iconpath . 'folder.png" alt="' . $tx_folders[$d]['files_name'] . '"';
+							$content .= '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $tx_folders[$d]['name'] . '"';
 						}
 						$content .= '</td>';
 						$content .= '<td class"' . $this->pi_getClassName('filename') . '">';
-						$content .= '<a href="index.php?id=' . $pid;
+						$content .= '<a href="index.php?id=' . $GLOBALS['TSFE']->id;
 						if (!t3lib_div::_GET('tx_file_list-path')) {
-							$content .= '&tx_file_list-path=' . $tx_folders[$d]['files_name'];
+							$content .= '&tx_file_list-path=' . $tx_folders[$d]['name'];
 						}
 						else {
-							if ($tx_folders[$d]['files_name'] == '..' && similar_text(preg_replace('/\//', '%2F', t3lib_div::_GET('tx_file_list-path')) ,'%2F') >= 3) {
+							if ($tx_folders[$d]['name'] === '..' && similar_text(preg_replace('/\//', '%2F', t3lib_div::_GET('tx_file_list-path')) ,'%2F') >= 3) {
 								$temp = explode('%2F', preg_replace('/\//', '%2F', t3lib_div::_GET('tx_file_list-path')));
 								$temp1 = count($temp)-1;
 								$content = $content . '&tx_file_list-path=' . preg_replace('/%2F/' . $temp[$temp1], '', preg_replace('/\//', '%2F', t3lib_div::_GET('tx_file_list-path')));
 							}
 							else {
-								if ($tx_folders[$d]['files_name'] != '..') {
-									$content .= '&tx_file_list-path=' . preg_replace('/\//', '%2F', t3lib_div::_GET('tx_file_list-path')) . '%2F' . $tx_folders[$d]['files_name'];
+								if ($tx_folders[$d]['name'] !== '..') {
+									$content .= '&tx_file_list-path=' . preg_replace('/\//', '%2F', t3lib_div::_GET('tx_file_list-path')) . '%2F' . $tx_folders[$d]['name'];
 								}
 							}
 						}
-						$content .= '">' . $tx_folders[$d]['files_name'] . '</a></td>';
+						$content .= '">' . $tx_folders[$d]['name'] . '</a></td>';
 						$content .= '<td class="' . $this->pi_getClassName('info') . '"><font size="1">';
-						$file_counte = $this->filecounter($temp_path.$tx_folders[$d]['files_name']);
-						$content .= $file_counte. ' ' .htmlspecialchars($this->pi_getLL('files_in_directory')). '</font></td>';
-						$content .= '<td class="' .$this->pi_getClassName('last_modification'). '"><font size="1">';
-						$content .= t3lib_BEfunc::datetime(@filemtime($temp_path . $tx_folders[$d]['files_name']));
+						$file_counter = $this->filecounter($temp_path.$tx_folders[$d]['name']);
+						$content .= $file_counter . ' ' . htmlspecialchars($this->pi_getLL('files_in_directory')) . '</font></td>';
+						$content .= '<td class="' . $this->pi_getClassName('last_modification') . '"><font size="1">';
+						$content .= t3lib_BEfunc::datetime(@filemtime($temp_path . $tx_folders[$d]['name']));
 						$content .= '</font></td>';
 						$content .= '</tr>';
 					}
@@ -287,19 +242,19 @@ class tx_filelist_pi1 extends tslib_pibase {
 				for ($f = 0; $f < count($tx_files); $f++) {
 					$content .= '<tr class="' . $this->pi_getClassName('tr') . '">';
 					$content .= '<td class="' . $this->pi_getClassName('icon') . '">';
-					$content .= '<img src="' . $iconpath . $this->fileicon($tx_files[$f]['files_name']) . '" alt="' . $tx_files[$f]['files_name'] . '">';
+					$content .= '<img src="' . $this->settings['iconsPath'] . $this->fileicon($tx_files[$f]['name']) . '" alt="' . $tx_files[$f]['name'] . '">';
 					$content .= '</td><td valign="bottom" class="' . $this->pi_getClassName('filename') . '">';
-					$content .= '<a href="' . $tx_files[$f]['files_path'] . '" target="_blank">' . $tx_files[$f]['files_name'] . '</a> ';
-					$content .= $this->show_new($tx_files[$f]['files_path'], $days_show_new, $iconpath) . '</td>';
-					$content .= '<td><font size="1">' . $this->getHRFileSize($tx_files[$f]['files_path']) . '</font></td>';
+					$content .= '<a href="' . $tx_files[$f]['path'] . '" target="_blank">' . $tx_files[$f]['name'] . '</a> ';
+					$content .= $this->show_new($tx_files[$f]['path'], $this->settings['new_duration']) . '</td>';
+					$content .= '<td><font size="1">' . $this->getHRFileSize($tx_files[$f]['path']) . '</font></td>';
 					$content .= '<td class="' . $this->pi_getClassName('last_modification') . '"><font size="1">';
-					$content .= t3lib_BEfunc::datetime(@filemtime($temp_path.$tx_files[$f]['files_name'])) . '</font></td>';
+					$content .= t3lib_BEfunc::datetime(@filemtime($temp_path.$tx_files[$f]['name'])) . '</font></td>';
 
 					if (t3lib_extMgm::isLoaded('indexed_search')) {		// Is indexed search engine on? When yes select some data from a indexed search table
 						$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 							'*',
 							'index_phash',
-							'date_filename = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($tx_files[$f]['files_path'], 'index_phash')
+							'date_filename = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($tx_files[$f]['path'], 'index_phash')
 						);
 						$out = array();
 						while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
@@ -310,13 +265,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 					if (t3lib_extMgm::isLoaded('indexed_search')) {		// Is indexed search engine on?
 
 							// If there are more then one entries in the index-database delete them all
-						if ((count($out) == 1 && @filemtime($tx_files[$f]['files_path']) != $out[0]) || (count($out) == 0)) {
+						if ((count($out) == 1 && @filemtime($tx_files[$f]['path']) != $out[0]) || (count($out) == 0)) {
 								// OK, let's index the files with indexed search engine
 							$indexerObj = &t3lib_div::makeInstance('tx_indexedsearch_indexer');
 							$setId = t3lib_div::md5int(microtime());
-							$indexerObj->backend_initIndexer($pid, 0, 0, '', $rl);
+							$indexerObj->backend_initIndexer($GLOBALS['TSFE']->id, 0, 0, '', $rl);
 							$indexerObj->backend_setFreeIndexUid($uid, $setId);
-							$indexerObj->indexRegularDocument($tx_files[$f]['files_path'], TRUE);
+							$indexerObj->indexRegularDocument($tx_files[$f]['path'], TRUE);
 						}
 					}
 					if (isset($out)) {
@@ -456,14 +411,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * Returns the new-icon, when the file is selected as new
 	 *
 	 * @param	string		Path to the specified file
-	 * @param	integer		With how mutch of days a file is new?
-	 * @param	string		Path to the directory, where the icons are
+	 * @param	integer		With how much of days a file is new?
 	 * @return	string		Returns the 'new-icon'
 	 */
-	protected function show_new($fn, $days_show_new, $iconpath) {
-		if ($days_show_new != 0 && $days_show_new != '' && isset($days_show_new) && $days_show_new != NULL)  {
-			if (filemtime($fn) > mktime(0, 0, 0, date('m'), date('d') - $days_show_new, date('Y'))) {
-				return '<img src="' . $iconpath.$this->pi_getLL('new_icon') . '.png" alt="' . $this->pi_getLL('new_text') . '">';
+	protected function show_new($fn, $duration) {
+		if ($duration > 0) {
+			if (filemtime($fn) > mktime(0, 0, 0, date('m'), date('d') - $duration, date('Y'))) {
+				return '<img src="' . $this->settings['iconsPath'] . $this->pi_getLL('new_icon') . '.png" alt="' . $this->pi_getLL('new_text') . '">';
 			}
 			else {
 				return '';
@@ -479,16 +433,14 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 *
 	 * @param	string		Order by (name, date, size)
 	 * @param	string		Order sequence (ASC, DESC)
-	 * @param	integer		pid
-	 * @param	string		Path to the directory, where the icons are
 	 * @return	string		Return of images for sorting
 	 */
-	protected function fe_sort($order_by, $order_seq, $pid, $iconpath) {
-		$temp_content = ' <a href="index.php?id=' . $pid;
+	protected function fe_sort($order_by, $order_seq) {
+		$temp_content = ' <a href="index.php?id=' . $GLOBALS['TSFE']->id;
 		if (t3lib_div::_GET('tx_file_list-path')) {
 			$temp_content = $temp_content . '&tx_file_list-path=' . preg_replace('/\//', '%2F', t3lib_div::_GET('tx_file_list-path'));
 		}
-		$temp_content = $temp_content . '&tx_file_list-order_by=' . $order_by . '&tx_file_list-order_sequence=' . $order_seq . '"><img src="' . $iconpath;
+		$temp_content = $temp_content . '&tx_file_list-order_by=' . $order_by . '&tx_file_list-order_sequence=' . $order_seq . '"><img src="' . $this->settings['iconsPath'];
 		if ($order_seq == 'asc') {
 			$temp_content = $temp_content . 'up.gif" alt="' . htmlspecialchars($this->pi_getLL('asc')) . '" border="0"></a>';
 		}
@@ -496,6 +448,59 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$temp_content = $temp_content . 'down.gif" alt="' . htmlspecialchars($this->pi_getLL('desc')) . '" border="0"></a>';
 		}
 		return $temp_content;
+	}
+
+	/**
+	 * This method performs various initializations.
+	 *
+	 * @param	array		$settings: Plugin configuration, as received by the main() method
+	 * @return	void
+	 */
+	protected function init(array $settings) {
+		$this->settings = $settings;
+
+		if (!isset($this->settings['iconsPath'])) {
+			$this->settings['iconsPath'] = t3lib_extMgm::siteRelPath('file_list') . 'pi1/icons/';
+		} else {
+			if (substr($this->settings['iconsPath'], -1, 1) !== '/') {
+				$this->settings['iconsPath'] .= '/';
+			}
+		}
+
+			// Load the flexform and loop on all its values to override TS setup values
+			// Some properties use a different test (more strict than not empty) and yet some others no test at all
+			// see http://wiki.typo3.org/index.php/Extension_Development,_using_Flexforms
+		$this->pi_initPIflexForm(); // Init and get the flexform data of the plugin
+
+			// Assign the flexform data to a local variable for easier access
+		$piFlexForm = $this->cObj->data['pi_flexform'];
+		
+		if (is_array($piFlexForm['data'])) {
+				// Traverse the entire array based on the language
+				// and assign each configuration option to $this->settings array...
+			foreach ($piFlexForm['data'] as $sheet => $langData) {
+				foreach ($langData as $lang => $fields) {
+					foreach (array_keys($fields) as $field) {
+						$value = $this->pi_getFFvalue($piFlexForm, $field, $sheet);	
+							
+						if (!empty($value)) {
+							if (in_array($field, $explodeFlexFormFields)) {
+								$this->settings[$field] = explode(',', $value);
+							} else {
+								$this->settings[$field] = $value;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+			// Disable Filelist if an error occurred
+		$this->error = 0;
+			// Load language data
+		$this->pi_loadLL();
+			// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
+		$this->pi_USER_INT_obj = 1;
 	}
 
 	/**
