@@ -122,13 +122,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$content = 'Could not open ' . $path_to_dir;
 		}
 			// Checking get-parameters
-		if (!$_GET['tx_file_list-path']) {
+		if (!t3lib_div::_GET('tx_file_list-path')) {
 			$temp_path = $path_to_dir;
 		}
 		else {
-			if ((substr($_GET['tx_file_list-path'], 0, 2) != '..') && (!eregi('\.', $_GET['tx_file_list-path']))) {
-				$temp_path = $path_to_dir.$_GET['tx_file_list-path'];
-				if (substr($_GET['tx_file_list-path'], -1, 1) != '/') {
+			if ((substr(t3lib_div::_GET('tx_file_list-path'), 0, 2) != '..') && (!eregi('\.', t3lib_div::_GET('tx_file_list-path')))) {
+				$temp_path = $path_to_dir . t3lib_div::_GET('tx_file_list-path');
+				if (substr(t3lib_div::_GET('tx_file_list-path'), -1, 1) != '/') {
 					$temp_path = $temp_path. '/';
 				}
 				if (substr($temp_path, -3, 3) == '%2F' || substr($temp_path, -4, 3) == '%2F') {
@@ -137,24 +137,23 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 			else {
 				$temp_path = $path_to_dir;
-				unset($_GET['tx_file_list-path']);
 			}
 		}
 
-		if ($_GET['tx_file_list-order_by'] && $_GET['tx_file_list-order_sequence']) {
-			$files_order_by = 'files_' . $_GET['tx_file_list-order_by'];
-			if ($_GET['tx_file_list-order_by'] == 'name') {
-				$folders_order_by = 'files_' . $_GET['tx_file_list-order_by'];
+		if (t3lib_div::_GET('tx_file_list-order_by') && t3lib_div::_GET('tx_file_list-order_sequence')) {
+			$files_order_by = 'files_' . t3lib_div::_GET('tx_file_list-order_by');
+			if (t3lib_div::_GET('tx_file_list-order_by') == 'name') {
+				$folders_order_by = 'files_' . t3lib_div::_GET('tx_file_list-order_by');
 			}
-			if ($_GET['tx_file_list-order_sequence'] == 'asc') {
+			if (t3lib_div::_GET('tx_file_list-order_sequence') == 'asc') {
 				$files_sort_sequence = SORT_ASC;
-				if ($_GET['tx_file_list-order_by'] == 'name') {
+				if (t3lib_div::_GET('tx_file_list-order_by') == 'name') {
 					$folders_sort_sequence = SORT_ASC;
 				}
 			}
-			elseif ($_GET['tx_file_list-order_sequence'] == 'desc') {
+			elseif (t3lib_div::_GET('tx_file_list-order_sequence') == 'desc') {
 				$files_sort_sequence = SORT_DESC;
-				if ($_GET['tx_file_list-order_by'] == 'name') {
+				if (t3lib_div::_GET('tx_file_list-order_by') == 'name') {
 					$folders_sort_sequence = SORT_DESC;
 				}
 			}
@@ -244,7 +243,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 					// Displays the folders in a table
 				for ($d = 0; $d < count($tx_folders); $d++) {
-					if (!(!$_GET['tx_file_list-path'] && $tx_folders[$d]['files_name'] == '..')) {
+					if (!(!t3lib_div::_GET('tx_file_list-path') && $tx_folders[$d]['files_name'] == '..')) {
 						$content .= '<tr class="' .$this->pi_getClassName('tr') . '">';
 						$content .= '<td class="' .$this->pi_getClassName('icon') . '">';
 						if ($tx_folders[$d]['files_name'] == '..') {
@@ -256,18 +255,18 @@ class tx_filelist_pi1 extends tslib_pibase {
 						$content .= '</td>';
 						$content .= '<td class"' . $this->pi_getClassName('filename') . '">';
 						$content .= '<a href="index.php?id=' . $pid;
-						if (!$_GET['tx_file_list-path']) {
+						if (!t3lib_div::_GET('tx_file_list-path')) {
 							$content .= '&tx_file_list-path=' . $tx_folders[$d]['files_name'];
 						}
 						else {
-							if ($tx_folders[$d]['files_name'] == '..' && similar_text(ereg_replace('/', '%2F', $_GET['tx_file_list-path']) ,'%2F') >= 3) {
-								$temp = explode('%2F', ereg_replace('/', '%2F', $_GET['tx_file_list-path']));
+							if ($tx_folders[$d]['files_name'] == '..' && similar_text(ereg_replace('/', '%2F', t3lib_div::_GET('tx_file_list-path')) ,'%2F') >= 3) {
+								$temp = explode('%2F', ereg_replace('/', '%2F', t3lib_div::_GET('tx_file_list-path')));
 								$temp1 = count($temp)-1;
-								$content = $content. '&tx_file_list-path=' .ereg_replace('%2F' .$temp[$temp1], '', ereg_replace('/', '%2F', $_GET['tx_file_list-path']));
+								$content = $content. '&tx_file_list-path=' .ereg_replace('%2F' .$temp[$temp1], '', ereg_replace('/', '%2F', t3lib_div::_GET('tx_file_list-path')));
 							}
 							else {
 								if ($tx_folders[$d]['files_name'] != '..') {
-									$content .= '&tx_file_list-path=' . ereg_replace('/', '%2F', $_GET['tx_file_list-path']) . '%2F' . $tx_folders[$d]['files_name'];
+									$content .= '&tx_file_list-path=' . ereg_replace('/', '%2F', t3lib_div::_GET('tx_file_list-path')) . '%2F' . $tx_folders[$d]['files_name'];
 								}
 							}
 						}
@@ -481,8 +480,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 */
 	protected function fe_sort($order_by, $order_seq, $pid, $iconpath) {
 		$temp_content = ' <a href="index.php?id=' . $pid;
-		if ($_GET['tx_file_list-path']) {
-			$temp_content = $temp_content . '&tx_file_list-path=' . eregi_replace('/', '%2F', $_GET['tx_file_list-path']);
+		if (t3lib_div::_GET('tx_file_list-path')) {
+			$temp_content = $temp_content . '&tx_file_list-path=' . eregi_replace('/', '%2F', t3lib_div::_GET('tx_file_list-path'));
 		}
 		$temp_content = $temp_content . '&tx_file_list-order_by=' . $order_by . '&tx_file_list-order_sequence=' . $order_seq . '"><img src="' . $iconpath;
 		if ($order_seq == 'asc') {
