@@ -1,0 +1,17 @@
+###
+# This is the default CSS Styles for the file_list standard template: EXT:file_list/Resources/Private/Templates/template_pi1.html
+##
+
+plugin.tx_filelist_pi1 {
+	_CSS_DEFAULT_STYLE (
+/*
+.tx-filelist-pi1 {
+	border: 1px solid red;
+}
+*/
+
+	)
+}
+
+### SVN id ###
+# $Id$

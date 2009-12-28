@@ -14,7 +14,7 @@ $tempColumns = array(
 		)
 	),
 	'tx_filelist_order_by' => array(        
-		'exclude' => 0,        
+		'exclude' => 0,
 		'label' => 'LLL:EXT:file_list/locallang_db.xml:tt_content.tx_filelist_order_by',        
 		'config' => array(
 			'type' => 'select',
@@ -80,5 +80,5 @@ $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_pi1'] = 'tx
 
 t3lib_extMgm::addPlugin(array('LLL:EXT:file_list/locallang_db.xml:tt_content.list_type_pi1', $_EXTKEY . '_pi1'), 'list_type');
 
-t3lib_extMgm::addStaticFile($_EXTKEY,'pi1/static/', 'File List');
+t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/', 'File List');
 ?>
