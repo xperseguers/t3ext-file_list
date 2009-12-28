@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2006-2008 Moreno Feltscher <moreno@luagsh.ch>
+*  (c) 2006-2009 Moreno Feltscher <moreno@feltscher.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,12 +21,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-/**
- * Plugin 'File List' for the 'file_list' extension.
- *
- * @author	Moreno Feltscher <moreno@luagsh.ch>
- */
-
 
 require_once(PATH_tslib . 'class.tslib_pibase.php');
 require_once('t3lib/class.t3lib_befunc.php');
@@ -34,44 +28,41 @@ if (t3lib_extMgm::isLoaded('indexed_search')) {		// Is indexed search engine loa
 	require_once(t3lib_extMgm::extPath('indexed_search') . 'class.indexer.php');
 }
 
-
-	/**
-	 * File-List
-	 *
-	 */
+/**
+ * Plugin 'File List' for the 'file_list' extension.
+ *
+ * @package     TYPO3
+ * @subpackage  tx_filelist
+ * @author      Moreno Feltscher <moreno@feltscher.ch>
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ * @version     SVN: $Id$
+ */
 class tx_filelist_pi1 extends tslib_pibase {
-	var $prefixId = 'tx_filelist_pi1';		// Same as class name
-	var $scriptRelPath = 'pi1/class.tx_filelist_pi1.php';	// Path to this script relative to the extension dir.
-	var $extKey = 'file_list';	// The extension key.
-
+	public $prefixId = 'tx_filelist_pi1';		// Same as class name
+	public $scriptRelPath = 'pi1/class.tx_filelist_pi1.php';
+	public $extKey = 'file_list';
 
 	/**
 	 * Main-function, returns output
 	 *
 	 * @param	string		$content: The PlugIn content
 	 * @param	array		$conf: The PlugIn configuration
-	 * @return	The		content that is displayed on the website
+	 * @return	The	content that is displayed on the website
 	 */
-	function main($content, $conf)	{
-		$this->conf=$conf;
+	public function main($content, $conf) {
+		$this->conf = $conf;
 		$this->pi_setPiVarDefaults();
-		$this->error=0;		// Disable Filelist if an error occurred
+		$this->error = 0;		// Disable Filelist if an error occurred
 		$this->pi_loadLL();
-		$this->pi_USER_INT_obj=1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
-		$path_to_dir=$this->cObj->data['tx_filelist_path'];		// Specified path to directory from frontent-plugin
+		$this->pi_USER_INT_obj = 1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
+		$path_to_dir = $this->cObj->data['tx_filelist_path'];		// Specified path to directory from frontent-plugin
 		$days_show_new = $this->cObj->data['tx_filelist_show_new'];		// Read out the count of days for having 'new'
 		settype($days_show_new, 'integer');		// Set variable-type to'integer
-		if ($this->cObj->data['tx_filelist_fe_user_sort'] == '1') {
-			$fe_show_sort = TRUE;
-		}
-		else {
-			$fe_show_sort = FALSE;
-		}
 
+		$fe_show_sort = ($this->cObj->data['tx_filelist_fe_user_sort'] == '1');
 		$iconpath = t3lib_extMgm::siteRelPath('file_list') . 'pi1/icons/';	// Path where all the icons are
 
-
-		// Prepare the variable $files_order_by and $folders_order_by (for sorting by)
+			// Prepare the variable $files_order_by and $folders_order_by (for sorting by)
 		if (!isset($this->cObj->data['tx_filelist_order_by']) || $this->cObj->data['tx_filelist_order_by'] == '') {
 			$files_order_by = 'files_name';
 		}
@@ -90,7 +81,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		}
 		$folders_order_by = $files_order_by;
 
-		// Prepare the variable $files_sort_sequence and $folders_sort_sequence (for sort-sequence)
+			// Prepare the variable $files_sort_sequence and $folders_sort_sequence (for sort-sequence)
 		if (!isset($this->cObj->data['tx_filelist_order_sort']) || $this->cObj->data['tx_filelist_order_sort'] == '') {
 			$files_sort_sequence = 'SORT_ASC';
 		}
@@ -106,12 +97,11 @@ class tx_filelist_pi1 extends tslib_pibase {
 		}
 		$folders_sort_sequence = $files_sort_sequence;
 
-
-		// Preparing some arrays
+			// Preparing some arrays
 		$tx_folders = array();
 		$tx_files = array();
 
-		// Gets the pid
+			// Gets the pid
 		$config['pid_list'] = trim($this->cObj->stdWrap($this->conf['pid_list'], $this->conf['pid_list.']));
 		$config['pid_list'] = $config['pid_list'] ? implode(t3lib_div::intExplode(',', $config['pid_list']), ',') : $GLOBALS['TSFE']->id;
 		list($pid) = explode(',', $config['pid_list']);
@@ -123,15 +113,15 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 		$rl = $this->getUidRootLineForClosestTemplate($pid);
 
-		// Preparing the path to the directory
+			// Preparing the path to the directory
 		if (substr($path_to_dir, -1, 1) != '/') {
 			$path_to_dir = $path_to_dir . '/';
 		}
-		// Is the directory readable?
+			// Is the directory readable?
 		if (!@is_readable($path_to_dir)) {
 			$content = 'Could not open ' . $path_to_dir;
 		}
-		// Checking get-parameters
+			// Checking get-parameters
 		if (!$_GET['tx_file_list-path']) {
 			$temp_path = $path_to_dir;
 		}
@@ -170,7 +160,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 		}
 
-		// Open the directory and read out all folders and files (/write them to an array)
+			// Open the directory and read out all folders and files (/write them to an array)
 		$open = @opendir($temp_path);
 		while ($dir_content = @readdir($open)) {
 			if ($dir_content != '.' && $dir_content != 'thumb' && $dir_content != '..') {
@@ -190,15 +180,15 @@ class tx_filelist_pi1 extends tslib_pibase {
 				}
 			}
 		}
-		// Close the directory
+			// Close the directory
 		@closedir($open);
 
-		// Are there any files in the directory?
+			// Are there any files in the directory?
 		if ((count($tx_files) == 0) && (count($tx_folders) < 0)) {
 			$content = $this->pi_getClassName('no_files');
 		}
 		else {
-			/* Sort Start */
+				/* Sort Start */
 			if (count($tx_folders) != 0 && $folders_order_by == 'files_name') {
 				foreach ($tx_folders as $tx_key => $tx_row) {
 					$files_name[$tx_key] = $tx_row['files_name'];
@@ -215,9 +205,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 				}
 				$ok_sort = array_multisort($$files_order_by, $files_sort_sequence, $tx_files);
 			}
-			/* Sort End */
+				/* Sort End */
 
-			// Preparing the table
+				// Preparing the table
 			$content = '<br /><table border="0" cellspacing="0" cellpadding="0" class="' . $this->pi_getClassName('table'). '">';
 			$content .= '<tr class="' . $this->pi_getClassName('header-tr') . '">';
 			$content .= '<td width="30" class="' . $this->pi_getClassName('header-icon') . '"></td>'; //Icon
@@ -244,7 +234,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 			if (count($tx_folders) >= 0) {
 
-				// Put '..' on the start of the array
+					// Put '..' on the start of the array
 				$temp_tx_folders = array_reverse($tx_folders);
 				$temp_tx_folders[] = array(
 					'files_name' => '..',
@@ -252,7 +242,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 				);
 				$tx_folders = array_reverse($temp_tx_folders);
 
-				// Displays the folders in a table
+					// Displays the folders in a table
 				for ($d = 0; $d < count($tx_folders); $d++) {
 					if (!(!$_GET['tx_file_list-path'] && $tx_folders[$d]['files_name'] == '..')) {
 						$content .= '<tr class="' .$this->pi_getClassName('tr') . '">';
@@ -293,12 +283,12 @@ class tx_filelist_pi1 extends tslib_pibase {
 				}
 			}
 
-			// Displays the files in a table
+				// Displays the files in a table
 			if (count($tx_files) != 0) {
 				for ($f = 0; $f < count($tx_files); $f++) {
-					$content .= .= '<tr class="' . $this->pi_getClassName('tr') . '">';
+					$content .= '<tr class="' . $this->pi_getClassName('tr') . '">';
 					$content .= '<td class="' . $this->pi_getClassName('icon') . '">';
-					$content .= '<img src="' . $iconpath.$this->fileicon($tx_files[$f]['files_name']) . '" alt="' . $tx_files[$f]['files_name'] . '">';
+					$content .= '<img src="' . $iconpath . $this->fileicon($tx_files[$f]['files_name']) . '" alt="' . $tx_files[$f]['files_name'] . '">';
 					$content .= '</td><td valign="bottom" class="' . $this->pi_getClassName('filename') . '">';
 					$content .= '<a href="' . $tx_files[$f]['files_path'] . '" target="_blank">' . $tx_files[$f]['files_name'] . '</a> ';
 					$content .= $this->show_new($tx_files[$f]['files_path'], $days_show_new, $iconpath) . '</td>';
@@ -310,7 +300,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 						$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 							'*',
 							'index_phash',
-							'date_filename = \'' . $GLOBALS[TYPO3_DB]->fullQuoteStr($tx_files[$f]['files_path'], 'index_phash') . '\''
+							'date_filename = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($tx_files[$f]['files_path'], 'index_phash')
 						);
 						$out = array();
 						while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
@@ -320,9 +310,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 					
 					if (t3lib_extMgm::isLoaded('indexed_search')) {		// Is indexed search engine on?
 
-						// If there are more then one entries in the index-database delete them all
+							// If there are more then one entries in the index-database delete them all
 						if ((count($out) == 1 && @filemtime($tx_files[$f]['files_path']) != $out[0]) || (count($out) == 0)) {
-							// OK, let's index the files with indexed search engine
+								// OK, let's index the files with indexed search engine
 							$indexerObj = &t3lib_div::makeInstance('tx_indexedsearch_indexer');
 							$setId = t3lib_div::md5int(microtime());
 							$indexerObj->backend_initIndexer($pid, 0, 0, '', $rl);
@@ -346,7 +336,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @param	string		Path to the specified directory
 	 * @return	integer		Number of files in the directory
 	 */
-	function filecounter($counter_dir) {
+	protected function filecounter($counter_dir) {
 		$counter = 0;
 		$counter_open = @opendir($counter_dir);
 		while ($counter_content = readdir($counter_open)) {
@@ -363,7 +353,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @param	string		Path to the specified file
 	 * @return	string		Filename of the icon
 	 */
-	function fileicon($fn) {
+	protected function fileicon($fn) {
 		$allfileends = array(
 			'doc', 'pdf', 'pps', 'tar', 'txt', 'xls', 'swf', 'htm', 'html', 'phtml', 'gif', 'jpg', 'jpeg', 'png', 'bpm', 'mp3', 'wav', 'wmv', 'tar', 'gz', 'txt', 'mp4', 'mpg', 'mpeg', 'tif'
 		);
@@ -380,7 +370,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			'video' => array('video', 'mp4', 'mpg', 'mpeg')
 		);
 		$fileend = explode('.', $fn);
-		$f_count = count($fileend)-1;
+		$f_count = count($fileend) - 1;
 		$fileend = strtolower($fileend[$f_count]);
 		if (in_array($fileend, $allfileends)) {
 			if (in_array($fileend, $normfileend)) {
@@ -405,7 +395,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @param	string		Path to the specified file
 	 * @return	string		Size of the file
 	 */
-	function file_size($fn) {
+	protected function file_size($fn) {
 		$sizetags = array('bytes', 'KB', 'MB', 'GB', 'TB');
 		$filesize = @filesize($fn);
 		for ($i=0; $i<count($sizetags); $i++) {
@@ -414,7 +404,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			else
 				break;
 		}
-		return ceil($filesize) .' '. $sizetags[$i];
+		return ceil($filesize) . ' ' . $sizetags[$i];
 	}
 
 	/**
@@ -423,7 +413,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @param	string		Path to the specified file
 	 * @return	string		Last modification of file
 	 */
-    function file_create_date($fn) {
+    protected function file_create_date($fn) {
 		$filedate = filemtime($fn);
 		return date('d-m-y H:i', $filedate);
 	}
@@ -434,14 +424,12 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @param	integer		pid
 	 * @return	integer		uid
 	 */
-	function getUidRootLineForClosestTemplate($id)	{
+	protected function getUidRootLineForClosestTemplate($id)	{
 		global $TYPO3_CONF_VARS;
 
-		require_once (PATH_t3lib .'class.t3lib_page.php');
-		require_once (PATH_t3lib .'class.t3lib_tstemplate.php');
-		require_once (PATH_t3lib .'class.t3lib_tsparser_ext.php');
-
-
+		require_once(PATH_t3lib . 'class.t3lib_page.php');
+		require_once(PATH_t3lib . 'class.t3lib_tstemplate.php');
+		require_once(PATH_t3lib . 'class.t3lib_tsparser_ext.php');
 
 		$tmpl = t3lib_div::makeInstance('t3lib_tsparser_ext');
 		$tmpl->tt_track = 0;	// Do not log time-performance information
@@ -450,11 +438,11 @@ class tx_filelist_pi1 extends tslib_pibase {
 			// Gets the rootLine
 		$sys_page = t3lib_div::makeInstance('t3lib_pageSelect');
 		$rootLine = $sys_page->getRootLine($id);
-		$tmpl->runThroughTemplates($rootLine,0);	// This generates the constants/config + hierarchy info for the template.
+		$tmpl->runThroughTemplates($rootLine, 0);	// This generates the constants/config + hierarchy info for the template.
 
 			// Root line uids
 		$rootline_uids = array();
-		foreach($tmpl->rootLine as $rlkey => $rldat)	{
+		foreach($tmpl->rootLine as $rlkey => $rldat) {
 			$rootline_uids[$rlkey] = $rldat['uid'];
 		}
 		return $rootline_uids;
@@ -468,7 +456,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @param	string		Path to the directory, where the icons are
 	 * @return	string		Returns the 'new-icon'
 	 */
-	function show_new($fn, $days_show_new, $iconpath) {
+	protected function show_new($fn, $days_show_new, $iconpath) {
 		if ($days_show_new != 0 && $days_show_new != '' && isset($days_show_new) && $days_show_new != NULL)  {
 			if (filemtime($fn) > mktime(0, 0, 0, date('m'), date('d') - $days_show_new, date('Y'))) {
 				return '<img src="' . $iconpath.$this->pi_getLL('new_icon') . '.png" alt="' . $this->pi_getLL('new_text') . '">';
@@ -491,7 +479,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @param	string		Path to the directory, where the icons are
 	 * @return	string		Return of images for sorting
 	 */
-	function fe_sort($order_by, $order_seq, $pid, $iconpath) {
+	protected function fe_sort($order_by, $order_seq, $pid, $iconpath) {
 		$temp_content = ' <a href="index.php?id=' . $pid;
 		if ($_GET['tx_file_list-path']) {
 			$temp_content = $temp_content . '&tx_file_list-path=' . eregi_replace('/', '%2F', $_GET['tx_file_list-path']);
@@ -506,13 +494,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		return $temp_content;
 	}
 
-
-
 }
-
-
-
-
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/pi1/class.tx_filelist_pi1.php'])	{

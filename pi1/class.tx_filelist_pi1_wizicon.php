@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2006 Moreno Feltscher <moreno@feltscher.ch>
+*  (c) 2006-2009 Moreno Feltscher <moreno@feltscher.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,14 +21,17 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
+
 /**
  * Class that adds the wizard icon.
  *
- * @author	Moreno Feltscher <moreno@feltscher.ch>
+ * @package     TYPO3
+ * @subpackage  tx_filelist
+ * @author      Moreno Feltscher <moreno@feltscher.ch>
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ * @version     SVN: $Id$
  */
-
-
-
 class tx_filelist_pi1_wizicon {
 
 	/**
@@ -37,30 +40,28 @@ class tx_filelist_pi1_wizicon {
 	 * @param	array		$wizardItems: The wizard items
 	 * @return	Modified array with wizard items
 	 */
-	function proc($wizardItems)	{
-		global $LANG;
-
+	function proc($wizardItems) {
 		$LL = $this->includeLocalLang();
 
 		$wizardItems['plugins_tx_filelist_pi1'] = array(
-			'icon'=>t3lib_extMgm::extRelPath('file_list').'pi1/ce_wiz.gif',
-			'title'=>$LANG->getLLL('pi1_title',$LL),
-			'description'=>$LANG->getLLL('pi1_plus_wiz_description',$LL),
-			'params'=>'&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=file_list_pi1'
+			'icon'        => t3lib_extMgm::extRelPath('file_list') . 'pi1/ce_wiz.gif',
+			'title'       => $GLOBALS['LANG']->getLLL('pi1_title', $LL),
+			'description' => $GLOBALS['LANG']->getLLL('pi1_plus_wiz_description', $LL),
+			'params'      => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=file_list_pi1'
 		);
 
 		return $wizardItems;
 	}
 
 	/**
-	 * Reads the [extDir]/locallang.xml and returns the \$LOCAL_LANG array found in that file.
+	 * Reads the [extDir]/locallang.xml and returns the $LOCAL_LANG array found in that file.
 	 *
 	 * @return	The array with language labels
 	 */
 	function includeLocalLang()	{
-		global $LANG;
+		$llFile = t3lib_extMgm::extPath('file_list') . 'locallang.xml';
+		$LOCAL_LANG = t3lib_div::readLLXMLfile($llFile, $GLOBALS['LANG']->lang);
 
-		$LOCAL_LANG = $LANG->includeLLFile('EXT:".$extKey."/locallang.xml',FALSE);
 		return $LOCAL_LANG;
 	}
 }
