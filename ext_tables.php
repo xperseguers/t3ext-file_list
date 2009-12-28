@@ -57,6 +57,20 @@ $tempColumns = array(
 	),
 );
 
+if (t3lib_extMgm::isLoaded('rgfolderselector')) {
+		// Add support for EXT:rgfolderselector
+	$tempColumns['tx_filelist_path']['config']['wizards'] = array(
+		'_PADDING' => 2,
+		'link' => array(
+			'type' => 'popup',
+			'title' => 'LLL:EXT:file_list/locallang_db.xml:tt_content.tx_filelist_path_wizards.link.title',
+			'icon' => 'link_popup.gif',
+			'script' => 'EXT:rgfolderselector/browse_links.php',
+			'JSopenParams' => 'height=400,width=400,status=0,menubar=0,scrollbars=1'
+		),
+	);
+}
+
 t3lib_div::loadTCA('tt_content');
 t3lib_extMgm::addTCAcolumns('tt_content', $tempColumns, 1);
 

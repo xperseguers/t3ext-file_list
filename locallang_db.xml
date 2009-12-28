@@ -7,6 +7,7 @@
     <data type="array">
         <languageKey index="default" type="array">
             <label index="tt_content.tx_filelist_path">Path to the directory (example: fileadmin/directory1/)</label>
+            <label index="tt_content.tx_filelist_path_wizards.link.title">Folder Selector</label>
             <label index="tt_content.tx_filelist_order_by.I.0">Name</label>
             <label index="tt_content.tx_filelist_order_by.I.1">Date</label>
             <label index="tt_content.tx_filelist_order_by.I.2">Size</label>
@@ -20,6 +21,7 @@
         </languageKey>
         <languageKey index="de" type="array">
             <label index="tt_content.tx_filelist_path">Pfad zum Verzeichnis (Beispiel: fileadmin/directory1/)</label>
+            <label index="tt_content.tx_filelist_path_wizards.link.title">Verzeichnis-Selektor</label>
             <label index="tt_content.tx_filelist_order_by.I.0">Name</label>
             <label index="tt_content.tx_filelist_order_by.I.1">Datum</label>
             <label index="tt_content.tx_filelist_order_by.I.2">Groesse</label>
