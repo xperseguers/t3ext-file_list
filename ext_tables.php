@@ -74,8 +74,8 @@ if (t3lib_extMgm::isLoaded('rgfolderselector')) {
 t3lib_div::loadTCA('tt_content');
 t3lib_extMgm::addTCAcolumns('tt_content', $tempColumns, 1);
 
-t3lib_div::loadTCA('tt_content');
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY . '_pi1'] = 'layout,select_key';
+	// Disable the display of layout, select_key and page fields
+$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY . '_pi1'] = 'layout,select_key,pages';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_pi1'] = 'tx_filelist_path;;;;1-1-1, tx_filelist_order_by, tx_filelist_order_sort, tx_filelist_show_new, tx_filelist_fe_user_sort';
 
 t3lib_extMgm::addPlugin(array('LLL:EXT:file_list/locallang_db.xml:tt_content.list_type_pi1', $_EXTKEY . '_pi1'), 'list_type');
