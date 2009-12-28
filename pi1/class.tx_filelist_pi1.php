@@ -291,7 +291,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 					$content .= '</td><td valign="bottom" class="' . $this->pi_getClassName('filename') . '">';
 					$content .= '<a href="' . $tx_files[$f]['files_path'] . '" target="_blank">' . $tx_files[$f]['files_name'] . '</a> ';
 					$content .= $this->show_new($tx_files[$f]['files_path'], $days_show_new, $iconpath) . '</td>';
-					$content .= '<td><font size="1">' . self::getHRFileSize($tx_files[$f]['files_path']) . '</font></td>';
+					$content .= '<td><font size="1">' . $this->getHRFileSize($tx_files[$f]['files_path']) . '</font></td>';
 					$content .= '<td class="' . $this->pi_getClassName('last_modification') . '"><font size="1">';
 					$content .= t3lib_BEfunc::datetime(@filemtime($temp_path.$tx_files[$f]['files_name'])) . '</font></td>';
 
@@ -394,7 +394,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @param	string		Path to the specified file
 	 * @return	string		Size of the file
 	 */
-	protected static function getHRFileSize($filename) {
+	protected function getHRFileSize($filename) {
 		$units = array(
 			'0' => $this->pi_getLL('units.bytes'),
 			'1' => $this->pi_getLL('units.KB'),
