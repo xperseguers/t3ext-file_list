@@ -126,13 +126,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$temp_path = $path_to_dir;
 		}
 		else {
-			if ((substr(t3lib_div::_GET('tx_file_list-path'), 0, 2) != '..') && (!eregi('\.', t3lib_div::_GET('tx_file_list-path')))) {
+			if ((substr(t3lib_div::_GET('tx_file_list-path'), 0, 2) != '..') && (!preg_match('/\./', t3lib_div::_GET('tx_file_list-path')))) {
 				$temp_path = $path_to_dir . t3lib_div::_GET('tx_file_list-path');
 				if (substr(t3lib_div::_GET('tx_file_list-path'), -1, 1) != '/') {
 					$temp_path = $temp_path. '/';
 				}
 				if (substr($temp_path, -3, 3) == '%2F' || substr($temp_path, -4, 3) == '%2F') {
-					$temp_path = ereg_replace('%2F', '', $temp_path);
+					$temp_path = preg_replace('/%2F/', '', $temp_path);
 				}
 			}
 			else {
@@ -259,14 +259,14 @@ class tx_filelist_pi1 extends tslib_pibase {
 							$content .= '&tx_file_list-path=' . $tx_folders[$d]['files_name'];
 						}
 						else {
-							if ($tx_folders[$d]['files_name'] == '..' && similar_text(ereg_replace('/', '%2F', t3lib_div::_GET('tx_file_list-path')) ,'%2F') >= 3) {
-								$temp = explode('%2F', ereg_replace('/', '%2F', t3lib_div::_GET('tx_file_list-path')));
+							if ($tx_folders[$d]['files_name'] == '..' && similar_text(preg_replace('/\//', '%2F', t3lib_div::_GET('tx_file_list-path')) ,'%2F') >= 3) {
+								$temp = explode('%2F', preg_replace('/\//', '%2F', t3lib_div::_GET('tx_file_list-path')));
 								$temp1 = count($temp)-1;
-								$content = $content. '&tx_file_list-path=' .ereg_replace('%2F' .$temp[$temp1], '', ereg_replace('/', '%2F', t3lib_div::_GET('tx_file_list-path')));
+								$content = $content . '&tx_file_list-path=' . preg_replace('/%2F/' . $temp[$temp1], '', preg_replace('/\//', '%2F', t3lib_div::_GET('tx_file_list-path')));
 							}
 							else {
 								if ($tx_folders[$d]['files_name'] != '..') {
-									$content .= '&tx_file_list-path=' . ereg_replace('/', '%2F', t3lib_div::_GET('tx_file_list-path')) . '%2F' . $tx_folders[$d]['files_name'];
+									$content .= '&tx_file_list-path=' . preg_replace('/\//', '%2F', t3lib_div::_GET('tx_file_list-path')) . '%2F' . $tx_folders[$d]['files_name'];
 								}
 							}
 						}
@@ -481,7 +481,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	protected function fe_sort($order_by, $order_seq, $pid, $iconpath) {
 		$temp_content = ' <a href="index.php?id=' . $pid;
 		if (t3lib_div::_GET('tx_file_list-path')) {
-			$temp_content = $temp_content . '&tx_file_list-path=' . eregi_replace('/', '%2F', t3lib_div::_GET('tx_file_list-path'));
+			$temp_content = $temp_content . '&tx_file_list-path=' . preg_replace('/\//', '%2F', t3lib_div::_GET('tx_file_list-path'));
 		}
 		$temp_content = $temp_content . '&tx_file_list-order_by=' . $order_by . '&tx_file_list-order_sequence=' . $order_seq . '"><img src="' . $iconpath;
 		if ($order_seq == 'asc') {
