@@ -12,10 +12,10 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'File List',
-	'description' => 'Adds a frontend plugin which shows a list of files in a specified directory (like apache).',
+	'description' => 'Adds a frontend plugin which shows a list of files in a specified directory (like Apache).',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '0.2.1',
+	'version' => '0.2-dev',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -34,7 +34,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '4.0-0.0.0',
+			'typo3' => '4.0.0-0.0.0',
 			'cms' => '',
 		),
 		'conflicts' => array(

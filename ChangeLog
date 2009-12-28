@@ -1,19 +1,19 @@
-2008-08-05 Moreno Feltscher  <moreno@luagsh.ch>
+2008-08-05  Moreno Feltscher  <moreno@luagsh.ch>
 
 	* Fixed Bug #1218: No DBAL compatibility
 
-2008-08-04 Moreno Feltscher  <moreno@luagsh.ch>
+2008-08-04  Moreno Feltscher  <moreno@luagsh.ch>
 
-	* #1080: Code cleanup (TYPO3 CGL)
+	* Fixed bug #1080: Code cleanup (TYPO3 CGL)
 
-2008-07-23 Moreno Feltscher  <moreno@luagsh.ch>
+2008-07-23  Moreno Feltscher  <moreno@luagsh.ch>
 
 	* Fixed Bug #1082: Some characters (umlauts) aren't dislayed properly in locallang.xml
 
-2008-07-17 Moreno Feltscher  <moreno@luagsh.ch>
+2008-07-17  Moreno Feltscher  <moreno@luagsh.ch>
 
 	* Initial commit to Forge-SVN
 
-2006-04-26 Moreno Feltscher  <moreno@luagsh.ch>
+2006-04-26  Moreno Feltscher  <moreno@luagsh.ch>
 
 	* Initial release
