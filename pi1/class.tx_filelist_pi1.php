@@ -498,6 +498,42 @@ class tx_filelist_pi1 extends tslib_pibase {
 		return $temp_content;
 	}
 
+	/**
+	 * Loads local-language values by looking for a "locallang.php" file in the plugin class directory ($this->scriptRelPath) and if found includes it.
+	 * Also locallang values set in the TypoScript property "_LOCAL_LANG" are merged onto the values found in the "locallang.php" file.
+	 * Overrides the base method to load language file from new directory structure.
+	 *
+	 * @return	void
+	 */
+	public function pi_loadLL() {
+		if (!$this->LOCAL_LANG_loaded) {
+			$llFile = t3lib_extMgm::extPath($this->extKey) . 'Resources/Private/Language/locallang_pi1.xml';
+
+				// Read the strings in the required charset (since TYPO3 4.2)
+			$this->LOCAL_LANG = t3lib_div::readLLfile($llFile, $this->LLkey, $GLOBALS['TSFE']->renderCharset);
+			if ($this->altLLkey) {
+				$tempLOCAL_LANG = t3lib_div::readLLfile($llFile, $this->altLLkey);
+				$this->LOCAL_LANG = array_merge(is_array($this->LOCAL_LANG) ? $this->LOCAL_LANG : array(), $tempLOCAL_LANG);
+			}
+
+				// Overlaying labels from TypoScript (including fictitious language keys for non-system languages!):
+			if (is_array($this->conf['_LOCAL_LANG.'])) {
+				foreach ($this->conf['_LOCAL_LANG.'] as $k => $lA) {
+					if (is_array($lA)) {
+						$k = substr($k, 0, -1);
+						foreach ($lA as $llK => $llV) {
+							if (!is_array($llV)) {
+								$this->LOCAL_LANG[$k][$llK] = $llV;
+									// For labels coming from the TypoScript (database) the charset is assumed to be "forceCharset" and if that is not set, assumed to be that of the individual system languages
+								$this->LOCAL_LANG_charset[$k][$llK] = $GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] ? $GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] : $GLOBALS['TSFE']->csConvObj->charSetArray[$k];
+							}
+						}
+					}
+				}
+			}
+		}
+		$this->LOCAL_LANG_loaded = 1;
+	}
 }
 
 
