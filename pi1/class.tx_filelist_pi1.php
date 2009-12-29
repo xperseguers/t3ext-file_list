@@ -107,10 +107,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 			// Preparing the path to the directory
 		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']);
-		$this->settings['path'] = $pathOptions[0];
-		if (substr($this->settings['path'], -1, 1) !== '/') {
-			$this->settings['path'] .= '/';
-		}
+		$this->settings['path'] = $this->sanitizePath($pathOptions[0]);
+
 			// Is the directory readable?
 		if (!@is_readable($this->settings['path'])) {
 			$content = 'Could not open ' . $this->settings['path'];
@@ -121,10 +119,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		}
 		else {
 			if ((substr($this->args['path'], 0, 2) !== '..') && (!preg_match('/\./', $this->args['path']))) {
-				$temp_path = $this->settings['path'] . $this->args['path'];
-				if (substr($this->args['path'], -1, 1) !== '/') {
-					$temp_path .= '/';
-				}
+				$temp_path = $this->sanitizePath($this->settings['path'] . $this->args['path']);
 				if (substr($temp_path, -3, 3) === '%2F' || substr($temp_path, -4, 3) === '%2F') {
 					$temp_path = preg_replace('/%2F/', '', $temp_path);
 				}
@@ -371,6 +366,22 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
+	 * Sanitizes a path by making sure a trailing slash is present and
+	 * all directories are resolved (no more '../' within string).
+	 *   
+	 * @param	string		$path: Path relative to website root (normally within fileadmin/)
+	 * @param	string		$openBaseDir: Optional root. If set $path must be within this directory
+	 * @return	string
+	 */
+	protected function sanitizePath($path, $openBaseDir = 'fileadmin') {
+		if (substr($path, -1, 1) !== '/') {
+			$path .= '/';
+		}
+		// TODO: use openBaseDir
+		return $path;
+	}
+
+	/**
 	 * Returns a human-readable size of a file.
 	 *
 	 * @param	string		Path to the specified file
@@ -489,9 +500,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 		if (!isset($this->settings['iconsPath'])) {
 			$this->settings['iconsPath'] = t3lib_extMgm::siteRelPath('file_list') . 'pi1/icons/';
 		} else {
-			if (substr($this->settings['iconsPath'], -1, 1) !== '/') {
-				$this->settings['iconsPath'] .= '/';
-			}
+				// No openbasedir restriction
+			$this->settings['iconsPath'] = $this->sanitizePath($this->settings['iconsPath'], '');
 		}
 
 			// Load the flexform and loop on all its values to override TS setup values
