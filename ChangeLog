@@ -1,5 +1,6 @@
 2009-12-29  Xavier Perseguers  <typo3@perseguers.ch>
 
+	* Fixed bug #5854: Cannot go one level up when in a sub-subdirectory
 	* Removed indexed_search references
 	* Added TS configuration option for the icon directory
 	* Added feature #5853: Create Update wizard to move database configuration data into FlexForm

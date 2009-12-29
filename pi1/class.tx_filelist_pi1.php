@@ -142,13 +142,11 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 			if (count($tx_folders) >= 0) {
 
-					// Put '..' on the start of the array
-				$temp_tx_folders = array_reverse($tx_folders);
-				$temp_tx_folders[] = array(
+					// Put '..' at the beginning of the array
+				array_unshift($tx_folders, array(
 					'name' => '..',
-					'path' => $listingPath . '..'
-				);
-				$tx_folders = array_reverse($temp_tx_folders);
+					'path' => $this->sanitizePath($listingPath . '../')
+				));
 
 					// Displays the folders in a table
 				for ($d = 0; $d < count($tx_folders); $d++) {
@@ -164,21 +162,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 						$content .= '</td>';
 						$content .= '<td class"' . $this->pi_getClassName('filename') . '">';
 						$content .= '<a href="index.php?id=' . $GLOBALS['TSFE']->id;
-						if (!$this->args['path']) {
-							$content .= '&' . $this->params['path'] . '=' . $tx_folders[$d]['name'];
-						}
-						else {
-							if ($tx_folders[$d]['name'] === '..' && similar_text(preg_replace('/\//', '%2F', $this->args['path']) ,'%2F') >= 3) {
-								$temp = explode('%2F', preg_replace('/\//', '%2F', $this->args['path']));
-								$temp1 = count($temp)-1;
-								$content = $content . '&' . $this->params['path'] . '=' . preg_replace('/%2F/' . $temp[$temp1], '', preg_replace('/\//', '%2F', $this->args['path']));
-							}
-							else {
-								if ($tx_folders[$d]['name'] !== '..') {
-									$content .= '&' . $this->params['path'] . '=' . preg_replace('/\//', '%2F', $this->args['path']) . '%2F' . $tx_folders[$d]['name'];
-								}
-							}
-						}
+						$content .= '&' . $this->params['path'] . '=' . substr($tx_folders[$d]['path'], strlen($this->settings['path']));
 						$content .= '">' . $tx_folders[$d]['name'] . '</a></td>';
 						$content .= '<td class="' . $this->pi_getClassName('info') . '"><font size="1">';
 						$file_counter = $this->filecounter($listingPath . $tx_folders[$d]['name']);
