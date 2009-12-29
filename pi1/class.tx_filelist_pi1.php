@@ -314,13 +314,18 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Checks that the given path is within the allowed root directory.
+	 * Checks that the given path is within the allowed root directory and
+	 * within the plugin's root directory.
 	 * 
 	 * @param	string		$path Path relative to the website root
 	 * @return	boolean
 	 */
 	protected function isValidDirectory($path) {
-		return !strcmp(substr(PATH_site . $path, 0, strlen($this->settings['rootabs'])), $this->settings['rootabs']);
+		return
+			// Within the allowed root directory
+			!(strcmp(substr(PATH_site . $path, 0, strlen($this->settings['rootabs'])), $this->settings['rootabs']))
+			// Within the plugin's root directory
+			&& !(strcmp(substr($path, 0, strlen($this->settings['path'])), $this->settings['path']));
 	}
 
 	/**
