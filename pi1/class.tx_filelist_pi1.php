@@ -139,28 +139,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 		}
 
-			// Open the directory and read out all folders and files (/write them to an array)
-		$open = @opendir($temp_path);
-		while ($dir_content = @readdir($open)) {
-			if ($dir_content != '.' && $dir_content !== 'thumb' && $dir_content !== '..') {
-				if (is_dir($temp_path . '/' . $dir_content)) {
-					$tx_folders[] = array(
-						'name' => $dir_content,
-						'path' => $temp_path . $dir_content
-					);
-				}
-				elseif (is_file($temp_path . '/' . $dir_content)) {
-					$tx_files[] = array(
-						'name' => $dir_content,
-						'date' => filemtime($temp_path . $dir_content),
-						'size' => filesize($temp_path . $dir_content),
-						'path' => $temp_path . $dir_content
-					);
-				}
-			}
-		}
-			// Close the directory
-		@closedir($open);
+		list($tx_folders, $tx_files) = $this->getDirectoryContent($temp_path);
 
 			// Are there any files in the directory?
 		if ((count($tx_files) == 0) && (count($tx_folders) == 0)) {
@@ -363,6 +342,41 @@ class tx_filelist_pi1 extends tslib_pibase {
 		else {
 			return 'mime.png';
 		}
+	}
+
+	/**
+	 * Gets content of a directory.
+	 * 
+	 * @param	string		$path
+	 * @return	array		list(array $directories, array $files)
+	 */
+	protected function getDirectoryContent($path) {
+		$dirs = array();
+		$files = array();
+
+			// Open the directory and read out all folders and files
+		$dh = @opendir($path);
+		while ($dir_content = @readdir($dh)) {
+			if ($dir_content != '.' && $dir_content !== 'thumb' && $dir_content !== '..') {
+				if (is_dir($path . '/' . $dir_content)) {
+					$dirs[] = array(
+						'name' => $dir_content,
+						'path' => $path . $dir_content
+					);
+				}
+				elseif (is_file($path . '/' . $dir_content)) {
+					$files[] = array(
+						'name' => $dir_content,
+						'date' => filemtime($path . $dir_content),
+						'size' => filesize($path . $dir_content),
+						'path' => $path . $dir_content
+					);
+				}
+			}
+		}
+			// Close the directory
+		@closedir($dh);
+		return array($dirs, $files);
 	}
 
 	/**
