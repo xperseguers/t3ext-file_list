@@ -497,13 +497,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 	protected function init(array $settings) {
 		$this->settings = $settings;
 
-		if (!isset($this->settings['iconsPath'])) {
-			$this->settings['iconsPath'] = t3lib_extMgm::siteRelPath('file_list') . 'pi1/icons/';
-		} else {
-				// No openbasedir restriction
-			$this->settings['iconsPath'] = $this->sanitizePath($this->settings['iconsPath'], '');
-		}
-
 			// Load the flexform and loop on all its values to override TS setup values
 			// Some properties use a different test (more strict than not empty) and yet some others no test at all
 			// see http://wiki.typo3.org/index.php/Extension_Development,_using_Flexforms
@@ -531,6 +524,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 				}
 			}
 		}
+
+		if (isset($this->settings['iconsPath'])) {
+			$iconsPath = $this->cObj->stdWrap($this->settings['iconsPath'], $this->settings['iconsPath.']);
+			$this->settings['iconsPath'] = $this->resolveSiteRelPath($iconsPath);
+		} else {	// Fallback
+			$this->settings['iconsPath'] = t3lib_extMgm::siteRelPath('file_list') . 'pi1/icons/';
+		}
 		
 			// Disable Filelist if an error occurred
 		$this->error = 0;
@@ -538,6 +538,31 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$this->pi_loadLL();
 			// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
 		$this->pi_USER_INT_obj = 1;
+	}
+
+	/**
+	 * Resolves a site-relative path and or filename.
+	 * 
+	 * @param	string		$path
+	 * @return	string
+	 */
+	protected function resolveSiteRelPath($path) {
+		if (strcmp(substr($path, 0, 4), 'EXT:')) {
+			return $path;
+		}
+		$path = substr($path, 4);	// Remove 'EXT:' at the beginning
+		$extension = substr($path, 0, strpos($path, '/'));
+		$references = explode(':', substr($path, strlen($extension) + 1));
+		$pathOrFilename = $references[0];
+
+		if (is_dir(t3lib_extMgm::extPath($extension) . $pathOrFilename)) {
+				// Ensure a trailing slash is present
+			if (substr($pathOrFilename, -1, 1) !== '/') {
+				$pathOrFilename .= '/';
+			}
+		}
+
+		return t3lib_extMgm::siteRelPath($extension) . $pathOrFilename;
 	}
 
 	/**
