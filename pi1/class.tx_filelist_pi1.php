@@ -163,12 +163,12 @@ class tx_filelist_pi1 extends tslib_pibase {
 						$content .= '<td class"' . $this->pi_getClassName('filename') . '">';
 						$content .= '<a href="' . $this->getLink(array($this->params['path'] => substr($subdirs[$d]['path'], strlen($this->settings['path']))));
 						$content .= '">' . $subdirs[$d]['name'] . '</a></td>';
-						$content .= '<td class="' . $this->pi_getClassName('info') . '"><font size="1">';
+						$content .= '<td class="' . $this->pi_getClassName('info') . '">';
 						$file_counter = $this->filecounter($listingPath . $subdirs[$d]['name']);
-						$content .= $file_counter . ' ' . htmlspecialchars($this->pi_getLL('files_in_directory')) . '</font></td>';
-						$content .= '<td class="' . $this->pi_getClassName('last_modification') . '"><font size="1">';
+						$content .= $file_counter . ' ' . htmlspecialchars($this->pi_getLL('files_in_directory')) . '</td>';
+						$content .= '<td class="' . $this->pi_getClassName('date') . '">';
 						$content .= t3lib_BEfunc::datetime(@filemtime($listingPath . $subdirs[$d]['name']));
-						$content .= '</font></td>';
+						$content .= '</td>';
 						$content .= '</tr>';
 					}
 				}
@@ -183,9 +183,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 					$content .= '</td><td valign="bottom" class="' . $this->pi_getClassName('filename') . '">';
 					$content .= '<a href="' . $files[$f]['path'] . '" target="_blank">' . $files[$f]['name'] . '</a> ';
 					$content .= $this->show_new($files[$f]['path'], $this->settings['new_duration']) . '</td>';
-					$content .= '<td><font size="1">' . $this->getHRFileSize($files[$f]['path']) . '</font></td>';
-					$content .= '<td class="' . $this->pi_getClassName('last_modification') . '"><font size="1">';
-					$content .= t3lib_BEfunc::datetime(@filemtime($listingPath . $files[$f]['name'])) . '</font></td>';
+					$content .= '<td class="' . $this->pi_getClassName('info') . '">' . $this->getHRFileSize($files[$f]['path']) . '</td>';
+					$content .= '<td class="' . $this->pi_getClassName('date') . '">';
+					$content .= t3lib_BEfunc::datetime(@filemtime($listingPath . $files[$f]['name'])) . '</td>';
 				}
 			}
 			$content .= '</table>';

@@ -9,11 +9,9 @@ plugin.tx_filelist_pi1 {
 	### Default CSS styles for the file_list standard template: EXT:file_list/Resources/Private/Templates/template_pi1.html
 
 	_CSS_DEFAULT_STYLE (
-/*
-.tx-filelist-pi1 {
-	border: 1px solid red;
+.tx-filelist-pi1-info, .tx-filelist-pi1-date {
+	font-size: smaller;
 }
-*/
 
 	)
 }
