@@ -157,7 +157,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			for ($f = 0; $f < count($files); $f++) {
 				$markers = array();
 				$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . $this->fileicon($files[$f]['name']) . '" alt="' . $files[$f]['name'] . '">';
-				$markers['###FILENAME###'] = '<a href="' . $files[$f]['path'] . '" target="_blank">' . $files[$f]['name'] . '</a>';
+				$markers['###FILENAME###'] = $this->cObj->typolink($files[$f]['name'], array('parameter' => $files[$f]['path']));
 				$markers['###FILENAME###'] .= ' ' . $this->show_new($files[$f]['path'], $this->settings['new_duration']);
 				$markers['###INFO###'] = $this->getHRFileSize($files[$f]['path']);
 				$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $files[$f]['name']));
