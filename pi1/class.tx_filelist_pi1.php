@@ -69,28 +69,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$this->init($settings);
 		$this->pi_setPiVarDefaults();
 	
-			// Parameters for frontend rendering
-		$uid = $this->cObj->data['uid'];
-		$this->params = array(
-			'path'      => $this->pi_getClassName('path') . '-' . $uid,
-			'order_by'  => $this->pi_getClassName('sort') . '-' . $uid,
-			'direction' => $this->pi_getClassName('dir') . '-' . $uid,
-		);
-
-			// Retrieval of arguments
-		$this->args = array(
-			'path'      => t3lib_div::_GET($this->params['path']),
-			'order_by'  => t3lib_div::_GET($this->params['order_by']),
-			'direction' => t3lib_div::_GET($this->params['direction']),
-		);
-		
 			// Preparing some arrays
 		$tx_folders = array();
 		$tx_files = array();
-
-			// Preparing the path to the directory
-		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']); // When RTE file browser is used, additionnal components may be present
-		$this->settings['path'] = $this->sanitizePath($pathOptions[0]);
 		
 			// Is the directory readable?
 		if (!@is_readable($this->settings['path'])) {
@@ -488,7 +469,26 @@ class tx_filelist_pi1 extends tslib_pibase {
 		}
 		$this->settings['root'] = $root;
 		$this->settings['rootabs'] = ($root{0} === '/') ? $root : PATH_site . $root; 
-		
+
+			// Preparing the path to the directory
+		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']); // When RTE file browser is used, additionnal components may be present
+		$this->settings['path'] = $this->sanitizePath($pathOptions[0]);
+
+			// Parameters for frontend rendering
+		$uid = $this->cObj->data['uid'];
+		$this->params = array(
+			'path'      => $this->pi_getClassName('path') . '-' . $uid,
+			'order_by'  => $this->pi_getClassName('sort') . '-' . $uid,
+			'direction' => $this->pi_getClassName('dir') . '-' . $uid,
+		);
+
+			// Retrieval of arguments
+		$this->args = array(
+			'path'      => t3lib_div::_GET($this->params['path']),
+			'order_by'  => t3lib_div::_GET($this->params['order_by']),
+			'direction' => t3lib_div::_GET($this->params['direction']),
+		);
+
 			// Disable Filelist if an error occurred
 		$this->error = 0;
 			// Load language data
