@@ -529,7 +529,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$iconsPath = $this->cObj->stdWrap($this->settings['iconsPath'], $this->settings['iconsPath.']);
 			$this->settings['iconsPath'] = $this->resolveSiteRelPath($iconsPath);
 		} else {	// Fallback
-			$this->settings['iconsPath'] = t3lib_extMgm::siteRelPath('file_list') . 'pi1/icons/';
+			$this->settings['iconsPath'] = t3lib_extMgm::siteRelPath('file_list') . 'Resources/Public/Icons/';
 		}
 		
 			// Disable Filelist if an error occurred
