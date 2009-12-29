@@ -89,7 +89,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$tx_files = array();
 
 			// Preparing the path to the directory
-		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']);
+		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']); // When RTE file browser is used, additionnal components may be present
 		$this->settings['path'] = $this->sanitizePath($pathOptions[0]);
 
 			// Is the directory readable?
