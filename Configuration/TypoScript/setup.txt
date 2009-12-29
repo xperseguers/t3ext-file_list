@@ -3,6 +3,9 @@ plugin.tx_filelist_pi1 {
 		# Icon skin (relative to site root or prefixed with an extension name, stdWrap-aware)
 	iconsPath = EXT:file_list/Resources/Public/Icons/
 
+		# Base root directory (all path must be within this directory, either absolute or relative to site root)
+	root = fileadmin/
+
 	### Default CSS styles for the file_list standard template: EXT:file_list/Resources/Private/Templates/template_pi1.html
 
 	_CSS_DEFAULT_STYLE (

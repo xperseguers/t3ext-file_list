@@ -338,15 +338,24 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * Sanitizes a path by making sure a trailing slash is present and
 	 * all directories are resolved (no more '../' within string).
 	 *   
-	 * @param	string		$path: Path relative to website root (normally within fileadmin/)
-	 * @param	string		$openBaseDir: Optional root. If set $path must be within this directory
+	 * @param	string		$path: either an absolute path or a path relative to website root
 	 * @return	string
 	 */
-	protected function sanitizePath($path, $openBaseDir = 'fileadmin') {
+	protected function sanitizePath($path) {
+		if ($path{0} === '/') {
+			$prefix = '';
+		} else {
+			$prefix = PATH_site;
+			$path = PATH_site . $path;
+		}
+			// Make sure there is no more ../ inside
+		$path = realpath($path);
+			// Make it relative again (if needed)
+		$path = substr($path, strlen($prefix));
+			// Ensure a trailing slash is present
 		if (substr($path, -1, 1) !== '/') {
 			$path .= '/';
 		}
-		// TODO: use openBaseDir
 		return $path;
 	}
 
@@ -464,12 +473,21 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 		}
 
+			// Set the icons path
 		if (isset($this->settings['iconsPath'])) {
 			$iconsPath = $this->cObj->stdWrap($this->settings['iconsPath'], $this->settings['iconsPath.']);
 			$this->settings['iconsPath'] = $this->resolveSiteRelPath($iconsPath);
 		} else {	// Fallback
 			$this->settings['iconsPath'] = t3lib_extMgm::siteRelPath('file_list') . 'Resources/Public/Icons/';
 		}
+
+			// Prepare open base directory
+		$root = $this->settings['root'];
+		if (!$root) {
+			$root = 'fileadmin/';
+		}
+		$this->settings['root'] = $root;
+		$this->settings['rootabs'] = ($root{0} === '/') ? $root : PATH_site . $root; 
 		
 			// Disable Filelist if an error occurred
 		$this->error = 0;
@@ -492,16 +510,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$path = substr($path, 4);	// Remove 'EXT:' at the beginning
 		$extension = substr($path, 0, strpos($path, '/'));
 		$references = explode(':', substr($path, strlen($extension) + 1));
-		$pathOrFilename = $references[0];
+		$pathOrFilename = t3lib_extMgm::siteRelPath($extension) . $references[0];
 
-		if (is_dir(t3lib_extMgm::extPath($extension) . $pathOrFilename)) {
-				// Ensure a trailing slash is present
-			if (substr($pathOrFilename, -1, 1) !== '/') {
-				$pathOrFilename .= '/';
-			}
+		if (is_dir(PATH_site . $pathOrFilename)) {
+			$pathOrFilename = $this->sanitizePath($pathOrFilename);
 		}
 
-		return t3lib_extMgm::siteRelPath($extension) . $pathOrFilename;
+		return $pathOrFilename;
 	}
 
 	/**
