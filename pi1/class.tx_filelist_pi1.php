@@ -69,8 +69,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$this->init($settings);
 		$this->pi_setPiVarDefaults();
 	
-		$tx_folders = array();
-		$tx_files = array();
+		$subdirs = array();
+		$files = array();
 
 		$listingPath = $this->settings['path'];
 		if ($this->args['path']) {
@@ -92,27 +92,27 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 		}
 
-		list($tx_folders, $tx_files) = $this->getDirectoryContent($listingPath);
+		list($subdirs, $files) = $this->getDirectoryContent($listingPath);
 
 			// Are there any files in the directory?
-		if ((count($tx_files) == 0) && (count($tx_folders) == 0)) {
+		if ((count($files) == 0) && (count($subdirs) == 0)) {
 			$content = $this->pi_getClassName('no_files');
 		}
 		else {
 				/* Sort Start */
-			if (count($tx_folders) > 0 && $this->settings['order_by'] === 'name') {
-				foreach ($tx_folders as $tx_key => $tx_row) {
+			if (count($subdirs) > 0 && $this->settings['order_by'] === 'name') {
+				foreach ($subdirs as $tx_key => $tx_row) {
 					$sortArr[$tx_key] = $tx_row['name'];
 				}
 				$direction = $this->settings['sort_direction'] === 'asc' ? SORT_ASC : SORT_DESC;
-				$ok_sort = array_multisort($sortArr, $direction, $tx_folders);
+				$ok_sort = array_multisort($sortArr, $direction, $subdirs);
 			}
-			if (count($tx_files) > 0) {
-				foreach ($tx_files as $tx_key => $tx_row) {
+			if (count($files) > 0) {
+				foreach ($files as $tx_key => $tx_row) {
 					$sortArr[$tx_key] = $tx_row[$this->settings['order_by']];
 				}
 				$direction = $this->settings['sort_direction'] === 'asc' ? SORT_ASC : SORT_DESC;
-				$ok_sort = array_multisort($sortArr, $direction, $tx_files);
+				$ok_sort = array_multisort($sortArr, $direction, $files);
 			}
 				/* Sort End */
 
@@ -140,53 +140,53 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$content .= '</td>';
 			$content .= '</tr>';
 
-			if (count($tx_folders) >= 0) {
+			if (count($subdirs) >= 0) {
 
 					// Put '..' at the beginning of the array
-				array_unshift($tx_folders, array(
+				array_unshift($subdirs, array(
 					'name' => '..',
 					'path' => $this->sanitizePath($listingPath . '../')
 				));
 
-					// Displays the folders in a table
-				for ($d = 0; $d < count($tx_folders); $d++) {
-					if (!(!$this->args['path'] && $tx_folders[$d]['name'] === '..')) {
+					// Display the folders in a table
+				for ($d = 0; $d < count($subdirs); $d++) {
+					if (!(!$this->args['path'] && $subdirs[$d]['name'] === '..')) {
 						$content .= '<tr class="' .$this->pi_getClassName('tr') . '">';
 						$content .= '<td class="' .$this->pi_getClassName('icon') . '">';
-						if ($tx_folders[$d]['name'] === '..') {
-							$content .= '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $tx_folders[$d]['name'] . '"';
+						if ($subdirs[$d]['name'] === '..') {
+							$content .= '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $subdirs[$d]['name'] . '"';
 						}
 						else {
-							$content .= '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $tx_folders[$d]['name'] . '"';
+							$content .= '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $subdirs[$d]['name'] . '"';
 						}
 						$content .= '</td>';
 						$content .= '<td class"' . $this->pi_getClassName('filename') . '">';
 						$content .= '<a href="index.php?id=' . $GLOBALS['TSFE']->id;
-						$content .= '&' . $this->params['path'] . '=' . substr($tx_folders[$d]['path'], strlen($this->settings['path']));
-						$content .= '">' . $tx_folders[$d]['name'] . '</a></td>';
+						$content .= '&' . $this->params['path'] . '=' . substr($subdirs[$d]['path'], strlen($this->settings['path']));
+						$content .= '">' . $subdirs[$d]['name'] . '</a></td>';
 						$content .= '<td class="' . $this->pi_getClassName('info') . '"><font size="1">';
-						$file_counter = $this->filecounter($listingPath . $tx_folders[$d]['name']);
+						$file_counter = $this->filecounter($listingPath . $subdirs[$d]['name']);
 						$content .= $file_counter . ' ' . htmlspecialchars($this->pi_getLL('files_in_directory')) . '</font></td>';
 						$content .= '<td class="' . $this->pi_getClassName('last_modification') . '"><font size="1">';
-						$content .= t3lib_BEfunc::datetime(@filemtime($listingPath . $tx_folders[$d]['name']));
+						$content .= t3lib_BEfunc::datetime(@filemtime($listingPath . $subdirs[$d]['name']));
 						$content .= '</font></td>';
 						$content .= '</tr>';
 					}
 				}
 			}
 
-				// Displays the files in a table
-			if (count($tx_files) != 0) {
-				for ($f = 0; $f < count($tx_files); $f++) {
+				// Display the files in a table
+			if (count($files) != 0) {
+				for ($f = 0; $f < count($files); $f++) {
 					$content .= '<tr class="' . $this->pi_getClassName('tr') . '">';
 					$content .= '<td class="' . $this->pi_getClassName('icon') . '">';
-					$content .= '<img src="' . $this->settings['iconsPath'] . $this->fileicon($tx_files[$f]['name']) . '" alt="' . $tx_files[$f]['name'] . '">';
+					$content .= '<img src="' . $this->settings['iconsPath'] . $this->fileicon($files[$f]['name']) . '" alt="' . $files[$f]['name'] . '">';
 					$content .= '</td><td valign="bottom" class="' . $this->pi_getClassName('filename') . '">';
-					$content .= '<a href="' . $tx_files[$f]['path'] . '" target="_blank">' . $tx_files[$f]['name'] . '</a> ';
-					$content .= $this->show_new($tx_files[$f]['path'], $this->settings['new_duration']) . '</td>';
-					$content .= '<td><font size="1">' . $this->getHRFileSize($tx_files[$f]['path']) . '</font></td>';
+					$content .= '<a href="' . $files[$f]['path'] . '" target="_blank">' . $files[$f]['name'] . '</a> ';
+					$content .= $this->show_new($files[$f]['path'], $this->settings['new_duration']) . '</td>';
+					$content .= '<td><font size="1">' . $this->getHRFileSize($files[$f]['path']) . '</font></td>';
 					$content .= '<td class="' . $this->pi_getClassName('last_modification') . '"><font size="1">';
-					$content .= t3lib_BEfunc::datetime(@filemtime($listingPath . $tx_files[$f]['name'])) . '</font></td>';
+					$content .= t3lib_BEfunc::datetime(@filemtime($listingPath . $files[$f]['name'])) . '</font></td>';
 				}
 			}
 			$content .= '</table>';
