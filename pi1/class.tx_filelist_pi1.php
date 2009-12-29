@@ -24,9 +24,6 @@
 
 require_once(PATH_tslib . 'class.tslib_pibase.php');
 require_once('t3lib/class.t3lib_befunc.php');
-if (t3lib_extMgm::isLoaded('indexed_search')) {		// Is indexed search engine loaded?
-	require_once(t3lib_extMgm::extPath('indexed_search') . 'class.indexer.php');
-}
 
 /**
  * Plugin 'File List' for the 'file_list' extension.
@@ -90,20 +87,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 			// Preparing some arrays
 		$tx_folders = array();
 		$tx_files = array();
-
-		/*
-			// Gets the pid
-		$config['pid_list'] = trim($this->cObj->stdWrap($this->conf['pid_list'], $this->conf['pid_list.']));
-		$config['pid_list'] = $config['pid_list'] ? implode(t3lib_div::intExplode(',', $config['pid_list']), ',') : $GLOBALS['TSFE']->id;
-		list($pid) = explode(',', $config['pid_list']);
-
-		// Gets the uid
-		$config['uid_list'] = trim($this->cObj->stdWrap($this->conf['uid_list'], $this->conf['uid_list.']));
-		$config['uid_list'] = $config['uid_list'] ? implode(t3lib_div::intExplode(',', $config['uid_list']), ',') : $GLOBALS['TSFE']->uid;
-		list($uid) = explode(',', $config['uid_list']);
-
-		$rl = $this->getUidRootLineForClosestTemplate($pid);
-		*/
 
 			// Preparing the path to the directory
 		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']);
@@ -250,34 +233,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 					$content .= '<td><font size="1">' . $this->getHRFileSize($tx_files[$f]['path']) . '</font></td>';
 					$content .= '<td class="' . $this->pi_getClassName('last_modification') . '"><font size="1">';
 					$content .= t3lib_BEfunc::datetime(@filemtime($temp_path.$tx_files[$f]['name'])) . '</font></td>';
-
-					if (t3lib_extMgm::isLoaded('indexed_search')) {		// Is indexed search engine on? When yes select some data from a indexed search table
-						$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-							'*',
-							'index_phash',
-							'date_filename = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($tx_files[$f]['path'], 'index_phash')
-						);
-						$out = array();
-						while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-							array_push($out, $row['item_crdate']);
-						}
-					}
-					
-					if (t3lib_extMgm::isLoaded('indexed_search')) {		// Is indexed search engine on?
-
-							// If there are more then one entries in the index-database delete them all
-						if ((count($out) == 1 && @filemtime($tx_files[$f]['path']) != $out[0]) || (count($out) == 0)) {
-								// OK, let's index the files with indexed search engine
-							$indexerObj = &t3lib_div::makeInstance('tx_indexedsearch_indexer');
-							$setId = t3lib_div::md5int(microtime());
-							$indexerObj->backend_initIndexer($GLOBALS['TSFE']->id, 0, 0, '', $rl);
-							$indexerObj->backend_setFreeIndexUid($uid, $setId);
-							$indexerObj->indexRegularDocument($tx_files[$f]['path'], TRUE);
-						}
-					}
-					if (isset($out)) {
-						unset($out);
-					}
 				}
 			}
 			$content .= '</table>';
@@ -427,36 +382,6 @@ class tx_filelist_pi1 extends tslib_pibase {
     protected function file_create_date($fn) {
 		$filedate = filemtime($fn);
 		return date('d-m-y H:i', $filedate);
-	}
-
-	/**
-	 * Returns the uid
-	 *
-	 * @param	integer		pid
-	 * @return	integer		uid
-	 */
-	protected function getUidRootLineForClosestTemplate($id)	{
-		global $TYPO3_CONF_VARS;
-
-		require_once(PATH_t3lib . 'class.t3lib_page.php');
-		require_once(PATH_t3lib . 'class.t3lib_tstemplate.php');
-		require_once(PATH_t3lib . 'class.t3lib_tsparser_ext.php');
-
-		$tmpl = t3lib_div::makeInstance('t3lib_tsparser_ext');
-		$tmpl->tt_track = 0;	// Do not log time-performance information
-		$tmpl->init();
-
-			// Gets the rootLine
-		$sys_page = t3lib_div::makeInstance('t3lib_pageSelect');
-		$rootLine = $sys_page->getRootLine($id);
-		$tmpl->runThroughTemplates($rootLine, 0);	// This generates the constants/config + hierarchy info for the template.
-
-			// Root line uids
-		$rootline_uids = array();
-		foreach($tmpl->rootLine as $rlkey => $rldat) {
-			$rootline_uids[$rlkey] = $rldat['uid'];
-		}
-		return $rootline_uids;
 	}
 
 	/**
