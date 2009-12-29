@@ -154,10 +154,10 @@ class tx_filelist_pi1 extends tslib_pibase {
 						$content .= '<tr class="' .$this->pi_getClassName('tr') . '">';
 						$content .= '<td class="' .$this->pi_getClassName('icon') . '">';
 						if ($subdirs[$d]['name'] === '..') {
-							$content .= '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $subdirs[$d]['name'] . '"';
+							$content .= '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $subdirs[$d]['name'] . '" />';
 						}
 						else {
-							$content .= '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $subdirs[$d]['name'] . '"';
+							$content .= '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $subdirs[$d]['name'] . '" />';
 						}
 						$content .= '</td>';
 						$content .= '<td class"' . $this->pi_getClassName('filename') . '">';
