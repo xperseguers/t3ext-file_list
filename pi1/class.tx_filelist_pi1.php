@@ -69,28 +69,17 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$this->init($settings);
 		$this->pi_setPiVarDefaults();
 	
-			// Preparing some arrays
 		$tx_folders = array();
 		$tx_files = array();
-		
-			// Is the directory readable?
-		if (!@is_readable($this->settings['path'])) {
-			$content = 'Could not open ' . $this->settings['path'];
+
+		$listingPath = $this->settings['path'];
+		if ($this->args['path']) {
+			$listingPath = $this->sanitizePath($listingPath . $this->args['path']);
 		}
-			// Checking get-parameters
-		if (!$this->args['path']) {
-			$listingPath = $this->settings['path'];
-		}
-		else {
-			if ((substr($this->args['path'], 0, 2) !== '..') && (!preg_match('/\./', $this->args['path']))) {
-				$listingPath = $this->sanitizePath($this->settings['path'] . $this->args['path']);
-				if (substr($listingPath, -3, 3) === '%2F' || substr($listingPath, -4, 3) === '%2F') {
-					$listingPath = preg_replace('/%2F/', '', $listingPath);
-				}
-			}
-			else {
-				$listingPath = $this->settings['path'];
-			}
+
+			// Checks that $listingPath is a valid directory
+		if (!(is_dir($listingPath) && is_readable($listingPath) && $this->isValidDirectory($listingPath))) {
+			return $this->error(sprintf('Could not open directory "%s"', $this->settings['path']));
 		}
 
 		if ($this->settings['fe_sort'] && $this->args['direction']) {
@@ -341,6 +330,16 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
+	 * Checks that the given path is within the allowed root directory.
+	 * 
+	 * @param	string		$path Path relative to the website root
+	 * @return	boolean
+	 */
+	protected function isValidDirectory($path) {
+		return !strcmp(substr(PATH_site . $path, 0, strlen($this->settings['rootabs'])), $this->settings['rootabs']);
+	}
+
+	/**
 	 * Returns a human-readable size of a file.
 	 *
 	 * @param	string		Path to the specified file
@@ -554,6 +553,27 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 		}
 		$this->LOCAL_LANG_loaded = 1;
+	}
+
+	/**
+	 * Returns an error message for frontend output.
+	 *
+	 * @param	string		$string Error message input
+	 * @return	void
+	 */
+	protected function error($string) {
+		return '
+			<!-- ' . get_class($this) . ' ERROR message: -->
+			<div class="' . $this->pi_getClassName('error') . '" style="
+					border: 2px red solid;
+					background-color: yellow;
+					color: black;
+					text-align: center;
+					padding: 20px 20px 20px 20px;
+					margin: 20px 20px 20px 20px;
+					">'.
+				'<strong>' . get_class($this) . ' ERROR:</strong><br /><br />' . nl2br(trim($string)) .
+			'</div>';
 	}
 }
 
