@@ -139,7 +139,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 					}
 					$markers = array();
 					if ($subdirs[$d]['name'] === '..') {
-						$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $subdirs[$d]['name'] . '" />';
+						$markers['###ICON###'] = '<a href="' . $this->getLink(array($this->params['path'] => substr($subdirs[$d]['path'], strlen($this->settings['path'])))) . '">' . '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $subdirs[$d]['name'] . '" border="0" /></a>';
 					} else {
 						$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $subdirs[$d]['name'] . '" />';
 					}
