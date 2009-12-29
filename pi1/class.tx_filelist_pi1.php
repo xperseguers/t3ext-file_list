@@ -91,24 +91,24 @@ class tx_filelist_pi1 extends tslib_pibase {
 			// Preparing the path to the directory
 		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']); // When RTE file browser is used, additionnal components may be present
 		$this->settings['path'] = $this->sanitizePath($pathOptions[0]);
-
+		
 			// Is the directory readable?
 		if (!@is_readable($this->settings['path'])) {
 			$content = 'Could not open ' . $this->settings['path'];
 		}
 			// Checking get-parameters
 		if (!$this->args['path']) {
-			$temp_path = $this->settings['path'];
+			$listingPath = $this->settings['path'];
 		}
 		else {
 			if ((substr($this->args['path'], 0, 2) !== '..') && (!preg_match('/\./', $this->args['path']))) {
-				$temp_path = $this->sanitizePath($this->settings['path'] . $this->args['path']);
-				if (substr($temp_path, -3, 3) === '%2F' || substr($temp_path, -4, 3) === '%2F') {
-					$temp_path = preg_replace('/%2F/', '', $temp_path);
+				$listingPath = $this->sanitizePath($this->settings['path'] . $this->args['path']);
+				if (substr($listingPath, -3, 3) === '%2F' || substr($listingPath, -4, 3) === '%2F') {
+					$listingPath = preg_replace('/%2F/', '', $listingPath);
 				}
 			}
 			else {
-				$temp_path = $this->settings['path'];
+				$listingPath = $this->settings['path'];
 			}
 		}
 
@@ -122,7 +122,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 		}
 
-		list($tx_folders, $tx_files) = $this->getDirectoryContent($temp_path);
+		list($tx_folders, $tx_files) = $this->getDirectoryContent($listingPath);
 
 			// Are there any files in the directory?
 		if ((count($tx_files) == 0) && (count($tx_folders) == 0)) {
@@ -176,7 +176,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 				$temp_tx_folders = array_reverse($tx_folders);
 				$temp_tx_folders[] = array(
 					'name' => '..',
-					'path' => $temp_path . '..'
+					'path' => $listingPath . '..'
 				);
 				$tx_folders = array_reverse($temp_tx_folders);
 
@@ -211,10 +211,10 @@ class tx_filelist_pi1 extends tslib_pibase {
 						}
 						$content .= '">' . $tx_folders[$d]['name'] . '</a></td>';
 						$content .= '<td class="' . $this->pi_getClassName('info') . '"><font size="1">';
-						$file_counter = $this->filecounter($temp_path.$tx_folders[$d]['name']);
+						$file_counter = $this->filecounter($listingPath . $tx_folders[$d]['name']);
 						$content .= $file_counter . ' ' . htmlspecialchars($this->pi_getLL('files_in_directory')) . '</font></td>';
 						$content .= '<td class="' . $this->pi_getClassName('last_modification') . '"><font size="1">';
-						$content .= t3lib_BEfunc::datetime(@filemtime($temp_path . $tx_folders[$d]['name']));
+						$content .= t3lib_BEfunc::datetime(@filemtime($listingPath . $tx_folders[$d]['name']));
 						$content .= '</font></td>';
 						$content .= '</tr>';
 					}
@@ -232,7 +232,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 					$content .= $this->show_new($tx_files[$f]['path'], $this->settings['new_duration']) . '</td>';
 					$content .= '<td><font size="1">' . $this->getHRFileSize($tx_files[$f]['path']) . '</font></td>';
 					$content .= '<td class="' . $this->pi_getClassName('last_modification') . '"><font size="1">';
-					$content .= t3lib_BEfunc::datetime(@filemtime($temp_path.$tx_files[$f]['name'])) . '</font></td>';
+					$content .= t3lib_BEfunc::datetime(@filemtime($listingPath . $tx_files[$f]['name'])) . '</font></td>';
 				}
 			}
 			$content .= '</table>';
