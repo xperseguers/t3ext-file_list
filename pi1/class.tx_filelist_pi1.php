@@ -161,8 +161,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 						}
 						$content .= '</td>';
 						$content .= '<td class"' . $this->pi_getClassName('filename') . '">';
-						$content .= '<a href="index.php?id=' . $GLOBALS['TSFE']->id;
-						$content .= '&' . $this->params['path'] . '=' . substr($subdirs[$d]['path'], strlen($this->settings['path']));
+						$content .= '<a href="' . $this->getLink(array($this->params['path'] => substr($subdirs[$d]['path'], strlen($this->settings['path']))));
 						$content .= '">' . $subdirs[$d]['name'] . '</a></td>';
 						$content .= '<td class="' . $this->pi_getClassName('info') . '"><font size="1">';
 						$file_counter = $this->filecounter($listingPath . $subdirs[$d]['name']);
@@ -192,6 +191,21 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$content .= '</table>';
 		}
 		return $this->pi_wrapInBaseClass($content);
+	}
+
+	/**
+	 * Returns a link to the same page with additional parameters.
+	 * 
+	 * @param	array		$params
+	 * @return	string
+	 */
+	protected function getLink(array $params) {
+		$tmp = array();
+		foreach ($params as $key => $value) {
+			$tmp[] = sprintf('%s=%s', $key, urlencode($value));
+		}
+		$params = $tmp;
+		return $this->pi_getPageLink($GLOBALS['TSFE']->id, '', '&' . implode('&', $params));
 	}
 
 	/**
@@ -391,18 +405,20 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @return	string		Return of images for sorting
 	 */
 	protected function fe_sort($order_by, $order_seq) {
-		$temp_content = ' <a href="index.php?id=' . $GLOBALS['TSFE']->id;
-		if ($this->args['path']) {
-			$temp_content = $temp_content . '&' . $this->params['path'] . '=' . preg_replace('/\//', '%2F', $this->args['path']);
+		$link = $this->getLink(array(
+			$this->params['path']      => $this->args['path'],
+			$this->params['order_by']  => $order_by,
+			$this->params['direction'] => $order_seq,
+		));
+		$ret = ' <a href="' . $link . '">';
+		$ret .= '<img src="' . $this->settings['iconsPath'];
+		if ($order_seq === 'asc') {
+			$ret .= 'up.gif" alt="' . $this->pi_getLL('asc');
+		} else {
+			$ret .= 'down.gif" alt="' . $this->pi_getLL('desc');
 		}
-		$temp_content = $temp_content . '&' . $this->params['order_by'] . '=' . $order_by . '&' . $this->params['direction'] . '=' . $order_seq . '"><img src="' . $this->settings['iconsPath'];
-		if ($order_seq == 'asc') {
-			$temp_content = $temp_content . 'up.gif" alt="' . htmlspecialchars($this->pi_getLL('asc')) . '" border="0"></a>';
-		}
-		if ($order_seq == 'desc') {
-			$temp_content = $temp_content . 'down.gif" alt="' . htmlspecialchars($this->pi_getLL('desc')) . '" border="0"></a>';
-		}
-		return $temp_content;
+		$ret .= '" border="0"></a>';
+		return $ret;
 	}
 
 	/**
