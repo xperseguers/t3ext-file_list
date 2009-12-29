@@ -3,13 +3,30 @@ plugin.tx_filelist_pi1 {
 		# Icon skin (relative to site root or prefixed with an extension name, stdWrap-aware)
 	iconsPath = EXT:file_list/Resources/Public/Icons/
 
+	templateFile = EXT:file_list/Resources/Private/Templates/template_pi1.html
+
 		# Base root directory (all path must be within this directory, either absolute or relative to site root)
 	root = fileadmin/
 
 	### Default CSS styles for the file_list standard template: EXT:file_list/Resources/Private/Templates/template_pi1.html
 
 	_CSS_DEFAULT_STYLE (
-.tx-filelist-pi1-info, .tx-filelist-pi1-date {
+table.tx-filelist-pi1-table th {
+	text-align: left;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+table.tx-filelist-pi1-table td {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.tx-filelist-pi1-icon {
+	width: 30px;
+}
+
+td.tx-filelist-pi1-info, td.tx-filelist-pi1-date {
 	font-size: smaller;
 }
 

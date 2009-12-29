@@ -22,8 +22,8 @@
 			<!-- Table labels -->
 			<label index="filename">Filename</label>
 			<label index="info">Info</label>
+			<label index="date">Modified</label>
 			<label index="files_in_directory">Files</label>
-			<label index="last_modification">Modified</label>
 			<label index="filesize">Filesize</label>
 			<label index="no_files">There are no files in the directory!</label>
 			<label index="file_in_directory">File</label>
@@ -32,7 +32,6 @@
 			<label index="new_text">New</label>
 			<label index="asc">Sort ascending</label>
 			<label index="desc">Sort descending</label>
-			<label index="submit_button_label">Click here to submit value</label>
 
 			<!-- Size units -->
 			<label index="units.bytes">bytes</label>
@@ -58,8 +57,8 @@
 			<!-- Table labels -->
 			<label index="filename">Dateiname</label>
 			<label index="info">Info</label>
+			<label index="date">Geändert</label>
 			<label index="files_in_directory">Dateien</label>
-			<label index="last_modification">Geändert</label>
 			<label index="filesize">Dateigrösse</label>
 			<label index="no_files">Keine Dateien im Verzeichnis!</label>
 			<label index="file_in_directory">Datei</label>
@@ -68,7 +67,6 @@
 			<label index="new_text">Neu</label>
 			<label index="asc">Aufsteigend sortieren</label>
 			<label index="desc">Absteigend sortieren</label>
-			<label index="submit_button_label">Hier klicken um zu bestätigen</label>
 		</languageKey>
 	</data>
 </T3locallang>

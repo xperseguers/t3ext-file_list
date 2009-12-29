@@ -44,19 +44,24 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * @var array
 	 */
-	protected $settings;
+	protected $settings = array();
 
 	/**
 	 * Parameter names
 	 * @var array
 	 */
-	protected $params;
+	protected $params = array();
 
 	/**
 	 * Plugin arguments (read from URL)
 	 * @var array
 	 */
-	protected $args;
+	protected $args = array();
+
+	/**
+	 * @var array
+	 */
+	protected $templates = array();
 	
 	/**
 	 * Main-function, returns output
@@ -68,6 +73,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	public function main($content, array $settings) {
 		$this->init($settings);
 		$this->pi_setPiVarDefaults();
+		$this->initTemplate();
 	
 		$subdirs = array();
 		$files = array();
@@ -96,7 +102,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 			// Are there any files in the directory?
 		if ((count($files) == 0) && (count($subdirs) == 0)) {
-			$content = $this->pi_getClassName('no_files');
+			$content = $this->pi_getLL('no_files');
 		}
 		else {
 				/* Sort Start */
@@ -116,30 +122,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 				/* Sort End */
 
-				// Preparing the table
-			$content = '<table border="0" cellspacing="0" cellpadding="0" class="' . $this->pi_getClassName('table') . '">';
-			$content .= '<tr class="' . $this->pi_getClassName('header-tr') . '">';
-			$content .= '<td width="30" class="' . $this->pi_getClassName('header-icon') . '"></td>'; //Icon
-			$content .= '<td align="left" valign="middle" class="' . $this->pi_getClassName('header-filename') . '">' . htmlspecialchars($this->pi_getLL('filename'));  // Filename
-			if ($this->settings['fe_sort']) {
-				$content .= $this->fe_sort('name', 'desc');
-				$content .= $this->fe_sort('name', 'asc');
-			}
-			$content .= '</td>';
-			$content .= '<td align="left" valign="middle" class="' . $this->pi_getClassName('header-info') . '">' . htmlspecialchars($this->pi_getLL('info')); //Info
-			if ($this->settings['fe_sort']) {
-				$content .= $this->fe_sort('size', 'desc');
-				$content .= $this->fe_sort('size', 'asc');
-			}
-			$content .= '</td>';
-			$content .= '<td align="left" valign="middle" class="' . $this->pi_getClassName('header-last_modification') . '">' . htmlspecialchars($this->pi_getLL('last_modification')); //Last modification
-			if ($this->settings['fe_sort']) {
-				$content .= $this->fe_sort('date', 'desc');
-				$content .= $this->fe_sort('date', 'asc');
-			}
-			$content .= '</td>';
-			$content .= '</tr>';
-
+			$rows = array();
+			$odd = TRUE;
 			if (count($subdirs) >= 0) {
 
 					// Put '..' at the beginning of the array
@@ -150,47 +134,78 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 					// Display the folders in a table
 				for ($d = 0; $d < count($subdirs); $d++) {
-					if (!(!$this->args['path'] && $subdirs[$d]['name'] === '..')) {
-						$content .= '<tr class="' .$this->pi_getClassName('tr') . '">';
-						$content .= '<td class="' .$this->pi_getClassName('icon') . '">';
-						if ($subdirs[$d]['name'] === '..') {
-							$content .= '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $subdirs[$d]['name'] . '" />';
-						}
-						else {
-							$content .= '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $subdirs[$d]['name'] . '" />';
-						}
-						$content .= '</td>';
-						$content .= '<td class"' . $this->pi_getClassName('filename') . '">';
-						$content .= '<a href="' . $this->getLink(array($this->params['path'] => substr($subdirs[$d]['path'], strlen($this->settings['path']))));
-						$content .= '">' . $subdirs[$d]['name'] . '</a></td>';
-						$content .= '<td class="' . $this->pi_getClassName('info') . '">';
-						$file_counter = $this->filecounter($listingPath . $subdirs[$d]['name']);
-						$content .= $file_counter . ' ' . htmlspecialchars($this->pi_getLL('files_in_directory')) . '</td>';
-						$content .= '<td class="' . $this->pi_getClassName('date') . '">';
-						$content .= t3lib_BEfunc::datetime(@filemtime($listingPath . $subdirs[$d]['name']));
-						$content .= '</td>';
-						$content .= '</tr>';
+					if (!$this->args['path'] && $subdirs[$d]['name'] === '..') {
+						continue;
 					}
+					$markers = array();
+					if ($subdirs[$d]['name'] === '..') {
+						$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $subdirs[$d]['name'] . '" />';
+					} else {
+						$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $subdirs[$d]['name'] . '" />';
+					}
+					$markers['###FILENAME###'] = '<a href="' . $this->getLink(array($this->params['path'] => substr($subdirs[$d]['path'], strlen($this->settings['path'])))) . '">' . $subdirs[$d]['name'] . '</a>';
+					$file_counter = $this->filecounter($listingPath . $subdirs[$d]['name']);
+					$markers['###INFO###'] = $file_counter . ' ' . htmlspecialchars($this->pi_getLL('files_in_directory'));
+					$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $subdirs[$d]['name']));
+					
+					$rows[] = $this->cObj->substituteMarkerArray($odd ? $this->templates['odd'] : $this->templates['even'], $markers);
+					$odd = !$odd;
 				}
 			}
 
 				// Display the files in a table
-			if (count($files) != 0) {
-				for ($f = 0; $f < count($files); $f++) {
-					$content .= '<tr class="' . $this->pi_getClassName('tr') . '">';
-					$content .= '<td class="' . $this->pi_getClassName('icon') . '">';
-					$content .= '<img src="' . $this->settings['iconsPath'] . $this->fileicon($files[$f]['name']) . '" alt="' . $files[$f]['name'] . '">';
-					$content .= '</td><td valign="bottom" class="' . $this->pi_getClassName('filename') . '">';
-					$content .= '<a href="' . $files[$f]['path'] . '" target="_blank">' . $files[$f]['name'] . '</a> ';
-					$content .= $this->show_new($files[$f]['path'], $this->settings['new_duration']) . '</td>';
-					$content .= '<td class="' . $this->pi_getClassName('info') . '">' . $this->getHRFileSize($files[$f]['path']) . '</td>';
-					$content .= '<td class="' . $this->pi_getClassName('date') . '">';
-					$content .= t3lib_BEfunc::datetime(@filemtime($listingPath . $files[$f]['name'])) . '</td>';
-				}
+			for ($f = 0; $f < count($files); $f++) {
+				$markers = array();
+				$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . $this->fileicon($files[$f]['name']) . '" alt="' . $files[$f]['name'] . '">';
+				$markers['###FILENAME###'] = '<a href="' . $files[$f]['path'] . '" target="_blank">' . $files[$f]['name'] . '</a>';
+				$markers['###FILENAME###'] .= ' ' . $this->show_new($files[$f]['path'], $this->settings['new_duration']);
+				$markers['###INFO###'] = $this->getHRFileSize($files[$f]['path']);
+				$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $files[$f]['name']));
+
+				$rows[] = $this->cObj->substituteMarkerArray($odd ? $this->templates['odd'] : $this->templates['even'], $markers);
+				$odd = !$odd;
 			}
-			$content .= '</table>';
+			
+			$markers = array(
+				'###HEADER_FILENAME###' => $this->pi_getLL('filename'),
+				'###HEADER_INFO###' => $this->pi_getLL('info'),
+				'###HEADER_DATE###' => $this->pi_getLL('date'),
+				'###BODY###' => implode("\n", $rows),
+			);
+			if ($this->settings['fe_sort']) {
+				$markers['###HEADER_FILENAME###'] .= $this->fe_sort('name', 'desc') . $this->fe_sort('name', 'asc');
+				$markers['###HEADER_INFO###'] .= $this->fe_sort('size', 'desc') . $this->fe_sort('size', 'asc');
+				$markers['###HEADER_DATE###'] .= $this->fe_sort('date', 'desc') . $this->fe_sort('date', 'asc');
+			}
+			$content = $this->cObj->substituteMarkerArray($this->templates['table'], $markers);
 		}
 		return $this->pi_wrapInBaseClass($content);
+	}
+
+	/**
+	 * Reads the template file, fill in global wraps and markers and write the result
+	 * parts to $this->templates array.
+	 *
+	 * @return	void
+	 */
+	function initTemplate() {
+		$content = $this->cObj->fileResource($this->settings['templateFile']);
+		$templateCode = $this->cObj->getSubpart($content, '###TEMPLATE_DEFAULT###');
+
+		$globalMarkerArray = array(
+			'###TABLE_CLASS###'     => $this->pi_getClassName('table'),
+			'###ODD_CLASS###'       => $this->pi_getClassName('odd'),
+			'###EVEN_CLASS###'      => $this->pi_getClassName('even'),
+			'###ICON_CLASS###'      => $this->pi_getClassName('icon'),
+			'###FILENAME_CLASS###'  => $this->pi_getClassName('filename'),
+			'###INFO_CLASS###'      => $this->pi_getClassName('info'),
+			'###DATE_CLASS###'      => $this->pi_getClassName('date'),
+		);
+		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $globalMarkerArray);
+
+		$this->templates['odd'] = $this->cObj->getSubpart($templateCode, '###ODD_TEMPLATE###');
+		$this->templates['even'] = $this->cObj->getSubpart($templateCode, '###EVEN_TEMPLATE###');
+		$this->templates['table'] = $this->cObj->substituteSubpart($templateCode, '###BODY###', '###BODY###');
 	}
 
 	/**
