@@ -1,3 +1,7 @@
+2009-12-29  Xavier Perseguers  <typo3@perseguers.ch>
+
+	* Added feature #5853: Create Update wizard to move database configuration data into FlexForm
+
 2009-12-28  Xavier Perseguers  <typo3@perseguers.ch>
 
 	* Performed task #5852: Move database fields to a FlexForm configuration
