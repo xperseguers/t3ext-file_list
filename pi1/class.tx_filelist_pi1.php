@@ -47,10 +47,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 	protected $settings = array();
 
 	/**
-	 * Parameter names
-	 * @var array
+	 * @var string
 	 */
-	protected $params = array();
+	protected $getPrefix;
 
 	/**
 	 * Plugin arguments (read from URL)
@@ -139,11 +138,11 @@ class tx_filelist_pi1 extends tslib_pibase {
 					}
 					$markers = array();
 					if ($subdirs[$d]['name'] === '..') {
-						$markers['###ICON###'] = '<a href="' . $this->getLink(array($this->params['path'] => substr($subdirs[$d]['path'], strlen($this->settings['path'])))) . '">' . '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $subdirs[$d]['name'] . '" border="0" /></a>';
+						$markers['###ICON###'] = '<a href="' . $this->getLink(array('path' => substr($subdirs[$d]['path'], strlen($this->settings['path'])))) . '">' . '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $subdirs[$d]['name'] . '" border="0" /></a>';
 					} else {
 						$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $subdirs[$d]['name'] . '" />';
 					}
-					$markers['###FILENAME###'] = '<a href="' . $this->getLink(array($this->params['path'] => substr($subdirs[$d]['path'], strlen($this->settings['path'])))) . '">' . $subdirs[$d]['name'] . '</a>';
+					$markers['###FILENAME###'] = '<a href="' . $this->getLink(array('path' => substr($subdirs[$d]['path'], strlen($this->settings['path'])))) . '">' . $subdirs[$d]['name'] . '</a>';
 					$totalFiles = $this->getNumberOfFiles($listingPath . $subdirs[$d]['name']);
 					$markers['###INFO###'] = $totalFiles . ' '; 
 					if ($totalFiles > 1) {
@@ -237,14 +236,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 	protected function getLink(array $params) {
 			// Merge existing parameters with $params
 		foreach ($this->args as $key => $value) {
-			$fullKey = $this->params[$key];
-			if (!isset($params[$fullKey])) {
-				$params[$fullKey] = $value;
+			if (!isset($params[$key])) {
+				$params[$key] = $value;
 			}
 		}
 		$tmp = array();
 		foreach ($params as $key => $value) {
-			$tmp[] = sprintf('%s=%s', $key, urlencode($value));
+			$tmp[] = sprintf('%s=%s', $this->getPrefix . '[' . $key . ']', urlencode($value));
 		}
 		$params = $tmp;
 		return $this->pi_getPageLink($GLOBALS['TSFE']->id, '', '&' . implode('&', $params));
@@ -449,9 +447,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 */
 	protected function fe_sort($order_by, $direction) {
 		$link = $this->getLink(array(
-			$this->params['path']      => $this->args['path'],
-			$this->params['order_by']  => $order_by,
-			$this->params['direction'] => $direction,
+			'path'      => $this->args['path'],
+			'order_by'  => $order_by,
+			'direction' => $direction,
 		));
 		$ret = ' <a href="' . $link . '">';
 		$ret .= '<img src="' . $this->settings['iconsPath'];
@@ -521,19 +519,15 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']); // When RTE file browser is used, additionnal components may be present
 		$this->settings['path'] = $this->sanitizePath($pathOptions[0]);
 
-			// Parameters for frontend rendering
-		$uid = $this->cObj->data['uid'];
-		$this->params = array(
-			'path'      => $this->pi_getClassName('path') . '-' . $uid,
-			'order_by'  => $this->pi_getClassName('sort') . '-' . $uid,
-			'direction' => $this->pi_getClassName('dir') . '-' . $uid,
-		);
-
 			// Retrieval of arguments
-		$this->args = array(
-			'path'      => t3lib_div::_GET($this->params['path']),
-			'order_by'  => t3lib_div::_GET($this->params['order_by']),
-			'direction' => t3lib_div::_GET($this->params['direction']),
+		$this->getPrefix = $this->pi_getClassName($this->cObj->data['uid']);
+		$this->args = array_merge(
+			array(
+				'path'      => '',
+				'order_by'  => '',
+				'direction' => '',
+			),
+			t3lib_div::_GET($this->getPrefix)
 		);
 
 			// Disable Filelist if an error occurred
