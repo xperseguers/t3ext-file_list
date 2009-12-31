@@ -161,7 +161,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 				// Display the files in a table
 			for ($f = 0; $f < count($files); $f++) {
 				$markers = array();
-				$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . $this->fileicon($files[$f]['name']) . '" alt="' . $files[$f]['name'] . '">';
+				$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . $this->getFileTypeIcon($files[$f]['name']) . '" alt="' . $files[$f]['name'] . '">';
 				$markers['###FILENAME###'] = $this->cObj->typolink($files[$f]['name'], array('parameter' => $files[$f]['path']));
 				$markers['###FILENAME###'] .= ' ' . $this->getNewIcon($files[$f]['path'], $this->settings['new_duration']);
 				$markers['###INFO###'] = $this->getHRFileSize($files[$f]['path']);
@@ -247,45 +247,62 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Returns the icon which represents a file-type
+	 * Returns the icon which represents a file-type.
 	 *
 	 * @param	string		Path to the specified file
 	 * @return	string		Filename of the icon
 	 */
-	protected function fileicon($fn) {
-		$allfileends = array(
-			'doc', 'pdf', 'pps', 'tar', 'txt', 'xls', 'swf', 'htm', 'html', 'phtml', 'gif', 'jpg', 'jpeg', 'png', 'bpm', 'mp3', 'wav', 'wmv', 'tar', 'gz', 'txt', 'mp4', 'mpg', 'mpeg', 'tif'
+	protected function getFileTypeIcon($filename) {
+		$categories = array(
+			'archive'    => array('bz2', 'gz', 'rar', 'tar', 'zip'),
+			'document'   => array('doc', 'docx', 'pdf', 'pps', 'ppt', 'pptx', 'xls', 'xlsx'),
+			'flash'      => array('fla', 'swf'),
+			'image'      => array('bmp', 'draw', 'gif', 'jpg', 'jpeg', 'png', 'tif', 'tiff'),
+			'sound'      => array('m4a', 'mid', 'midi', 'mp3', 'mp4', 'wav'),
+			'source'     => array('php', 'htm', 'html', 'inc', 'phtml'),
+			'video'      => array('mpg', 'mpeg', 'wmv'),
 		);
-		$normfileend = array('doc', 'pdf', 'pps', 'tar', 'txt', 'xls');
-		$fileends = array(
-			'draw' => array('draw'),
-			'flash' => array('flash', 'swf'),
-			'html' => array('html', 'htm', 'phtml'),
-			'image' => array('image', 'gif', 'jpg', 'jpeg', 'png', 'bpm', 'tif'),
-			'sound' => array('sound','mp3', 'wav', 'wmv'),
-			'source' => array('source'),
-			'tar' => array('tar', 'gz'),
-			'txt' => array('txt'),
-			'video' => array('video', 'mp4', 'mpg', 'mpeg')
+			// Remapping occurs if a dedicated icon cannot be found
+		$remapExtensions = array(
+			'docx'  => 'doc',
+			'htm'   => 'html',
+			'midi'  => 'mid',
+			'phtml' => 'html',
+			'pptx'  => 'ptt',
+			'tiff'  => 'tif',
+			'xlsx'  => 'xls',
 		);
-		$fileend = explode('.', $fn);
-		$f_count = count($fileend) - 1;
-		$fileend = strtolower($fileend[$f_count]);
-		if (in_array($fileend, $allfileends)) {
-			if (in_array($fileend, $normfileend)) {
-				return $fileend . '.png';
-			}
-			else {
-				foreach($fileends as $temp_fileend) {
-					if (in_array($fileend, $temp_fileend)) {
-						return $temp_fileend[0] . '.png';
-					}
+
+			// Extract the file extension
+		$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
+
+			// Try to find a dedicated icon
+		for ($i = 0; $i < 2; $i++) {
+			if ($i == 1) {
+					// Remap the extension
+				if (isset($remapExtensions[$ext])) {
+					$ext = $remapExtensions[$ext];
+				} else {
+					break;
 				}
 			}
+			if (is_file($this->settings['iconsPath'] . $ext . '.png')) {
+				return $ext . '.png';
+			} elseif (is_file($this->settings['iconsPath'] . $ext . '.gif')) {
+				return $ext . '.gif';
+			}
 		}
-		else {
-			return 'mime.png';
+
+			// Try to find a filetype category icon
+		$category = '';
+		foreach ($categories as $cat => $extensions) {
+			if (t3lib_div::inArray($extensions, $ext)) {
+				return 'category_' . $cat . '.png';
+			}
 		}
+
+			// Fallback icon
+		return 'blank_document.png';
 	}
 
 	/**
