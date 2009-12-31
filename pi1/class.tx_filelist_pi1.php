@@ -235,6 +235,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @return	string
 	 */
 	protected function getLink(array $params) {
+			// Merge existing parameters with $params
+		foreach ($this->args as $key => $value) {
+			$fullKey = $this->params[$key];
+			if (!isset($params[$fullKey])) {
+				$params[$fullKey] = $value;
+			}
+		}
 		$tmp = array();
 		foreach ($params as $key => $value) {
 			$tmp[] = sprintf('%s=%s', $key, urlencode($value));
