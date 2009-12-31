@@ -61,7 +61,7 @@
 			<label index="no_files">Keine Datei im Verzeichnis!</label>
 			<label index="file_in_directory">Datei</label>
 			<label index="files_in_directory">Dateien</label>
-			<label index="new.icon">neu.png</label>
+			<label index="new.icon">new_de.png</label>
 			<label index="new.altText">Neu</label>
 			<label index="sort.asc">Aufsteigend sortieren</label>
 			<label index="sort.desc">Absteigend sortieren</label>
@@ -88,7 +88,7 @@
 			<label index="no_files">Il n'y a aucun fichier dans le répertoire !</label>
 			<label index="file_in_directory">Fichier</label>
 			<label index="files_in_directory">Fichiers</label>
-			<label index="new.icon">new.png</label>
+			<label index="new.icon">new_fr.png</label>
 			<label index="new.altText">Nouveau</label>
 			<label index="sort.asc">Tri ascendant</label>
 			<label index="sort.desc">Tri descendant</label>
