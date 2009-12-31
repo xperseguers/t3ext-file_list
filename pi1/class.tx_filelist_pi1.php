@@ -411,17 +411,11 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @return	string		Returns the 'new-icon'
 	 */
 	protected function getNewIcon($fn, $duration) {
-		if ($duration > 0) {
-			if (filemtime($fn) > mktime(0, 0, 0, date('m'), date('d') - $duration, date('Y'))) {
-				return '<img src="' . $this->settings['iconsPath'] . $this->pi_getLL('new.icon') . '" alt="' . $this->pi_getLL('new.altText') . '" />';
-			}
-			else {
-				return '';
-			}
+		if ($duration > 0 && filemtime($fn) > mktime(0, 0, 0, date('m'), date('d') - $duration, date('Y'))) {
+			return '<img src="' . $this->settings['iconsPath'] . $this->pi_getLL('new.icon') . '" alt="' . $this->pi_getLL('new.altText') . '" />';
 		}
-		else {
-			return '';
-		}
+
+		return '';
 	}
 
 	/**
