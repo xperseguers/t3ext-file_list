@@ -13,5 +13,9 @@
 			<label index="pi1_title">Dateiliste</label>
 			<label index="pi1_plus_wiz_description">Stellt Dateien und Ordner eines Verzeichnisses grafisch dar.</label>
 		</languageKey>
+		<languageKey index="fr" type="array">
+			<label index="pi1_title">Liste de fichiers</label>
+			<label index="pi1_plus_wiz_description">Affiche une liste de répertoires et de fichiers.</label>
+		</languageKey>
 	</data>
 </T3locallang>

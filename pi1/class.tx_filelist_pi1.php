@@ -144,8 +144,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 						$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $subdirs[$d]['name'] . '" />';
 					}
 					$markers['###FILENAME###'] = '<a href="' . $this->getLink(array($this->params['path'] => substr($subdirs[$d]['path'], strlen($this->settings['path'])))) . '">' . $subdirs[$d]['name'] . '</a>';
-					$file_counter = $this->filecounter($listingPath . $subdirs[$d]['name']);
-					$markers['###INFO###'] = $file_counter . ' ' . htmlspecialchars($this->pi_getLL('files_in_directory'));
+					$totalFiles = $this->getNumberOfFiles($listingPath . $subdirs[$d]['name']);
+					$markers['###INFO###'] = $totalFiles . ' '; 
+					if ($totalFiles > 1) {
+						$markers['###INFO###'] .= $this->pi_getLL('files_in_directory');
+					} else {
+						$markers['###INFO###'] .= $this->pi_getLL('file_in_directory');
+					}
 					$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $subdirs[$d]['name']));
 					
 					$rows[] = $this->cObj->substituteMarkerArray($odd ? $this->templates['odd'] : $this->templates['even'], $markers);
@@ -158,7 +163,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 				$markers = array();
 				$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . $this->fileicon($files[$f]['name']) . '" alt="' . $files[$f]['name'] . '">';
 				$markers['###FILENAME###'] = $this->cObj->typolink($files[$f]['name'], array('parameter' => $files[$f]['path']));
-				$markers['###FILENAME###'] .= ' ' . $this->show_new($files[$f]['path'], $this->settings['new_duration']);
+				$markers['###FILENAME###'] .= ' ' . $this->getNewIcon($files[$f]['path'], $this->settings['new_duration']);
 				$markers['###INFO###'] = $this->getHRFileSize($files[$f]['path']);
 				$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $files[$f]['name']));
 
@@ -229,15 +234,16 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @param	string		Path to the specified directory
 	 * @return	integer		Number of files in the directory
 	 */
-	protected function filecounter($counter_dir) {
-		$counter = 0;
-		$counter_open = @opendir($counter_dir);
-		while ($counter_content = readdir($counter_open)) {
-			if (is_file($counter_dir . '/' . $counter_content) && $counter_content != 'thumb') {
-				$counter++;
+	protected function getNumberOfFiles($path) {
+		$files = 0;
+		$dh = @opendir($path);
+		while ($c = readdir($dh)) {
+			if (is_file($path . '/' . $c) && $c !== 'thumb') {
+				$files++;
 			}
 		}
-		return $counter;
+		@closedir($dh);
+		return $files;
 	}
 
 	/**
@@ -381,27 +387,16 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Returns the date of the last modification
-	 *
-	 * @param	string		Path to the specified file
-	 * @return	string		Last modification of file
-	 */
-    protected function file_create_date($fn) {
-		$filedate = filemtime($fn);
-		return date('d-m-y H:i', $filedate);
-	}
-
-	/**
-	 * Returns the new-icon, when the file is selected as new
+	 * Returns the new-icon, when the file is selected as new.
 	 *
 	 * @param	string		Path to the specified file
 	 * @param	integer		With how much of days a file is new?
 	 * @return	string		Returns the 'new-icon'
 	 */
-	protected function show_new($fn, $duration) {
+	protected function getNewIcon($fn, $duration) {
 		if ($duration > 0) {
 			if (filemtime($fn) > mktime(0, 0, 0, date('m'), date('d') - $duration, date('Y'))) {
-				return '<img src="' . $this->settings['iconsPath'] . $this->pi_getLL('new_icon') . '.png" alt="' . $this->pi_getLL('new_text') . '">';
+				return '<img src="' . $this->settings['iconsPath'] . $this->pi_getLL('new.icon') . '" alt="' . $this->pi_getLL('new.altText') . '" />';
 			}
 			else {
 				return '';
@@ -416,21 +411,21 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * Returns the icons, with witch the user on the frontend can sort the files
 	 *
 	 * @param	string		Order by (name, date, size)
-	 * @param	string		Order sequence (ASC, DESC)
+	 * @param	string		Order sequence ('asc', 'desc')
 	 * @return	string		Return of images for sorting
 	 */
-	protected function fe_sort($order_by, $order_seq) {
+	protected function fe_sort($order_by, $direction) {
 		$link = $this->getLink(array(
 			$this->params['path']      => $this->args['path'],
 			$this->params['order_by']  => $order_by,
-			$this->params['direction'] => $order_seq,
+			$this->params['direction'] => $direction,
 		));
 		$ret = ' <a href="' . $link . '">';
 		$ret .= '<img src="' . $this->settings['iconsPath'];
-		if ($order_seq === 'asc') {
-			$ret .= 'up.gif" alt="' . $this->pi_getLL('asc');
+		if ($direction === 'asc') {
+			$ret .= 'up.gif" alt="' . $this->pi_getLL('sort.asc');
 		} else {
-			$ret .= 'down.gif" alt="' . $this->pi_getLL('desc');
+			$ret .= 'down.gif" alt="' . $this->pi_getLL('sort.desc');
 		}
 		$ret .= '" border="0"></a>';
 		return $ret;

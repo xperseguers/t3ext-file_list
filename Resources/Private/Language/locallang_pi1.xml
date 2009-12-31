@@ -23,15 +23,14 @@
 			<label index="filename">Filename</label>
 			<label index="info">Info</label>
 			<label index="date">Modified</label>
-			<label index="files_in_directory">Files</label>
 			<label index="filesize">Filesize</label>
-			<label index="no_files">There are no files in the directory!</label>
+			<label index="no_files">There are no file in the directory!</label>
 			<label index="file_in_directory">File</label>
-			<label index="back">Back</label>
-			<label index="new_icon">new</label>
-			<label index="new_text">New</label>
-			<label index="asc">Sort ascending</label>
-			<label index="desc">Sort descending</label>
+			<label index="files_in_directory">Files</label>
+			<label index="new.icon">new.png</label>
+			<label index="new.altText">New</label>
+			<label index="sort.asc">Sort ascending</label>
+			<label index="sort.desc">Sort descending</label>
 
 			<!-- Size units -->
 			<label index="units.bytes">bytes</label>
@@ -58,15 +57,48 @@
 			<label index="filename">Dateiname</label>
 			<label index="info">Info</label>
 			<label index="date">Geändert</label>
-			<label index="files_in_directory">Dateien</label>
 			<label index="filesize">Dateigrösse</label>
-			<label index="no_files">Keine Dateien im Verzeichnis!</label>
+			<label index="no_files">Keine Datei im Verzeichnis!</label>
 			<label index="file_in_directory">Datei</label>
-			<label index="back">Zurück</label>
-			<label index="new_icon">neu</label>
-			<label index="new_text">Neu</label>
-			<label index="asc">Aufsteigend sortieren</label>
-			<label index="desc">Absteigend sortieren</label>
+			<label index="files_in_directory">Dateien</label>
+			<label index="new.icon">neu.png</label>
+			<label index="new.altText">Neu</label>
+			<label index="sort.asc">Aufsteigend sortieren</label>
+			<label index="sort.desc">Absteigend sortieren</label>
+		</languageKey>
+		<languageKey index="fr" type="array">
+			<!-- FlexForm labels -->
+			<label index="pi_flexform.path">Chemin vers le répertoire (exemple : fileadmin/repertoire1/)</label>
+            <label index="pi_flexform.path.wizards.link.title">Sélecteur de répertoire</label>
+            <label index="pi_flexform.order_by">Trier les fichiers par :</label>
+            <label index="pi_flexform.order_by.name">Nom</label>
+            <label index="pi_flexform.order_by.date">Date</label>
+            <label index="pi_flexform.order_by.size">Taille</label>
+            <label index="pi_flexform.sort_direction">Ordre de tri :</label>
+            <label index="pi_flexform.sort_direction.asc">Ascendant (A-Z)</label>
+            <label index="pi_flexform.sort_direction.desc">Descendant (Z-A)</label>
+            <label index="pi_flexform.new_duration">Nombre de jours pour qu'un fichier soit &quot; nouveau &quot; (0 = désactivé):</label>
+			<label index="pi_flexform.fe_sort">Autoriser le tri en frontend :</label>
+			
+			<!-- Table labels -->
+			<label index="filename">Fichier</label>
+			<label index="info">Info</label>
+			<label index="date">Modification</label>
+			<label index="filesize">Taille</label>
+			<label index="no_files">Il n'y a aucun fichier dans le répertoire !</label>
+			<label index="file_in_directory">Fichier</label>
+			<label index="files_in_directory">Fichiers</label>
+			<label index="new.icon">new.png</label>
+			<label index="new.altText">Nouveau</label>
+			<label index="sort.asc">Tri ascendant</label>
+			<label index="sort.desc">Tri descendant</label>
+
+			<!-- Size units -->
+			<label index="units.bytes">octets</label>
+			<label index="units.KB">Ko</label>
+			<label index="units.MB">Mo</label>
+			<label index="units.GB">Go</label>
+			<label index="units.TB">To</label>
 		</languageKey>
 	</data>
 </T3locallang>
