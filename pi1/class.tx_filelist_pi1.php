@@ -152,6 +152,14 @@ class tx_filelist_pi1 extends tslib_pibase {
 						$markers['###INFO###'] .= $this->pi_getLL('file_in_directory');
 					}
 					$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $subdirs[$d]['name']));
+
+						// Hook for processing of extra item markers
+					if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
+						foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'] as $_classRef) {
+							$_procObj =& t3lib_div::getUserObj($_classRef);
+							$markers = $_procObj->extraItemMarkerProcessor($markers, $subdirs[$d]['path'], $this);
+						}
+					}
 					
 					$rows[] = $this->cObj->substituteMarkerArray($odd ? $this->templates['odd'] : $this->templates['even'], $markers);
 					$odd = !$odd;
@@ -167,6 +175,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 				$markers['###INFO###'] = $this->getHRFileSize($files[$f]['path']);
 				$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $files[$f]['name']));
 
+					// Hook for processing of extra item markers
+				if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
+					foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'] as $_classRef) {
+						$_procObj =& t3lib_div::getUserObj($_classRef);
+						$markers = $_procObj->extraItemMarkerProcessor($markers, $files[$f]['path'], $this);
+					}
+				}
 				$rows[] = $this->cObj->substituteMarkerArray($odd ? $this->templates['odd'] : $this->templates['even'], $markers);
 				$odd = !$odd;
 			}

@@ -1,5 +1,7 @@
 2009-12-31  Xavier Perseguers  <typo3@perseguers.ch>
 
+	* Added hook to post-process template markers (might be used to reimplement indexed_search feature removed with changeset #28154)
+	* Reorganized icons
 	* Added French translation
 
 2009-12-29  Xavier Perseguers  <typo3@perseguers.ch>
