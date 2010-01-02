@@ -109,82 +109,11 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$subdirs = $this->userSort($subdirs);
 		$files = $this->userSort($files);
 
-		$rows = array();
+			// Generate table rows
 		$odd = TRUE;
-		if (count($subdirs) >= 0) {
-
-				// Put '..' at the beginning of the array
-			array_unshift($subdirs, array(
-				'name' => '..',
-				'path' => $this->sanitizePath($listingPath . '../')
-			));
-
-				// Display the folders in a table
-			for ($d = 0; $d < count($subdirs); $d++) {
-				if (!$this->args['path'] && $subdirs[$d]['name'] === '..') {
-					continue;
-				}
-				$markers = array();
-				if ($subdirs[$d]['name'] === '..') {
-					$markers['###ICON###'] = '<a href="' . $this->getLink(array('path' => substr($subdirs[$d]['path'], strlen($this->settings['path'])))) . '">' . '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $subdirs[$d]['name'] . '" border="0" /></a>';
-				} else {
-					$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $subdirs[$d]['name'] . '" />';
-				}
-				$markers['###FILENAME###'] = '<a href="' . $this->getLink(array('path' => substr($subdirs[$d]['path'], strlen($this->settings['path'])))) . '">' . $subdirs[$d]['name'] . '</a>';
-				$totalFiles = $this->getNumberOfFiles($listingPath . $subdirs[$d]['name']);
-				$markers['###INFO###'] = $totalFiles . ' '; 
-				if ($totalFiles > 1) {
-					$markers['###INFO###'] .= $this->pi_getLL('files_in_directory');
-				} else {
-					$markers['###INFO###'] .= $this->pi_getLL('file_in_directory');
-				}
-				$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $subdirs[$d]['name']));
-
-					// Hook for processing of extra item markers
-				if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
-					foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'] as $_classRef) {
-						$_procObj =& t3lib_div::getUserObj($_classRef);
-						$markers = $_procObj->extraItemMarkerProcessor($markers, $subdirs[$d]['path'], $this);
-					}
-				}
-				
-				$rows[] = $this->cObj->substituteMarkerArray($odd ? $this->templates['odd'] : $this->templates['even'], $markers);
-				$odd = !$odd;
-			}
-		}
-
-			// Display the files in a table
-		for ($f = 0; $f < count($files); $f++) {
-			$markers = array();
-			$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . $this->getFileTypeIcon($files[$f]['name']) . '" alt="' . $files[$f]['name'] . '">';
-			$markers['###FILENAME###'] = $this->cObj->typolink($files[$f]['name'], array('parameter' => $files[$f]['path']));
-			$markers['###FILENAME###'] .= ' ' . $this->getNewIcon($files[$f]['path'], $this->settings['new_duration']);
-			$markers['###INFO###'] = $this->getHRFileSize($files[$f]['path']);
-			$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $files[$f]['name']));
-
-				// Hook for processing of extra item markers
-			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
-				foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'] as $_classRef) {
-					$_procObj =& t3lib_div::getUserObj($_classRef);
-					$markers = $_procObj->extraItemMarkerProcessor($markers, $files[$f]['path'], $this);
-				}
-			}
-			$rows[] = $this->cObj->substituteMarkerArray($odd ? $this->templates['odd'] : $this->templates['even'], $markers);
-			$odd = !$odd;
-		}
-		
-		$markers = array(
-			'###HEADER_FILENAME###' => $this->pi_getLL('filename'),
-			'###HEADER_INFO###' => $this->pi_getLL('info'),
-			'###HEADER_DATE###' => $this->pi_getLL('date'),
-			'###BODY###' => implode("\n", $rows),
-		);
-		if ($this->settings['fe_sort']) {
-			$markers['###HEADER_FILENAME###'] .= $this->fe_sort('name', 'desc') . $this->fe_sort('name', 'asc');
-			$markers['###HEADER_INFO###'] .= $this->fe_sort('size', 'desc') . $this->fe_sort('size', 'asc');
-			$markers['###HEADER_DATE###'] .= $this->fe_sort('date', 'desc') . $this->fe_sort('date', 'asc');
-		}
-		$content = $this->cObj->substituteMarkerArray($this->templates['table'], $markers);
+		$directoryRows = $this->generateDirectoryRows($subdirs, $listingPath, $odd);
+		$fileRows = $this->generateFileRows($files, $listingPath, $odd);
+		$content = $this->generateTable(array_merge($directoryRows, $fileRows));
 
 		return $this->pi_wrapInBaseClass($content);
 	}
@@ -205,6 +134,114 @@ class tx_filelist_pi1 extends tslib_pibase {
 		}
 
 		return $arr;
+	}
+
+	/**
+	 * Returns templated rows for a given array of directories.
+	 * 
+	 * @param	array		$directories
+	 * @param	string		$listingPath Current path
+	 * @param	boolean		$odd Whether first row is an odd row.
+	 * @return	array
+	 */
+	protected function generateDirectoryRows(array $directories, $listingPath, &$odd) {
+		$rows = array();
+
+			// Put '..' at the beginning of the array
+		array_unshift($directories, array(
+			'name' => '..',
+			'path' => $this->sanitizePath($listingPath . '../')
+		));
+
+		for ($i = 0; $i < count($directories); $i++) {
+			if (!$this->args['path'] && $directories[$i]['name'] === '..') {
+				continue;
+			}
+			$markers = array();
+			if ($directories[$i]['name'] === '..') {
+				$markers['###ICON###'] = '<a href="' . $this->getLink(array('path' => substr($directories[$i]['path'], strlen($this->settings['path'])))) . '">';
+				$markers['###ICON###'] .= '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $directories[$i]['name'] . '" border="0" />';
+				$markers['###ICON###'] .= '</a>';
+			} else {
+				$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $directories[$i]['name'] . '" />';
+			}
+			$markers['###FILENAME###'] = '<a href="' . $this->getLink(array('path' => substr($directories[$i]['path'], strlen($this->settings['path'])))) . '">' . $directories[$i]['name'] . '</a>';
+			$totalFiles = $this->getNumberOfFiles($listingPath . $directories[$i]['name']);
+			$markers['###INFO###'] = $totalFiles . ' '; 
+			if ($totalFiles > 1) {
+				$markers['###INFO###'] .= $this->pi_getLL('files_in_directory');
+			} else {
+				$markers['###INFO###'] .= $this->pi_getLL('file_in_directory');
+			}
+			$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $directories[$i]['name']));
+
+				// Hook for processing of extra item markers
+			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
+				foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'] as $_classRef) {
+					$_procObj =& t3lib_div::getUserObj($_classRef);
+					$markers = $_procObj->extraItemMarkerProcessor($markers, $directories[$d]['path'], $this);
+				}
+			}
+			
+			$rows[] = $this->cObj->substituteMarkerArray($odd ? $this->templates['odd'] : $this->templates['even'], $markers);
+			$odd = !$odd;
+		}
+
+		return $rows;
+	}
+
+	/**
+	 * Returns templated rows for a given array of files.
+	 * 
+	 * @param	array		$files
+	 * @param	string		$listingPath Current path
+	 * @param	boolean		$odd Whether first row is an odd row.
+	 * @return	array
+	 */
+	protected function generateFileRows(array $files, $listingPath, &$odd) {
+		$rows = array();
+		for ($i = 0; $i < count($files); $i++) {
+			$markers = array();
+			$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . $this->getFileTypeIcon($files[$i]['name']) . '" alt="' . $files[$i]['name'] . '">';
+			$markers['###FILENAME###'] = $this->cObj->typolink($files[$i]['name'], array('parameter' => $files[$i]['path']));
+			$markers['###FILENAME###'] .= ' ' . $this->getNewIcon($files[$i]['path'], $this->settings['new_duration']);
+			$markers['###INFO###'] = $this->getHRFileSize($files[$i]['path']);
+			$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $files[$i]['name']));
+
+				// Hook for processing of extra item markers
+			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
+				foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'] as $_classRef) {
+					$_procObj =& t3lib_div::getUserObj($_classRef);
+					$markers = $_procObj->extraItemMarkerProcessor($markers, $files[$i]['path'], $this);
+				}
+			}
+			$rows[] = $this->cObj->substituteMarkerArray($odd ? $this->templates['odd'] : $this->templates['even'], $markers);
+			$odd = !$odd;
+		}
+
+		return $rows;
+	}
+
+	/**
+	 * Returns a templated table containing all given rows as body.
+	 * 
+	 * @param	array		$rows Templated rows
+	 * @return	string
+	 */
+	protected function generateTable(array $rows) {
+			// Replace header markers and create the listing table
+		$markers = array(
+			'###HEADER_FILENAME###' => $this->pi_getLL('filename'),
+			'###HEADER_INFO###' => $this->pi_getLL('info'),
+			'###HEADER_DATE###' => $this->pi_getLL('date'),
+			'###BODY###' => implode("\n", $rows),
+		);
+		if ($this->settings['fe_sort']) {
+			$markers['###HEADER_FILENAME###'] .= $this->fe_sort('name', 'desc') . $this->fe_sort('name', 'asc');
+			$markers['###HEADER_INFO###'] .= $this->fe_sort('size', 'desc') . $this->fe_sort('size', 'asc');
+			$markers['###HEADER_DATE###'] .= $this->fe_sort('date', 'desc') . $this->fe_sort('date', 'asc');
+		}
+		return $this->cObj->substituteMarkerArray($this->templates['table'], $markers);
 	}
 
 	/**
