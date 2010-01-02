@@ -240,12 +240,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 				$params[$key] = $value;
 			}
 		}
-		$tmp = array();
-		foreach ($params as $key => $value) {
-			$tmp[] = sprintf('%s=%s', $this->getPrefix . '[' . $key . ']', urlencode($value));
-		}
-		$params = $tmp;
-		return $this->pi_getPageLink($GLOBALS['TSFE']->id, '', '&' . implode('&', $params));
+		$pParams = t3lib_div::implodeArrayForUrl($this->getPrefix, $params, '', TRUE);
+		return $this->pi_getPageLink($GLOBALS['TSFE']->id, '', $pParams);
 	}
 
 	/**
