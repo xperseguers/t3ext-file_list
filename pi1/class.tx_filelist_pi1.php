@@ -379,9 +379,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			// Make it relative again (if needed)
 		$path = substr($path, strlen($prefix));
 			// Ensure a trailing slash is present
-		if (substr($path, -1, 1) !== '/') {
-			$path .= '/';
-		}
+		$path = rtrim($path, '/') . '/';
 		return $path;
 	}
 
