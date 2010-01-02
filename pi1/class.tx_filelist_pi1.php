@@ -105,22 +105,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 			return $this->pi_wrapInBaseClass($content);
 		}
 
-			/* Sort Start */
-		if (count($subdirs) > 0 && $this->settings['order_by'] === 'name') {
-			foreach ($subdirs as $tx_key => $tx_row) {
-				$sortArr[$tx_key] = $tx_row['name'];
-			}
-			$direction = $this->settings['sort_direction'] === 'asc' ? SORT_ASC : SORT_DESC;
-			$ok_sort = array_multisort($sortArr, $direction, $subdirs);
-		}
-		if (count($files) > 0) {
-			foreach ($files as $tx_key => $tx_row) {
-				$sortArr[$tx_key] = $tx_row[$this->settings['order_by']];
-			}
-			$direction = $this->settings['sort_direction'] === 'asc' ? SORT_ASC : SORT_DESC;
-			$ok_sort = array_multisort($sortArr, $direction, $files);
-		}
-			/* Sort End */
+			// Sort directories and files according to user settings
+		$subdirs = $this->userSort($subdirs);
+		$files = $this->userSort($files);
 
 		$rows = array();
 		$odd = TRUE;
@@ -203,12 +190,30 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
+	 * Sorts an array according to user settings.
+	 * 
+	 * @param	array		$arr
+	 * @return	array		The sorted array
+	 */
+	protected function userSort(array $arr) {
+		if (count($arr) > 0) {
+			foreach ($arr as $tx_key => $tx_row) {
+				$sortArr[$tx_key] = $tx_row['name'];
+			}
+			$direction = $this->settings['sort_direction'] === 'asc' ? SORT_ASC : SORT_DESC;
+			array_multisort($sortArr, $direction, $arr);
+		}
+
+		return $arr;
+	}
+
+	/**
 	 * Reads the template file, fill in global wraps and markers and write the result
 	 * parts to $this->templates array.
 	 *
 	 * @return	void
 	 */
-	function initTemplate() {
+	protected function initTemplate() {
 		$content = $this->cObj->fileResource($this->settings['templateFile']);
 		$templateCode = $this->cObj->getSubpart($content, '###TEMPLATE_DEFAULT###');
 
