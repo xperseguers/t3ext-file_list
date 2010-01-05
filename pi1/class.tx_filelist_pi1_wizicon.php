@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2006-2009 Moreno Feltscher <moreno@feltscher.ch>
+*  (c) 2006-2009 Moreno Feltscher <moreno@luagsh.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +28,8 @@
  *
  * @package     TYPO3
  * @subpackage  tx_filelist
- * @author      Moreno Feltscher <moreno@feltscher.ch>
+ * @author      Moreno Feltscher <moreno@luagsh.ch>
+ * @author      Xavier Perseguers  <typo3@perseguers.ch>
  * @license     http://www.gnu.org/copyleft/gpl.html
  * @version     SVN: $Id$
  */

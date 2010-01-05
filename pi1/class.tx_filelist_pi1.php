@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2006-2009 Moreno Feltscher <moreno@feltscher.ch>
+*  (c) 2006-2009 Moreno Feltscher <moreno@luagsh.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,8 @@ require_once('t3lib/class.t3lib_befunc.php');
  *
  * @package     TYPO3
  * @subpackage  tx_filelist
- * @author      Moreno Feltscher <moreno@feltscher.ch>
+ * @author      Moreno Feltscher <moreno@luagsh.ch>
+ * @author      Xavier Perseguers  <typo3@perseguers.ch>
  * @license     http://www.gnu.org/copyleft/gpl.html
  * @version     SVN: $Id$
  */
@@ -67,7 +68,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 *
 	 * @param	string		$content: The Plugin content
 	 * @param	array		$settings: The Plugin configuration
-	 * @return	The	content that is displayed on the website
+	 * @return	string          Content which appears on the website
 	 */
 	public function main($content, array $settings) {
 		$this->init($settings);
@@ -237,9 +238,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 			'###BODY###' => implode("\n", $rows),
 		);
 		if ($this->settings['fe_sort']) {
-			$markers['###HEADER_FILENAME###'] .= $this->fe_sort('name', 'desc') . $this->fe_sort('name', 'asc');
-			$markers['###HEADER_INFO###'] .= $this->fe_sort('size', 'desc') . $this->fe_sort('size', 'asc');
-			$markers['###HEADER_DATE###'] .= $this->fe_sort('date', 'desc') . $this->fe_sort('date', 'asc');
+			$markers['###HEADER_FILENAME###'] .= $this->getFeSortIcon('name', 'desc') . $this->getFeSortIcon('name', 'asc');
+			$markers['###HEADER_INFO###'] .= $this->getFeSortIcon('size', 'desc') . $this->getFeSortIcon('size', 'asc');
+			$markers['###HEADER_DATE###'] .= $this->getFeSortIcon('date', 'desc') . $this->getFeSortIcon('date', 'asc');
 		}
 		return $this->cObj->substituteMarkerArray($this->templates['table'], $markers);
 	}
@@ -288,7 +289,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * How many files are in the directory?
+	 * Counts the amount of files inside a given directory
 	 *
 	 * @param	string		Path to the specified directory
 	 * @return	integer		Number of files in the directory
@@ -306,7 +307,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Returns the icon which represents a file-type.
+	 * Returns the icon which represents a file type
 	 *
 	 * @param	string		Path to the specified file
 	 * @return	string		Filename of the icon
@@ -461,28 +462,29 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Returns the new-icon, when the file is selected as new.
+	 * Returns the new-icon if the file is selected as new.
 	 *
 	 * @param	string		Path to the specified file
-	 * @param	integer		With how much of days a file is new?
+	 * @param	integer		User specific amount of days within a file is considered to be new
 	 * @return	string		Returns the 'new-icon'
 	 */
 	protected function getNewIcon($fn, $duration) {
 		if ($duration > 0 && filemtime($fn) > mktime(0, 0, 0, date('m'), date('d') - $duration, date('Y'))) {
 			return '<img src="' . $this->settings['iconsPath'] . $this->pi_getLL('new.icon') . '" alt="' . $this->pi_getLL('new.altText') . '" />';
 		}
-
-		return '';
+                else {
+                    return '';
+                }
 	}
 
 	/**
-	 * Returns the icons, with witch the user on the frontend can sort the files
+	 * Reads out the icons in order to sort FE output of files
 	 *
 	 * @param	string		Order by (name, date, size)
 	 * @param	string		Order sequence ('asc', 'desc')
-	 * @return	string		Return of images for sorting
+	 * @return	string		Filename of ordering icons
 	 */
-	protected function fe_sort($order_by, $direction) {
+	protected function getFeSortIcon($order_by, $direction) {
 		$link = $this->getLink(array(
 			'path'      => $this->args['path'],
 			'order_by'  => $order_by,
