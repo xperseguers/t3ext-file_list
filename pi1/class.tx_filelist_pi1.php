@@ -378,20 +378,22 @@ class tx_filelist_pi1 extends tslib_pibase {
 			// Open the directory and read out all folders and files
 		$dh = @opendir($path);
 		while ($dir_content = @readdir($dh)) {
-			if ($dir_content !== '.' && $dir_content !== '..' && $this->isValidFileName($dir_content)) {
-				if (is_dir($path . '/' . $dir_content)) {
+			if ($dir_content !== '.' && $dir_content !== '..') {
+				if (is_dir($path . '/' . $dir_content) && $this->isValidFolderName($dir_content)) {
 					$dirs[] = array(
 						'name' => $dir_content,
 						'path' => $path . $dir_content
 					);
+                                        t3lib_div::devLog('Folder: '.$dir_content, 'file_list');
 				}
-				elseif (is_file($path . '/' . $dir_content)) {
+				elseif (is_file($path . '/' . $dir_content) && $this->isValidFileName($dir_content)) {
 					$files[] = array(
 						'name' => $dir_content,
 						'date' => filemtime($path . $dir_content),
 						'size' => filesize($path . $dir_content),
 						'path' => $path . $dir_content
 					);
+                                        t3lib_div::devLog('File: '.$dir_content, 'file_list');
 				}
 			}
 		}
@@ -446,7 +448,18 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @return	boolean
 	 */
 	protected function isValidFileName($filename) {
-		return !preg_match($this->settings['ignoreFileNamePattern'], $filename);
+            return !preg_match($this->settings['ignoreFileNamePattern'], $filename);
+	}
+
+        /**
+	 * Checks whether a file is supposed to be shown in the frontend.
+	 * The pattern, file names are compared with, is set in the TypoScript option "ignoreFileNamePattern"
+	 *
+	 * @param	string		$path Path relative to the website root
+	 * @return	boolean
+	 */
+	protected function isValidFolderName($foldername) {
+            return !preg_match($this->settings['ignoreFolderNamePattern'], $foldername);
 	}
 
 	/**
@@ -568,9 +581,16 @@ class tx_filelist_pi1 extends tslib_pibase {
                         // Prepare regular expression for file name validation
                 $ignoreFileNamePattern = $this->settings['ignoreFileNamePattern'];
                 if (!$ignoreFileNamePattern) {
-                        $ignoreFileNamePattern = '/^(\..*|CVS|thumb)$/i';
+                        $ignoreFileNamePattern = '/^(\..*|thumb)$/i';
                 }
                 $this->settings['ignoreFileNamePattern'] = $ignoreFileNamePattern;
+
+                        // Prepare regular expression for folder name validation
+                $ignoreFolderNamePattern = $this->settings['ignoreFolderNamePattern'];
+                if (!$ignoreFolderNamePattern) {
+                        $ignoreFolderNamePattern = '/^(\..*|CVS)$/i';
+                }
+                $this->settings['ignoreFolderNamePattern'] = $ignoreFolderNamePattern;
 
 			// Preparing the path to the directory
 		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']); // When RTE file browser is used, additionnal components may be present

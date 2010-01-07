@@ -9,7 +9,10 @@ plugin.tx_filelist_pi1 {
 	root = fileadmin/
 
                 # Perl compatible regular expression for file names which shouldn't be displayed. See documentation for further information
-        ignoreFileNamePattern = /^(\..*|CVS|thumb)$/i
+        ignoreFileNamePattern = /^(\..*|thumb)$/i
+
+                # Perl compatible regular expression for folder names which shouldn't be displayed. See documentation for further information
+        ignoreFolderNamePattern = /^(\..*|CVS)$/i
 
 	### Default CSS styles for the file_list standard template: EXT:file_list/Resources/Private/Templates/template_pi1.html
 

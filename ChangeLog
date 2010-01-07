@@ -1,6 +1,7 @@
 2010-01-07  Moreno Feltscher  <moreno@luagsh.ch>
 
-	* Added feature #5910: Allow users to prevent specific files to be shown on the frontend
+	* Added feature #5911: Allow users to prevent specific folders related to their names to be shown on the frontend
+        * Added feature #5910: Allow users to prevent specific files to be shown on the frontend
 
 2010-01-04  Moreno Feltscher  <moreno@luagsh.ch>
 
