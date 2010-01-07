@@ -37,19 +37,30 @@ require_once(t3lib_extMgm::extPath('indexed_search') . 'class.indexer.php');
 class user_tx_filelist_indexedsearch {
 
 	/**
-	 * Indexes an external file
+	 * Pseudo extraItemMarkerProcessor to actually index an external file.
 	 *
 	 * @param	array		$markers
 	 * @param	string		$filename
 	 * @param	tx_filelist_pi1		$pObj
 	 * @return	array		$markers array, unchanged
 	 */
-	public function indexExternalFile(array $markers, $filename, tx_filelist_pi1 $pObj) {
-		if (!@is_file($filename)) {
-				// Early return
-			return $markers;
+	public function extraItemMarkerProcessor(array $markers, $filename, tx_filelist_pi1 $pObj) {
+		if (@is_file($filename)) {
+			$this->indexExternalFile($filename, $pObj);
 		}
 
+		return $markers;
+	}
+
+	/**
+	 * Indexes an external file.
+	 * 
+	 * @param	string		$filename
+	 * @param	tx_filelist_pi1		$pObj
+	 * @return	void
+	 */
+	protected function indexExternalFile($filename, tx_filelist_pi1 $pObj) {
+		 
 			// Get the pid
 		$config['pid_list'] = trim($pObj->cObj->stdWrap($this->conf['pid_list'], $this->conf['pid_list.']));
 		$config['pid_list'] = $config['pid_list'] ? implode(t3lib_div::intExplode(',', $config['pid_list']), ',') : $GLOBALS['TSFE']->id;
@@ -85,9 +96,6 @@ class user_tx_filelist_indexedsearch {
 		if (isset($out)) {
 			unset($out);
 		}
-
-			// Return the input marker array, unchanged
-		return $markers;
 	}
 
 	/**
