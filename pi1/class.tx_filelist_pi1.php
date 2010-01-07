@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2006-2009 Moreno Feltscher <moreno@luagsh.ch>
+*  (c) 2006-2010 Moreno Feltscher <moreno@luagsh.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -446,18 +446,18 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @return	boolean
 	 */
 	protected function isValidFileName($filename) {
-            return !preg_match($this->settings['ignoreFileNamePattern'], $filename);
+                return !preg_match($this->settings['ignoreFileNamePattern'], $filename);
 	}
 
         /**
 	 * Checks whether a file is supposed to be shown in the frontend.
-	 * The pattern, file names are compared with, is set in the TypoScript option "ignoreFileNamePattern"
+	 * The pattern, file names are compared with, is set in the TypoScript option "ignoreFolderNamePattern"
 	 *
 	 * @param	string		$path Path relative to the website root
 	 * @return	boolean
 	 */
 	protected function isValidFolderName($foldername) {
-            return !preg_match($this->settings['ignoreFolderNamePattern'], $foldername);
+                return !preg_match($this->settings['ignoreFolderNamePattern'], $foldername);
 	}
 
 	/**
