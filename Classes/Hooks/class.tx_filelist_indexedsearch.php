@@ -34,7 +34,7 @@ require_once(t3lib_extMgm::extPath('indexed_search') . 'class.indexer.php');
  * @license     http://www.gnu.org/copyleft/gpl.html
  * @version     SVN: $Id$
  */
-class user_tx_filelist_indexedsearch {
+class tx_filelist_indexedsearch {
 
 	/**
 	 * Pseudo extraItemMarkerProcessor to actually index an external file.
@@ -129,4 +129,10 @@ class user_tx_filelist_indexedsearch {
 	}
 
 }
+
+
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/Classes/Hooks/class.tx_filelist_indexedsearch.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/Classes/Hooks/class.tx_filelist_indexedsearch.php']);
+}
+
 ?>
