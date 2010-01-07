@@ -384,7 +384,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 						'name' => $dir_content,
 						'path' => $path . $dir_content
 					);
-                                        t3lib_div::devLog('Folder: '.$dir_content, 'file_list');
 				}
 				elseif (is_file($path . '/' . $dir_content) && $this->isValidFileName($dir_content)) {
 					$files[] = array(
@@ -393,7 +392,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 						'size' => filesize($path . $dir_content),
 						'path' => $path . $dir_content
 					);
-                                        t3lib_div::devLog('File: '.$dir_content, 'file_list');
 				}
 			}
 		}
