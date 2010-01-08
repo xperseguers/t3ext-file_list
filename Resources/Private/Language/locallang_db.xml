@@ -11,7 +11,7 @@
         <languageKey index="de" type="array">
             <label index="tt_content.list_type_pi1">Dateiliste</label>
         </languageKey>
-        <languageKey index="de" type="array">
+        <languageKey index="fr" type="array">
             <label index="tt_content.list_type_pi1">Liste de fichiers</label>
         </languageKey>
     </data>
