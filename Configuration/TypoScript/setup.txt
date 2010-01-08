@@ -8,11 +8,11 @@ plugin.tx_filelist_pi1 {
 		# Base root directory (all path must be within this directory, either absolute or relative to site root)
 	root = fileadmin/
 
-                # Perl compatible regular expression for file names which shouldn't be displayed. See documentation for further information
-        ignoreFileNamePattern = /^(\..*|thumb)$/i
+		# Perl compatible regular expression for file names which shouldn't be displayed. See documentation for further information
+	ignoreFileNamePattern = /^(\..*|thumb)$/i
 
-                # Perl compatible regular expression for folder names which shouldn't be displayed. See documentation for further information
-        ignoreFolderNamePattern = /^(\..*|CVS)$/i
+		# Perl compatible regular expression for folder names which shouldn't be displayed. See documentation for further information
+	ignoreFolderNamePattern = /^(\..*|CVS)$/i
 
 	### Default CSS styles for the file_list standard template: EXT:file_list/Resources/Private/Templates/template_pi1.html
 
