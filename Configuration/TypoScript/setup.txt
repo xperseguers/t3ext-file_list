@@ -1,6 +1,6 @@
 plugin.tx_filelist_pi1 {
 
-		# Icon skin (relative to site root or prefixed with an extension name, stdWrap-aware)
+		# Icon skin (relative to site root or prefixed with an extension name)
 	iconsPath = EXT:file_list/Resources/Public/Icons/
 
 	templateFile = EXT:file_list/Resources/Private/Templates/template_pi1.html
@@ -8,10 +8,10 @@ plugin.tx_filelist_pi1 {
 		# Base root directory (all path must be within this directory, either absolute or relative to site root)
 	root = fileadmin/
 
-		# Perl compatible regular expression for file names which shouldn't be displayed. See documentation for further information
+		# Perl compatible regular expression for file names which shouldn't be displayed
 	ignoreFileNamePattern = /^(\..*|thumb)$/i
 
-		# Perl compatible regular expression for folder names which shouldn't be displayed. See documentation for further information
+		# Perl compatible regular expression for folder names which shouldn't be displayed
 	ignoreFolderNamePattern = /^(\..*|CVS)$/i
 
 	
