@@ -101,7 +101,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		list($subdirs, $files) = $this->getDirectoryContent($listingPath);
 
 			// Are there any files in the directory?
-		if ((count($files) == 0) && (count($subdirs) == 0)) {
+		if ((count($files) == 0) && (count($subdirs) == 0) && !$this->args['path']) {
 			$content = $this->pi_getLL('no_files');
 			return $this->pi_wrapInBaseClass($content);
 		}
