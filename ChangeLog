@@ -1,4 +1,4 @@
-2010-01-10  Xavier Perseguers  <typo3@perseguers.ch>
+2010-01-09  Xavier Perseguers  <typo3@perseguers.ch>
 
 	* Added hook to post-process the list of files
 	* Finally fixed indexed_search problem
