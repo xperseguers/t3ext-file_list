@@ -320,25 +320,10 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @return	string		Filename of the icon
 	 */
 	protected function getFileTypeIcon($filename) {
-		$categories = array(
-			'archive'    => array('bz2', 'gz', 'rar', 'tar', 'zip'),
-			'document'   => array('doc', 'docx', 'pdf', 'pps', 'ppt', 'pptx', 'xls', 'xlsx'),
-			'flash'      => array('fla', 'swf'),
-			'image'      => array('bmp', 'draw', 'gif', 'jpg', 'jpeg', 'png', 'tif', 'tiff'),
-			'sound'      => array('m4a', 'mid', 'midi', 'mp3', 'mp4', 'wav'),
-			'source'     => array('php', 'htm', 'html', 'inc', 'phtml'),
-			'video'      => array('mpg', 'mpeg', 'wmv'),
-		);
-			// Remapping occurs if a dedicated icon cannot be found
-		$remapExtensions = array(
-			'docx'  => 'doc',
-			'htm'   => 'html',
-			'midi'  => 'mid',
-			'phtml' => 'html',
-			'pptx'  => 'ptt',
-			'tiff'  => 'tif',
-			'xlsx'  => 'xls',
-		);
+		foreach ($this->settings['extension.']['category.'] as $category => $extensions) {
+			$categories[$category] = t3lib_div::trimExplode(',', $extensions);
+		}
+		$remapExtensions = $this->settings['extension.']['remap.'];
 
 			// Extract the file extension
 		$ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
