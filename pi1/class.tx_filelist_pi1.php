@@ -74,7 +74,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$this->init($settings);
 		$this->pi_setPiVarDefaults();
 		$this->initTemplate();
-	
+
 		$subdirs = array();
 		$files = array();
 
@@ -284,8 +284,15 @@ class tx_filelist_pi1 extends tslib_pibase {
 				$params[$key] = $value;
 			}
 		}
-		$pParams = t3lib_div::implodeArrayForUrl($this->getPrefix, $params, '', TRUE);
-		return $this->pi_getPageLink($GLOBALS['TSFE']->id, '', $pParams);
+
+		$conf = array();
+		$conf['useCacheHash'] = $this->pi_USER_INT_obj ? 0 : 1;
+		$conf['no_cache'] = FALSE;
+		$conf['parameter'] = $GLOBALS['TSFE']->id;
+		$conf['additionalParams'] = t3lib_div::implodeArrayForUrl($this->getPrefix, $params, '', TRUE);
+
+		$this->cObj->typoLink('|', $conf);
+		return $this->cObj->lastTypoLinkUrl;
 	}
 
 	/**
@@ -438,7 +445,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			&& !(strcmp(substr($path, 0, strlen($this->settings['path'])), $this->settings['path']));
 	}
 
-        /**
+	/**
 	 * Checks whether a file is supposed to be shown in the frontend.
 	 * The pattern, file names are compared with, is set in the TypoScript option "ignoreFileNamePattern"
 	 *
@@ -446,10 +453,10 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @return	boolean
 	 */
 	protected function isValidFileName($filename) {
-                return !preg_match($this->settings['ignoreFileNamePattern'], $filename);
+		return !preg_match($this->settings['ignoreFileNamePattern'], $filename);
 	}
 
-        /**
+	/**
 	 * Checks whether a file is supposed to be shown in the frontend.
 	 * The pattern, file names are compared with, is set in the TypoScript option "ignoreFolderNamePattern"
 	 *
@@ -457,7 +464,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @return	boolean
 	 */
 	protected function isValidFolderName($foldername) {
-                return !preg_match($this->settings['ignoreFolderNamePattern'], $foldername);
+		return !preg_match($this->settings['ignoreFolderNamePattern'], $foldername);
 	}
 
 	/**
@@ -494,9 +501,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 		if ($duration > 0 && filemtime($fn) > mktime(0, 0, 0, date('m'), date('d') - $duration, date('Y'))) {
 			return '<img src="' . $this->settings['iconsPath'] . $this->pi_getLL('new.icon') . '" alt="' . $this->pi_getLL('new.altText') . '" />';
 		}
-                else {
-                    return '';
-                }
+		else {
+			return '';
+		}
 	}
 
 	/**
@@ -530,7 +537,14 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @return	void
 	 */
 	protected function init(array $settings) {
-		$this->settings = $settings;
+			// Initialize default values based on extension TS
+		$this->settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
+		if (!is_array($this->settings)) {
+			$this->settings = array();
+		}
+
+			// Base configuration is equal the the plugin's TS setup
+		$this->settings = array_merge($this->settings, $settings);
 
 			// Load the flexform and loop on all its values to override TS setup values
 			// Some properties use a different test (more strict than not empty) and yet some others no test at all
@@ -596,21 +610,25 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 			// Retrieval of arguments
 		$this->getPrefix = $this->pi_getClassName($this->cObj->data['uid']);
+		$arguments = t3lib_div::_GET($this->getPrefix);
+		if (isset($arguments['noCache'])) {
+			unset($arguments['noCache']);
+		}
 		$this->args = array_merge(
 			array(
 				'path'      => '',
 				'order_by'  => '',
 				'direction' => '',
 			),
-			t3lib_div::_GET($this->getPrefix)
+			$arguments
 		);
 
 			// Disable Filelist if an error occurred
 		$this->error = 0;
 			// Load language data
 		$this->pi_loadLL();
-			// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
-		$this->pi_USER_INT_obj = 1;
+			// Configure the plugin either as USER or USER_INT according to plugin configuration
+		$this->pi_USER_INT_obj = $this->settings['noCache'] ? 1 : 0;
 	}
 
 	/**
