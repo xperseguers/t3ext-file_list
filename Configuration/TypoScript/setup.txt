@@ -14,6 +14,7 @@ plugin.tx_filelist_pi1 {
 		# Perl compatible regular expression for folder names which shouldn't be displayed. See documentation for further information
 	ignoreFolderNamePattern = /^(\..*|CVS)$/i
 
+	
 	### Default CSS styles for the file_list standard template: EXT:file_list/Resources/Private/Templates/template_pi1.html
 
 	_CSS_DEFAULT_STYLE (

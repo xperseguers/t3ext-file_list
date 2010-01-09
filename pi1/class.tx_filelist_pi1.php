@@ -453,7 +453,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @return	boolean
 	 */
 	protected function isValidFileName($filename) {
-		return !preg_match($this->settings['ignoreFileNamePattern'], $filename);
+		return empty($this->settings['ignoreFileNamePattern']) || !preg_match($this->settings['ignoreFileNamePattern'], $filename);
 	}
 
 	/**
@@ -464,7 +464,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @return	boolean
 	 */
 	protected function isValidFolderName($foldername) {
-		return !preg_match($this->settings['ignoreFolderNamePattern'], $foldername);
+		return empty($this->settings['ignoreFolderNamePattern']) || !preg_match($this->settings['ignoreFolderNamePattern'], $foldername);
 	}
 
 	/**
@@ -590,21 +590,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$this->settings['root'] = $root;
 		$this->settings['rootabs'] = ($root{0} === '/') ? $root : PATH_site . $root;
 
-                        // Prepare regular expression for file name validation
-                $ignoreFileNamePattern = $this->settings['ignoreFileNamePattern'];
-                if (!$ignoreFileNamePattern) {
-                        $ignoreFileNamePattern = '/^(\..*|thumb)$/i';
-                }
-                $this->settings['ignoreFileNamePattern'] = $ignoreFileNamePattern;
-
-                        // Prepare regular expression for folder name validation
-                $ignoreFolderNamePattern = $this->settings['ignoreFolderNamePattern'];
-                if (!$ignoreFolderNamePattern) {
-                        $ignoreFolderNamePattern = '/^(\..*|CVS)$/i';
-                }
-                $this->settings['ignoreFolderNamePattern'] = $ignoreFolderNamePattern;
-
-			// Preparing the path to the directory
+			// Prepare the path to the directory
 		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']); // When RTE file browser is used, additionnal components may be present
 		$this->settings['path'] = $this->sanitizePath($pathOptions[0]);
 
