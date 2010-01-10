@@ -552,7 +552,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 				'direction' => $direction,
 			));
 			$ret .= '<a href="' . $link . '" target="_top" title="' . $this->pi_getLL('sort.' . $direction) . '">';
-			$ret .= '<img src="' . $this->settings['iconsPathSorting'] . $direction .'.gif" alt="' . $this->pi_getLL('sort.' . $direction) . '" border="0">';
+			$ret .= '<img src="' . $this->settings['iconsPathSorting'] . $direction .'.gif" alt="' . $this->pi_getLL('sort.' . $direction) . '" border="0" />';
 			$ret .= '</a>';
 			$direction = 'asc';
 		}
