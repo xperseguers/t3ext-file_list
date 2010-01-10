@@ -264,6 +264,15 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 		$this->templates['odd'] = $this->cObj->getSubpart($templateCode, '###ODD_TEMPLATE###');
 		$this->templates['even'] = $this->cObj->getSubpart($templateCode, '###EVEN_TEMPLATE###');
+
+		$defaultTemplate = $this->cObj->getSubpart($templateCode, '###TEMPLATE###');
+		if (empty($this->templates['odd'])) {
+			$this->templates['odd'] = $defaultTemplate;
+		}
+		if (empty($this->templates['even'])) {
+			$this->templates['even'] = $defaultTemplate;
+		}
+		
 		$this->templates['table'] = $this->cObj->substituteSubpart($templateCode, '###BODY###', '###BODY###');
 	}
 
