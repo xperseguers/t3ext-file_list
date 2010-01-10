@@ -151,11 +151,14 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$markers['###ICON###'] .= '</a>';
 			$markers['###FILENAME###'] = '<a href="' . $this->getLink(array('path' => substr($directories[$i]['path'], strlen($this->settings['path'])))) . '">' . $directories[$i]['name'] . '</a>';
 			$markers['###NEWFILE###'] = '';
-			$markers['###INFO###'] = $directories[$i]['size'] . ' ';
-			if ($directories[$i]['size'] > 1) {
-				$markers['###INFO###'] .= $this->pi_getLL('files_in_directory');
-			} else {
-				$markers['###INFO###'] .= $this->pi_getLL('file_in_directory');
+			$markers['###INFO###'] = '';
+			if (isset($directories[$i]['size'])) {
+				$markers['###INFO###'] = $directories[$i]['size'] . ' ';
+				if ($directories[$i]['size'] > 1) {
+					$markers['###INFO###'] .= $this->pi_getLL('files_in_directory');
+				} else {
+					$markers['###INFO###'] .= $this->pi_getLL('file_in_directory');
+				}
 			}
 			$markers['###DATE###'] = $directories[$i]['date'] > 0 ? t3lib_BEfunc::datetime($directories[$i]['date']) : '';
 
