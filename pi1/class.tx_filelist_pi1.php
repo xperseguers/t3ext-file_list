@@ -163,11 +163,15 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$markers['###NEWFILE###'] = '';
 			$markers['###INFO###'] = '';
 			if (isset($directories[$i]['size'])) {
-				$markers['###INFO###'] = $directories[$i]['size'] . ' ';
-				if ($directories[$i]['size'] > 1) {
-					$markers['###INFO###'] .= $this->pi_getLL('files_in_directory');
+				if ($directories[$i]['size'] > 0) {
+					$markers['###INFO###'] = $directories[$i]['size'] . ' ';
+					if ($directories[$i]['size'] > 1) {
+						$markers['###INFO###'] .= $this->pi_getLL('directory_size.multiple_files');
+					} else {
+						$markers['###INFO###'] .= $this->pi_getLL('directory_size.one_file');
+					}
 				} else {
-					$markers['###INFO###'] .= $this->pi_getLL('file_in_directory');
+					$markers['###INFO###'] = $this->pi_getLL('directory_size.no_files');
 				}
 			}
 			$markers['###DATE###'] = $directories[$i]['date'] > 0 ? t3lib_BEfunc::datetime($directories[$i]['date']) : '';
