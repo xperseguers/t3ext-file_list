@@ -157,7 +157,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			} else {
 				$markers['###INFO###'] .= $this->pi_getLL('file_in_directory');
 			}
-			$markers['###DATE###'] = t3lib_BEfunc::datetime($directories[$i]['date']);
+			$markers['###DATE###'] = $directories[$i]['date'] > 0 ? t3lib_BEfunc::datetime($directories[$i]['date']) : '';
 
 				// Hook for processing of extra item markers
 			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
