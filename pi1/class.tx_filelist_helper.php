@@ -135,7 +135,8 @@ class tx_filelist_helper {
 						'name' => $dir_content,
 						'date' => self::getHighestFileTimestamp($path . '/' . $dir_content, TRUE, $invalidFileNamePattern, $invalidFolderNamePattern),
 						'size' => self::getNumberOfFiles($path . '/' . $dir_content, FALSE, $invalidFileNamePattern, $invalidFolderNamePattern),
-						'path' => $path . $dir_content
+						'path' => $path . $dir_content,
+						'fullpath' => PATH_site . $path . $dir_content,
 					);
 				}
 				elseif (is_file($path . '/' . $dir_content) && self::isValidName($dir_content, $invalidFileNamePattern)) {
@@ -144,7 +145,8 @@ class tx_filelist_helper {
 						'name' => $dir_content,
 						'date' => filemtime($path . $dir_content),
 						'size' => filesize($path . $dir_content),
-						'path' => $path . $dir_content
+						'path' => $path . $dir_content,
+						'fullpath' => PATH_site . $path . $dir_content,
 					);
 				}
 			}
