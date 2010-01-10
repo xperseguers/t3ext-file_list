@@ -167,6 +167,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 				$markers['###ICON###'] = '<img src="' . $this->settings['iconsPathFolders'] . 'folder.png" alt="' . $directories[$i]['name'] . '" />';
 			}
 			$markers['###FILENAME###'] = '<a href="' . $this->getLink(array('path' => substr($directories[$i]['path'], strlen($this->settings['path'])))) . '">' . $directories[$i]['name'] . '</a>';
+			$markers['###NEWFILE###'] = '';
 			$totalFiles = $this->getNumberOfFiles($listingPath . $directories[$i]['name']);
 			$markers['###INFO###'] = $totalFiles . ' '; 
 			if ($totalFiles > 1) {
@@ -205,7 +206,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$markers = array();
 			$markers['###ICON###'] = '<img src="' . $this->settings['iconsPathFiles'] . $this->getFileTypeIcon($files[$i]['name']) . '" alt="' . $files[$i]['name'] . '">';
 			$markers['###FILENAME###'] = $this->cObj->typolink($files[$i]['name'], array('parameter' => $files[$i]['path']));
-			$markers['###FILENAME###'] .= ' ' . $this->getNewIcon($files[$i]['path'], $this->settings['new_duration']);
+			$markers['###NEWFILE###'] = ($this->settings['new_duration'] > 0) ? $this->getNewFileText($files[$i]['path'], $this->settings['new_duration']) : '';
 			$markers['###INFO###'] = $this->getHRFileSize($files[$i]['path']);
 			$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $files[$i]['name']));
 
@@ -261,6 +262,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			'###EVEN_CLASS###'      => $this->pi_getClassName('even'),
 			'###ICON_CLASS###'      => $this->pi_getClassName('icon'),
 			'###FILENAME_CLASS###'  => $this->pi_getClassName('filename'),
+			'###NEWFILE_CLASS###'	=> $this->pi_getClassName('newFile'),
 			'###INFO_CLASS###'      => $this->pi_getClassName('info'),
 			'###DATE_CLASS###'      => $this->pi_getClassName('date'),
 		);
@@ -485,19 +487,14 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Returns the new-icon if the file is selected as new.
+	 * Returns a text stating "new" if a file is considered to be marked as new
 	 *
 	 * @param	string		Path to the specified file
 	 * @param	integer		User specific amount of days within a file is considered to be new
-	 * @return	string		Returns the 'new-icon'
+	 * @return	string'
 	 */
-	protected function getNewIcon($fn, $duration) {
-		if ($duration > 0 && filemtime($fn) > mktime(0, 0, 0, date('m'), date('d') - $duration, date('Y'))) {
-			return '<img src="' . $this->settings['iconsPath'] . $this->pi_getLL('new.icon') . '" alt="' . $this->pi_getLL('new.altText') . '" />';
-		}
-		else {
-			return '';
-		}
+	protected function getNewFileText($fn, $duration) {
+		return ($duration > 0 && filemtime($fn) > mktime(0, 0, 0, date('m'), date('d') - $duration, date('Y'))) ? $this->pi_getLL('newFile') : '';
 	}
 
 	/**

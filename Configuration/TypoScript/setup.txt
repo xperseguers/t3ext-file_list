@@ -56,6 +56,12 @@ td.tx-filelist-pi1-info, td.tx-filelist-pi1-date {
 	font-size: smaller;
 }
 
+span.tx-filelist-pi1-newFile {
+	font-size: smaller;
+	font-style: italic;
+	color: red;
+}
+
 	)
 }
 

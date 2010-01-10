@@ -8,15 +8,15 @@
 		<languageKey index="default" type="array">
 			<!-- FlexForm labels -->
 			<label index="pi_flexform.path">Path to the directory (example: fileadmin/directory1/)</label>
-            <label index="pi_flexform.path.wizards.link.title">Folder Selector</label>
-            <label index="pi_flexform.order_by">Order files by:</label>
-            <label index="pi_flexform.order_by.name">Name</label>
-            <label index="pi_flexform.order_by.date">Date</label>
-            <label index="pi_flexform.order_by.size">Size</label>
-            <label index="pi_flexform.sort_direction">Sort sequence:</label>
-            <label index="pi_flexform.sort_direction.asc">Ascending</label>
-            <label index="pi_flexform.sort_direction.desc">Descending</label>            
-            <label index="pi_flexform.new_duration">Days to have &quot;new&quot; (0 = disable):</label>
+			<label index="pi_flexform.path.wizards.link.title">Folder Selector</label>
+			<label index="pi_flexform.order_by">Order files by:</label>
+			<label index="pi_flexform.order_by.name">Name</label>
+			<label index="pi_flexform.order_by.date">Date</label>
+			<label index="pi_flexform.order_by.size">Size</label>
+			<label index="pi_flexform.sort_direction">Sort sequence:</label>
+			<label index="pi_flexform.sort_direction.asc">Ascending</label>
+			<label index="pi_flexform.sort_direction.desc">Descending</label>
+			<label index="pi_flexform.new_duration">Days to have &quot;new&quot; (0 = disable):</label>
 			<label index="pi_flexform.fe_sort">Users can sort on FE:</label>
 			
 			<!-- Table labels -->
@@ -27,8 +27,7 @@
 			<label index="no_files">There are no file in the directory!</label>
 			<label index="file_in_directory">File</label>
 			<label index="files_in_directory">Files</label>
-			<label index="new.icon">new.png</label>
-			<label index="new.altText">New</label>
+			<label index="newFile">new</label>
 			<label index="sort.asc">Sort ascending</label>
 			<label index="sort.desc">Sort descending</label>
 
@@ -42,15 +41,15 @@
 		<languageKey index="de" type="array">
 			<!-- FlexForm labels -->
 			<label index="pi_flexform.path">Pfad zum Verzeichnis (Beispiel: fileadmin/directory1/)</label>
-            <label index="pi_flexform.path.wizards.link.title">Verzeichnis-Selektor</label>
-            <label index="pi_flexform.order_by">Ordne Dateien nach:</label>
-            <label index="pi_flexform.order_by.name">Name</label>
-            <label index="pi_flexform.order_by.date">Datum</label>
-            <label index="pi_flexform.order_by.size">Grösse</label>
-            <label index="pi_flexform.sort_direction">Sortierreihenfolge:</label>
-            <label index="pi_flexform.sort_direction.asc">Aufsteigend</label>
-            <label index="pi_flexform.sort_direction.desc">Absteigend</label>            
-            <label index="pi_flexform.new_duration">Anzahl Tage um &quot;neu&quot; zu sein (0 = ausgeschaltet):</label>
+			<label index="pi_flexform.path.wizards.link.title">Verzeichnis-Selektor</label>
+			<label index="pi_flexform.order_by">Ordne Dateien nach:</label>
+			<label index="pi_flexform.order_by.name">Name</label>
+			<label index="pi_flexform.order_by.date">Datum</label>
+			<label index="pi_flexform.order_by.size">Grösse</label>
+			<label index="pi_flexform.sort_direction">Sortierreihenfolge:</label>
+			<label index="pi_flexform.sort_direction.asc">Aufsteigend</label>
+			<label index="pi_flexform.sort_direction.desc">Absteigend</label>
+			<label index="pi_flexform.new_duration">Anzahl Tage um &quot;neu&quot; zu sein (0 = ausgeschaltet):</label>
 			<label index="pi_flexform.fe_sort">Sortieren auf FE erlauben:</label>
 			
 			<!-- Table labels -->
@@ -61,23 +60,22 @@
 			<label index="no_files">Keine Datei im Verzeichnis!</label>
 			<label index="file_in_directory">Datei</label>
 			<label index="files_in_directory">Dateien</label>
-			<label index="new.icon">new_de.png</label>
-			<label index="new.altText">Neu</label>
+			<label index="newFile">neu</label>
 			<label index="sort.asc">Aufsteigend sortieren</label>
 			<label index="sort.desc">Absteigend sortieren</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<!-- FlexForm labels -->
 			<label index="pi_flexform.path">Chemin vers le répertoire (exemple : fileadmin/repertoire1/)</label>
-            <label index="pi_flexform.path.wizards.link.title">Sélecteur de répertoire</label>
-            <label index="pi_flexform.order_by">Trier les fichiers par :</label>
-            <label index="pi_flexform.order_by.name">Nom</label>
-            <label index="pi_flexform.order_by.date">Date</label>
-            <label index="pi_flexform.order_by.size">Taille</label>
-            <label index="pi_flexform.sort_direction">Ordre de tri :</label>
-            <label index="pi_flexform.sort_direction.asc">Ascendant (A-Z)</label>
-            <label index="pi_flexform.sort_direction.desc">Descendant (Z-A)</label>
-            <label index="pi_flexform.new_duration">Nombre de jours pour qu'un fichier soit &quot; nouveau &quot; (0 = désactivé):</label>
+			<label index="pi_flexform.path.wizards.link.title">Sélecteur de répertoire</label>
+			<label index="pi_flexform.order_by">Trier les fichiers par :</label>
+			<label index="pi_flexform.order_by.name">Nom</label>
+			<label index="pi_flexform.order_by.date">Date</label>
+			<label index="pi_flexform.order_by.size">Taille</label>
+			<label index="pi_flexform.sort_direction">Ordre de tri :</label>
+			<label index="pi_flexform.sort_direction.asc">Ascendant (A-Z)</label>
+			<label index="pi_flexform.sort_direction.desc">Descendant (Z-A)</label>
+			<label index="pi_flexform.new_duration">Nombre de jours pour qu'un fichier soit &quot; nouveau &quot; (0 = désactivé):</label>
 			<label index="pi_flexform.fe_sort">Autoriser le tri en frontend :</label>
 			
 			<!-- Table labels -->
@@ -88,8 +86,7 @@
 			<label index="no_files">Il n'y a aucun fichier dans le répertoire !</label>
 			<label index="file_in_directory">Fichier</label>
 			<label index="files_in_directory">Fichiers</label>
-			<label index="new.icon">new_fr.png</label>
-			<label index="new.altText">Nouveau</label>
+			<label index="newFile">nouveau</label>
 			<label index="sort.asc">Tri ascendant</label>
 			<label index="sort.desc">Tri descendant</label>
 
