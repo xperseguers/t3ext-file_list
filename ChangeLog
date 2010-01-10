@@ -1,7 +1,8 @@
 2010-01-09  Moreno Feltscher  <moreno@luagsh.ch>
 
 	* Reorganized icons
-	* Get rid of the new icons and use a text instead
+	* Got rid of the new icons and use a text instead
+	* Added link to every icon shown in frontend
 
 2010-01-09  Xavier Perseguers  <typo3@perseguers.ch>
 

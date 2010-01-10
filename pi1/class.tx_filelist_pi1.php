@@ -159,13 +159,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 				continue;
 			}
 			$markers = array();
+			$markers['###ICON###'] = '<a href="' . $this->getLink(array('path' => substr($directories[$i]['path'], strlen($this->settings['path'])))) . '">';
 			if ($directories[$i]['name'] === '..') {
-				$markers['###ICON###'] = '<a href="' . $this->getLink(array('path' => substr($directories[$i]['path'], strlen($this->settings['path'])))) . '">';
 				$markers['###ICON###'] .= '<img src="' . $this->settings['iconsPathFolders'] . 'move_up.png" alt="' . $directories[$i]['name'] . '" border="0" />';
-				$markers['###ICON###'] .= '</a>';
 			} else {
-				$markers['###ICON###'] = '<img src="' . $this->settings['iconsPathFolders'] . 'folder.png" alt="' . $directories[$i]['name'] . '" />';
+				$markers['###ICON###'] .= '<img src="' . $this->settings['iconsPathFolders'] . 'folder.png" alt="' . $directories[$i]['name'] . '" border ="0" />';
 			}
+			$markers['###ICON###'] .= '</a>';
 			$markers['###FILENAME###'] = '<a href="' . $this->getLink(array('path' => substr($directories[$i]['path'], strlen($this->settings['path'])))) . '">' . $directories[$i]['name'] . '</a>';
 			$markers['###NEWFILE###'] = '';
 			$totalFiles = $this->getNumberOfFiles($listingPath . $directories[$i]['name']);
@@ -204,7 +204,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$rows = array();
 		for ($i = 0; $i < count($files); $i++) {
 			$markers = array();
-			$markers['###ICON###'] = '<img src="' . $this->settings['iconsPathFiles'] . $this->getFileTypeIcon($files[$i]['name']) . '" alt="' . $files[$i]['name'] . '">';
+			$markers['###ICON###'] = $this->cObj->typolink('<img src="' . $this->settings['iconsPathFiles'] . $this->getFileTypeIcon($files[$i]['name']) . '" alt="' . $files[$i]['name'] . '">', array('parameter' => $files[$i]['path']));
 			$markers['###FILENAME###'] = $this->cObj->typolink($files[$i]['name'], array('parameter' => $files[$i]['path']));
 			$markers['###NEWFILE###'] = ($this->settings['new_duration'] > 0) ? $this->getNewFileText($files[$i]['path'], $this->settings['new_duration']) : '';
 			$markers['###INFO###'] = $this->getHRFileSize($files[$i]['path']);
