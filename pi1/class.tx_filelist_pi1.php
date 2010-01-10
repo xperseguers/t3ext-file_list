@@ -207,7 +207,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$markers['###FILENAME###'] = $this->cObj->typolink($files[$i]['name'], array('parameter' => $files[$i]['path']));
 			$markers['###NEWFILE###'] = ($this->settings['new_duration'] > 0) ? $this->getNewFileText($files[$i]['path'], $this->settings['new_duration']) : '';
 			$markers['###INFO###'] = $this->getHRFileSize($files[$i]['path']);
-			$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $files[$i]['name']));
+			$markers['###DATE###'] = t3lib_BEfunc::datetime(filemtime($listingPath . $files[$i]['name']));
 
 				// Hook for processing of extra item markers
 			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
@@ -305,8 +305,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 */
 	protected function getListOfFiles($directory, $recursive = FALSE) {
 		$result = array();
-		$handle =  @opendir($directory);
-		while ($tempName = @readdir($handle)) {
+		$handle =  opendir($directory);
+		while ($tempName = readdir($handle)) {
 			if (($tempName != '.') && ($tempName != '..')) {
 				$tempPath = $directory . '/' . $tempName;
 				if (is_dir($tempPath) && $this->isValidFolderName($tempName) && $recursive) {
@@ -317,7 +317,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 				}
 			}
 		}
-		@closedir($handle);
+		closedir($handle);
 		return $result;
 	}
 
@@ -343,7 +343,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$allFiles = $this->getListOfFiles($directory, $recursive);
 		$highestKnown = 0;
 		foreach ($allFiles as $val) {
-			$currentValue = @filemtime($val);
+			$currentValue = filemtime($val);
 			if ($currentValue > $highestKnown) {
 				$highestKnown = $currentValue;
 			}
@@ -406,8 +406,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$files = array();
 
 			// Open the directory and read out all folders and files
-		$dh = @opendir($path);
-		while ($dir_content = @readdir($dh)) {
+		$dh = opendir($path);
+		while ($dir_content = readdir($dh)) {
 			if ($dir_content !== '.' && $dir_content !== '..') {
 				if (is_dir($path . '/' . $dir_content) && $this->isValidFolderName($dir_content)) {
 					$dirs[] = array(
@@ -428,7 +428,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 		}
 			// Close the directory
-		@closedir($dh);
+		closedir($dh);
 
 			// Hook for post-processing the list of files
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['filesHook'])) {
@@ -515,7 +515,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			'3' => $this->pi_getLL('units.GB'),
 			'4' => $this->pi_getLL('units.TB'),
 		);
-		$filesize = @filesize($filename);
+		$filesize = filesize($filename);
 		for ($offset = 0; $filesize >= 1024; $offset++) {
 			$filesize /= 1024;
 		}
