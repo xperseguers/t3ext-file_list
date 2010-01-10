@@ -1,5 +1,6 @@
 2010-01-10  Xavier Perseguers  <typo3@perseguers.ch>
 
+	* Refactored helper methods to a dedicated static class (useful when hooking into file_list)
 	* Updated documentation
 
 2010-01-10  Moreno Feltscher  <moreno@luagsh.ch>

@@ -24,6 +24,7 @@
 
 require_once(PATH_tslib . 'class.tslib_pibase.php');
 require_once('t3lib/class.t3lib_befunc.php');
+require_once(t3lib_extMgm::extPath('file_list') . '/pi1/class.tx_filelist_helper.php');
 
 /**
  * Plugin 'File List' for the 'file_list' extension.
@@ -80,7 +81,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 		$listingPath = $this->settings['path'];
 		if ($this->args['path']) {
-			$listingPath = $this->sanitizePath($listingPath . $this->args['path']);
+			$listingPath = tx_filelist_helper::sanitizePath($listingPath . $this->args['path']);
 		}
 
 			// Checks that $listingPath is a valid directory
@@ -98,7 +99,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 		}
 
-		list($subdirs, $files) = $this->getDirectoryContent($listingPath);
+		list($subdirs, $files) = tx_filelist_helper::getDirectoryContent($listingPath, $this->settings['ignoreFileNamePattern'], $this->settings['ignoreFolderNamePattern']);
 
 			// Are there any files in the directory?
 		if ((count($files) == 0) && (count($subdirs) == 0) && !$this->args['path']) {
@@ -107,8 +108,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 		}
 
 			// Sort directories and files according to user settings
-		$subdirs = $this->userSort($subdirs);
-		$files = $this->userSort($files);
+		$subdirs = tx_filelist_helper::arraySort($subdirs, $this->settings['order_by'], $this->settings['sort_direction']);
+		$files = tx_filelist_helper::arraySort($files, $this->settings['order_by'], $this->settings['sort_direction']);
 
 			// Generate table rows
 		$odd = TRUE;
@@ -117,24 +118,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$content = $this->generateTable(array_merge($directoryRows, $fileRows));
 
 		return $this->pi_wrapInBaseClass($content);
-	}
-
-	/**
-	 * Sorts an array according to user settings.
-	 * 
-	 * @param	array		$arr
-	 * @return	array		The sorted array
-	 */
-	protected function userSort(array $arr) {
-		if (count($arr) > 0) {
-			foreach ($arr as $tx_key => $tx_row) {
-				$sortArr[$tx_key] = $tx_row[$this->settings['order_by']];
-			}
-			$direction = $this->settings['sort_direction'] === 'asc' ? SORT_ASC : SORT_DESC;
-			array_multisort($sortArr, $direction, $arr);
-		}
-
-		return $arr;
 	}
 
 	/**
@@ -151,7 +134,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			// Put '..' at the beginning of the array
 		array_unshift($directories, array(
 			'name' => '..',
-			'path' => $this->sanitizePath($listingPath . '../')
+			'path' => tx_filelist_helper::sanitizePath($listingPath . '../')
 		));
 
 		for ($i = 0; $i < count($directories); $i++) {
@@ -169,7 +152,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$markers['###FILENAME###'] = '<a href="' . $this->getLink(array('path' => substr($directories[$i]['path'], strlen($this->settings['path'])))) . '">' . $directories[$i]['name'] . '</a>';
 			$markers['###NEWFILE###'] = '';
 			$markers['###INFO###'] = $directories[$i]['size'] . ' ';
-			if ($directories[$i]['size'] != 1) {
+			if ($directories[$i]['size'] > 1) {
 				$markers['###INFO###'] .= $this->pi_getLL('files_in_directory');
 			} else {
 				$markers['###INFO###'] .= $this->pi_getLL('file_in_directory');
@@ -297,61 +280,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Gets a list of all files inside a given directory
-	 *
-	 * @param	string		Path to the specified directory
-	 * @param	boolean		Defines whether files should be searched recursively
-	 * @return	array		List of all files inside the directory
-	 */
-	protected function getListOfFiles($directory, $recursive = FALSE) {
-		$result = array();
-		$handle =  opendir($directory);
-		while ($tempName = readdir($handle)) {
-			if (($tempName != '.') && ($tempName != '..')) {
-				$tempPath = $directory . '/' . $tempName;
-				if (is_dir($tempPath) && $this->isValidFolderName($tempName) && $recursive) {
-					$result = array_merge($result, $this->getListOfFiles($tempPath, TRUE));
-				}
-				elseif (is_file($tempPath) && $this->isValidFileName($tempName)) {
-					$result[] = $tempPath;
-				}
-			}
-		}
-		closedir($handle);
-		return $result;
-	}
-
-	/**
-	 * Counts the amount of files inside a given directory
-	 *
-	 * @param	string		Path to the specified directory
-	 * @param	boolean		Defines whether files should be counted recursively
-	 * @return	integer		Number of files in the directory
-	 */
-	protected function getNumberOfFiles($path, $recursive = FALSE) {
-		return count($this->getListOfFiles($path, $recursive));
-	}
-
-	/**
-	 * Returns the highest timestamp of all files inside a given directory
-	 *
-	 * @param	string		Path to the specified directory
-	 * @param	boolean		Defines whether files should be searched recursively
-	 * @return	integer		Highest timestamp of all files in the directory
-	 */
-	protected function getHighestFileTimestamp($directory, $recursive = TRUE) {
-		$allFiles = $this->getListOfFiles($directory, $recursive);
-		$highestKnown = 0;
-		foreach ($allFiles as $val) {
-			$currentValue = filemtime($val);
-			if ($currentValue > $highestKnown) {
-				$highestKnown = $currentValue;
-			}
-		}
-		return $highestKnown;
-	}
-
-	/**
 	 * Returns the icon which represents a file type
 	 *
 	 * @param	string		Path to the specified file
@@ -396,75 +324,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Gets content of a directory.
-	 * 
-	 * @param	string		$path
-	 * @return	array		list(array $directories, array $files)
-	 */
-	protected function getDirectoryContent($path) {
-		$dirs = array();
-		$files = array();
-
-			// Open the directory and read out all folders and files
-		$dh = opendir($path);
-		while ($dir_content = readdir($dh)) {
-			if ($dir_content !== '.' && $dir_content !== '..') {
-				if (is_dir($path . '/' . $dir_content) && $this->isValidFolderName($dir_content)) {
-					$dirs[] = array(
-						'name' => $dir_content,
-						'date' => $this->getHighestFileTimestamp($path . '/' . $dir_content, TRUE),
-						'size' => $this->getNumberOfFiles($path . '/' . $dir_content),
-						'path' => $path . $dir_content
-					);
-				}
-				elseif (is_file($path . '/' . $dir_content) && $this->isValidFileName($dir_content)) {
-					$files[] = array(
-						'name' => $dir_content,
-						'date' => filemtime($path . $dir_content),
-						'size' => filesize($path . $dir_content),
-						'path' => $path . $dir_content
-					);
-				}
-			}
-		}
-			// Close the directory
-		closedir($dh);
-
-			// Hook for post-processing the list of files
-		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['filesHook'])) {
-			foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['filesHook'] as $_classRef) {
-				$_procObj =& t3lib_div::getUserObj($_classRef);
-				$files = $_procObj->filesProcessor($files, $this);
-			}
-		}
-
-		return array($dirs, $files);
-	}
-
-	/**
-	 * Sanitizes a path by making sure a trailing slash is present and
-	 * all directories are resolved (no more '../' within string).
-	 *   
-	 * @param	string		$path: either an absolute path or a path relative to website root
-	 * @return	string
-	 */
-	protected function sanitizePath($path) {
-		if ($path{0} === '/') {
-			$prefix = '';
-		} else {
-			$prefix = PATH_site;
-			$path = PATH_site . $path;
-		}
-			// Make sure there is no more ../ inside
-		$path = realpath($path);
-			// Make it relative again (if needed)
-		$path = substr($path, strlen($prefix));
-			// Ensure a trailing slash is present
-		$path = rtrim($path, '/') . '/';
-		return $path;
-	}
-
-	/**
 	 * Checks that the given path is within the allowed root directory and
 	 * within the plugin's root directory.
 	 * 
@@ -477,28 +336,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 			!(strcmp(substr(PATH_site . $path, 0, strlen($this->settings['rootabs'])), $this->settings['rootabs']))
 			// Within the plugin's root directory
 			&& !(strcmp(substr($path, 0, strlen($this->settings['path'])), $this->settings['path']));
-	}
-
-	/**
-	 * Checks whether a file is supposed to be shown in the frontend.
-	 * The pattern, file names are compared with, is set in the TypoScript option "ignoreFileNamePattern"
-	 *
-	 * @param	string		$path Path relative to the website root
-	 * @return	boolean
-	 */
-	protected function isValidFileName($filename) {
-		return empty($this->settings['ignoreFileNamePattern']) || !preg_match($this->settings['ignoreFileNamePattern'], $filename);
-	}
-
-	/**
-	 * Checks whether a file is supposed to be shown in the frontend.
-	 * The pattern, file names are compared with, is set in the TypoScript option "ignoreFolderNamePattern"
-	 *
-	 * @param	string		$path Path relative to the website root
-	 * @return	boolean
-	 */
-	protected function isValidFolderName($foldername) {
-		return empty($this->settings['ignoreFolderNamePattern']) || !preg_match($this->settings['ignoreFolderNamePattern'], $foldername);
 	}
 
 	/**
@@ -607,7 +444,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		foreach (array('Files', 'Folders', 'Sorting') as $subdirectory) {
 			if (isset($this->settings['iconsPath' . $subdirectory])) {
 				$iconsPath = $this->cObj->stdWrap($this->settings['iconsPath' . $subdirectory], $this->settings['iconsPath' . $subdirectory . '.']);
-				$this->settings['iconsPath' . $subdirectory] = $this->resolveSiteRelPath($iconsPath);
+				$this->settings['iconsPath' . $subdirectory] = tx_filelist_helper::resolveSiteRelPath($iconsPath);
 			} else {	// Fallback
 				$this->settings['iconsPath' . $subdirectory] = t3lib_extMgm::siteRelPath('file_list') . 'Resources/Public/Icons/' . $subdirectory . '/';
 			}
@@ -623,7 +460,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 			// Prepare the path to the directory
 		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']); // When RTE file browser is used, additionnal components may be present
-		$this->settings['path'] = $this->sanitizePath($pathOptions[0]);
+		$this->settings['path'] = tx_filelist_helper::sanitizePath($pathOptions[0]);
 
 			// Retrieval of arguments
 		$this->getPrefix = $this->pi_getClassName($this->cObj->data['uid']);
@@ -646,28 +483,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$this->pi_loadLL();
 			// Configure the plugin either as USER or USER_INT according to plugin configuration
 		$this->pi_USER_INT_obj = $this->settings['noCache'] ? 1 : 0;
-	}
-
-	/**
-	 * Resolves a site-relative path and or filename.
-	 * 
-	 * @param	string		$path
-	 * @return	string
-	 */
-	protected function resolveSiteRelPath($path) {
-		if (strcmp(substr($path, 0, 4), 'EXT:')) {
-			return $path;
-		}
-		$path = substr($path, 4);	// Remove 'EXT:' at the beginning
-		$extension = substr($path, 0, strpos($path, '/'));
-		$references = explode(':', substr($path, strlen($extension) + 1));
-		$pathOrFilename = t3lib_extMgm::siteRelPath($extension) . $references[0];
-
-		if (is_dir(PATH_site . $pathOrFilename)) {
-			$pathOrFilename = $this->sanitizePath($pathOrFilename);
-		}
-
-		return $pathOrFilename;
 	}
 
 	/**
