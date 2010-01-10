@@ -1,8 +1,12 @@
+2010-01-10  Moreno Feltscher  <moreno@luagsh.ch>
+
+	* Got rid of the new icons and use a text instead
+	* Added link to every icon shown in frontend
+	* Corrected regular expression for file ignoring due to wrong Microsoft Windows thumbnail file check
+
 2010-01-09  Moreno Feltscher  <moreno@luagsh.ch>
 
 	* Reorganized icons
-	* Got rid of the new icons and use a text instead
-	* Added link to every icon shown in frontend
 
 2010-01-09  Xavier Perseguers  <typo3@perseguers.ch>
 

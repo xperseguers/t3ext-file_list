@@ -15,7 +15,7 @@ plugin.tx_filelist_pi1 {
 	iconsPathSorting = EXT:file_list/Resources/Public/Icons/Sorting/
 
 		# Perl compatible regular expression for file names which shouldn't be displayed
-	ignoreFileNamePattern = /^(\..*|thumb)$/i
+	ignoreFileNamePattern = /^(\..*|thumbs\.db)$/i
 
 		# Perl compatible regular expression for folder names which shouldn't be displayed
 	ignoreFolderNamePattern = /^(\..*|CVS)$/i
