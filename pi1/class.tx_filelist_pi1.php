@@ -310,7 +310,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			if (($tempName != '.') && ($tempName != '..')) {
 				$tempPath = $directory . '/' . $tempName;
 				if (is_dir($tempPath) && $this->isValidFolderName($tempName) && $recursive) {
-					$result = array_merge($result, $this->getListOfFiles($tempPath . '/', TRUE));
+					$result = array_merge($result, $this->getListOfFiles($tempPath, TRUE));
 				}
 				elseif (is_file($tempPath) && $this->isValidFileName($tempName)) {
 					$result[] = $tempPath;
