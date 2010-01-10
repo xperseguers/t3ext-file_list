@@ -8,6 +8,7 @@
 	* Added link to every icon shown in frontend
 	* Corrected regular expression for file ignoring due to wrong Microsoft Windows thumbnail file check
 	* Updated language files
+	* Added new icons for sorting and changed sort functionality
 
 2010-01-09  Moreno Feltscher  <moreno@luagsh.ch>
 

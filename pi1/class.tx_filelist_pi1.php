@@ -239,9 +239,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 			'###BODY###' => implode("\n", $rows),
 		);
 		if ($this->settings['fe_sort']) {
-			$markers['###HEADER_FILENAME###'] .= $this->getFeSortIcon('name', 'desc') . $this->getFeSortIcon('name', 'asc');
-			$markers['###HEADER_INFO###'] .= $this->getFeSortIcon('size', 'desc') . $this->getFeSortIcon('size', 'asc');
-			$markers['###HEADER_DATE###'] .= $this->getFeSortIcon('date', 'desc') . $this->getFeSortIcon('date', 'asc');
+			$markers['###HEADER_FILENAME###'] .= $this->getFeSortIcons('name');
+			$markers['###HEADER_INFO###'] .= $this->getFeSortIcons('size');
+			$markers['###HEADER_DATE###'] .= $this->getFeSortIcons('date');
 		}
 		return $this->cObj->substituteMarkerArray($this->templates['table'], $markers);
 	}
@@ -504,20 +504,20 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @param	string		Order sequence ('asc', 'desc')
 	 * @return	string		Filename of ordering icons
 	 */
-	protected function getFeSortIcon($order_by, $direction) {
-		$link = $this->getLink(array(
-			'path'      => $this->args['path'],
-			'order_by'  => $order_by,
-			'direction' => $direction,
-		));
-		$ret = ' <a href="' . $link . '">';
-		$ret .= '<img src="' . $this->settings['iconsPathSorting'];
-		if ($direction === 'asc') {
-			$ret .= 'up.gif" alt="' . $this->pi_getLL('sort.asc');
-		} else {
-			$ret .= 'down.gif" alt="' . $this->pi_getLL('sort.desc');
+	protected function getFeSortIcons($order_by) {
+		$ret = '&nbsp;';
+		$direction = 'desc';
+		for ($i = 0; $i < 2; $i++) {
+			$link = $this->getLink(array(
+				'path'      => $this->args['path'],
+				'order_by'  => $order_by,
+				'direction' => $direction,
+			));
+			$ret .= ' <a href="' . $link . '" target="_top" title="' . $this->pi_getLL('sort.' . $direction) . '">';
+			$ret .= '<img src="' . $this->settings['iconsPathSorting'] . $direction .'.gif" alt="' . $this->pi_getLL('sort.' . $direction) . '" border="0">';
+			$ret .= '</a>';
+			$direction = 'asc';
 		}
-		$ret .= '" border="0"></a>';
 		return $ret;
 	}
 
