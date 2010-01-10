@@ -44,9 +44,10 @@ class tx_filelist_pi1 extends tslib_pibase {
 	public $extKey = 'file_list';
 
 	/**
+	 * Settings of the extension. Public to be available in hooks.
 	 * @var array
 	 */
-	protected $settings = array();
+	public $settings = array();
 
 	/**
 	 * @var string
