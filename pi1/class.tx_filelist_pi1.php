@@ -161,10 +161,10 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$markers = array();
 			if ($directories[$i]['name'] === '..') {
 				$markers['###ICON###'] = '<a href="' . $this->getLink(array('path' => substr($directories[$i]['path'], strlen($this->settings['path'])))) . '">';
-				$markers['###ICON###'] .= '<img src="' . $this->settings['iconsPath'] . 'move_up.png" alt="' . $directories[$i]['name'] . '" border="0" />';
+				$markers['###ICON###'] .= '<img src="' . $this->settings['iconsPathFolders'] . 'move_up.png" alt="' . $directories[$i]['name'] . '" border="0" />';
 				$markers['###ICON###'] .= '</a>';
 			} else {
-				$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . 'folder.png" alt="' . $directories[$i]['name'] . '" />';
+				$markers['###ICON###'] = '<img src="' . $this->settings['iconsPathFolders'] . 'folder.png" alt="' . $directories[$i]['name'] . '" />';
 			}
 			$markers['###FILENAME###'] = '<a href="' . $this->getLink(array('path' => substr($directories[$i]['path'], strlen($this->settings['path'])))) . '">' . $directories[$i]['name'] . '</a>';
 			$totalFiles = $this->getNumberOfFiles($listingPath . $directories[$i]['name']);
@@ -203,7 +203,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$rows = array();
 		for ($i = 0; $i < count($files); $i++) {
 			$markers = array();
-			$markers['###ICON###'] = '<img src="' . $this->settings['iconsPath'] . $this->getFileTypeIcon($files[$i]['name']) . '" alt="' . $files[$i]['name'] . '">';
+			$markers['###ICON###'] = '<img src="' . $this->settings['iconsPathFiles'] . $this->getFileTypeIcon($files[$i]['name']) . '" alt="' . $files[$i]['name'] . '">';
 			$markers['###FILENAME###'] = $this->cObj->typolink($files[$i]['name'], array('parameter' => $files[$i]['path']));
 			$markers['###FILENAME###'] .= ' ' . $this->getNewIcon($files[$i]['path'], $this->settings['new_duration']);
 			$markers['###INFO###'] = $this->getHRFileSize($files[$i]['path']);
@@ -338,9 +338,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 					break;
 				}
 			}
-			if (is_file($this->settings['iconsPath'] . $ext . '.png')) {
+			if (is_file($this->settings['iconsPathFiles'] . $ext . '.png')) {
 				return $ext . '.png';
-			} elseif (is_file($this->settings['iconsPath'] . $ext . '.gif')) {
+			} elseif (is_file($this->settings['iconsPathFiles'] . $ext . '.gif')) {
 				return $ext . '.gif';
 			}
 		}
@@ -514,7 +514,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			'direction' => $direction,
 		));
 		$ret = ' <a href="' . $link . '">';
-		$ret .= '<img src="' . $this->settings['iconsPath'];
+		$ret .= '<img src="' . $this->settings['iconsPathSorting'];
 		if ($direction === 'asc') {
 			$ret .= 'up.gif" alt="' . $this->pi_getLL('sort.asc');
 		} else {
@@ -568,13 +568,16 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 		}
 
-			// Set the icons path
+			// Set the icons paths
 		if (isset($this->settings['iconsPath'])) {
 			$iconsPath = $this->cObj->stdWrap($this->settings['iconsPath'], $this->settings['iconsPath.']);
 			$this->settings['iconsPath'] = $this->resolveSiteRelPath($iconsPath);
 		} else {	// Fallback
 			$this->settings['iconsPath'] = t3lib_extMgm::siteRelPath('file_list') . 'Resources/Public/Icons/';
 		}
+		$this->settings['iconsPathFiles'] = $this->settings['iconsPath'] . 'Files/';
+		$this->settings['iconsPathFolders'] = $this->settings['iconsPath'] . 'Folders/';
+		$this->settings['iconsPathSorting'] = $this->settings['iconsPath'] . 'Sorting/';
 
 			// Prepare open base directory
 		$root = $this->settings['root'];
