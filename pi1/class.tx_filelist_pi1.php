@@ -128,7 +128,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	protected function userSort(array $arr) {
 		if (count($arr) > 0) {
 			foreach ($arr as $tx_key => $tx_row) {
-				$sortArr[$tx_key] = $tx_row['name'];
+				$sortArr[$tx_key] = $tx_row[$this->settings['order_by']];
 			}
 			$direction = $this->settings['sort_direction'] === 'asc' ? SORT_ASC : SORT_DESC;
 			array_multisort($sortArr, $direction, $arr);
@@ -168,14 +168,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$markers['###ICON###'] .= '</a>';
 			$markers['###FILENAME###'] = '<a href="' . $this->getLink(array('path' => substr($directories[$i]['path'], strlen($this->settings['path'])))) . '">' . $directories[$i]['name'] . '</a>';
 			$markers['###NEWFILE###'] = '';
-			$totalFiles = $this->getNumberOfFiles($listingPath . $directories[$i]['name']);
-			$markers['###INFO###'] = $totalFiles . ' '; 
-			if ($totalFiles > 1) {
+			$markers['###INFO###'] = $directories[$i]['size'] . ' ';
+			if ($directories[$i]['size'] != 1) {
 				$markers['###INFO###'] .= $this->pi_getLL('files_in_directory');
 			} else {
 				$markers['###INFO###'] .= $this->pi_getLL('file_in_directory');
 			}
-			$markers['###DATE###'] = t3lib_BEfunc::datetime(@filemtime($listingPath . $directories[$i]['name']));
+			$markers['###DATE###'] = t3lib_BEfunc::datetime($directories[$i]['date']);
 
 				// Hook for processing of extra item markers
 			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
@@ -298,21 +297,58 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
+	 * Gets a list of all files inside a given directory
+	 *
+	 * @param	string		Path to the specified directory
+	 * @param	boolean		Defines whether files should be searched recursively
+	 * @return	array		List of all files inside the directory
+	 */
+	protected function getListOfFiles($directory, $recursive = FALSE) {
+		$result = array();
+		$handle =  @opendir($directory);
+		while ($tempName = @readdir($handle)) {
+			if (($tempName != '.') && ($tempName != '..')) {
+				$tempPath = $directory . '/' . $tempName;
+				if (is_dir($tempPath) && $this->isValidFolderName($tempName) && $recursive) {
+					$result = array_merge($result, $this->getListOfFiles($tempPath . '/', TRUE));
+				}
+				elseif (is_file($tempPath) && $this->isValidFileName($tempName)) {
+					$result[] = $tempPath;
+				}
+			}
+		}
+		@closedir($handle);
+		return $result;
+	}
+
+	/**
 	 * Counts the amount of files inside a given directory
 	 *
 	 * @param	string		Path to the specified directory
+	 * @param	boolean		Defines whether files should be counted recursively
 	 * @return	integer		Number of files in the directory
 	 */
-	protected function getNumberOfFiles($path) {
-		$files = 0;
-		$dh = @opendir($path);
-		while ($c = readdir($dh)) {
-			if (is_file($path . '/' . $c) && $this->isValidFileName($c)) {
-				$files++;
+	protected function getNumberOfFiles($path, $recursive = FALSE) {
+		return count($this->getListOfFiles($path, $recursive));
+	}
+
+	/**
+	 * Returns the highest timestamp of all files inside a given directory
+	 *
+	 * @param	string		Path to the specified directory
+	 * @param	boolean		Defines whether files should be searched recursively
+	 * @return	integer		Highest timestamp of all files in the directory
+	 */
+	protected function getHighestFileTimestamp($directory, $recursive = TRUE) {
+		$allFiles = $this->getListOfFiles($directory, $recursive);
+		$highestKnown = 0;
+		foreach ($allFiles as $val) {
+			$currentValue = @filemtime($val);
+			if ($currentValue > $highestKnown) {
+				$highestKnown = $currentValue;
 			}
 		}
-		@closedir($dh);
-		return $files;
+		return $highestKnown;
 	}
 
 	/**
@@ -376,6 +412,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 				if (is_dir($path . '/' . $dir_content) && $this->isValidFolderName($dir_content)) {
 					$dirs[] = array(
 						'name' => $dir_content,
+						'date' => $this->getHighestFileTimestamp($path . '/' . $dir_content, TRUE),
+						'size' => $this->getNumberOfFiles($path . '/' . $dir_content),
 						'path' => $path . $dir_content
 					);
 				}
@@ -513,7 +551,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 				'order_by'  => $order_by,
 				'direction' => $direction,
 			));
-			$ret .= ' <a href="' . $link . '" target="_top" title="' . $this->pi_getLL('sort.' . $direction) . '">';
+			$ret .= '<a href="' . $link . '" target="_top" title="' . $this->pi_getLL('sort.' . $direction) . '">';
 			$ret .= '<img src="' . $this->settings['iconsPathSorting'] . $direction .'.gif" alt="' . $this->pi_getLL('sort.' . $direction) . '" border="0">';
 			$ret .= '</a>';
 			$direction = 'asc';
