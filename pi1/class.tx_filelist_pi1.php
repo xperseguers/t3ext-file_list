@@ -103,10 +103,11 @@ class tx_filelist_pi1 extends tslib_pibase {
 		list($subdirs, $files) = tx_filelist_helper::getDirectoryContent($listingPath, $this->settings['ignoreFileNamePattern'], $this->settings['ignoreFolderNamePattern']);
 
 			// Hook for post-processing the list of files
-		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['filesHook'])) {
-			foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['filesHook'] as $_classRef) {
+		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['filesDirectoriesHook'])) {
+			foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['filesDirectoriesHook'] as $_classRef) {
 				$_procObj =& t3lib_div::getUserObj($_classRef);
-				$files = $_procObj->filesProcessor($files, $this);
+				$files = $_procObj->filesDirectoriesProcessor($files, $this);
+				$subdirs = $_procObj->filesDirectoriesProcessor($subdirs, $this);
 			}
 		}
 
