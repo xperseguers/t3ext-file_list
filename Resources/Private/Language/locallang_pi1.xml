@@ -7,24 +7,24 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<!-- FlexForm labels -->
-			<label index="pi_flexform.path">Path to the directory (example: fileadmin/directory1/)</label>
-			<label index="pi_flexform.path.wizards.link.title">Folder Selector</label>
-			<label index="pi_flexform.order_by">Order files by:</label>
+			<label index="pi_flexform.path">Directory path (example: fileadmin/directory1/)</label>
+			<label index="pi_flexform.path.wizards.link.title">Folder selector</label>
+			<label index="pi_flexform.order_by">Sort files by</label>
 			<label index="pi_flexform.order_by.name">Name</label>
 			<label index="pi_flexform.order_by.date">Date</label>
 			<label index="pi_flexform.order_by.size">Size</label>
-			<label index="pi_flexform.sort_direction">Sort sequence:</label>
+			<label index="pi_flexform.sort_direction">Sort sequence</label>
 			<label index="pi_flexform.sort_direction.asc">Ascending</label>
 			<label index="pi_flexform.sort_direction.desc">Descending</label>
-			<label index="pi_flexform.new_duration">Days to have &quot;new&quot; (0 = disable):</label>
-			<label index="pi_flexform.fe_sort">Users can sort on FE:</label>
+			<label index="pi_flexform.new_duration">Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled):</label>
+			<label index="pi_flexform.fe_sort">Users are able to sort files in frontend:</label>
 			
 			<!-- Table labels -->
 			<label index="filename">Filename</label>
 			<label index="info">Info</label>
 			<label index="date">Modified</label>
 			<label index="filesize">Filesize</label>
-			<label index="no_files">There are no file in the directory!</label>
+			<label index="no_files">No files or folders found in this directory!</label>
 			<label index="file_in_directory">File</label>
 			<label index="files_in_directory">Files</label>
 			<label index="newFile">new</label>
@@ -42,22 +42,22 @@
 			<!-- FlexForm labels -->
 			<label index="pi_flexform.path">Pfad zum Verzeichnis (Beispiel: fileadmin/directory1/)</label>
 			<label index="pi_flexform.path.wizards.link.title">Verzeichnis-Selektor</label>
-			<label index="pi_flexform.order_by">Ordne Dateien nach:</label>
+			<label index="pi_flexform.order_by">Ordne Dateien nach</label>
 			<label index="pi_flexform.order_by.name">Name</label>
 			<label index="pi_flexform.order_by.date">Datum</label>
 			<label index="pi_flexform.order_by.size">Grösse</label>
-			<label index="pi_flexform.sort_direction">Sortierreihenfolge:</label>
+			<label index="pi_flexform.sort_direction">Sortierreihenfolge</label>
 			<label index="pi_flexform.sort_direction.asc">Aufsteigend</label>
 			<label index="pi_flexform.sort_direction.desc">Absteigend</label>
-			<label index="pi_flexform.new_duration">Anzahl Tage um &quot;neu&quot; zu sein (0 = ausgeschaltet):</label>
-			<label index="pi_flexform.fe_sort">Sortieren auf FE erlauben:</label>
+			<label index="pi_flexform.new_duration">Zeitspanne (Angabe in Tagen) innerhalb welcher eine Datei (vom Zeitpunkt ihrer Erstellung) als &quot;neu&quot; deklariert wird (0 = ausgeschaltet):</label>
+			<label index="pi_flexform.fe_sort">Erlaube Benutzern, Dateien im Frontend zu sortieren:</label>
 			
 			<!-- Table labels -->
 			<label index="filename">Dateiname</label>
 			<label index="info">Info</label>
 			<label index="date">Geändert</label>
 			<label index="filesize">Dateigrösse</label>
-			<label index="no_files">Keine Datei im Verzeichnis!</label>
+			<label index="no_files">Keine Dateien oder Ordner im Verzeichnis!</label>
 			<label index="file_in_directory">Datei</label>
 			<label index="files_in_directory">Dateien</label>
 			<label index="newFile">neu</label>
