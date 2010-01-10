@@ -69,7 +69,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 *
 	 * @param	string		$content: The Plugin content
 	 * @param	array		$settings: The Plugin configuration
-	 * @return	string          Content which appears on the website
+	 * @return	string		Content which appears on the website
 	 */
 	public function main($content, array $settings) {
 		$this->init($settings);
@@ -84,7 +84,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$listingPath = tx_filelist_helper::sanitizePath($listingPath . $this->args['path']);
 		}
 
-			// Checks that $listingPath is a valid directory
+			// Check that $listingPath is a valid directory
 		if (!(is_dir($listingPath) && is_readable($listingPath) && $this->isValidDirectory($listingPath))) {
 			return $this->error(sprintf('Could not open directory "%s"', $this->settings['path']));
 		}
