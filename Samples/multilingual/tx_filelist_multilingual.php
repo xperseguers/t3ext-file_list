@@ -60,8 +60,8 @@ class tx_filelist_multilingual {
 
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/Samples/metadata/tx_filelist_metadata.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/Samples/metadata/tx_filelist_metadata.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/Samples/multilingual/tx_filelist_multilingual.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/Samples/multilingual/tx_filelist_multilingual.php']);
 }
 
 ?>
