@@ -175,7 +175,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
 				foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'] as $_classRef) {
 					$_procObj =& t3lib_div::getUserObj($_classRef);
-					$markers = $_procObj->extraItemMarkerProcessor($markers, $directories[$d]['path'], $this);
+					$markers = $_procObj->extraItemMarkerProcessor($markers, $directories[$d], $this);
 				}
 			}
 			
@@ -208,7 +208,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
 				foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'] as $_classRef) {
 					$_procObj =& t3lib_div::getUserObj($_classRef);
-					$markers = $_procObj->extraItemMarkerProcessor($markers, $files[$i]['path'], $this);
+					$markers = $_procObj->extraItemMarkerProcessor($markers, $files[$i], $this);
 				}
 			}
 			$rows[] = $this->cObj->substituteMarkerArray($odd ? $this->templates['odd'] : $this->templates['even'], $markers);
