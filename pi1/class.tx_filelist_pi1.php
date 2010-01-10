@@ -566,15 +566,14 @@ class tx_filelist_pi1 extends tslib_pibase {
 		}
 
 			// Set the icons paths
-		if (isset($this->settings['iconsPath'])) {
-			$iconsPath = $this->cObj->stdWrap($this->settings['iconsPath'], $this->settings['iconsPath.']);
-			$this->settings['iconsPath'] = $this->resolveSiteRelPath($iconsPath);
-		} else {	// Fallback
-			$this->settings['iconsPath'] = t3lib_extMgm::siteRelPath('file_list') . 'Resources/Public/Icons/';
+		foreach (array('Files', 'Folders', 'Sorting') as $subdirectory) {
+			if (isset($this->settings['iconsPath' . $subdirectory])) {
+				$iconsPath = $this->cObj->stdWrap($this->settings['iconsPath' . $subdirectory], $this->settings['iconsPath' . $subdirectory . '.']);
+				$this->settings['iconsPath' . $subdirectory] = $this->resolveSiteRelPath($iconsPath);
+			} else {	// Fallback
+				$this->settings['iconsPath' . $subdirectory] = t3lib_extMgm::siteRelPath('file_list') . 'Resources/Public/Icons/' . $subdirectory . '/';
+			}
 		}
-		$this->settings['iconsPathFiles'] = $this->settings['iconsPath'] . 'Files/';
-		$this->settings['iconsPathFolders'] = $this->settings['iconsPath'] . 'Folders/';
-		$this->settings['iconsPathSorting'] = $this->settings['iconsPath'] . 'Sorting/';
 
 			// Prepare open base directory
 		$root = $this->settings['root'];
