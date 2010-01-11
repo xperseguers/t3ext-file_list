@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'File List',
-	'description' => 'Adds a frontend plugin which shows a list of files in a specified directory (like Apache).',
+	'description' => 'This extension provides a frontend plugin which shows a list of files and folders in a specified directory on the file system (comparable to Apache\'s directory listing).',
 	'category' => 'plugin',
 	'shy' => 0,
 	'version' => '1.0-dev',
