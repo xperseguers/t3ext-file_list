@@ -136,7 +136,6 @@ class tx_filelist_helper {
 						'date' => self::getHighestFileTimestamp($path . '/' . $dir_content, TRUE, $invalidFileNamePattern, $invalidFolderNamePattern),
 						'size' => self::getNumberOfFiles($path . '/' . $dir_content, FALSE, $invalidFileNamePattern, $invalidFolderNamePattern),
 						'path' => $path . $dir_content,
-						'url' => $path . rawurlencode($dir_content),
 						'fullpath' => PATH_site . $path . $dir_content,
 					);
 				}
@@ -147,7 +146,6 @@ class tx_filelist_helper {
 						'date' => filemtime($path . $dir_content),
 						'size' => filesize($path . $dir_content),
 						'path' => $path . $dir_content,
-						'url' => $path . rawurlencode($dir_content),
 						'fullpath' => PATH_site . $path . $dir_content,
 					);
 				}
@@ -202,6 +200,16 @@ class tx_filelist_helper {
 		}
 
 		return $pathOrFilename;
+	}
+
+	/**
+	 * Generates a proper URL for file links by encoding special characters and spaces.
+	 *
+	 * @param	string		$path: Path to the file
+	 * @return	string
+	 */
+	public static function generateProperURL($path) {
+		return implode('/', array_map('rawurlencode', explode('/', $path)));
 	}
 
 	/**

@@ -203,8 +203,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$rows = array();
 		for ($i = 0; $i < count($files); $i++) {
 			$markers = array();
-			$markers['###ICON###'] = $this->cObj->typolink('<img src="' . $this->settings['iconsPathFiles'] . $this->getFileTypeIcon($files[$i]['name']) . '" alt="' . $files[$i]['name'] . '">', array('parameter' => $files[$i]['url']));
-			$markers['###FILENAME###'] = $this->cObj->typolink($files[$i]['name'], array('parameter' => $files[$i]['url']));
+			$markers['###ICON###'] = $this->cObj->typolink('<img src="' . $this->settings['iconsPathFiles'] . $this->getFileTypeIcon($files[$i]['name']) . '" alt="' . $files[$i]['name'] . '">', array('parameter' => tx_filelist_helper::generateProperURL($files[$i]['path'])));
+			$markers['###FILENAME###'] = $this->cObj->typolink($files[$i]['name'], array('parameter' => tx_filelist_helper::generateProperURL($files[$i]['path'])));
 			$markers['###NEWFILE###'] = ($this->settings['new_duration'] > 0) ? $this->getNewFileText($files[$i]['path'], $this->settings['new_duration']) : '';
 			$markers['###INFO###'] = $this->getHRFileSize($files[$i]['path']);
 			$markers['###DATE###'] = t3lib_BEfunc::datetime(filemtime($listingPath . $files[$i]['name']));
