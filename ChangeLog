@@ -1,5 +1,9 @@
 2010-01-10  Moreno Feltscher  <moreno@luagsh.ch>
 
+	* Fixed bug which prevents files with special characters or spaces in their filenames to be accessible
+
+2010-01-10  Moreno Feltscher  <moreno@luagsh.ch>
+
 	* Release to TER
 	* Raised version to 1.0.0
 
