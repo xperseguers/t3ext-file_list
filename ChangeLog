@@ -1,6 +1,6 @@
-2010-01-10  Moreno Feltscher  <moreno@luagsh.ch>
+2010-01-11  Moreno Feltscher  <moreno@luagsh.ch>
 
-	* Fixed bug which prevents files with special characters or spaces in their filenames to be accessible
+	* Fixed bug which prevents files with special characters or spaces in their filenames from being accessible
 
 2010-01-10  Moreno Feltscher  <moreno@luagsh.ch>
 
