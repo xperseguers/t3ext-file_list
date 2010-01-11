@@ -1,3 +1,7 @@
+2010-01-11  Xavier Perseguers  <typo3@perseguers.ch>
+
+	* Made file icons with white background transparent instead and lowered depth to number of colors really needed
+
 2010-01-11  Moreno Feltscher  <moreno@luagsh.ch>
 
 	* Fixed bug which prevents files with special characters or spaces in their filenames from being accessible
