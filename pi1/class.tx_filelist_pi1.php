@@ -426,9 +426,10 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * This method performs various initializations.
 	 *
 	 * @param	array		$settings: Plugin configuration, as received by the main() method
+	 * @param	array		$explodeFlexFormFields: FlexForm fields to be exploded as an array
 	 * @return	void
 	 */
-	protected function init(array $settings) {
+	protected function init(array $settings, array $explodeFlexFormFields = array()) {
 			// Initialize default values based on extension TS
 		$this->settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
 		if (!is_array($this->settings)) {
