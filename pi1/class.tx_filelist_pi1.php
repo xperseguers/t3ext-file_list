@@ -495,14 +495,14 @@ class tx_filelist_pi1 extends tslib_pibase {
 		if (isset($arguments['noCache'])) {
 			unset($arguments['noCache']);
 		}
-		$this->args = array_merge(
-			array(
-				'path'      => '',
-				'order_by'  => '',
-				'direction' => '',
-			),
-			$arguments
+		$this->args = array(
+			'path'      => '',
+			'order_by'  => '',
+			'direction' => ''
 		);
+		if (is_array($arguments)) {
+			$this->args = array_merge($this->args, $arguments);
+		}
 
 			// Disable Filelist if an error occurred
 		$this->error = 0;
