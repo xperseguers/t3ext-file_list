@@ -1,3 +1,8 @@
+2010-01-12  Moreno Feltscher  <moreno@luagsh.ch>
+
+	* Release to TER
+	* Raised version to 1.0.1
+
 2010-01-11  Xavier Perseguers  <typo3@perseguers.ch>
 
 	* Made file icons with white background transparent instead and lowered depth to number of colors really needed
