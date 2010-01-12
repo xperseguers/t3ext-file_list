@@ -5,7 +5,7 @@
 
 2010-01-11  Moreno Feltscher  <moreno@luagsh.ch>
 
-	* Fixed bug which prevents files with special characters or spaces in their filenames from being accessible
+	* Fixed bug #5964: Files with special characters or spaces in their filenames or paths are not accessible
 	* Fixed bug #5966: If there are no GET parameters given this ends up in a PHP error warning
 
 2010-01-10  Moreno Feltscher  <moreno@luagsh.ch>
