@@ -1,6 +1,7 @@
 2010-01-11  Xavier Perseguers  <typo3@perseguers.ch>
 
 	* Made file icons with white background transparent instead and lowered depth to number of colors really needed
+	* Fixed bug #5965: PHP error warning for in_array functions is shown because one given variable isn't declared as an array
 
 2010-01-11  Moreno Feltscher  <moreno@luagsh.ch>
 
