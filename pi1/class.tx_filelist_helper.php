@@ -168,7 +168,7 @@ class tx_filelist_helper {
 		if ($path{0} === '/') {
 			$prefix = '';
 		} else {
-			$prefix = PATH_site;
+			$prefix = realpath(PATH_site);
 			$path = PATH_site . $path;
 		}
 			// Make sure there is no more ../ inside

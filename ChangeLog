@@ -1,3 +1,7 @@
+2010-01-27  Xavier Perseguers  <typo3@perseguers.ch>
+
+	* Fixed bug #6214: Error in sanitizePath function when PATH_site contains symlinks (Thanks to Alexander Stehlik)
+
 2010-01-12  Moreno Feltscher  <moreno@luagsh.ch>
 
 	* Release to TER
