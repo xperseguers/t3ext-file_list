@@ -37,7 +37,7 @@ class tx_filelist_helper {
 
 	/**
 	 * Sorts an array according to a key and a sort direction.
-	 * 
+	 *
 	 * @param	array		$arr
 	 * @param	string		$sortKey
 	 * @param	string		$direction: (either 'asc' or 'desc')
@@ -115,7 +115,7 @@ class tx_filelist_helper {
 
 	/**
 	 * Gets content of a directory.
-	 * 
+	 *
 	 * @param	string		$path: Path to the specified directory
 	 * @param	string		$invalidFileNamePattern: Invalid filename pattern
 	 * @param	string		$invalidFolderNamePattern: Invalid directory name pattern
@@ -160,7 +160,7 @@ class tx_filelist_helper {
 	/**
 	 * Sanitizes a path by making sure a trailing slash is present and
 	 * all directories are resolved (no more '../' within string).
-	 *   
+	 *
 	 * @param	string		$path: either an absolute path or a path relative to website root
 	 * @return	string
 	 */
@@ -182,7 +182,7 @@ class tx_filelist_helper {
 
 	/**
 	 * Resolves a site-relative path and or filename.
-	 * 
+	 *
 	 * @param	string		$path
 	 * @return	string
 	 */
@@ -214,7 +214,7 @@ class tx_filelist_helper {
 
 	/**
 	 * Returns TRUE if $invalidPattern does not match $name.
-	 * 
+	 *
 	 * @param	string		$name
 	 * @param	string		$pattern
 	 * @return	boolean

@@ -57,7 +57,7 @@ class ext_update extends t3lib_SCbase {
 		$this->doc = t3lib_div::makeInstance('noDoc');
 		$this->doc->backPath = $GLOBALS['BACK_PATH'];
 		$this->doc->form = '<form action="" method="post">';
-		
+
 		$title = 'File List Plugin Configuration';
 		$this->content .= $this->doc->startPage($title);
 		$this->content .= $this->doc->header($title);
@@ -82,7 +82,7 @@ class ext_update extends t3lib_SCbase {
 
 	/**
 	 * Prepares the upgrade process.
-	 * 
+	 *
 	 * @return	string
 	 */
 	protected function prepareUpgrade() {
@@ -96,7 +96,7 @@ class ext_update extends t3lib_SCbase {
 
 	/**
 	 * Performs the configuration upgrade.
-	 * 
+	 *
 	 * @return	string
 	 */
 	protected function upgrade() {
@@ -121,7 +121,7 @@ class ext_update extends t3lib_SCbase {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param	array		$config
 	 * @return	string
 	 */
@@ -171,7 +171,7 @@ class ext_update extends t3lib_SCbase {
 
 	/**
 	 * Returns a list of plugins that have not yet been upgraded to use the FlexForm configuration.
-	 * 
+	 *
 	 * @return array	Array of "light" tt_content rows
 	 */
 	protected function getPluginsWithOldConfiguration() {

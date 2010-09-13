@@ -37,7 +37,7 @@ require_once(t3lib_extMgm::extPath('file_list') . '/pi1/class.tx_filelist_helper
  * @version     SVN: $Id$
  */
 class tx_filelist_pi1 extends tslib_pibase {
-	
+
 	// Members coming from tslib_pibase
 	public $prefixId = 'tx_filelist_pi1';
 	public $scriptRelPath = 'pi1/class.tx_filelist_pi1.php';
@@ -64,7 +64,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * @var array
 	 */
 	protected $templates = array();
-	
+
 	/**
 	 * Main-function, returns output
 	 *
@@ -91,7 +91,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		}
 
 		if ($this->settings['fe_sort'] && $this->args['direction']) {
-			$this->settings['sort_direction'] = $this->args['direction']; 
+			$this->settings['sort_direction'] = $this->args['direction'];
 		}
 		if ($this->settings['fe_sort'] && $this->args['order_by']) {
 			$this->settings['order_by'] = $this->args['order_by'];
@@ -132,7 +132,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 	/**
 	 * Returns templated rows for a given array of directories.
-	 * 
+	 *
 	 * @param	array		$directories
 	 * @param	string		$listingPath Current path
 	 * @param	boolean		$odd Whether first row is an odd row.
@@ -183,7 +183,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 					$markers = $_procObj->extraItemMarkerProcessor($markers, $directories[$i], $this);
 				}
 			}
-			
+
 			$rows[] = $this->cObj->substituteMarkerArray($odd ? $this->templates['odd'] : $this->templates['even'], $markers);
 			$odd = !$odd;
 		}
@@ -193,7 +193,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 	/**
 	 * Returns templated rows for a given array of files.
-	 * 
+	 *
 	 * @param	array		$files
 	 * @param	string		$listingPath Current path
 	 * @param	boolean		$odd Whether first row is an odd row.
@@ -225,7 +225,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 	/**
 	 * Returns a templated table containing all given rows as body.
-	 * 
+	 *
 	 * @param	array		$rows Templated rows
 	 * @return	string
 	 */
@@ -277,13 +277,13 @@ class tx_filelist_pi1 extends tslib_pibase {
 		if (empty($this->templates['even'])) {
 			$this->templates['even'] = $defaultTemplate;
 		}
-		
+
 		$this->templates['table'] = $this->cObj->substituteSubpart($templateCode, '###BODY###', '###BODY###');
 	}
 
 	/**
 	 * Returns a link to the same page with additional parameters.
-	 * 
+	 *
 	 * @param	array		$params
 	 * @return	string
 	 */
@@ -352,7 +352,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * Checks that the given path is within the allowed root directory and
 	 * within the plugin's root directory.
-	 * 
+	 *
 	 * @param	string		$path Path relative to the website root
 	 * @return	boolean
 	 */
@@ -446,15 +446,15 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 			// Assign the flexform data to a local variable for easier access
 		$piFlexForm = $this->cObj->data['pi_flexform'];
-		
+
 		if (is_array($piFlexForm['data'])) {
 				// Traverse the entire array based on the language
 				// and assign each configuration option to $this->settings array...
 			foreach ($piFlexForm['data'] as $sheet => $langData) {
 				foreach ($langData as $lang => $fields) {
 					foreach (array_keys($fields) as $field) {
-						$value = $this->pi_getFFvalue($piFlexForm, $field, $sheet);	
-							
+						$value = $this->pi_getFFvalue($piFlexForm, $field, $sheet);
+
 						if (!empty($value)) {
 							if (in_array($field, $explodeFlexFormFields)) {
 								$this->settings[$field] = explode(',', $value);
