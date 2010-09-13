@@ -1,5 +1,6 @@
 2010-09-13  Xavier Perseguers  <typo3@perseguers.ch>
 
+	* Fixed bug #9656: plugin.tx_filelist_pi1._LOCAL_LANG.xxx not working (thanks to Felix Griesser)
 	* Cleaned-up files
 
 2010-01-29  Moreno Feltscher  <moreno@luagsh.ch>

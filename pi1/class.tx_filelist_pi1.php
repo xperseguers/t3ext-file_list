@@ -32,7 +32,7 @@ require_once(t3lib_extMgm::extPath('file_list') . '/pi1/class.tx_filelist_helper
  * @package     TYPO3
  * @subpackage  tx_filelist
  * @author      Moreno Feltscher <moreno@luagsh.ch>
- * @author      Xavier Perseguers  <typo3@perseguers.ch>
+ * @author      Xavier Perseguers <typo3@perseguers.ch>
  * @license     http://www.gnu.org/copyleft/gpl.html
  * @version     SVN: $Id$
  */
@@ -531,8 +531,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 
 				// Overlaying labels from TypoScript (including fictitious language keys for non-system languages!):
-			if (is_array($this->conf['_LOCAL_LANG.'])) {
-				foreach ($this->conf['_LOCAL_LANG.'] as $k => $lA) {
+			if (is_array($this->settings['_LOCAL_LANG.'])) {
+				foreach ($this->settings['_LOCAL_LANG.'] as $k => $lA) {
 					if (is_array($lA)) {
 						$k = substr($k, 0, -1);
 						foreach ($lA as $llK => $llV) {
