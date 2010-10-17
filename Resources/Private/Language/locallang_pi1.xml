@@ -18,7 +18,7 @@
 			<label index="pi_flexform.sort_direction.desc">Descending</label>
 			<label index="pi_flexform.new_duration">Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled):</label>
 			<label index="pi_flexform.fe_sort">Users are able to sort files in frontend:</label>
-			<label index="pi_flexform.path">Template file</label>
+			<label index="pi_flexform.templateFile">Template file</label>
 
 			<!-- Table labels -->
 			<label index="filename">Filename</label>
@@ -53,7 +53,7 @@
 			<label index="pi_flexform.sort_direction.desc">Absteigend</label>
 			<label index="pi_flexform.new_duration">Zeitspanne (Angabe in Tagen) innerhalb welcher eine Datei (vom Zeitpunkt ihrer Erstellung) als &quot;neu&quot; deklariert wird (0 = ausgeschaltet):</label>
 			<label index="pi_flexform.fe_sort">Erlaube Benutzern, Dateien im Frontend zu sortieren:</label>
-			<label index="pi_flexform.path">Template-Datei</label>
+			<label index="pi_flexform.templateFile">Template-Datei</label>
 
 			<!-- Table labels -->
 			<label index="filename">Dateiname</label>
@@ -81,7 +81,7 @@
 			<label index="pi_flexform.sort_direction.desc">Descendant (Z-A)</label>
 			<label index="pi_flexform.new_duration">Nombre de jours pour qu'un fichier soit &quot; nouveau &quot; (0 = désactivé):</label>
 			<label index="pi_flexform.fe_sort">Autoriser le tri en frontend :</label>
-			<label index="pi_flexform.path">Gabarit</label>
+			<label index="pi_flexform.templateFile">Gabarit</label>
 
 			<!-- Table labels -->
 			<label index="filename">Fichier</label>
