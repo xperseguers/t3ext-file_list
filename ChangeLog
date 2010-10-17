@@ -1,3 +1,7 @@
+2010-10-17  Xavier Perseguers  <typo3@perseguers.ch>
+
+	* Added templateFile plugin option to locally override the template
+
 2010-09-13  Xavier Perseguers  <typo3@perseguers.ch>
 
 	* Fixed bug #9656: plugin.tx_filelist_pi1._LOCAL_LANG.xxx not working (thanks to Felix Griesser)

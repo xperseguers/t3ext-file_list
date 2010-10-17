@@ -93,6 +93,30 @@
 					</config>
 				</TCEforms>
 			</fe_sort>
+			<templateFile>
+				<TCEforms>
+					<exclude>1</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.templateFile</label>
+					<config>
+						<type>input</type>
+						<size>48</size>
+						<eval>trim</eval>
+						<wizards type="array">
+							<_PADDING>2</_PADDING>
+							<link type="array">
+								<type>popup</type>
+								<title>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.path.wizards.link.title</title>
+								<icon>link_popup.gif</icon>
+								<script>browse_links.php?mode=wizard&amp;act=file</script>
+								<params type="array">
+									<blindLinkOptions>page,url,mail,spec,folder</blindLinkOptions>
+								</params>
+								<JSopenParams>height=500,width=400,status=0,menubar=0,scrollbars=1</JSopenParams>
+							</link>
+						</wizards>
+					</config>
+				</TCEforms>
+			</templateFile>
 		</el>
 	</ROOT>
 </T3DataStructure>
