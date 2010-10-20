@@ -1,3 +1,7 @@
+2010-10-20  Xavier Perseguers  <typo3@perseguers.ch>
+
+	* Added feature #6395: Additional markers for filename (not wrapped with link) and file URL
+
 2010-10-17  Xavier Perseguers  <typo3@perseguers.ch>
 
 	* Added templateFile plugin option to locally override the template

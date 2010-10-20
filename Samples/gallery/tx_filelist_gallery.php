@@ -24,6 +24,10 @@
 
 class tx_filelist_gallery {
 
+	public function filesDirectoriesProcessor(array $items, tx_filelist_pi1 $pObj) {
+
+	}
+
 	public function extraItemMarkerProcessor(array $markers, array $data, tx_filelist_pi1 $pObj) {
 		$thumbnail = $pObj->settings['thumbnail.'];
 
