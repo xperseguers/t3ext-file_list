@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Xavier Perseguers <typo3@perseguers.ch>
+*  (c) 2010-2011 Xavier Perseguers  <typo3@perseguers.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -37,7 +37,7 @@ class tx_filelist_metadata {
 
 			// Update configuration with current filename
 		$fields = $this->replaceFilename($fields, $data['fullpath']);
-		
+
 			// Populate additional markers
 		$markers['###APERTURE###'] = $pObj->cObj->cObjGetSingle($fields['aperture'], $fields['aperture.']);
 		$markers['###AUTHOR###'] = $pObj->cObj->cObjGetSingle($fields['author'], $fields['author.']);
@@ -48,7 +48,7 @@ class tx_filelist_metadata {
 
 	/**
 	 * Replaces the 'dynamicFilename' TS key with actual filename.
-	 * 
+	 *
 	 * @param	array	$ts
 	 * @param	string	$filename
 	 * @return	array

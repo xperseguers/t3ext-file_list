@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2006-2010 Moreno Feltscher <moreno@luagsh.ch>
+*  (c) 2006-2011 Moreno Feltscher  <moreno@luagsh.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,8 +31,8 @@ require_once(t3lib_extMgm::extPath('file_list') . '/pi1/class.tx_filelist_helper
  *
  * @package     TYPO3
  * @subpackage  tx_filelist
- * @author      Moreno Feltscher <moreno@luagsh.ch>
- * @author      Xavier Perseguers <typo3@perseguers.ch>
+ * @author      Moreno Feltscher  <moreno@luagsh.ch>
+ * @author      Xavier Perseguers  <typo3@perseguers.ch>
  * @license     http://www.gnu.org/copyleft/gpl.html
  * @version     SVN: $Id$
  */
@@ -76,9 +76,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$this->init($settings);
 		$this->pi_setPiVarDefaults();
 		$this->initTemplate();
-
-		$subdirs = array();
-		$files = array();
 
 		$listingPath = $this->settings['path'];
 		if ($this->args['path']) {
@@ -204,7 +201,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Returns templated rows for a given array of files.
+	 * Returns rows with applied template for a given array of files.
 	 *
 	 * @param	array		$files
 	 * @param	string		$listingPath Current path
@@ -245,9 +242,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Returns a templated table containing all given rows as body.
+	 * Returns a table with applied template containing all given rows as body.
 	 *
-	 * @param	array		$rows Templated rows
+	 * @param	array		$rows Rows with applied template
 	 * @return	string
 	 */
 	protected function generateTable(array $rows) {
@@ -267,7 +264,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	}
 
 	/**
-	 * Reads the template file, fill in global wraps and markers and write the result
+	 * Reads the template file, fills in global wraps and markers and writes the result
 	 * parts to $this->templates array.
 	 *
 	 * @return	void
@@ -358,7 +355,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 		}
 
-			// Try to find a filetype category icon
+			// Try to find a file type category icon
 		$category = '';
 		foreach ($categories as $cat => $extensions) {
 			if (t3lib_div::inArray($extensions, $ext)) {
@@ -525,7 +522,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$this->args = array_merge($this->args, $arguments);
 		}
 
-			// Disable Filelist if an error occurred
+			// Disable file_list if an error occurred
 		$this->error = 0;
 			// Load language data
 		$this->pi_loadLL();

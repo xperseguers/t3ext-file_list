@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Xavier Perseguers <typo3@perseguers.ch>
+*  (c) 2010-2011 Xavier Perseguers  <typo3@perseguers.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -48,7 +48,7 @@ class tx_filelist_multilingual {
 				$translationPath = preg_replace('/(\.[^.]+)$/', '_' . $translation . '\1', $data['path']);
 				if (is_file($translationFullPath)) {
 					$flag = '<img src="/typo3/gfx/flags/' . $translation . '.gif" alt="' . $translation . '" />';
-					$markers[$tMarker] = $pObj->cObj->typolink($flag, array('parameter' => $translationPath)); 
+					$markers[$tMarker] = $pObj->cObj->typolink($flag, array('parameter' => $translationPath));
 				}
 			}
 		}
