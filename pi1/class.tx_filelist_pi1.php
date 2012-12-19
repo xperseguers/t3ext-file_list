@@ -504,8 +504,25 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$this->settings['rootabs'] = ($root{0} === '/') ? $root : PATH_site . $root;
 
 			// Prepare the path to the directory
-		$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']); // When RTE file browser is used, additionnal components may be present
-		$this->settings['path'] = tx_filelist_helper::sanitizePath($pathOptions[0]);
+		if (!t3lib_extMgm::isLoaded('rgfolderselector')) {
+				// When RTE file browser is used, additional components may be present (target/class according
+				// to typolink documentation. However those additional arguments cannot contain a slash (/) except for
+				// the title attribute but then it should be either be alone in title, or should not contain spaces in
+				// in AND should end with a / (otherwise it would be quoted). This is very unlikely to occur and it's
+				// just fine to fail under those conditions.
+				// As such, we take for granted that a slash at the end of the path marks the end of it and any
+				// space-delimited argument before is in fact part of the path itself.
+			if (strrpos($this->settings['path'], '/') != strlen($this->settings['path']) - 1) {
+				$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']);
+				$this->settings['path'] = $pathOptions[0];
+			}
+
+				// Furthermore, if TYPO3 native folder browser is used with a directory containing spaces,
+				// the resulting path will have spaces encoded as %20
+			$this->settings['path'] = urldecode($this->settings['path']);
+		}
+
+		$this->settings['path'] = tx_filelist_helper::sanitizePath($this->settings['path']);
 
 			// Retrieval of arguments
 		$this->getPrefix = $this->pi_getClassName($this->cObj->data['uid']);
