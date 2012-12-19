@@ -1,3 +1,7 @@
+2012-12-19  Xavier Perseguers  <xavier@typo3.org>
+
+	* [BUGFIX] #26157: Could not open directory "/"
+
 2011-01-04  Xavier Perseguers  <typo3@perseguers.ch>
 
 	* [BUGFIX] #11857: Directories with spaces in name cannot be used
