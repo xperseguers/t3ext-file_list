@@ -1,3 +1,7 @@
+2013-02-12  Xavier Perseguers  <xavier@typo3.org>
+
+	* [BUGFIX] Invalid default fallback mapping for extension pptx
+
 2012-12-19  Xavier Perseguers  <xavier@typo3.org>
 
 	* [BUGFIX] #26157: Could not open directory "/"

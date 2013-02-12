@@ -36,7 +36,7 @@ plugin.tx_filelist_pi1 {
 	extension.remap.htm   = html
 	extension.remap.midi  = mid
 	extension.remap.phtml = html
-	extension.remap.pptx  = ptt
+	extension.remap.pptx  = ppt
 	extension.remap.tiff  = tif
 	extension.remap.xlsx  = xls
 
