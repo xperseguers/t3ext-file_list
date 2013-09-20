@@ -522,6 +522,20 @@ class tx_filelist_pi1 extends tslib_pibase {
 			$this->settings['path'] = urldecode($this->settings['path']);
 		}
 
+		// Compatibility with FAL-encoded paths in TYPO3 6.x
+		if (preg_match('/^file:(\d+):(.*)$/', $this->settings['path'], $matches)) {
+			/** @var $storageRepository \TYPO3\CMS\Core\Resource\StorageRepository */
+			$storageRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\StorageRepository');
+			/** @var $storage \TYPO3\CMS\Core\Resource\ResourceStorage */
+			$storage = $storageRepository->findByUid(intval($matches[1]));
+			$storageRecord = $storage->getStorageRecord();
+			if ($storageRecord['driver'] === 'Local') {
+				$storageConfiguration = $storage->getConfiguration();
+				$basePath = rtrim($storageConfiguration['basePath'], '/') . '/';
+				$this->settings['path'] = $basePath . substr($matches[2], 1);
+			}
+		}
+
 		$this->settings['path'] = tx_filelist_helper::sanitizePath($this->settings['path']);
 
 			// Retrieval of arguments

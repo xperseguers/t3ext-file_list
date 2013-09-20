@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'This extension provides a frontend plugin which shows a list of files and folders in a specified directory on the file system (comparable to Apache\'s directory listing).',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '1.0-dev',
+	'version' => '1.1-dev',
 	'dependencies' => 'cms',
 	'conflicts' => '',
 	'priority' => '',
@@ -34,7 +34,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '4.0.0-0.0.0',
+			'typo3' => '4.5.0-6.1.99',
 			'cms' => '',
 		),
 		'conflicts' => array(
