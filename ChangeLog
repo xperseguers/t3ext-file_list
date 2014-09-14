@@ -1,3 +1,7 @@
+2014-09-14  Xavier Perseguers  <xavier@typo3.org>
+
+	* [BUGFIX] Compatibility with TYPO3 6.2
+
 2013-09-20  Xavier Perseguers  <xavier@typo3.org>
 
 	* [BUGFIX] #52146: Directory path does not support FAL references

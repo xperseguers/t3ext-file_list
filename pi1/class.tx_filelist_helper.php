@@ -125,7 +125,7 @@ class tx_filelist_helper {
 		$dirs = array();
 		$files = array();
 
-			// Open the directory and read out all folders and files
+		// Open the directory and read out all folders and files
 		$dh = opendir($path);
 		while ($dir_content = readdir($dh)) {
 			if ($dir_content !== '.' && $dir_content !== '..') {
@@ -171,12 +171,14 @@ class tx_filelist_helper {
 			$prefix = realpath(PATH_site) . '/';
 			$path = PATH_site . $path;
 		}
-			// Make sure there is no more ../ inside
+
+		// Make sure there is no more ../ inside
 		$path = realpath($path);
-			// Make it relative again (if needed)
+		// Make it relative again (if needed)
 		$path = substr($path, strlen($prefix));
-			// Ensure a trailing slash is present
+		// Ensure a trailing slash is present
 		$path = rtrim($path, '/') . '/';
+
 		return $path;
 	}
 
@@ -225,8 +227,6 @@ class tx_filelist_helper {
 }
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/pi1/class.tx_filelist_helper.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/pi1/class.tx_filelist_helper.php']);
+if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/file_list/pi1/class.tx_filelist_helper.php'])) {
+	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/file_list/pi1/class.tx_filelist_helper.php']);
 }
-
-?>

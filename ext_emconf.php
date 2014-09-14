@@ -16,7 +16,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'category' => 'plugin',
 	'shy' => 0,
 	'version' => '1.1-dev',
-	'dependencies' => 'cms',
+	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
 	'loadOrder' => '',
@@ -27,15 +27,15 @@ $EM_CONF[$_EXTKEY] = array(
 	'modify_tables' => '',
 	'clearcacheonload' => 0,
 	'lockType' => '',
-	'author' => 'Moreno Feltscher',
+	'author' => 'Moreno Feltscher and Xavier Perseguers',
 	'author_email' => 'moreno@luagsh.ch',
 	'author_company' => '',
 	'CGLcompliance' => '',
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '4.5.0-6.1.99',
-			'cms' => '',
+			'typo3' => '4.5.0-6.2.99',
+			'php' => '5.3.3-5.5.99',
 		),
 		'conflicts' => array(
 		),
