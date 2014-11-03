@@ -1,42 +1,42 @@
 <?php
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2006-2011 Moreno Feltscher  <moreno@luagsh.ch>
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2011-2014 Xavier Perseguers <xavier@causal.ch>
+ *  (c) 2006-2011 Moreno Feltscher <moreno@luagsh.ch>
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * Plugin 'File List' for the 'file_list' extension.
  *
  * @package     TYPO3
  * @subpackage  tx_filelist
- * @author      Moreno Feltscher  <moreno@luagsh.ch>
- * @author      Xavier Perseguers  <typo3@perseguers.ch>
+ * @author      Moreno Feltscher <moreno@luagsh.ch>
+ * @author      Xavier Perseguers <xavier@causal.ch>
  * @license     http://www.gnu.org/copyleft/gpl.html
- * @version     SVN: $Id$
  */
 class tx_filelist_pi1 extends tslib_pibase {
 
 	// Members coming from tslib_pibase
 	public $prefixId = 'tx_filelist_pi1';
-	public $scriptRelPath = 'pi1/class.tx_filelist_pi1.php';
+	public $scriptRelPath = 'Classes/Controller/Pi1/class.tx_filelist_pi1.php';
 	public $extKey = 'file_list';
 
 	/**
@@ -64,9 +64,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * Main-function, returns output
 	 *
-	 * @param	string		$content: The Plugin content
-	 * @param	array		$settings: The Plugin configuration
-	 * @return	string		Content which appears on the website
+	 * @param string $content The Plugin content
+	 * @param array $settings The Plugin configuration
+	 * @return string Content which appears on the website
 	 */
 	public function main($content, array $settings) {
 		$this->init($settings);
@@ -126,10 +126,10 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * Returns templated rows for a given array of directories.
 	 *
-	 * @param	array		$directories
-	 * @param	string		$listingPath Current path
-	 * @param	boolean		$odd Whether first row is an odd row.
-	 * @return	array
+	 * @param array $directories
+	 * @param string $listingPath Current path
+	 * @param bool $odd Whether first row is an odd row.
+	 * @return array
 	 */
 	protected function generateDirectoryRows(array $directories, $listingPath, &$odd) {
 		$rows = array();
@@ -199,10 +199,10 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * Returns rows with applied template for a given array of files.
 	 *
-	 * @param	array		$files
-	 * @param	string		$listingPath Current path
-	 * @param	boolean		$odd Whether first row is an odd row.
-	 * @return	array
+	 * @param array $files
+	 * @param string $listingPath Current path
+	 * @param bool $odd Whether first row is an odd row.
+	 * @return array
 	 */
 	protected function generateFileRows(array $files, $listingPath, &$odd) {
 		$rows = array();
@@ -240,8 +240,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * Returns a table with applied template containing all given rows as body.
 	 *
-	 * @param	array		$rows Rows with applied template
-	 * @return	string
+	 * @param array $rows Rows with applied template
+	 * @return string
 	 */
 	protected function generateTable(array $rows) {
 		// Replace header markers and create the listing table
@@ -263,7 +263,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * Reads the template file, fills in global wraps and markers and writes the result
 	 * parts to $this->templates array.
 	 *
-	 * @return	void
+	 * @return void
 	 */
 	protected function initTemplate() {
 		$content = $this->cObj->fileResource($this->settings['templateFile']);
@@ -298,8 +298,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * Returns a link to the same page with additional parameters.
 	 *
-	 * @param	array		$params
-	 * @return	string
+	 * @param array $params
+	 * @return string
 	 */
 	protected function getLink(array $params) {
 		// Merge existing parameters with $params
@@ -322,10 +322,11 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * Returns the icon which represents a file type
 	 *
-	 * @param	string		Path to the specified file
-	 * @return	string		Filename of the icon
+	 * @param string $filename Path to the specified file
+	 * @return string Filename of the icon
 	 */
 	protected function getFileTypeIcon($filename) {
+		$categories = array();
 		foreach ($this->settings['extension.']['category.'] as $category => $extensions) {
 			$categories[$category] = t3lib_div::trimExplode(',', $extensions);
 		}
@@ -352,7 +353,6 @@ class tx_filelist_pi1 extends tslib_pibase {
 		}
 
 		// Try to find a file type category icon
-		$category = '';
 		foreach ($categories as $cat => $extensions) {
 			if (t3lib_div::inArray($extensions, $ext)) {
 				return 'category_' . $cat . '.png';
@@ -367,8 +367,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * Checks that the given path is within the allowed root directory and
 	 * within the plugin's root directory.
 	 *
-	 * @param	string		$path Path relative to the website root
-	 * @return	boolean
+	 * @param string $path Path relative to the website root
+	 * @return bool
 	 */
 	protected function isValidDirectory($path) {
 		return
@@ -381,8 +381,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * Returns a human-readable size of a file.
 	 *
-	 * @param	string		Path to the specified file
-	 * @return	string		Size of the file
+	 * @param string $filename Path to the specified file
+	 * @return string Size of the file
 	 */
 	protected function getHRFileSize($filename) {
 		$units = array(
@@ -404,9 +404,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * Returns a text stating "new" if a file is considered to be marked as new
 	 *
-	 * @param	string		Path to the specified file
-	 * @param	integer		User specific amount of days within a file is considered to be new
-	 * @return	string'
+	 * @param string $fn Path to the specified file
+	 * @param integer $duration User specific amount of days within a file is considered to be new
+	 * @return string
 	 */
 	protected function getNewFileText($fn, $duration) {
 		return ($duration > 0 && filemtime($fn) > mktime(0, 0, 0, date('m'), date('d') - $duration, date('Y'))) ? $this->pi_getLL('newFile') : '';
@@ -415,9 +415,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * Reads out the icons in order to sort FE output of files
 	 *
-	 * @param	string		Order by (name, date, size)
-	 * @param	string		Order sequence ('asc', 'desc')
-	 * @return	string		Filename of ordering icons
+	 * @param string $order_by Order by (name, date, size)
+	 * @return string HTML of ordering icons
 	 */
 	protected function getFeSortIcons($order_by) {
 		$ret = '&nbsp;';
@@ -439,9 +438,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * This method performs various initializations.
 	 *
-	 * @param	array		$settings: Plugin configuration, as received by the main() method
-	 * @param	array		$explodeFlexFormFields: FlexForm fields to be exploded as an array
-	 * @return	void
+	 * @param array $settings Plugin configuration, as received by the main() method
+	 * @param array $explodeFlexFormFields FlexForm fields to be exploded as an array
+	 * @return void
 	 */
 	protected function init(array $settings, array $explodeFlexFormFields = array()) {
 		// Initialize default values based on extension TS
@@ -597,8 +596,8 @@ class tx_filelist_pi1 extends tslib_pibase {
 	/**
 	 * Returns an error message for frontend output.
 	 *
-	 * @param	string		$string Error message input
-	 * @return	void
+	 * @param string $string Error message input
+	 * @return string
 	 */
 	protected function error($string) {
 		return '
