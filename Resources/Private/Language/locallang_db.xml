@@ -6,13 +6,13 @@
     </meta>
     <data type="array">
         <languageKey index="default" type="array">
-            <label index="tt_content.list_type_pi1">File List</label>
+            <label index="tt_content.list_type_pi1">File List - (old plugin)</label>
         </languageKey>
         <languageKey index="de" type="array">
-            <label index="tt_content.list_type_pi1">Dateiliste</label>
+            <label index="tt_content.list_type_pi1">Dateiliste - (altes Plugin)</label>
         </languageKey>
         <languageKey index="fr" type="array">
-            <label index="tt_content.list_type_pi1">Liste de fichiers</label>
+            <label index="tt_content.list_type_pi1">Liste de fichiers - (vieux plugin)</label>
         </languageKey>
     </data>
 </T3locallang>

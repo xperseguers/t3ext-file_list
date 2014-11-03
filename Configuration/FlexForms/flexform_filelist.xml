@@ -1,0 +1,109 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<ROOT>
+		<type>array</type>
+		<el>
+			<settings.mode>
+				<TCEforms>
+					<exclude>0</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.mode</label>
+					<onChange>reload</onChange>
+					<config>
+						<type>select</type>
+						<items type="array">
+							<numIndex index="0" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.mode.folder</numIndex>
+								<numIndex index="1">FOLDER</numIndex>
+							</numIndex>
+							<numIndex index="1" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.mode.file_collections</numIndex>
+								<numIndex index="1">FILE_COLLECTIONS</numIndex>
+							</numIndex>
+							<numIndex index="2" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.mode.categories</numIndex>
+								<numIndex index="1">CATEGORIES</numIndex>
+							</numIndex>
+						</items>
+					</config>
+				</TCEforms>
+			</settings.mode>
+			<settings.path>
+				<TCEforms>
+					<exclude>0</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.path</label>
+					<displayCond>FIELD:settings.mode:=:FOLDER</displayCond>
+					<config>
+						<type>input</type>
+						<size>48</size>
+						<eval>required,trim</eval>
+						<wizards type="array">
+							<_PADDING>2</_PADDING>
+							<link type="array">
+								<type>popup</type>
+								<title>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.path.wizards.link.title</title>
+								<icon>link_popup.gif</icon>
+								<script>browse_links.php?mode=wizard&amp;act=folder</script>
+								<params type="array">
+									<blindLinkOptions>page,url,mail,spec,file</blindLinkOptions>
+								</params>
+								<JSopenParams>height=500,width=400,status=0,menubar=0,scrollbars=1</JSopenParams>
+							</link>
+						</wizards>
+					</config>
+				</TCEforms>
+			</settings.path>
+			<settings.file_collections>
+				<TCEforms>
+					<exclude>0</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.file_collections</label>
+					<displayCond>FIELD:settings.mode:=:FILE_COLLECTIONS</displayCond>
+					<config>
+						<type>group</type>
+						<internal_type>db</internal_type>
+						<localizeReferencesAtParentLocalization>true</localizeReferencesAtParentLocalization>
+						<allowed>sys_file_collection</allowed>
+						<foreign_table>sys_file_collection</foreign_table>
+						<maxitems>999</maxitems>
+						<minitems>0</minitems>
+						<size>5</size>
+					</config>
+				</TCEforms>
+			</settings.file_collections>
+			<settings.categories>
+				<TCEforms>
+					<exclude>0</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.categories</label>
+					<displayCond>FIELD:settings.mode:=:CATEGORIES</displayCond>
+					<config>
+						<type>select</type>
+						<renderMode>tree</renderMode>
+						<treeConfig>
+							<parentField>parent</parentField>
+							<expandAll>1</expandAll>
+						</treeConfig>
+						<foreign_table>sys_category</foreign_table>
+						<size>15</size>
+						<autoSizeMax>25</autoSizeMax>
+						<maxitems>999</maxitems>
+						<minitems>0</minitems>
+						<default></default>
+					</config>
+				</TCEforms>
+			</settings.categories>
+			<settings.new_duration>
+				<TCEforms>
+					<exclude>0</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.new_duration</label>
+					<config>
+						<type>input</type>
+						<size>4</size>
+						<eval>int,trim</eval>
+						<default>0</default>
+					</config>
+				</TCEforms>
+			</settings.new_duration>
+		</el>
+	</ROOT>
+</T3DataStructure>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2014-11-03T13:48:41Z" product-name="file_list">
+		<header/>
+		<body>
+			<trans-unit id="filelist.mode">
+				<source>Mode</source>
+			</trans-unit>
+			<trans-unit id="filelist.mode.folder">
+				<source>Files within a folder</source>
+			</trans-unit>
+			<trans-unit id="filelist.mode.file_collections">
+				<source>Files from file collections</source>
+			</trans-unit>
+			<trans-unit id="filelist.mode.categories">
+				<source>Files from categories</source>
+			</trans-unit>
+			<trans-unit id="filelist.path">
+				<source>Folder path (example: file:1:/user_upload/)</source>
+			</trans-unit>
+			<trans-unit id="filelist.path.wizards.link.title">
+				<source>Folder selector</source>
+			</trans-unit>
+			<trans-unit id="filelist.categories">
+				<source>Select categories</source>
+			</trans-unit>
+			<trans-unit id="filelist.file_collections">
+				<source>Select file collections</source>
+			</trans-unit>
+			<trans-unit id="filelist.new_duration">
+				<source>Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled)</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

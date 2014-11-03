@@ -16,4 +16,17 @@ if (!t3lib_extMgm::isLoaded('rgfolderselector')) {
 
 t3lib_extMgm::addPlugin(array('LLL:EXT:file_list/Resources/Private/Language/locallang_db.xml:tt_content.list_type_pi1', $_EXTKEY . '_pi1'), 'list_type');
 
+if (version_compare(TYPO3_branch, '6.0', '>=')) {
+	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+		'Causal.' . $_EXTKEY,
+		'Filelist',
+		'File List - List of files'
+	);
+
+	$extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY);
+	$pluginSignature = strtolower($extensionName) . '_filelist';
+	$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_filelist.xml');
+}
+
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/', 'File List');
