@@ -1,2 +1,2 @@
-	# cat=basic/enable; type=boolean; label=LLL:EXT:file_list/Resources/Private/Language/locallang.xml:config.noCache
+# cat=basic/enable; type=boolean; label=LLL:EXT:file_list/Resources/Private/Language/locallang.xml:config.noCache
 noCache = 0

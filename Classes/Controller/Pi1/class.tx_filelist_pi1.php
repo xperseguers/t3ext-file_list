@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2011-2014 Xavier Perseguers <xavier@causal.ch>
+ *  (c) 2011-2015 Xavier Perseguers <xavier@causal.ch>
  *  (c) 2006-2011 Moreno Feltscher <moreno@luagsh.ch>
  *  All rights reserved
  *

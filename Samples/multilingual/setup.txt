@@ -1,9 +1,6 @@
 plugin.tx_filelist_pi1 {
 
-		# Use our special metadata template
+	# Use our special metadata template
 	templateFile = EXT:file_list/Samples/multilingual/template.html
 
 }
-
-### SVN id ###
-# $Id$

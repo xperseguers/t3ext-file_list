@@ -4,7 +4,7 @@ namespace Causal\FileList\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 Xavier Perseguers <xavier@causal.ch>
+ *  (c) 2014-2015 Xavier Perseguers <xavier@causal.ch>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is

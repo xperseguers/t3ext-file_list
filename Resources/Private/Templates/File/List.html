@@ -1,0 +1,14 @@
+<table>
+	<tbody>
+	<f:for each="{files}" as="file">
+		<tr>
+			<td><f:link.page pageUid="{file.publicUrl}">
+				<f:if condition="{file.properties.title}">
+					<f:then>{file.properties.title}</f:then>
+					<f:else>{file.name}</f:else>
+				</f:if>
+			</f:link.page></td>
+		</tr>
+	</f:for>
+	</tbody>
+</table>

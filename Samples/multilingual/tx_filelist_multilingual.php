@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2011 Xavier Perseguers  <typo3@perseguers.ch>
+*  (c) 2010-2015 Xavier Perseguers <xavier@causal.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,7 +27,7 @@ class tx_filelist_multilingual {
 	public function filesDirectoriesProcessor(array $items, tx_filelist_pi1 $pObj) {
 		$ret = array();
 
-			// Filter out translations
+		// Filter out translations
 		foreach ($items as $item) {
 			if ($item['type'] === 'DIRECTORY' || !preg_match('/_..\.[^.]+$/', $item['path'])) {
 				$ret[] = $item;
@@ -42,7 +42,7 @@ class tx_filelist_multilingual {
 		$markers['###ITALIAN###'] = '';
 
 		if ($data['type'] === 'FILE') {
-				// Search a translation
+			// Search a translation
 			foreach (array('fr' => '###FRENCH###', 'de' => '###GERMAN###', 'it' => '###ITALIAN###') as $translation => $tMarker) {
 				$translationFullPath = preg_replace('/(\.[^.]+)$/', '_' . $translation . '\1', $data['fullpath']);
 				$translationPath = preg_replace('/(\.[^.]+)$/', '_' . $translation . '\1', $data['path']);
@@ -63,5 +63,3 @@ class tx_filelist_multilingual {
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/Samples/multilingual/tx_filelist_multilingual.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/Samples/multilingual/tx_filelist_multilingual.php']);
 }
-
-?>

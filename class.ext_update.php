@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009-2012 Xavier Perseguers <typo3@perseguers.ch>
+*  (c) 2009-2015 Xavier Perseguers <xavier@causal.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,9 +27,8 @@
  *
  * @package     TYPO3
  * @subpackage  tx_filelist
- * @author      Xavier Perseguers <typo3@perseguers.ch>
+ * @author      Xavier Perseguers <xavier@causal.ch>
  * @license     http://www.gnu.org/copyleft/gpl.html
- * @version     SVN: $Id$
  */
 class ext_update extends t3lib_SCbase {
 

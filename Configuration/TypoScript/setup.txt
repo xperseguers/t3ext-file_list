@@ -2,27 +2,27 @@ plugin.tx_filelist_pi1 {
 
 	templateFile = EXT:file_list/Resources/Private/Templates/template_pi1.html
 
-		# Base root directory (path must be within this directory, either absolute or relative to site root)
+	# Base root directory (path must be within this directory, either absolute or relative to site root)
 	root = fileadmin/
 
-		# Icon skin for file extensions and categories
+	# Icon skin for file extensions and categories
 	iconsPathFiles = EXT:file_list/Resources/Public/Icons/Files/
 
-		# Icon skin for folders
+	# Icon skin for folders
 	iconsPathFolders = EXT:file_list/Resources/Public/Icons/Folders/
 
-		# Icon skin for sorting arrows
+	# Icon skin for sorting arrows
 	iconsPathSorting = EXT:file_list/Resources/Public/Icons/Sorting/
 
-		# Perl compatible regular expression for file names which shouldn't be displayed
+	# Perl compatible regular expression for file names which shouldn't be displayed
 	ignoreFileNamePattern = /^(\..*|thumbs\.db)$/i
 
-		# Perl compatible regular expression for folder names which shouldn't be displayed
+	# Perl compatible regular expression for folder names which shouldn't be displayed
 	ignoreFolderNamePattern = /^(\..*|CVS)$/i
 
 	### Extension <-> Icon mapping
 
-		# You should create an icon with the name of your category if you create other categories
+	# You should create an icon with the name of your category if you create other categories
 	extension.category.archive  = bz2, gz, rar, tar, zip
 	extension.category.document = doc, docx, pdf, pps, ppt, pptx, xls, xlsx
 	extension.category.flash    = fla, swf
@@ -31,7 +31,7 @@ plugin.tx_filelist_pi1 {
 	extension.category.source   = php, htm, html, inc, phtml
 	extension.category.video    = mpg, mpeg, wmv
 
-		# Remapping takes place if a dedicated icon cannot be found, before falling back to the category icon
+	# Remapping takes place if a dedicated icon cannot be found, before falling back to the category icon
 	extension.remap.docx  = doc
 	extension.remap.htm   = html
 	extension.remap.midi  = mid
@@ -70,6 +70,3 @@ span.tx-filelist-pi1-newFile {
 
 	)
 }
-
-### SVN id ###
-# $Id$

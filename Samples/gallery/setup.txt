@@ -1,6 +1,6 @@
 plugin.tx_filelist_pi1 {
 
-		# Use our special metadata template
+	# Use our special metadata template
 	templateFile = EXT:file_list/Samples/gallery/template.html
 
 	thumbnail = IMAGE
@@ -10,26 +10,23 @@ plugin.tx_filelist_pi1 {
 			XY = 150,150
 			format = jpg
 			10 = IMAGE
-			10.file = 
+			10.file =
 			10.file.height = 150c
 			10.file.width = 150c
 		}
-		
+
 		imageLinkWrap = 1
 		imageLinkWrap {
 			enable = 1
 			typolink.parameter.cObject = IMG_RESOURCE
 			typolink.parameter.cObject {
-				file = 
+				file =
 				file.maxH = 600
 				file.maxW = 750
 			}
 			typolink.ATagParams = rel="lightbox"
 		}
-		
-		altText = 
+
+		altText =
 	}
 }
-
-### SVN id ###
-# $Id$

@@ -1,0 +1,26 @@
+{
+  "name": "causal/file_list",
+  "description": "This extension provides a frontend plugin which shows a list of files and folders in a specified directory on the file system (comparable to Apache's directory listing).",
+  "version": "2.0.0-dev",
+  "type": "typo3-cms-extension",
+  "keywords": ["TYPO3 CMS", "list", "files", "directories", "gallery"],
+  "homepage": "https://forge.typo3.org/projects/extension-file_list",
+  "license": "GPL-2.0+",
+  "authors": [
+    {
+      "name": "Xavier Perseguers",
+      "email": "xavier@causal.ch",
+      "homepage": "https://www.causal.ch",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">= 5.3.3, <= 5.6.99",
+    "typo3/cms-core": ">= 4.5.0, <= 6.2.99"
+  },
+  "suggest": {
+  },
+  "support": {
+	"issues": "https://forge.typo3.org/projects/extension-file_list/issues"
+  }
+}

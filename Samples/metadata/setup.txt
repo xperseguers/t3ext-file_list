@@ -1,26 +1,26 @@
 plugin.tx_filelist_pi1 {
 
-		# Use our special metadata template
+	# Use our special metadata template
 	templateFile = EXT:file_list/Samples/metadata/template.html
 
 	fields.aperture = FILEINFO
 	fields.aperture {
-			# Will be user-processed to get the actual filename
+		# Will be user-processed to get the actual filename
 		dynamicFilename =
 
-			# Focal aperture
+		# Focal aperture
 		metadata.field = EXIF:COMPUTED|ApertureFNumber
 
-			# DEBUG: Show all available fields
+		# DEBUG: Show all available fields
 		#debug = 1
 	}
 
 	fields.author = FILEINFO
 	fields.author {
-			# Will be user-processed to get the actual filename
+		# Will be user-processed to get the actual filename
 		dynamicFilename =
 
-			# Author then Artist (EXIF) or Author (IPTC)
+		# Author then Artist (EXIF) or Author (IPTC)
 		metadata.field = EXIF:Author // EXIF:Artist // IPTC:2#080|0
 	}
 
@@ -39,6 +39,3 @@ plugin.tx_filelist_pi1 {
 	}
 
 }
-
-### SVN id ###
-# $Id$
