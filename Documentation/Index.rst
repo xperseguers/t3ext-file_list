@@ -32,7 +32,7 @@ File List
 		list, file, directory, files, directories
 
 	:Copyright:
-		2008-2014
+		2008-2015
 
 	:Author:
 		Xavier Perseguers, Moreno Feltscher
@@ -54,7 +54,7 @@ File List
 	**Other version of this document**
 
 	:PDF:
-		http://docs.typo3.org/typo3cms/extensions/file_list/2.0.0/_pdf/
+		http://docs.typo3.org/typo3cms/extensions/file_list/1.1.1/_pdf/
 
 
 	**Table of Contents**
