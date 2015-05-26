@@ -1,4 +1,6 @@
 <?php
+namespace Causal\FileList\Utility;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -32,7 +34,7 @@
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
-class tx_filelist_helper {
+class Helper {
 
 	/**
 	 * Sorts an array according to a key and a sort direction.
@@ -66,10 +68,10 @@ class tx_filelist_helper {
 		while ($tempName = readdir($handle)) {
 			if (($tempName !== '.') && ($tempName !== '..')) {
 				$tempPath = $path . '/' . $tempName;
-				if (is_dir($tempPath) && self::isValidName($tempName, $invalidFolderNamePattern) && $recursive) {
-					$result = array_merge($result, self::getListOfFiles($tempPath, TRUE, $invalidFileNamePattern, $invalidFolderNamePattern));
+				if (is_dir($tempPath) && static::isValidName($tempName, $invalidFolderNamePattern) && $recursive) {
+					$result = array_merge($result, static::getListOfFiles($tempPath, TRUE, $invalidFileNamePattern, $invalidFolderNamePattern));
 				}
-				elseif (is_file($tempPath) && self::isValidName($tempName, $invalidFileNamePattern)) {
+				elseif (is_file($tempPath) && static::isValidName($tempName, $invalidFileNamePattern)) {
 					$result[] = $tempPath;
 				}
 			}
@@ -88,7 +90,7 @@ class tx_filelist_helper {
 	 * @return int Number of files in the directory
 	 */
 	static public function getNumberOfFiles($path, $recursive = FALSE, $invalidFileNamePattern = '', $invalidFolderNamePattern = '') {
-		return count(self::getListOfFiles($path, $recursive, $invalidFileNamePattern, $invalidFolderNamePattern));
+		return count(static::getListOfFiles($path, $recursive, $invalidFileNamePattern, $invalidFolderNamePattern));
 	}
 
 	/**
@@ -101,7 +103,7 @@ class tx_filelist_helper {
 	 * @return int Highest timestamp of all files in the directory
 	 */
 	static public function getHighestFileTimestamp($path, $recursive = TRUE, $invalidFileNamePattern = '', $invalidFolderNamePattern = '') {
-		$allFiles = self::getListOfFiles($path, $recursive, $invalidFileNamePattern, $invalidFolderNamePattern);
+		$allFiles = static::getListOfFiles($path, $recursive, $invalidFileNamePattern, $invalidFolderNamePattern);
 		$highestKnown = 0;
 		foreach ($allFiles as $val) {
 			$currentValue = filemtime($val);
@@ -128,17 +130,17 @@ class tx_filelist_helper {
 		$dh = opendir($path);
 		while ($dir_content = readdir($dh)) {
 			if ($dir_content !== '.' && $dir_content !== '..') {
-				if (is_dir($path . '/' . $dir_content) && self::isValidName($dir_content, $invalidFolderNamePattern)) {
+				if (is_dir($path . '/' . $dir_content) && static::isValidName($dir_content, $invalidFolderNamePattern)) {
 					$dirs[] = array(
 						'type' => 'DIRECTORY',
 						'name' => $dir_content,
-						'date' => self::getHighestFileTimestamp($path . '/' . $dir_content, TRUE, $invalidFileNamePattern, $invalidFolderNamePattern),
-						'size' => self::getNumberOfFiles($path . '/' . $dir_content, FALSE, $invalidFileNamePattern, $invalidFolderNamePattern),
+						'date' => static::getHighestFileTimestamp($path . '/' . $dir_content, TRUE, $invalidFileNamePattern, $invalidFolderNamePattern),
+						'size' => static::getNumberOfFiles($path . '/' . $dir_content, FALSE, $invalidFileNamePattern, $invalidFolderNamePattern),
 						'path' => $path . $dir_content,
 						'fullpath' => PATH_site . $path . $dir_content,
 					);
 				}
-				elseif (is_file($path . '/' . $dir_content) && self::isValidName($dir_content, $invalidFileNamePattern)) {
+				elseif (is_file($path . '/' . $dir_content) && static::isValidName($dir_content, $invalidFileNamePattern)) {
 					$files[] = array(
 						'type' => 'FILE',
 						'name' => $dir_content,
@@ -194,10 +196,10 @@ class tx_filelist_helper {
 		$path = substr($path, 4);	// Remove 'EXT:' at the beginning
 		$extension = substr($path, 0, strpos($path, '/'));
 		$references = explode(':', substr($path, strlen($extension) + 1));
-		$pathOrFilename = t3lib_extMgm::siteRelPath($extension) . $references[0];
+		$pathOrFilename = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath($extension) . $references[0];
 
 		if (is_dir(PATH_site . $pathOrFilename)) {
-			$pathOrFilename = self::sanitizePath($pathOrFilename);
+			$pathOrFilename = static::sanitizePath($pathOrFilename);
 		}
 
 		return $pathOrFilename;
@@ -223,9 +225,4 @@ class tx_filelist_helper {
 	static protected function isValidName($name, $invalidPattern) {
 		return empty($invalidPattern) || !preg_match($invalidPattern, $name);
 	}
-}
-
-
-if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/file_list/pi1/class.tx_filelist_helper.php'])) {
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/file_list/pi1/class.tx_filelist_helper.php']);
 }

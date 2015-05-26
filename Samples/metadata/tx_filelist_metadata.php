@@ -29,7 +29,7 @@ class tx_filelist_metadata {
 		$markers['###AUTHOR###'] = '';
 		$markers['###DIMENSIONS###'] = '';
 
-		if (!($data['type'] == 'FILE' && strtolower(substr($data['path'], -4)) == '.jpg')) {
+		if (!($data['type'] === 'FILE' && strtolower(substr($data['path'], -4)) === '.jpg')) {
 			return $markers;
 		}
 
@@ -67,10 +67,4 @@ class tx_filelist_metadata {
 		return $ret;
 	}
 
-}
-
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/Samples/metadata/tx_filelist_metadata.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/Samples/metadata/tx_filelist_metadata.php']);
 }

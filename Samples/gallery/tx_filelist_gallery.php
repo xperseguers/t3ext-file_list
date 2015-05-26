@@ -42,9 +42,3 @@ class tx_filelist_gallery {
 	}
 
 }
-
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/Samples/gallery/tx_filelist_gallery.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/file_list/Samples/gallery/tx_filelist_gallery.php']);
-}

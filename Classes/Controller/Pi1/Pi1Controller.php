@@ -23,6 +23,11 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Causal\FileList\Utility\Helper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
 /**
  * Plugin 'File List' for the 'file_list' extension.
  *
@@ -32,11 +37,11 @@
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
-class tx_filelist_pi1 extends tslib_pibase {
+class tx_filelist_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 
 	// Members coming from tslib_pibase
 	public $prefixId = 'tx_filelist_pi1';
-	public $scriptRelPath = 'Classes/Controller/Pi1/class.tx_filelist_pi1.php';
+	public $scriptRelPath = 'Classes/Controller/Pi1/Pi1Controller.php';
 	public $extKey = 'file_list';
 
 	/**
@@ -75,7 +80,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 		$listingPath = $this->settings['path'];
 		if ($this->args['path']) {
-			$listingPath = tx_filelist_helper::sanitizePath($listingPath . $this->args['path']);
+			$listingPath = Helper::sanitizePath($listingPath . $this->args['path']);
 		}
 
 		// Check that $listingPath is a valid directory
@@ -88,31 +93,31 @@ class tx_filelist_pi1 extends tslib_pibase {
 		}
 		if ($this->settings['fe_sort'] && $this->args['order_by']) {
 			$this->settings['order_by'] = $this->args['order_by'];
-			if (!t3lib_div::inList('name,date,size', $this->settings['order_by'])) {
+			if (!GeneralUtility::inList('name,date,size', $this->settings['order_by'])) {
 				$this->settings['order_by'] = 'name';
 			}
 		}
 
-		list($subdirs, $files) = tx_filelist_helper::getDirectoryContent($listingPath, $this->settings['ignoreFileNamePattern'], $this->settings['ignoreFolderNamePattern']);
+		list($subdirs, $files) = Helper::getDirectoryContent($listingPath, $this->settings['ignoreFileNamePattern'], $this->settings['ignoreFolderNamePattern']);
 
 		// Hook for post-processing the list of files
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['filesDirectoriesHook'])) {
 			foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['filesDirectoriesHook'] as $_classRef) {
-				$_procObj =& t3lib_div::getUserObj($_classRef);
+				$_procObj =& GeneralUtility::getUserObj($_classRef);
 				$files = $_procObj->filesDirectoriesProcessor($files, $this);
 				$subdirs = $_procObj->filesDirectoriesProcessor($subdirs, $this);
 			}
 		}
 
 		// Are there any files in the directory?
-		if ((count($files) == 0) && (count($subdirs) == 0) && !$this->args['path']) {
+		if ((count($files) === 0) && (count($subdirs) === 0) && !$this->args['path']) {
 			$content = $this->pi_getLL('no_files');
 			return $this->pi_wrapInBaseClass($content);
 		}
 
 		// Sort directories and files according to user settings
-		$subdirs = tx_filelist_helper::arraySort($subdirs, $this->settings['order_by'], $this->settings['sort_direction']);
-		$files = tx_filelist_helper::arraySort($files, $this->settings['order_by'], $this->settings['sort_direction']);
+		$subdirs = Helper::arraySort($subdirs, $this->settings['order_by'], $this->settings['sort_direction']);
+		$files = Helper::arraySort($files, $this->settings['order_by'], $this->settings['sort_direction']);
 
 		// Generate table rows
 		$odd = TRUE;
@@ -137,7 +142,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		// Put '..' at the beginning of the array
 		array_unshift($directories, array(
 			'name' => '..',
-			'path' => tx_filelist_helper::sanitizePath($listingPath . '../')
+			'path' => Helper::sanitizePath($listingPath . '../')
 		));
 
 		for ($i = 0; $i < count($directories); $i++) {
@@ -168,12 +173,12 @@ class tx_filelist_pi1 extends tslib_pibase {
 					$markers['###INFO###'] = $this->pi_getLL('directory_size.no_files');
 				}
 			}
-			$markers['###DATE###'] = $directories[$i]['date'] > 0 ? t3lib_BEfunc::datetime($directories[$i]['date']) : '';
+			$markers['###DATE###'] = $directories[$i]['date'] > 0 ? BackendUtility::datetime($directories[$i]['date']) : '';
 
 			// Hook for processing of extra item markers
 			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
 				foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'] as $_classRef) {
-					$_procObj =& t3lib_div::getUserObj($_classRef);
+					$_procObj =& GeneralUtility::getUserObj($_classRef);
 					$markers = $_procObj->extraItemMarkerProcessor($markers, $directories[$i], $this);
 				}
 			}
@@ -208,21 +213,21 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$rows = array();
 		for ($i = 0; $i < count($files); $i++) {
 			$markers = array();
-			$markers['###ICON###'] = $this->cObj->typolink('<img src="' . $this->settings['iconsPathFiles'] . $this->getFileTypeIcon($files[$i]['name']) . '" alt="' . $files[$i]['name'] . '">', array('parameter' => tx_filelist_helper::generateProperURL($files[$i]['path'])));
+			$markers['###ICON###'] = $this->cObj->typolink('<img src="' . $this->settings['iconsPathFiles'] . $this->getFileTypeIcon($files[$i]['name']) . '" alt="' . $files[$i]['name'] . '">', array('parameter' => Helper::generateProperURL($files[$i]['path'])));
 			$markers['###FILENAME###'] = $files[$i]['name'];
 			$markers['###PATH###'] = $files[$i]['path'];
 			$markers['###NEWFILE###'] = ($this->settings['new_duration'] > 0) ? $this->getNewFileText($files[$i]['path'], $this->settings['new_duration']) : '';
 			$markers['###INFO###'] = $this->getHRFileSize($files[$i]['path']);
-			$markers['###DATE###'] = t3lib_BEfunc::datetime(filemtime($listingPath . $files[$i]['name']));
+			$markers['###DATE###'] = BackendUtility::datetime(filemtime($listingPath . $files[$i]['name']));
 
 			// Hook for processing of extra item markers
 			if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'])) {
 				foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'] as $_classRef) {
-					$_procObj =& t3lib_div::getUserObj($_classRef);
+					$_procObj =& GeneralUtility::getUserObj($_classRef);
 					$markers = $_procObj->extraItemMarkerProcessor($markers, $files[$i], $this);
 				}
 			}
-			$wrappedSubpartArray['###LINK_FILE###'] = $this->cObj->typolinkWrap(array('parameter' => tx_filelist_helper::generateProperURL($files[$i]['path'])));
+			$wrappedSubpartArray['###LINK_FILE###'] = $this->cObj->typolinkWrap(array('parameter' => Helper::generateProperURL($files[$i]['path'])));
 
 			$row = $this->cObj->substituteMarkerArrayCached(
 				$odd ? $this->templates['odd'] : $this->templates['even'],
@@ -313,7 +318,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$conf['useCacheHash'] = $this->pi_USER_INT_obj ? 0 : 1;
 		$conf['no_cache'] = FALSE;
 		$conf['parameter'] = $GLOBALS['TSFE']->id;
-		$conf['additionalParams'] = t3lib_div::implodeArrayForUrl($this->getPrefix, $params, '', TRUE);
+		$conf['additionalParams'] = GeneralUtility::implodeArrayForUrl($this->getPrefix, $params, '', TRUE);
 
 		$this->cObj->typoLink('|', $conf);
 		return $this->cObj->lastTypoLinkUrl;
@@ -328,7 +333,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	protected function getFileTypeIcon($filename) {
 		$categories = array();
 		foreach ($this->settings['extension.']['category.'] as $category => $extensions) {
-			$categories[$category] = t3lib_div::trimExplode(',', $extensions);
+			$categories[$category] = GeneralUtility::trimExplode(',', $extensions);
 		}
 		$remapExtensions = $this->settings['extension.']['remap.'];
 
@@ -354,7 +359,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 
 		// Try to find a file type category icon
 		foreach ($categories as $cat => $extensions) {
-			if (t3lib_div::inArray($extensions, $ext)) {
+			if (GeneralUtility::inArray($extensions, $ext)) {
 				return 'category_' . $cat . '.png';
 			}
 		}
@@ -405,7 +410,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * Returns a text stating "new" if a file is considered to be marked as new
 	 *
 	 * @param string $fn Path to the specified file
-	 * @param integer $duration User specific amount of days within a file is considered to be new
+	 * @param int $duration User specific amount of days within a file is considered to be new
 	 * @return string
 	 */
 	protected function getNewFileText($fn, $duration) {
@@ -484,9 +489,9 @@ class tx_filelist_pi1 extends tslib_pibase {
 		foreach (array('Files', 'Folders', 'Sorting') as $subdirectory) {
 			if (isset($this->settings['iconsPath' . $subdirectory])) {
 				$iconsPath = $this->cObj->stdWrap($this->settings['iconsPath' . $subdirectory], $this->settings['iconsPath' . $subdirectory . '.']);
-				$this->settings['iconsPath' . $subdirectory] = tx_filelist_helper::resolveSiteRelPath($iconsPath);
+				$this->settings['iconsPath' . $subdirectory] = Helper::resolveSiteRelPath($iconsPath);
 			} else {	// Fallback
-				$this->settings['iconsPath' . $subdirectory] = t3lib_extMgm::siteRelPath('file_list') . 'Resources/Public/Icons/' . $subdirectory . '/';
+				$this->settings['iconsPath' . $subdirectory] = ExtensionManagementUtility::siteRelPath('file_list') . 'Resources/Public/Icons/' . $subdirectory . '/';
 			}
 		}
 
@@ -499,7 +504,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 		$this->settings['rootabs'] = ($root{0} === '/') ? $root : PATH_site . $root;
 
 		// Prepare the path to the directory
-		if (!t3lib_extMgm::isLoaded('rgfolderselector')) {
+		if (!ExtensionManagementUtility::isLoaded('rgfolderselector')) {
 			// When RTE file browser is used, additional components may be present (target/class according
 			// to typolink documentation. However those additional arguments cannot contain a slash (/) except for
 			// the title attribute but then it should be either be alone in title, or should not contain spaces in
@@ -508,7 +513,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			// As such, we take for granted that a slash at the end of the path marks the end of it and any
 			// space-delimited argument before is in fact part of the path itself.
 			if (strrpos($this->settings['path'], '/') != strlen($this->settings['path']) - 1) {
-				$pathOptions = t3lib_div::trimExplode(' ', $this->settings['path']);
+				$pathOptions = GeneralUtility::trimExplode(' ', $this->settings['path']);
 				$this->settings['path'] = $pathOptions[0];
 			}
 
@@ -522,7 +527,7 @@ class tx_filelist_pi1 extends tslib_pibase {
 			/** @var $storageRepository \TYPO3\CMS\Core\Resource\StorageRepository */
 			$storageRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Resource\\StorageRepository');
 			/** @var $storage \TYPO3\CMS\Core\Resource\ResourceStorage */
-			$storage = $storageRepository->findByUid(intval($matches[1]));
+			$storage = $storageRepository->findByUid((int)$matches[1]);
 			$storageRecord = $storage->getStorageRecord();
 			if ($storageRecord['driver'] === 'Local') {
 				$storageConfiguration = $storage->getConfiguration();
@@ -531,11 +536,11 @@ class tx_filelist_pi1 extends tslib_pibase {
 			}
 		}
 
-		$this->settings['path'] = tx_filelist_helper::sanitizePath($this->settings['path']);
+		$this->settings['path'] = Helper::sanitizePath($this->settings['path']);
 
 		// Retrieval of arguments
 		$this->getPrefix = $this->pi_getClassName($this->cObj->data['uid']);
-		$arguments = t3lib_div::_GET($this->getPrefix);
+		$arguments = GeneralUtility::_GET($this->getPrefix);
 		if (isset($arguments['noCache'])) {
 			unset($arguments['noCache']);
 		}
@@ -561,16 +566,16 @@ class tx_filelist_pi1 extends tslib_pibase {
 	 * Also locallang values set in the TypoScript property "_LOCAL_LANG" are merged onto the values found in the "locallang.php" file.
 	 * Overrides the base method to load language file from new directory structure.
 	 *
-	 * @return	void
+	 * @return void
 	 */
 	public function pi_loadLL() {
 		if (!$this->LOCAL_LANG_loaded) {
-			$llFile = t3lib_extMgm::extPath($this->extKey) . 'Resources/Private/Language/locallang_pi1.xml';
+			$llFile = ExtensionManagementUtility::extPath($this->extKey) . 'Resources/Private/Language/locallang_pi1.xml';
 
 			// Read the strings in the required charset (since TYPO3 4.2)
-			$this->LOCAL_LANG = t3lib_div::readLLfile($llFile, $this->LLkey, $GLOBALS['TSFE']->renderCharset);
+			$this->LOCAL_LANG = GeneralUtility::readLLfile($llFile, $this->LLkey, $GLOBALS['TSFE']->renderCharset);
 			if ($this->altLLkey) {
-				$tempLOCAL_LANG = t3lib_div::readLLfile($llFile, $this->altLLkey);
+				$tempLOCAL_LANG = GeneralUtility::readLLfile($llFile, $this->altLLkey);
 				$this->LOCAL_LANG = array_merge(is_array($this->LOCAL_LANG) ? $this->LOCAL_LANG : array(), $tempLOCAL_LANG);
 			}
 
@@ -613,9 +618,4 @@ class tx_filelist_pi1 extends tslib_pibase {
 				'<strong>' . get_class($this) . ' ERROR:</strong><br /><br />' . nl2br(trim($string)) .
 			'</div>';
 	}
-}
-
-
-if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/file_list/pi1/class.tx_filelist_pi1.php'])) {
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/file_list/pi1/class.tx_filelist_pi1.php']);
 }

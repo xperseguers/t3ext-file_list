@@ -22,6 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Update class for the 'file_list' extension.
  *
@@ -30,13 +32,13 @@
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
-class ext_update extends t3lib_SCbase {
+class ext_update extends \TYPO3\CMS\Backend\Module\BaseScriptClass {
 
 	/**
 	 * Checks whether the "UPDATE!" menu item should be shown. If no old configuration (in
 	 * dedicated fields of tt_content) is found, should return FALSE; otherwise TRUE.
 	 *
-	 * @return	boolean
+	 * @return bool
 	 */
 	public function access() {
 		return count($this->getPluginsWithOldConfiguration()) > 0;
@@ -46,12 +48,12 @@ class ext_update extends t3lib_SCbase {
 	 * Main method that is called whenever UPDATE! menu was clicked. This method outputs a
 	 * HTML form to update the configuration of all plugins of the website.
 	 *
-	 * @return	string	HTML to display
+	 * @return string HTML to display
 	 */
 	public function main() {
 		$this->content = '';
 
-		$this->doc = t3lib_div::makeInstance('noDoc');
+		$this->doc = GeneralUtility::makeInstance('TYPO3\\CMS\\Backend\\Template\\StandardDocumentTemplate');
 		$this->doc->backPath = $GLOBALS['BACK_PATH'];
 		$this->doc->form = '<form action="" method="post">';
 
@@ -68,7 +70,7 @@ class ext_update extends t3lib_SCbase {
 			'FlexForm configuration.'
 		);
 
-		if (t3lib_div::_GET('upgrade')) {
+		if (GeneralUtility::_GET('upgrade')) {
 			$this->content .= $this->upgrade();
 		} else {
 			$this->content .= $this->prepareUpgrade();
@@ -80,13 +82,13 @@ class ext_update extends t3lib_SCbase {
 	/**
 	 * Prepares the upgrade process.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	protected function prepareUpgrade() {
 		$oldPlugins = $this->getPluginsWithOldConfiguration();
 		return $this->doc->section('Configuration Upgrade',
 			count($oldPlugins) . ' plugins with old configuration were found.  ' .
-			'<a href="' . t3lib_div::linkThisScript(array('upgrade' => 1)) . '">Click here</a> ' .
+			'<a href="' . GeneralUtility::linkThisScript(array('upgrade' => 1)) . '">Click here</a> ' .
 			'to start the upgrade process.'
 		);
 	}
@@ -94,12 +96,12 @@ class ext_update extends t3lib_SCbase {
 	/**
 	 * Performs the configuration upgrade.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	protected function upgrade() {
 		$oldPlugins = $this->getPluginsWithOldConfiguration();
 		foreach ($oldPlugins as $plugin) {
-			$GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+			$this->getDatabaseConnection()->exec_UPDATEquery(
 				'tt_content',
 				'uid=' . $plugin['uid'],
 				array(
@@ -118,9 +120,10 @@ class ext_update extends t3lib_SCbase {
 	}
 
 	/**
+	 * Returns a FlexForm configuration template.
 	 *
-	 * @param	array		$config
-	 * @return	string
+	 * @param array $config
+	 * @return string
 	 */
 	protected function getFlexFormConfiguration(array $config) {
 		$flexform = '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
@@ -160,8 +163,8 @@ class ext_update extends t3lib_SCbase {
 				$order_by = 'name';
 		}
 		$direction = $config['tx_filelist_order_sort'] == '1' ? 'desc' : 'asc';
-		$duration = intval($config['tx_filelist_show_new']);
-		$fe_sort = intval($config['tx_filelist_fe_user_sort']);
+		$duration = (int)$config['tx_filelist_show_new'];
+		$fe_sort = (int)$config['tx_filelist_fe_user_sort'];
 
 		return sprintf($flexform, $path, $order_by, $direction, $duration, $fe_sort);
 	}
@@ -169,12 +172,12 @@ class ext_update extends t3lib_SCbase {
 	/**
 	 * Returns a list of plugins that have not yet been upgraded to use the FlexForm configuration.
 	 *
-	 * @return array	Array of "light" tt_content rows
+	 * @return array Array of "light" tt_content rows
 	 */
 	protected function getPluginsWithOldConfiguration() {
-			// Do not take deleted flag into account as we wish to upgrade ALL plugins
-		$records = t3lib_BEfunc::getRecordsByField('tt_content', 'list_type', 'file_list_pi1');
-		$fields = t3lib_div::trimExplode(',', 'uid,pid,tx_filelist_path,tx_filelist_order_by,tx_filelist_order_sort,tx_filelist_show_new,tx_filelist_fe_user_sort');
+		// Do not take deleted flag into account as we wish to upgrade ALL plugins
+		$records = \TYPO3\CMS\Backend\Utility\BackendUtility::getRecordsByField('tt_content', 'list_type', 'file_list_pi1');
+		$fields = GeneralUtility::trimExplode(',', 'uid,pid,tx_filelist_path,tx_filelist_order_by,tx_filelist_order_sort,tx_filelist_show_new,tx_filelist_fe_user_sort');
 		$plugins = array();
 		foreach ($records as $record) {
 			if (isset($record['tx_filelist_path']) && $record['tx_filelist_path'] !== '') {
@@ -187,9 +190,14 @@ class ext_update extends t3lib_SCbase {
 		}
 		return $plugins;
 	}
-}
 
+	/**
+	 * Returns the database connection.
+	 *
+	 * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+	 */
+	protected function getDatabaseConnection() {
+		return $GLOBALS['TYPO3_DB'];
+	}
 
-if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/file_list/class.ext_update.php'])) {
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/file_list/class.ext_update.php']);
 }

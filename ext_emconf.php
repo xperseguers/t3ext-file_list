@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "file_list".
  *
- * Auto generated 20-09-2014 09:41
+ * Auto generated 25-05-2015 10:32
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
@@ -34,7 +34,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '4.5.0-6.2.99',
+			'typo3' => '6.2.0-7.99.99',
 			'php' => '5.3.3-5.6.99',
 		),
 		'conflicts' => array(
@@ -42,7 +42,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'suggests' => array(
 		),
 	),
-	'_md5_values_when_last_written' => 'a:50:{s:9:"ChangeLog";s:4:"b1da";s:20:"class.ext_update.php";s:4:"b8a3";s:16:"ext_autoload.php";s:4:"6b4b";s:21:"ext_conf_template.txt";s:4:"3ce3";s:12:"ext_icon.gif";s:4:"0522";s:17:"ext_localconf.php";s:4:"642e";s:14:"ext_tables.php";s:4:"246b";s:40:"Configuration/FlexForms/flexform_pi1.xml";s:4:"7d00";s:57:"Configuration/FlexForms/flexform_pi1_rgfolderselector.xml";s:4:"3227";s:34:"Configuration/TypoScript/setup.txt";s:4:"2b1e";s:40:"Resources/Private/Language/locallang.xml";s:4:"605b";s:43:"Resources/Private/Language/locallang_db.xml";s:4:"149d";s:44:"Resources/Private/Language/locallang_pi1.xml";s:4:"8ba3";s:45:"Resources/Private/Templates/template_pi1.html";s:4:"275b";s:47:"Resources/Public/Icons/Files/blank_document.png";s:4:"b0c2";s:49:"Resources/Public/Icons/Files/category_archive.png";s:4:"e97d";s:50:"Resources/Public/Icons/Files/category_document.png";s:4:"b0c2";s:47:"Resources/Public/Icons/Files/category_flash.png";s:4:"35cd";s:47:"Resources/Public/Icons/Files/category_image.png";s:4:"5f73";s:47:"Resources/Public/Icons/Files/category_sound.png";s:4:"92f6";s:48:"Resources/Public/Icons/Files/category_source.png";s:4:"6a30";s:47:"Resources/Public/Icons/Files/category_video.png";s:4:"e014";s:36:"Resources/Public/Icons/Files/doc.png";s:4:"310a";s:37:"Resources/Public/Icons/Files/draw.png";s:4:"47dc";s:37:"Resources/Public/Icons/Files/html.png";s:4:"1577";s:36:"Resources/Public/Icons/Files/pdf.png";s:4:"f3b3";s:36:"Resources/Public/Icons/Files/pps.png";s:4:"892f";s:36:"Resources/Public/Icons/Files/txt.png";s:4:"9088";s:36:"Resources/Public/Icons/Files/xls.png";s:4:"96f2";s:41:"Resources/Public/Icons/Folders/folder.png";s:4:"4f81";s:42:"Resources/Public/Icons/Folders/move_up.png";s:4:"ae9b";s:38:"Resources/Public/Icons/Sorting/asc.gif";s:4:"16a2";s:39:"Resources/Public/Icons/Sorting/desc.gif";s:4:"e0be";s:22:"Samples/gallery/README";s:4:"84e9";s:25:"Samples/gallery/setup.txt";s:4:"51e9";s:29:"Samples/gallery/template.html";s:4:"33ed";s:39:"Samples/gallery/tx_filelist_gallery.php";s:4:"789c";s:23:"Samples/metadata/README";s:4:"f9c7";s:26:"Samples/metadata/setup.txt";s:4:"cc45";s:30:"Samples/metadata/template.html";s:4:"060c";s:41:"Samples/metadata/tx_filelist_metadata.php";s:4:"ce59";s:27:"Samples/multilingual/README";s:4:"fd47";s:30:"Samples/multilingual/setup.txt";s:4:"58ea";s:34:"Samples/multilingual/template.html";s:4:"8d22";s:49:"Samples/multilingual/tx_filelist_multilingual.php";s:4:"a8f9";s:14:"doc/manual.sxw";s:4:"1e8a";s:14:"pi1/ce_wiz.gif";s:4:"02b6";s:32:"pi1/class.tx_filelist_helper.php";s:4:"f057";s:29:"pi1/class.tx_filelist_pi1.php";s:4:"5b64";s:37:"pi1/class.tx_filelist_pi1_wizicon.php";s:4:"4ea4";}',
+	'_md5_values_when_last_written' => '',
 	'suggests' => array(
 	),
 );
