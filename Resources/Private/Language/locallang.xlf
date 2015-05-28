@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2015-05-28T07:56:41Z" product-name="file_list">
+		<header/>
+		<body>
+			<trans-unit id="pi1_title">
+				<source>File List</source>
+			</trans-unit>
+			<trans-unit id="pi1_plus_wiz_description">
+				<source> Adds a frontend plugin which shows a list of files and folders inside a specified directory. </source>
+			</trans-unit>
+			<trans-unit id="config.noCache">
+				<source>Do not cache this plugin: Please not that this will prevent indexed_search to index files.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

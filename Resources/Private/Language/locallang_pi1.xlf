@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2015-05-28T07:56:49Z" product-name="file_list">
+		<header/>
+		<body>
+			<trans-unit id="pi_flexform.path">
+				<source>Directory path (example: fileadmin/directory1/)</source>
+			</trans-unit>
+			<trans-unit id="pi_flexform.path.wizards.link.title">
+				<source>Folder selector</source>
+			</trans-unit>
+			<trans-unit id="pi_flexform.order_by">
+				<source>Sort files by</source>
+			</trans-unit>
+			<trans-unit id="pi_flexform.order_by.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="pi_flexform.order_by.date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="pi_flexform.order_by.size">
+				<source>Size</source>
+			</trans-unit>
+			<trans-unit id="pi_flexform.sort_direction">
+				<source>Sort sequence</source>
+			</trans-unit>
+			<trans-unit id="pi_flexform.sort_direction.asc">
+				<source>Ascending</source>
+			</trans-unit>
+			<trans-unit id="pi_flexform.sort_direction.desc">
+				<source>Descending</source>
+			</trans-unit>
+			<trans-unit id="pi_flexform.new_duration">
+				<source>Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled):</source>
+			</trans-unit>
+			<trans-unit id="pi_flexform.fe_sort">
+				<source>Users are able to sort files in frontend:</source>
+			</trans-unit>
+			<trans-unit id="pi_flexform.templateFile">
+				<source>Template file</source>
+			</trans-unit>
+			<trans-unit id="filename">
+				<source>Filename</source>
+			</trans-unit>
+			<trans-unit id="info">
+				<source>Info</source>
+			</trans-unit>
+			<trans-unit id="date">
+				<source>Modified</source>
+			</trans-unit>
+			<trans-unit id="filesize">
+				<source>Filesize</source>
+			</trans-unit>
+			<trans-unit id="no_files">
+				<source>No files or folders found in this directory!</source>
+			</trans-unit>
+			<trans-unit id="directory_size.no_files">
+				<source>No files</source>
+			</trans-unit>
+			<trans-unit id="directory_size.one_file">
+				<source>File</source>
+			</trans-unit>
+			<trans-unit id="directory_size.multiple_files">
+				<source>Files</source>
+			</trans-unit>
+			<trans-unit id="newFile">
+				<source>new</source>
+			</trans-unit>
+			<trans-unit id="sort.asc">
+				<source>Sort ascending</source>
+			</trans-unit>
+			<trans-unit id="sort.desc">
+				<source>Sort descending</source>
+			</trans-unit>
+			<trans-unit id="units.bytes">
+				<source>bytes</source>
+			</trans-unit>
+			<trans-unit id="units.KB">
+				<source>KB</source>
+			</trans-unit>
+			<trans-unit id="units.MB">
+				<source>MB</source>
+			</trans-unit>
+			<trans-unit id="units.GB">
+				<source>GB</source>
+			</trans-unit>
+			<trans-unit id="units.TB">
+				<source>TB</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
