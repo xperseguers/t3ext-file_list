@@ -175,6 +175,7 @@ class ext_update extends t3lib_SCbase {
 	protected function getPluginsWithOldConfiguration() {
 			// Do not take deleted flag into account as we wish to upgrade ALL plugins
 		$records = t3lib_BEfunc::getRecordsByField('tt_content', 'list_type', 'file_list_pi1');
+		if (!is_array($records)) $records = array();
 		$fields = t3lib_div::trimExplode(',', 'uid,pid,tx_filelist_path,tx_filelist_order_by,tx_filelist_order_sort,tx_filelist_show_new,tx_filelist_fe_user_sort');
 		$plugins = array();
 		foreach ($records as $record) {

@@ -32,7 +32,7 @@ File List
 		list, file, directory, files, directories
 
 	:Copyright:
-		2008-2015
+		2008-2016
 
 	:Author:
 		Xavier Perseguers, Moreno Feltscher
@@ -41,8 +41,8 @@ File List
 		xavier@causal.ch, moreno@luagsh.ch
 
 	:License:
-		This document is published under the Open Content License
-		available from http://www.opencontent.org/opl.shtml
+		This document is published under the Open Publication License
+		available from http://www.opencontent.org/openpub/
 
 	:Rendered:
 		|today|
