@@ -72,6 +72,7 @@
 			</trans-unit>
 			<trans-unit id="newFile">
 				<source>new</source>
+				<note from="developer">This label is deprecated (related to the old plugin) as of FILE_LIST v.2.0.</note>
 			</trans-unit>
 			<trans-unit id="sort.asc">
 				<source>Sort ascending</source>

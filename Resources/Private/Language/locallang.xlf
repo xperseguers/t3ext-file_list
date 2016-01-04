@@ -34,6 +34,9 @@
 			<trans-unit id="directory_size.multiple_files">
 				<source>Files</source>
 			</trans-unit>
+			<trans-unit id="newFile">
+				<source>new</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

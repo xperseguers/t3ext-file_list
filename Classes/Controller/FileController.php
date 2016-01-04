@@ -59,7 +59,10 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     $storageUid = (int)$matches[1];
                     $rootIdentifier = $matches[2];
                     // Security check before blindly accepting the requested folder's content
-                    if (GeneralUtility::isFirstPartOfStr($path, $rootIdentifier)) {
+                    if ($path === $rootIdentifier) {
+                        $path = '';
+                    }
+                    if (!empty($path) && GeneralUtility::isFirstPartOfStr($path, $rootIdentifier)) {
                         $identifier = 'file:' . $storageUid . ':' . $path;
                         $folder = $this->fileRepository->getFolderByIdentifier($identifier);
                     }
@@ -69,9 +72,19 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 }
 
                 $parentFolder = !empty($path) ? $folder->getParentFolder() : null;
+
                 $subfolders = $folder->getSubfolders();
                 ksort($subfolders);
+
                 $files = $folder->getFiles();
+                if ((int)$this->settings['new_duration'] > 0) {
+                    $newTimestamp = $GLOBALS['EXEC_TIME'] - 86400 * (int)$this->settings['new_duration'];
+                    foreach ($files as &$file) {
+                        $properties = $file->getProperties();
+                        $properties['tx_filelist']['isNew'] = $properties['modification_date'] >= $newTimestamp;
+                        $file->updateProperties($properties);
+                    }
+                }
                 break;
 
             case 'FILE_COLLECTIONS':
