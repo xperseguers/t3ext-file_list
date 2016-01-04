@@ -573,10 +573,22 @@ class tx_filelist_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 			$llFile = ExtensionManagementUtility::extPath($this->extKey) . 'Resources/Private/Language/locallang_pi1.xml';
 
 			// Read the strings in the required charset (since TYPO3 4.2)
-			$this->LOCAL_LANG = GeneralUtility::readLLfile($llFile, $this->LLkey, $GLOBALS['TSFE']->renderCharset);
-			if ($this->altLLkey) {
-				$tempLOCAL_LANG = GeneralUtility::readLLfile($llFile, $this->altLLkey);
-				$this->LOCAL_LANG = array_merge(is_array($this->LOCAL_LANG) ? $this->LOCAL_LANG : array(), $tempLOCAL_LANG);
+			if (version_compare(TYPO3_version, '7.6', '>=')) {
+				/** @var $languageFactory \TYPO3\CMS\Core\Localization\LocalizationFactory */
+				$languageFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Localization\LocalizationFactory::class);
+				$this->LOCAL_LANG = $languageFactory->getParsedData($llFile, $this->LLkey, $GLOBALS['TSFE']->renderCharset);
+
+				if ($this->altLLkey) {
+					$tempLOCAL_LANG = $languageFactory->getParsedData($llFile, $this->altLLkey);
+					$this->LOCAL_LANG = array_merge(is_array($this->LOCAL_LANG) ? $this->LOCAL_LANG : [], $tempLOCAL_LANG);
+				}
+			} else {
+				$this->LOCAL_LANG = GeneralUtility::readLLfile($llFile, $this->LLkey, $GLOBALS['TSFE']->renderCharset);
+
+				if ($this->altLLkey) {
+					$tempLOCAL_LANG = GeneralUtility::readLLfile($llFile, $this->altLLkey);
+					$this->LOCAL_LANG = array_merge(is_array($this->LOCAL_LANG) ? $this->LOCAL_LANG : [], $tempLOCAL_LANG);
+				}
 			}
 
 			// Overlaying labels from TypoScript (including fictitious language keys for non-system languages!):
