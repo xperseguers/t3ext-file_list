@@ -54,6 +54,15 @@
 					</config>
 				</TCEforms>
 			</settings.path>
+			<settings.includeSubfolders>
+				<TCEforms>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.includeSubfolders</label>
+					<displayCond>FIELD:settings.mode:=:FOLDER</displayCond>
+					<config>
+						<type>check</type>
+					</config>
+				</TCEforms>
+			</settings.includeSubfolders>
 			<settings.rootPath>
 				<TCEforms>
 					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.rootPath</label>
@@ -102,7 +111,7 @@
 			</settings.file_collections>
 			<settings.orderBy>
 				<TCEforms>
-					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.order_by</label>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy</label>
 					<config>
 						<type>select</type>
 						<items type="array">

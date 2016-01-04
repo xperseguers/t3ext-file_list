@@ -18,6 +18,9 @@
 			<trans-unit id="filelist.path.wizards.link.title">
 				<source>Folder selector</source>
 			</trans-unit>
+			<trans-unit id="filelist.includeSubfolders">
+				<source>Allow browsing to subfolders</source>
+			</trans-unit>
 			<trans-unit id="filelist.rootPath">
 				<source>Folder path (example: file:1:/user_upload/), leave empty to gather all available files</source>
 			</trans-unit>

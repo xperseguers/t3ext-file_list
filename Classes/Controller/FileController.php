@@ -66,6 +66,10 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         switch ($this->settings['mode']) {
             case 'FOLDER':
+                if (!(bool)$this->settings['includeSubfolders']) {
+                    // No way!
+                    $path = '';
+                }
                 $folder = null;
                 if (!empty($path) && preg_match('/^file:(\d+):(.*)$/', $this->settings['path'], $matches)) {
                     $storageUid = (int)$matches[1];
@@ -86,7 +90,9 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 if (!empty($path)) {
                     $parentFolder = $folder->getParentFolder();
                 }
-                $subfolders = $folder->getSubfolders();
+                if ((bool)$this->settings['includeSubfolders']) {
+                    $subfolders = $folder->getSubfolders();
+                }
                 $files = $folder->getFiles();
                 break;
 
