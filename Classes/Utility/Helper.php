@@ -25,6 +25,9 @@ namespace Causal\FileList\Utility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
+
 /**
  * Helper class for the 'file_list' extension.
  *
@@ -166,17 +169,8 @@ class Helper {
 	 * @return string
 	 */
 	static public function sanitizePath($path) {
-		if ($path{0} === '/') {
-			$prefix = '';
-		} else {
-			$prefix = realpath(PATH_site) . '/';
-			$path = PATH_site . $path;
-		}
+		$path = PathUtility::getCanonicalPath($path);
 
-		// Make sure there is no more ../ inside
-		$path = realpath($path);
-		// Make it relative again (if needed)
-		$path = substr($path, strlen($prefix));
 		// Ensure a trailing slash is present
 		$path = rtrim($path, '/') . '/';
 
@@ -196,7 +190,7 @@ class Helper {
 		$path = substr($path, 4);	// Remove 'EXT:' at the beginning
 		$extension = substr($path, 0, strpos($path, '/'));
 		$references = explode(':', substr($path, strlen($extension) + 1));
-		$pathOrFilename = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath($extension) . $references[0];
+		$pathOrFilename = ExtensionManagementUtility::siteRelPath($extension) . $references[0];
 
 		if (is_dir(PATH_site . $pathOrFilename)) {
 			$pathOrFilename = static::sanitizePath($pathOrFilename);
