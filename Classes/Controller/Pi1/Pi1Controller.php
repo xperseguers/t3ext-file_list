@@ -359,7 +359,7 @@ class tx_filelist_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 
 		// Try to find a file type category icon
 		foreach ($categories as $cat => $extensions) {
-			if (GeneralUtility::inArray($extensions, $ext)) {
+			if (in_array($ext, $extensions)) {
 				return 'category_' . $cat . '.png';
 			}
 		}
