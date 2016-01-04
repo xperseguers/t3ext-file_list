@@ -30,6 +30,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
+    const SORT_BY_NAME = 'NAME';
+    const SORT_BY_DATE = 'DATE';
+    const SORT_BY_SIZE = 'SIZE';
+
+    const SORT_DIRECTION_ASC = 'ASC';
+    const SORT_DIRECTION_DESC = 'DESC';
+
     /**
      * @var FileRepository
      */
@@ -72,19 +79,8 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 }
 
                 $parentFolder = !empty($path) ? $folder->getParentFolder() : null;
-
                 $subfolders = $folder->getSubfolders();
-                ksort($subfolders);
-
                 $files = $folder->getFiles();
-                if ((int)$this->settings['new_duration'] > 0) {
-                    $newTimestamp = $GLOBALS['EXEC_TIME'] - 86400 * (int)$this->settings['new_duration'];
-                    foreach ($files as &$file) {
-                        $properties = $file->getProperties();
-                        $properties['tx_filelist']['isNew'] = $properties['modification_date'] >= $newTimestamp;
-                        $file->updateProperties($properties);
-                    }
-                }
                 break;
 
             case 'FILE_COLLECTIONS':
@@ -94,11 +90,53 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 throw new \RuntimeException('Mode "CATEGORIES" is not yet implemented', 1451922447);
         }
 
+        // Sort folders and files
+        if ($this->settings['orderBy'] === static::SORT_BY_NAME && $this->settings['sortDirection'] === static::SORT_DIRECTION_DESC) {
+            krsort($subfolders);
+        } else {
+            ksort($subfolders);
+        }
+
+        $orderedFiles = [];
+        foreach ($files as $file) {
+            switch ($this->settings['orderBy']) {
+                case static::SORT_BY_NAME:
+                    $key = $file->getName();
+                    break;
+                case static::SORT_BY_DATE:
+                    $key = $file->getProperty('modification_date');
+                    break;
+                case static::SORT_BY_SIZE:
+                    $key = $file->getSize();
+                    break;
+            }
+            $key .= TAB . $file->getUid();
+            $orderedFiles[$key] = $file;
+        }
+
+        if ($this->settings['sortDirection'] === static::SORT_DIRECTION_ASC) {
+            ksort($orderedFiles);
+        } else {
+            krsort($orderedFiles);
+        }
+
+        // Mark files as "new" if needed
+        // BEWARE: This needs to be done at the end since it is using an internal method which
+        //         may break other operations such as sorting
+        if ((int)$this->settings['new_duration'] > 0) {
+            $newTimestamp = $GLOBALS['EXEC_TIME'] - 86400 * (int)$this->settings['new_duration'];
+            foreach ($files as &$file) {
+                $properties = $file->getProperties();
+                $properties['tx_filelist']['isNew'] = $properties['modification_date'] >= $newTimestamp;
+                $file->updateProperties($properties);
+            }
+        }
+
         $this->view->assignMultiple([
             'isEmpty' => empty($parentFolder) && empty($subfolders) && empty($files),
             'parent' => $parentFolder,
             'folders' => $subfolders,
-            'files' => $files,
+            'files' => $orderedFiles,
         ]);
     }
 

@@ -60,6 +60,52 @@
 					</config>
 				</TCEforms>
 			</settings.path>
+			<settings.orderBy>
+				<TCEforms>
+					<exclude>0</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.order_by</label>
+					<displayCond>FIELD:settings.mode:=:FOLDER</displayCond>
+					<config>
+						<type>select</type>
+						<items type="array">
+							<numIndex index="0" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy.name</numIndex>
+								<numIndex index="1">NAME</numIndex>
+							</numIndex>
+							<numIndex index="1" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy.date</numIndex>
+								<numIndex index="1">DATE</numIndex>
+							</numIndex>
+							<numIndex index="2" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy.size</numIndex>
+								<numIndex index="1">SIZE</numIndex>
+							</numIndex>
+						</items>
+						<default>name</default>
+					</config>
+				</TCEforms>
+			</settings.orderBy>
+			<settings.sortDirection>
+				<TCEforms>
+					<exclude>0</exclude>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.sortDirection</label>
+					<displayCond>FIELD:settings.mode:=:FOLDER</displayCond>
+					<config>
+						<type>select</type>
+						<items type="array">
+							<numIndex index="0" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.sortDirection.asc</numIndex>
+								<numIndex index="1">ASC</numIndex>
+							</numIndex>
+							<numIndex index="1" type="array">
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.sortDirection.desc</numIndex>
+								<numIndex index="1">DESC</numIndex>
+							</numIndex>
+						</items>
+						<default>asc</default>
+					</config>
+				</TCEforms>
+			</settings.sortDirection>
 			<settings.file_collections>
 				<TCEforms>
 					<exclude>0</exclude>

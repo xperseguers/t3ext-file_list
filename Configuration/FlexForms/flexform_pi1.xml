@@ -8,7 +8,7 @@
 			<path>
 				<TCEforms>
 					<exclude>0</exclude>
-					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.path</label>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.path</label>
 					<config>
 						<type>input</type>
 						<size>48</size>
@@ -17,7 +17,7 @@
 							<_PADDING>2</_PADDING>
 							<link type="array">
 								<type>popup</type>
-								<title>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.path.wizards.link.title</title>
+								<title>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.path.wizards.link.title</title>
 								<icon>link_popup.gif</icon>
 								<module type="array">
 									<name>wizard_element_browser</name>
@@ -38,20 +38,20 @@
 			<order_by>
 				<TCEforms>
 					<exclude>0</exclude>
-					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.order_by</label>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.order_by</label>
 					<config>
 						<type>select</type>
 						<items type="array">
 							<numIndex index="0" type="array">
-								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.order_by.name</numIndex>
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.order_by.name</numIndex>
 								<numIndex index="1">name</numIndex>
 							</numIndex>
 							<numIndex index="1" type="array">
-								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.order_by.date</numIndex>
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.order_by.date</numIndex>
 								<numIndex index="1">date</numIndex>
 							</numIndex>
 							<numIndex index="2" type="array">
-								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.order_by.size</numIndex>
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.order_by.size</numIndex>
 								<numIndex index="1">size</numIndex>
 							</numIndex>
 						</items>
@@ -62,16 +62,16 @@
 			<sort_direction>
 				<TCEforms>
 					<exclude>0</exclude>
-					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.sort_direction</label>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.sort_direction</label>
 					<config>
 						<type>select</type>
 						<items type="array">
 							<numIndex index="0" type="array">
-								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.sort_direction.asc</numIndex>
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.sort_direction.asc</numIndex>
 								<numIndex index="1">asc</numIndex>
 							</numIndex>
 							<numIndex index="1" type="array">
-								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.sort_direction.desc</numIndex>
+								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.sort_direction.desc</numIndex>
 								<numIndex index="1">desc</numIndex>
 							</numIndex>
 						</items>
@@ -82,7 +82,7 @@
 			<new_duration>
 				<TCEforms>
 					<exclude>1</exclude>
-					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.new_duration</label>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.new_duration</label>
 					<config>
 						<type>input</type>
 						<size>4</size>
@@ -93,7 +93,7 @@
 			<fe_sort>
 				<TCEforms>
 					<exclude>1</exclude>
-					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.fe_sort</label>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.fe_sort</label>
 					<config>
 						<type>check</type>
 					</config>
@@ -102,7 +102,7 @@
 			<templateFile>
 				<TCEforms>
 					<exclude>1</exclude>
-					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.templateFile</label>
+					<label>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.templateFile</label>
 					<config>
 						<type>input</type>
 						<size>48</size>
@@ -111,7 +111,7 @@
 							<_PADDING>2</_PADDING>
 							<link type="array">
 								<type>popup</type>
-								<title>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xml:pi_flexform.path.wizards.link.title</title>
+								<title>LLL:EXT:file_list/Resources/Private/Language/locallang_pi1.xlf:pi_flexform.path.wizards.link.title</title>
 								<icon>link_popup.gif</icon>
 								<module type="array">
 									<name>wizard_element_browser</name>

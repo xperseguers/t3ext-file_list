@@ -21,6 +21,27 @@
 			<trans-unit id="filelist.path.wizards.link.title">
 				<source>Folder selector</source>
 			</trans-unit>
+			<trans-unit id="filelist.orderBy">
+				<source>Sort files by</source>
+			</trans-unit>
+			<trans-unit id="filelist.orderBy.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="filelist.orderBy.date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="filelist.orderBy.size">
+				<source>Size</source>
+			</trans-unit>
+			<trans-unit id="filelist.sortDirection">
+				<source>Sort sequence</source>
+			</trans-unit>
+			<trans-unit id="filelist.sortDirection.asc">
+				<source>Ascending</source>
+			</trans-unit>
+			<trans-unit id="filelist.sortDirection.desc">
+				<source>Descending</source>
+			</trans-unit>
 			<trans-unit id="filelist.categories">
 				<source>Select categories</source>
 			</trans-unit>
