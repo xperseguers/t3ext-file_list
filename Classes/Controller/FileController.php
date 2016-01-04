@@ -16,6 +16,7 @@ namespace Causal\FileList\Controller;
 
 use Causal\FileList\Domain\Repository\FileRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Resource\FileCollectionRepository;
 
 /**
  * File controller.
@@ -59,6 +60,10 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction($path = '')
     {
+        $parentFolder = null;
+        $subfolders = [];
+        $files = [];
+
         switch ($this->settings['mode']) {
             case 'FOLDER':
                 $folder = null;
@@ -78,13 +83,42 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     $folder = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
                 }
 
-                $parentFolder = !empty($path) ? $folder->getParentFolder() : null;
+                if (!empty($path)) {
+                    $parentFolder = $folder->getParentFolder();
+                }
                 $subfolders = $folder->getSubfolders();
                 $files = $folder->getFiles();
                 break;
 
             case 'FILE_COLLECTIONS':
-                throw new \RuntimeException('Mode "FILE_COLLECTIONS" is not yet implemented', 1451922432);
+                /** @var FileCollectionRepository $fileCollectionRepository */
+                $fileCollectionRepository = $this->objectManager->get(FileCollectionRepository::class);
+                if (!empty($this->settings['rootPath'])) {
+                    $folder = $this->fileRepository->getFolderByIdentifier($this->settings['rootPath']);
+                }
+
+                $collectionUids = GeneralUtility::intExplode(',', $this->settings['file_collections'], true);
+                foreach ($collectionUids as $uid) {
+                    $collection = $fileCollectionRepository->findByUid($uid);
+                    if ($collection !== null) {
+                        $collection->loadContents();
+                        /** @var \TYPO3\CMS\Core\Resource\File[] $collectionFiles */
+                        $collectionFiles = $collection->getItems();
+                        if ($folder === null) {
+                            $files += $collectionFiles;
+                        } else {
+                            foreach ($collectionFiles as $file) {
+                                if ($file->getStorage() === $folder->getStorage()) {
+                                    // TODO: Check if this is the correct way to filter out files with non-local storages
+                                    if (GeneralUtility::isFirstPartOfStr($file->getIdentifier(), $folder->getIdentifier())) {
+                                        $files[] = $file;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
 
             case 'CATEGORIES':
                 throw new \RuntimeException('Mode "CATEGORIES" is not yet implemented', 1451922447);
@@ -123,17 +157,17 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // Mark files as "new" if needed
         // BEWARE: This needs to be done at the end since it is using an internal method which
         //         may break other operations such as sorting
-        if ((int)$this->settings['new_duration'] > 0) {
-            $newTimestamp = $GLOBALS['EXEC_TIME'] - 86400 * (int)$this->settings['new_duration'];
-            foreach ($files as &$file) {
+        if ((int)$this->settings['newDuration'] > 0) {
+            $newTimestamp = $GLOBALS['EXEC_TIME'] - 86400 * (int)$this->settings['newDuration'];
+            foreach ($orderedFiles as &$file) {
                 $properties = $file->getProperties();
-                $properties['tx_filelist']['isNew'] = $properties['modification_date'] >= $newTimestamp;
+                $properties['tx_filelist']['isNew'] = $properties['creation_date'] >= $newTimestamp;
                 $file->updateProperties($properties);
             }
         }
 
         $this->view->assignMultiple([
-            'isEmpty' => empty($parentFolder) && empty($subfolders) && empty($files),
+            'isEmpty' => $parentFolder === null && empty($subfolders) && empty($files),
             'parent' => $parentFolder,
             'folders' => $subfolders,
             'files' => $orderedFiles,

@@ -21,6 +21,9 @@
 			<trans-unit id="filelist.path.wizards.link.title">
 				<source>Folder selector</source>
 			</trans-unit>
+			<trans-unit id="filelist.rootPath">
+				<source>Folder path (example: file:1:/user_upload/), leave empty to gather all available files</source>
+			</trans-unit>
 			<trans-unit id="filelist.orderBy">
 				<source>Sort files by</source>
 			</trans-unit>
@@ -48,7 +51,7 @@
 			<trans-unit id="filelist.file_collections">
 				<source>Select file collections</source>
 			</trans-unit>
-			<trans-unit id="filelist.new_duration">
+			<trans-unit id="filelist.newDuration">
 				<source>Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled)</source>
 			</trans-unit>
 		</body>
