@@ -119,9 +119,6 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     }
                 }
                 break;
-
-            case 'CATEGORIES':
-                throw new \RuntimeException('Mode "CATEGORIES" is not yet implemented', 1451922447);
         }
 
         // Sort folders and files

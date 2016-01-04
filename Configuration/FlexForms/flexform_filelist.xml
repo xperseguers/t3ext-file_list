@@ -20,10 +20,6 @@
 								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.mode.file_collections</numIndex>
 								<numIndex index="1">FILE_COLLECTIONS</numIndex>
 							</numIndex>
-							<numIndex index="2" type="array">
-								<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.mode.categories</numIndex>
-								<numIndex index="1">CATEGORIES</numIndex>
-							</numIndex>
 						</items>
 					</config>
 				</TCEforms>

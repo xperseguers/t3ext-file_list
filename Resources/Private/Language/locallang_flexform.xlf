@@ -12,9 +12,6 @@
 			<trans-unit id="filelist.mode.file_collections">
 				<source>Files from file collections</source>
 			</trans-unit>
-			<trans-unit id="filelist.mode.categories">
-				<source>Files from categories</source>
-			</trans-unit>
 			<trans-unit id="filelist.path">
 				<source>Folder path (example: file:1:/user_upload/)</source>
 			</trans-unit>
@@ -44,9 +41,6 @@
 			</trans-unit>
 			<trans-unit id="filelist.sortDirection.desc">
 				<source>Descending</source>
-			</trans-unit>
-			<trans-unit id="filelist.categories">
-				<source>Select categories</source>
 			</trans-unit>
 			<trans-unit id="filelist.file_collections">
 				<source>Select file collections</source>
