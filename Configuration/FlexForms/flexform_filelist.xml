@@ -44,7 +44,13 @@
 								<type>popup</type>
 								<title>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.path.wizards.link.title</title>
 								<icon>link_popup.gif</icon>
-								<script>browse_links.php?mode=wizard&amp;act=folder</script>
+								<module type="array">
+									<name>wizard_element_browser</name>
+									<urlParameters type="array">
+										<mode>wizard</mode>
+										<act>file</act>
+									</urlParameters>
+								</module>
 								<params type="array">
 									<blindLinkOptions>page,url,mail,spec,file</blindLinkOptions>
 								</params>
