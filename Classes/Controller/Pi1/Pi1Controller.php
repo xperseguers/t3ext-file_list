@@ -513,23 +513,23 @@ class tx_filelist_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
         $this->settings['rootabs'] = ($root{0} === '/') ? $root : PATH_site . $root;
 
         // Prepare the path to the directory
-        if (!ExtensionManagementUtility::isLoaded('rgfolderselector')) {
-            // When RTE file browser is used, additional components may be present (target/class according
-            // to typolink documentation. However those additional arguments cannot contain a slash (/) except for
-            // the title attribute but then it should be either be alone in title, or should not contain spaces in
-            // in AND should end with a / (otherwise it would be quoted). This is very unlikely to occur and it's
-            // just fine to fail under those conditions.
-            // As such, we take for granted that a slash at the end of the path marks the end of it and any
-            // space-delimited argument before is in fact part of the path itself.
-            if (strrpos($this->settings['path'], '/') != strlen($this->settings['path']) - 1) {
-                $pathOptions = GeneralUtility::trimExplode(' ', $this->settings['path']);
-                $this->settings['path'] = $pathOptions[0];
-            }
-
-            // Furthermore, if TYPO3 native folder browser is used with a directory containing spaces,
-            // the resulting path will have spaces encoded as %20
-            $this->settings['path'] = urldecode($this->settings['path']);
+        //
+        // When RTE file browser is used, additional components may be present (target/class according
+        // to typolink documentation. However those additional arguments cannot contain a slash (/) except for
+        // the title attribute but then it should be either be alone in title, or should not contain spaces in
+        // in AND should end with a / (otherwise it would be quoted). This is very unlikely to occur and it's
+        // just fine to fail under those conditions.
+        //
+        // As such, we take for granted that a slash at the end of the path marks the end of it and any
+        // space-delimited argument before is in fact part of the path itself.
+        if (strrpos($this->settings['path'], '/') != strlen($this->settings['path']) - 1) {
+            $pathOptions = GeneralUtility::trimExplode(' ', $this->settings['path']);
+            $this->settings['path'] = $pathOptions[0];
         }
+
+        // Furthermore, if TYPO3 native folder browser is used with a directory containing spaces,
+        // the resulting path will have spaces encoded as %20
+        $this->settings['path'] = urldecode($this->settings['path']);
 
         // Compatibility with FAL-encoded paths in TYPO3 6.x
         if (preg_match('/^file:(\d+):(.*)$/', $this->settings['path'], $matches)) {
