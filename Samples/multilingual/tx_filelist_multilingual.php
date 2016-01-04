@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -12,38 +13,42 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-class tx_filelist_multilingual {
+class tx_filelist_multilingual
+{
 
-	public function filesDirectoriesProcessor(array $items, tx_filelist_pi1 $pObj) {
-		$ret = array();
+    public function filesDirectoriesProcessor(array $items, tx_filelist_pi1 $pObj)
+    {
+        $ret = [];
 
-		// Filter out translations
-		foreach ($items as $item) {
-			if ($item['type'] === 'DIRECTORY' || !preg_match('/_..\.[^.]+$/', $item['path'])) {
-				$ret[] = $item;
-			}
-		}
-		return $ret;
-	}
+        // Filter out translations
+        foreach ($items as $item) {
+            if ($item['type'] === 'DIRECTORY' || !preg_match('/_..\.[^.]+$/', $item['path'])) {
+                $ret[] = $item;
+            }
+        }
 
-	public function extraItemMarkerProcessor(array $markers, array $data, tx_filelist_pi1 $pObj) {
-		$markers['###FRENCH###'] = '';
-		$markers['###GERMAN###'] = '';
-		$markers['###ITALIAN###'] = '';
+        return $ret;
+    }
 
-		if ($data['type'] === 'FILE') {
-			// Search a translation
-			foreach (array('fr' => '###FRENCH###', 'de' => '###GERMAN###', 'it' => '###ITALIAN###') as $translation => $tMarker) {
-				$translationFullPath = preg_replace('/(\.[^.]+)$/', '_' . $translation . '\1', $data['fullpath']);
-				$translationPath = preg_replace('/(\.[^.]+)$/', '_' . $translation . '\1', $data['path']);
-				if (is_file($translationFullPath)) {
-					$flag = '<img src="/typo3/gfx/flags/' . $translation . '.gif" alt="' . $translation . '" />';
-					$markers[$tMarker] = $pObj->cObj->typolink($flag, array('parameter' => $translationPath));
-				}
-			}
-		}
+    public function extraItemMarkerProcessor(array $markers, array $data, tx_filelist_pi1 $pObj)
+    {
+        $markers['###FRENCH###'] = '';
+        $markers['###GERMAN###'] = '';
+        $markers['###ITALIAN###'] = '';
 
-		return $markers;
-	}
+        if ($data['type'] === 'FILE') {
+            // Search a translation
+            foreach (array('fr' => '###FRENCH###', 'de' => '###GERMAN###', 'it' => '###ITALIAN###') as $translation => $tMarker) {
+                $translationFullPath = preg_replace('/(\.[^.]+)$/', '_' . $translation . '\1', $data['fullpath']);
+                $translationPath = preg_replace('/(\.[^.]+)$/', '_' . $translation . '\1', $data['path']);
+                if (is_file($translationFullPath)) {
+                    $flag = '<img src="/typo3/gfx/flags/' . $translation . '.gif" alt="' . $translation . '" />';
+                    $markers[$tMarker] = $pObj->cObj->typolink($flag, array('parameter' => $translationPath));
+                }
+            }
+        }
+
+        return $markers;
+    }
 
 }

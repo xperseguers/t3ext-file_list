@@ -24,15 +24,17 @@ namespace Causal\FileList\Controller;
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
-class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+{
 
-	/**
-	 * Listing of files.
-	 *
-	 * @return void
-	 */
-	public function listAction() {
-		return 'listing goes here...';
-	}
+    /**
+     * Listing of files.
+     *
+     * @return void
+     */
+    public function listAction()
+    {
+        return 'listing goes here...';
+    }
 
 }

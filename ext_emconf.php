@@ -16,8 +16,6 @@ $EM_CONF[$_EXTKEY] = array(
     'category' => 'plugin',
     'shy' => 0,
     'version' => '2.0.0-dev',
-    'dependencies' => '',
-    'conflicts' => '',
     'priority' => '',
     'loadOrder' => '',
     'module' => '',
@@ -41,5 +39,4 @@ $EM_CONF[$_EXTKEY] = array(
         'suggests' => array(),
     ),
     '_md5_values_when_last_written' => '',
-    'suggests' => array(),
 );

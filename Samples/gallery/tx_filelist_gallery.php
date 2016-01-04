@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -12,23 +13,26 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-class tx_filelist_gallery {
+class tx_filelist_gallery
+{
 
-	public function filesDirectoriesProcessor(array $items, tx_filelist_pi1 $pObj) {
+    public function filesDirectoriesProcessor(array $items, tx_filelist_pi1 $pObj)
+    {
 
-	}
+    }
 
-	public function extraItemMarkerProcessor(array $markers, array $data, tx_filelist_pi1 $pObj) {
-		$thumbnail = $pObj->settings['thumbnail.'];
+    public function extraItemMarkerProcessor(array $markers, array $data, tx_filelist_pi1 $pObj)
+    {
+        $thumbnail = $pObj->settings['thumbnail.'];
 
-			// Update configuration with current filename
-		$thumbnail['file.']['10.']['file'] = $data['path'];
-		$thumbnail['imageLinkWrap.']['typolink.']['parameter.']['cObject.']['file'] = $data['path'];
-		$thumbnail['altText'] = $data['name'];
+        // Update configuration with current filename
+        $thumbnail['file.']['10.']['file'] = $data['path'];
+        $thumbnail['imageLinkWrap.']['typolink.']['parameter.']['cObject.']['file'] = $data['path'];
+        $thumbnail['altText'] = $data['name'];
 
-		$markers['###THUMBNAIL###'] = $pObj->cObj->IMAGE($thumbnail);
+        $markers['###THUMBNAIL###'] = $pObj->cObj->IMAGE($thumbnail);
 
-		return $markers;
-	}
+        return $markers;
+    }
 
 }
