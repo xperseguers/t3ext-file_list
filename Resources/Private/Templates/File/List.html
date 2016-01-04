@@ -1,14 +1,34 @@
-<table>
-	<tbody>
-	<f:for each="{files}" as="file">
-		<tr>
-			<td><f:link.page pageUid="{file.publicUrl}">
-				<f:if condition="{file.properties.title}">
-					<f:then>{file.properties.title}</f:then>
-					<f:else>{file.name}</f:else>
+<f:layout name="Default"/>
+
+<f:section name="main">
+
+	<f:if condition="{isEmpty}">
+		<f:then>
+			<f:translate key="no_files" />
+		</f:then>
+		<f:else>
+			<table>
+				<thead>
+				<tr>
+					<th></th>
+					<th><f:translate key="filename" /></th>
+					<th><f:translate key="info" /></th>
+					<th><f:translate key="date" /></th>
+				</tr>
+				</thead>
+				<tbody>
+				<f:if condition="{parent}">
+					<f:render partial="ParentFolder" arguments="{folder: parent}" />
 				</f:if>
-			</f:link.page></td>
-		</tr>
-	</f:for>
-	</tbody>
-</table>
+				<f:for each="{folders}" as="folder">
+					<f:render partial="Folder" arguments="{folder: folder}" />
+				</f:for>
+				<f:for each="{files}" as="file">
+					<f:render partial="File" arguments="{file: file}" />
+				</f:for>
+				</tbody>
+			</table>
+		</f:else>
+	</f:if>
+
+</f:section>

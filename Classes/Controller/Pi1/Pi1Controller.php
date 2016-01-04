@@ -25,6 +25,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  * @author      Moreno Feltscher <moreno@luagsh.ch>
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @license     http://www.gnu.org/copyleft/gpl.html
+ * @deprecated
  */
 class tx_filelist_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
 {
@@ -335,7 +336,7 @@ class tx_filelist_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
     {
         $categories = [];
         foreach ($this->settings['extension.']['category.'] as $category => $extensions) {
-            $categories[$category] = GeneralUtility::trimExplode(',', $extensions);
+            $categories[$category] = GeneralUtility::trimExplode(',', $extensions, true);
         }
         $remapExtensions = $this->settings['extension.']['remap.'];
 

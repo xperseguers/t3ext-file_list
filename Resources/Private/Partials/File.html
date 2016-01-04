@@ -1,0 +1,21 @@
+{namespace fl=Causal\FileList\ViewHelpers}
+
+<tr>
+    <td>
+        <fl:fileIcon file="{file}" />
+    </td>
+    <td>
+        <f:link.page pageUid="{file.publicUrl}">
+            <f:if condition="{file.properties.title}">
+                <f:then>{file.properties.title}</f:then>
+                <f:else>{file.name}</f:else>
+            </f:if>
+        </f:link.page>
+    </td>
+    <td>
+        {file.properties.size -> f:format.bytes()}
+    </td>
+    <td>
+        <f:format.date format="{settings.dateFormat}">@{file.properties.modification_date}</f:format.date>
+    </td>
+</tr>

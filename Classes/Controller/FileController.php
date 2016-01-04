@@ -14,6 +14,9 @@
 
 namespace Causal\FileList\Controller;
 
+use Causal\FileList\Domain\Repository\FileRepository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * File controller.
  *
@@ -28,13 +31,62 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
     /**
-     * Listing of files.
-     *
+     * @var FileRepository
+     */
+    protected $fileRepository;
+
+    /**
+     * @param \Causal\FileList\Domain\Repository\FileRepository $fileRepository
      * @return void
      */
-    public function listAction()
+    public function injectFileRepository(FileRepository $fileRepository)
     {
-        return 'listing goes here...';
+        $this->fileRepository = $fileRepository;
+    }
+
+    /**
+     * Listing of files.
+     *
+     * @param string $path
+     * @return void
+     */
+    public function listAction($path = '')
+    {
+        switch ($this->settings['mode']) {
+            case 'FOLDER':
+                $folder = null;
+                if (!empty($path) && preg_match('/^file:(\d+):(.*)$/', $this->settings['path'], $matches)) {
+                    $storageUid = (int)$matches[1];
+                    $rootIdentifier = $matches[2];
+                    // Security check before blindly accepting the requested folder's content
+                    if (GeneralUtility::isFirstPartOfStr($path, $rootIdentifier)) {
+                        $identifier = 'file:' . $storageUid . ':' . $path;
+                        $folder = $this->fileRepository->getFolderByIdentifier($identifier);
+                    }
+                }
+                if ($folder === null) {
+                    $folder = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
+                }
+
+                $parentFolder = !empty($path) ? $folder->getParentFolder() : null;
+                $subfolders = $folder->getSubfolders();
+                ksort($subfolders);
+                $files = $folder->getFiles();
+                break;
+
+            case 'FILE_COLLECTIONS':
+                throw new \RuntimeException('Mode "FILE_COLLECTIONS" is not yet implemented', 1451922432);
+
+            case 'CATEGORIES':
+                throw new \RuntimeException('Mode "CATEGORIES" is not yet implemented', 1451922447);
+        }
+
+        $this->view->assignMultiple([
+            'isEmpty' => empty($parentFolder) && empty($subfolders) && empty($files),
+            'parent' => $parentFolder,
+            'folders' => $subfolders,
+            'files' => $files,
+        ]);
     }
 
 }

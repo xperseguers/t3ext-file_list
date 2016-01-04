@@ -41,27 +41,34 @@
 			</trans-unit>
 			<trans-unit id="filename">
 				<source>Filename</source>
+				<note from="developer">This label is deprecated (related to the old plugin) as of FILE_LIST v.2.0.</note>
 			</trans-unit>
 			<trans-unit id="info">
 				<source>Info</source>
+				<note from="developer">This label is deprecated (related to the old plugin) as of FILE_LIST v.2.0.</note>
 			</trans-unit>
 			<trans-unit id="date">
 				<source>Modified</source>
+				<note from="developer">This label is deprecated (related to the old plugin) as of FILE_LIST v.2.0.</note>
 			</trans-unit>
 			<trans-unit id="filesize">
 				<source>Filesize</source>
 			</trans-unit>
 			<trans-unit id="no_files">
 				<source>No files or folders found in this directory!</source>
+				<note from="developer">This label is deprecated (related to the old plugin) as of FILE_LIST v.2.0.</note>
 			</trans-unit>
 			<trans-unit id="directory_size.no_files">
 				<source>No files</source>
+				<note from="developer">This label is deprecated (related to the old plugin) as of FILE_LIST v.2.0.</note>
 			</trans-unit>
 			<trans-unit id="directory_size.one_file">
 				<source>File</source>
+				<note from="developer">This label is deprecated (related to the old plugin) as of FILE_LIST v.2.0.</note>
 			</trans-unit>
 			<trans-unit id="directory_size.multiple_files">
 				<source>Files</source>
+				<note from="developer">This label is deprecated (related to the old plugin) as of FILE_LIST v.2.0.</note>
 			</trans-unit>
 			<trans-unit id="newFile">
 				<source>new</source>

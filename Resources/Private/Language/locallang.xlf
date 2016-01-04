@@ -12,6 +12,28 @@
 			<trans-unit id="config.noCache">
 				<source>Do not cache this plugin: Please not that this will prevent indexed_search to index files.</source>
 			</trans-unit>
+
+			<trans-unit id="filename">
+				<source>Filename</source>
+			</trans-unit>
+			<trans-unit id="info">
+				<source>Info</source>
+			</trans-unit>
+			<trans-unit id="date">
+				<source>Modified</source>
+			</trans-unit>
+			<trans-unit id="no_files">
+				<source>No files or folders found in this directory!</source>
+			</trans-unit>
+			<trans-unit id="directory_size.no_files">
+				<source>No files</source>
+			</trans-unit>
+			<trans-unit id="directory_size.one_file">
+				<source>File</source>
+			</trans-unit>
+			<trans-unit id="directory_size.multiple_files">
+				<source>Files</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
