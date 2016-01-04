@@ -175,6 +175,9 @@ class ext_update extends \TYPO3\CMS\Backend\Module\BaseScriptClass
     {
         // Do not take deleted flag into account as we wish to upgrade ALL plugins
         $records = \TYPO3\CMS\Backend\Utility\BackendUtility::getRecordsByField('tt_content', 'list_type', 'file_list_pi1');
+        if (!is_array($records)) {
+            $records = array();
+        }
         $fields = GeneralUtility::trimExplode(',', 'uid,pid,tx_filelist_path,tx_filelist_order_by,tx_filelist_order_sort,tx_filelist_show_new,tx_filelist_fe_user_sort');
         $plugins = [];
         foreach ($records as $record) {
