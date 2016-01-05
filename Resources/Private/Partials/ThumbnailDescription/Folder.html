@@ -1,0 +1,24 @@
+<div class="media">
+    <div class="media-left">
+        <f:link.action action="list" arguments="{path: folder.identifier}">
+            <img src="{f:uri.resource(path:'Icons/Folders/folder_thumbnail.png')}" />
+        </f:link.action>
+    </div>
+    <div class="media-body">
+        <h4 class="media-heading">
+            <f:link.action action="list" arguments="{path: folder.identifier}">{folder.name}</f:link.action>
+        </h4>
+
+        <f:switch expression="{folder.files -> f:count()}">
+            <f:case value="0">
+                <f:translate key="directory_size.no_files" />
+            </f:case>
+            <f:case value="1">
+                {folder.files -> f:count()} <f:translate key="directory_size.one_file" />
+            </f:case>
+            <f:case default="true">
+                {folder.files -> f:count()} <f:translate key="directory_size.multiple_files" />
+            </f:case>
+        </f:switch>
+    </div>
+</div>

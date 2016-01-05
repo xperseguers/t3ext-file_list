@@ -20,9 +20,17 @@ This extension provides a frontend plugin which shows a list of files and folder
 system or using more advanced FAL selectors such as categories or collections of files.
 
 You can sort the files in this directory over the Backend by name, size or creation date. Also Frontend users may, if
-you want, sort over the Frontend plugin. The files will be sorted by name as default.
+you want, sort over the list (legacy plugin only). The files will be sorted by name by default.
 
-There is also an option to display files as new (with a localized text after the name).
+There is also an option to display files as "new" (with a localized text after the name).
+
+.. hint::
+    As you may figure it out, this plugin could easily turn a list of images (and possibly subfolders) into an
+    easy-to-use image gallery. You probably will not be in need of any other extension for that purpose.
+
+    Be sure to have a look and consider installing extension "image_autoresize"
+    `available in TER <https://typo3.org/extensions/repository/view/image_autoresize>`__ if you plan to seriously use
+    TYPO3 for storing a large collection of images.
 
 
 .. _screenshots:
@@ -30,7 +38,30 @@ There is also an option to display files as new (with a localized text after the
 Screenshots
 -----------
 
-TODO
+Information such as titles and descriptions are those you may populate in TYPO3 Backend, using FAL.
+
+
+.. _screenshots-simple:
+
+Simple list
+^^^^^^^^^^^
+
+.. image:: ../Images/list-simple.png
+    :alt: Simple list
+
+
+.. _screenshots-description-thumbnail:
+
+Description and thumbnail
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. image:: ../Images/list-description-thumbnail.png
+    :alt: List with description and thumbnail
+
+
+.. hint::
+    You may use extension "extractor" `available in TER <https://typo3.org/extensions/repository/view/extractor>`__ to
+    automatically extract and populate metadata when you upload assets to your website.
 
 
 .. _screenshots-legacy:
@@ -46,6 +77,7 @@ marker-based template instead of Fluid).
     maintained anymore and will be dropped altogether in a future release of this extension.
 
 .. image:: ../Images/list-new.png
+    :alt: Listing showing new files (legacy plugin)
 
 You want to show additional columns of information? Use one of the hook (:file:`Resources/Private/Samples/metadata/`):
 

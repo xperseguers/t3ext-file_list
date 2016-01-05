@@ -1,3 +1,9 @@
+<f:if condition="{parent}">
+    <f:render partial="ThumbnailDescription/ParentFolder" arguments="{folder: parent}" />
+</f:if>
+<f:for each="{folders}" as="folder">
+    <f:render partial="ThumbnailDescription/Folder" arguments="{folder: folder}" />
+</f:for>
 <f:for each="{files}" as="file">
     <f:render partial="ThumbnailDescription/File" arguments="{file: file}" />
 </f:for>

@@ -8,8 +8,8 @@
 
 .. _users-manual-changing-layout:
 
-Changing the layout
--------------------
+Changing the layout (legacy)
+----------------------------
 
 You may override the default CSS and/or create a new template.
 

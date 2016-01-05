@@ -11,8 +11,7 @@
 Configuration over TypoScript
 -----------------------------
 
-This table is an overview of the main keys in the plugin configuration
-"plugin.tx_filelist_pi1":
+This table is an overview of the main keys in the plugin configuration "plugin.tx_filelist_pi1" (legacy):
 
 .. only:: html
 
