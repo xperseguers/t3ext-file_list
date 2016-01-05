@@ -84,7 +84,11 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     }
                 }
                 if ($folder === null) {
-                    $folder = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
+                    try {
+                        $folder = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
+                    } catch (\Exception $e) {
+                        return sprintf('<p class="bg-danger">%s</p>', htmlspecialchars($e->getMessage()));
+                    }
                 }
 
                 if (!empty($path)) {

@@ -62,7 +62,7 @@ class FileRepository
             $storage = $this->storageRepository->findByUid($storageUid);
             $folder = $storage->getFolder($identifier);
         } else {
-            throw new \InvalidArgumentException('getFolderByIdentifier expects a FAL identifier. Input was: ' . $identifier, 1451923517);
+            throw new \InvalidArgumentException(__METHOD__ . '() expects a FAL identifier. Input was: ' . $identifier, 1451923517);
         }
 
         return $folder;
