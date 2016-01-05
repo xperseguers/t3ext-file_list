@@ -3,6 +3,9 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2014-11-03T13:48:41Z" product-name="file_list">
 		<header/>
 		<body>
+			<trans-unit id="tabs.appearance">
+				<source>Listing Appearance</source>
+			</trans-unit>
 			<trans-unit id="filelist.mode">
 				<source>Mode</source>
 			</trans-unit>
