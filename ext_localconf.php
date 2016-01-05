@@ -16,6 +16,12 @@ $boot = function ($_EXTKEY) {
         []
     );
 
+    // Page module hook
+    $extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY);
+    $pluginSignature = strtolower($extensionName) . '_filelist';
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['list_type_Info'][$pluginSignature][$_EXTKEY] =
+        \Causal\FileList\Hooks\PageLayoutView::class . '->getExtensionSummary';
+
     /* ===========================================================================
         Register default template layouts
     =========================================================================== */

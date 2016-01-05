@@ -9,12 +9,18 @@ $boot = function ($_EXTKEY) {
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_pi1'] = 'pi_flexform';
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($_EXTKEY . '_pi1', 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_pi1.xml');
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(array('LLL:EXT:file_list/Resources/Private/Language/locallang_db.xml:tt_content.list_type_pi1', $_EXTKEY . '_pi1'), 'list_type');
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+        [
+            'LLL:EXT:file_list/Resources/Private/Language/locallang_db.xml:tt_content.list_type_pi1',
+            $_EXTKEY . '_pi1'
+        ],
+        'list_type'
+    );
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
         'Causal.' . $_EXTKEY,
         'Filelist',
-        'File List - List of files'
+        'LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist_title'
     );
 
     $extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY);

@@ -3,6 +3,10 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2014-11-03T13:48:41Z" product-name="file_list">
 		<header/>
 		<body>
+			<trans-unit id="filelist_title">
+				<source>File List - List of files</source>
+			</trans-unit>
+
 			<trans-unit id="tabs.appearance">
 				<source>Listing Appearance</source>
 			</trans-unit>
@@ -17,6 +21,9 @@
 			</trans-unit>
 			<trans-unit id="filelist.path">
 				<source>Folder path (example: file:1:/user_upload/)</source>
+			</trans-unit>
+			<trans-unit id="filelist.path.summary">
+				<source>Path</source>
 			</trans-unit>
 			<trans-unit id="filelist.path.wizards.link.title">
 				<source>Folder selector</source>
