@@ -1,2 +1,5 @@
-# cat=basic/enable; type=boolean; label=LLL:EXT:file_list/Resources/Private/Language/locallang.xml:config.noCache
+# cat=basic/enable/1; type=boolean; label=LLL:EXT:file_list/Resources/Private/Language/locallang.xml:config.enableLegacyPlugin
+enableLegacyPlugin = 0
+
+# cat=basic/enable/2; type=boolean; label=LLL:EXT:file_list/Resources/Private/Language/locallang.xml:config.noCache
 noCache = 0
