@@ -10,7 +10,7 @@
 				<source> Adds a frontend plugin which shows a list of files and folders inside a specified directory. </source>
 			</trans-unit>
 			<trans-unit id="config.noCache">
-				<source>Do not cache this plugin: Please not that this will prevent indexed_search to index files.</source>
+				<source>Do not cache this plugin: [legacy] Please note that this will prevent indexed_search from indexing files.</source>
 			</trans-unit>
 
 			<trans-unit id="filename">
@@ -24,6 +24,9 @@
 			</trans-unit>
 			<trans-unit id="no_files">
 				<source>No files or folders found in this directory!</source>
+			</trans-unit>
+			<trans-unit id="breadcrumb.home">
+				<source>Home</source>
 			</trans-unit>
 			<trans-unit id="directory_size.no_files">
 				<source>No files</source>

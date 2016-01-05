@@ -33,6 +33,9 @@ There is also an option to display files as "new" (with a localized text after t
     TYPO3 for storing a large collection of images.
 
 
+.. note::
+    Default templates are using (light) Bootstrap markup.
+
 .. _screenshots:
 
 Screenshots
@@ -48,6 +51,17 @@ Simple list
 
 .. image:: ../Images/list-simple.png
     :alt: Simple list
+
+
+.. _screenshots-simple:
+
+Breadcrumb menu
+^^^^^^^^^^^^^^^
+
+A breadcrumb menu lets you easily go back to higher directories when browsing a deep directory structure.
+
+.. image:: ../Images/list-breadcrumb.png
+    :alt: Breadcrumb menu
 
 
 .. _screenshots-description-thumbnail:

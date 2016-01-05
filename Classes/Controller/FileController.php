@@ -60,9 +60,18 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction($path = '')
     {
+        $breadcrumb = [];
         $parentFolder = null;
         $subfolders = [];
         $files = [];
+
+        // Sanitize configuration
+        if (!empty($this->settings['path'])) {
+            $this->settings['path'] = rtrim($this->settings['path'], '/') . '/';
+        }
+        if (!empty($path)) {
+            $path = rtrim($path, '/') . '/';
+        }
 
         switch ($this->settings['mode']) {
             case 'FOLDER':
@@ -70,6 +79,12 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     // No way!
                     $path = '';
                 }
+                try {
+                    $rootFolder = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
+                } catch (\Exception $e) {
+                    return sprintf('<p class="bg-danger">%s</p>', htmlspecialchars($e->getMessage()));
+                }
+
                 $folder = null;
                 if (!empty($path) && preg_match('/^file:(\d+):(.*)$/', $this->settings['path'], $matches)) {
                     $storageUid = (int)$matches[1];
@@ -84,17 +99,22 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     }
                 }
                 if ($folder === null) {
-                    try {
-                        $folder = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
-                    } catch (\Exception $e) {
-                        return sprintf('<p class="bg-danger">%s</p>', htmlspecialchars($e->getMessage()));
-                    }
+                    $folder = $rootFolder;
                 }
 
                 if (!empty($path)) {
                     $parentFolder = $folder->getParentFolder();
                 }
                 if ((bool)$this->settings['includeSubfolders']) {
+                    // Prepare the breadcrumb data
+                    $f = $folder;
+                    while ($this->settings['path'] !== 'file:' . $f->getCombinedIdentifier()) {
+                        array_unshift($breadcrumb, [ 'folder' => $f ]);
+                        $f = $f->getParentFolder();
+                    }
+                    array_unshift($breadcrumb, [ 'folder' => $rootFolder, 'isRoot' => true ]);
+                    $breadcrumb[count($breadcrumb) - 1]['state'] = 'active';
+
                     $subfolders = $folder->getSubfolders();
                 }
                 $files = $folder->getFiles();
@@ -175,6 +195,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         $this->view->assignMultiple([
             'isEmpty' => $parentFolder === null && empty($subfolders) && empty($files),
+            'breadcrumb' => $breadcrumb,
             'parent' => $parentFolder,
             'folders' => $subfolders,
             'files' => $orderedFiles,

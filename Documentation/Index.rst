@@ -30,7 +30,7 @@ File List
         collection of files, ...). This extension may also be used for creating image galleries.
 
     :Keywords:
-        list, file, directory, files, directories, gallery
+        list, file, directory, files, directories, gallery, bootstrap
 
     :Copyright:
         2008-2016

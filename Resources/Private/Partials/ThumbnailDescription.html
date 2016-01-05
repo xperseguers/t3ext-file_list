@@ -1,3 +1,7 @@
+<f:if condition="{breadcrumb}">
+    <f:render partial="Breadcrumb" arguments="{breadcrumb: breadcrumb}" />
+</f:if>
+
 <f:if condition="{parent}">
     <f:render partial="ThumbnailDescription/ParentFolder" arguments="{folder: parent}" />
 </f:if>
