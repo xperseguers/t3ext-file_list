@@ -1,0 +1,6 @@
+plugin.tx_filelist_pi1 {
+
+	# Use our special metadata template
+	templateFile = EXT:file_list/Resources/Private/Samples/multilingual/template.html
+
+}

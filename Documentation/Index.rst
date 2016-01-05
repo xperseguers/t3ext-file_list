@@ -15,66 +15,57 @@ File List
 .. only:: html
 
 
-	:Classification:
-		file_list
+    :Classification:
+        file_list
 
-	:Version:
-		|release|
+    :Version:
+        |release|
 
-	:Language:
-		en
+    :Language:
+        en
 
-	:Description:
-		This extension provides a frontend plugin which shows a list of files and folders in a specified directory
-		on the file system (comparable to Apache's directory listing).
+    :Description:
+        This extension provides a frontend plugin which shows a list of files and folders in a specified directory
+        on the file system (comparable to Apache's directory listing) or using more advanced FAL selectors (categories,
+        collection of files, ...).
 
-	:Keywords:
-		list, file, directory, files, directories
+    :Keywords:
+        list, file, directory, files, directories
 
-	:Copyright:
-		2008-2015
+    :Copyright:
+        2008-2016
 
-	:Author:
-		Xavier Perseguers, Moreno Feltscher
+    :Author:
+        Xavier Perseguers
 
-	:Email:
-		xavier@causal.ch, moreno@luagsh.ch
+    :Email:
+        xavier@causal.ch
 
-	:License:
-		This document is published under the Open Content License
-		available from http://www.opencontent.org/opl.shtml
+    :License:
+        This document is published under the Open Content License
+        available from http://www.opencontent.org/opl.shtml
 
-	:Rendered:
-		|today|
+    :Rendered:
+        |today|
 
-	The content of this document is related to TYPO3,
-	a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
-
-
-	**Other version of this document**
-
-	:PDF:
-		http://docs.typo3.org/typo3cms/extensions/file_list/2.0.0/_pdf/
+    The content of this document is related to TYPO3,
+    a GNU/GPL CMS/Framework available from `www.typo3.org <https://typo3.org/>`__.
 
 
-	**Table of Contents**
+    **Other version of this document**
 
-	.. toctree::
-		:maxdepth: 5
-		:titlesonly:
+    :PDF:
+        http://docs.typo3.org/typo3cms/extensions/file_list/2.0.0/_pdf/
 
-		Introduction/Index
-		UsersManual/Index
-		AdministratorManual/Index
-		KnownProblems/Index
 
-.. only:: latex
+    **Table of Contents**
 
-	.. toctree::
-		:maxdepth: 5
-		:titlesonly:
+.. toctree::
+    :maxdepth: 3
+    :titlesonly:
 
-		Introduction/Index
-		UsersManual/Index
-		AdministratorManual/Index
-		KnownProblems/Index
+    Introduction/Index
+    UsersManual/Index
+    AdministratorManual/Index
+    DeveloperManual/Index
+    KnownProblems/Index

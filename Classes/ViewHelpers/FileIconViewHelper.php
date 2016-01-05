@@ -1,9 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: xavier
- * Date: 04/01/16
- * Time: 18:22
+/*
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
  */
 
 namespace Causal\FileList\ViewHelpers;
@@ -15,6 +21,16 @@ use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Fluid\Core\ViewHelper\Facets\CompilableInterface;
 
+/**
+ * View helper for the icon associated to a file.
+ *
+ * @category    ViewHelpers
+ * @package     TYPO3
+ * @subpackage  tx_filelist
+ * @author      Xavier Perseguers <xavier@causal.ch>
+ * @copyright   Causal Sàrl
+ * @license     http://www.gnu.org/copyleft/gpl.html
+ */
 class FileIconViewHelper extends AbstractViewHelper implements CompilableInterface
 {
 

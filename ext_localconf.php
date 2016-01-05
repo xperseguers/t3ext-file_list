@@ -13,3 +13,13 @@ $settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$_EXTKEY])
     // non-cacheable actions
     []
 );
+
+// Register default template layouts
+$GLOBALS['TYPO3_CONF_VARS']['EXT']['file_list']['templateLayouts'][] = [
+    'LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.templateLayout.simple',
+    'Simple'
+];
+$GLOBALS['TYPO3_CONF_VARS']['EXT']['file_list']['templateLayouts'][] = [
+    'LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.templateLayout.thumbnailDescription',
+    'ThumbnailDescription'
+];

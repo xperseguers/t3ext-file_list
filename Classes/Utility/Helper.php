@@ -20,6 +20,7 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 /**
  * Helper class for the 'file_list' extension.
  *
+ * @category    Utility
  * @package     TYPO3
  * @subpackage  tx_filelist
  * @author      Moreno Feltscher <moreno@luagsh.ch>

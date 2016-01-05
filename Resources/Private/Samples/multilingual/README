@@ -8,10 +8,13 @@ none
 How to use
 ------------------------------------
 - Copy content of setup.txt into your template TS.
-- Add this to typo3conf/localconf.php:
+- Add this to typo3conf/AdditionalConfiguration.php:
 
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['filesDirectoriesHook'][] = 'EXT:file_list/Samples/multilingual/tx_filelist_multilingual.php:tx_filelist_multilingual';
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'][] = 'EXT:file_list/Samples/multilingual/tx_filelist_multilingual.php:tx_filelist_multilingual';
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['filesDirectoriesHook'][] =
+    'EXT:file_list/Resources/Private/Samples/multilingual/tx_filelist_multilingual.php:tx_filelist_multilingual';
+
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['file_list']['extraItemMarkerHook'][] =
+    'EXT:file_list/Resources/Private/Samples/multilingual/tx_filelist_multilingual.php:tx_filelist_multilingual';
 
 - Add a plugin to your page and choose a directory containing your translated documents
 

@@ -54,6 +54,15 @@
 			<trans-unit id="filelist.newDuration">
 				<source>Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled)</source>
 			</trans-unit>
+			<trans-unit id="filelist.templateLayout">
+				<source>Layout</source>
+			</trans-unit>
+			<trans-unit id="filelist.templateLayout.simple">
+				<source>Simple listing</source>
+			</trans-unit>
+			<trans-unit id="filelist.templateLayout.thumbnailDescription">
+				<source>Thumbnail + description</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

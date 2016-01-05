@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
     'title' => 'File List',
-    'description' => 'This extension provides a frontend plugin which shows a list of files and folders in a specified directory on the file system (comparable to Apache\'s directory listing).',
+    'description' => 'This extension provides a frontend plugin which shows a list of files and folders in a specified directory on the file system (comparable to Apache\'s directory listing) or using more advanced FAL selectors (categories, collection of files, ...).',
     'category' => 'plugin',
     'shy' => 0,
     'version' => '2.0.0-dev',
@@ -25,7 +25,7 @@ $EM_CONF[$_EXTKEY] = array(
     'modify_tables' => '',
     'clearcacheonload' => 0,
     'lockType' => '',
-    'author' => 'Xavier Perseguers and Moreno Feltscher',
+    'author' => 'Xavier Perseguers',
     'author_email' => 'xavier@causal.ch',
     'author_company' => 'Causal Sàrl',
     'CGLcompliance' => '',

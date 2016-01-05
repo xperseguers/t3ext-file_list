@@ -1,7 +1,7 @@
 plugin.tx_filelist_pi1 {
 
 	# Use our special metadata template
-	templateFile = EXT:file_list/Samples/metadata/template.html
+	templateFile = EXT:file_list/Resources/Private/Samples/metadata/template.html
 
 	fields.aperture = FILEINFO
 	fields.aperture {

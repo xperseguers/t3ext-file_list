@@ -169,7 +169,6 @@
 				<el>
 					<settings.newDuration>
 						<TCEforms>
-							<exclude>0</exclude>
 							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.newDuration</label>
 							<config>
 								<type>input</type>
@@ -179,6 +178,16 @@
 							</config>
 						</TCEforms>
 					</settings.newDuration>
+					<settings.templateLayout>
+						<TCEforms>
+							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.templateLayout</label>
+							<config>
+								<type>select</type>
+								<items type="array"></items>
+								<itemsProcFunc>Causal\FileList\Tca\TemplateLayoutSelector->render</itemsProcFunc>
+							</config>
+						</TCEforms>
+					</settings.templateLayout>
 				</el>
 			</ROOT>
 		</display>

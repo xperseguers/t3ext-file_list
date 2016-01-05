@@ -7,26 +7,7 @@
 			<f:translate key="no_files" />
 		</f:then>
 		<f:else>
-			<table class="table table-striped table-condensed">
-				<thead>
-				<tr>
-					<th><f:translate key="filename" /></th>
-					<th><f:translate key="info" /></th>
-					<th><f:translate key="date" /></th>
-				</tr>
-				</thead>
-				<tbody>
-				<f:if condition="{parent}">
-					<f:render partial="ParentFolder" arguments="{folder: parent}" />
-				</f:if>
-				<f:for each="{folders}" as="folder">
-					<f:render partial="Folder" arguments="{folder: folder}" />
-				</f:for>
-				<f:for each="{files}" as="file">
-					<f:render partial="File" arguments="{file: file}" />
-				</f:for>
-				</tbody>
-			</table>
+			<f:render partial="{settings.templateLayout}" arguments="{_all}" />
 		</f:else>
 	</f:if>
 
