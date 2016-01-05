@@ -39,7 +39,11 @@
 								<title>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.path.wizards.link.title</title>
 								<icon>link_popup.gif</icon>
 								<module type="array">
-									<name>wizard_link</name>
+									<name>wizard_element_browser</name>
+									<urlParameters type="array">
+										<mode>wizard</mode>
+										<act>file</act>
+									</urlParameters>
 								</module>
 								<params type="array">
 									<blindLinkOptions>page,url,mail,spec,file</blindLinkOptions>
@@ -74,7 +78,11 @@
 								<title>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.path.wizards.link.title</title>
 								<icon>link_popup.gif</icon>
 								<module type="array">
-									<name>wizard_link</name>
+									<name>wizard_element_browser</name>
+									<urlParameters type="array">
+										<mode>wizard</mode>
+										<act>file</act>
+									</urlParameters>
 								</module>
 								<params type="array">
 									<blindLinkOptions>page,url,mail,spec,file</blindLinkOptions>
