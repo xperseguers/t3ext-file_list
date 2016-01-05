@@ -2,12 +2,27 @@
     <f:render partial="Breadcrumb" arguments="{breadcrumb: breadcrumb}" />
 </f:if>
 
-<f:if condition="{parent}">
-    <f:render partial="ThumbnailDescription/ParentFolder" arguments="{folder: parent}" />
-</f:if>
-<f:for each="{folders}" as="folder">
-    <f:render partial="ThumbnailDescription/Folder" arguments="{folder: folder}" />
-</f:for>
-<f:for each="{files}" as="file">
-    <f:render partial="ThumbnailDescription/File" arguments="{file: file}" />
-</f:for>
+<table class="table">
+    <f:if condition="{parent}">
+        <tr>
+            <td>
+                <f:render partial="ThumbnailDescription/ParentFolder" arguments="{folder: parent}" />
+            </td>
+        </tr>
+    </f:if>
+    <f:for each="{folders}" as="folder">
+        <tr>
+            <td>
+                <f:render partial="ThumbnailDescription/Folder" arguments="{folder: folder}" />
+            </td>
+        </tr>
+    </f:for>
+
+    <f:for each="{files}" as="file">
+        <tr>
+            <td>
+                <f:render partial="ThumbnailDescription/File" arguments="{file: file}" />
+            </td>
+        </tr>
+    </f:for>
+</table>
