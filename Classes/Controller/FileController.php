@@ -17,6 +17,7 @@ namespace Causal\FileList\Controller;
 use Causal\FileList\Domain\Repository\FileRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
+use TYPO3\CMS\Core\Resource\Folder;
 
 /**
  * File controller.
@@ -60,10 +61,10 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction($path = '')
     {
-        $breadcrumb = [];
-        $parentFolder = null;
-        $subfolders = [];
         $files = [];
+        $subfolders = [];
+        $parentFolder = null;
+        $breadcrumb = [];
 
         // Sanitize configuration
         if (!empty($this->settings['path'])) {
@@ -73,82 +74,18 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $path = rtrim($path, '/') . '/';
         }
 
-        switch ($this->settings['mode']) {
-            case 'FOLDER':
-                if (!(bool)$this->settings['includeSubfolders']) {
-                    // No way!
-                    $path = '';
-                }
-                try {
-                    $rootFolder = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
-                } catch (\Exception $e) {
-                    return sprintf('<p class="bg-danger">%s</p>', htmlspecialchars($e->getMessage()));
-                }
+        try {
+            switch ($this->settings['mode']) {
+                case 'FOLDER':
+                    $this->populateFromFolder($path, $files, $subfolders, $parentFolder, $breadcrumb);
+                    break;
 
-                $folder = null;
-                if (!empty($path) && preg_match('/^file:(\d+):(.*)$/', $this->settings['path'], $matches)) {
-                    $storageUid = (int)$matches[1];
-                    $rootIdentifier = $matches[2];
-                    // Security check before blindly accepting the requested folder's content
-                    if ($path === $rootIdentifier) {
-                        $path = '';
-                    }
-                    if (!empty($path) && GeneralUtility::isFirstPartOfStr($path, $rootIdentifier)) {
-                        $identifier = 'file:' . $storageUid . ':' . $path;
-                        $folder = $this->fileRepository->getFolderByIdentifier($identifier);
-                    }
-                }
-                if ($folder === null) {
-                    $folder = $rootFolder;
-                }
-
-                if (!empty($path)) {
-                    $parentFolder = $folder->getParentFolder();
-                }
-                if ((bool)$this->settings['includeSubfolders']) {
-                    // Prepare the breadcrumb data
-                    $f = $folder;
-                    while ($this->settings['path'] !== 'file:' . $f->getCombinedIdentifier()) {
-                        array_unshift($breadcrumb, [ 'folder' => $f ]);
-                        $f = $f->getParentFolder();
-                    }
-                    array_unshift($breadcrumb, [ 'folder' => $rootFolder, 'isRoot' => true ]);
-                    $breadcrumb[count($breadcrumb) - 1]['state'] = 'active';
-
-                    $subfolders = $folder->getSubfolders();
-                }
-                $files = $folder->getFiles();
-                break;
-
-            case 'FILE_COLLECTIONS':
-                /** @var FileCollectionRepository $fileCollectionRepository */
-                $fileCollectionRepository = $this->objectManager->get(FileCollectionRepository::class);
-                if (!empty($this->settings['rootPath'])) {
-                    $folder = $this->fileRepository->getFolderByIdentifier($this->settings['rootPath']);
-                }
-
-                $collectionUids = GeneralUtility::intExplode(',', $this->settings['file_collections'], true);
-                foreach ($collectionUids as $uid) {
-                    $collection = $fileCollectionRepository->findByUid($uid);
-                    if ($collection !== null) {
-                        $collection->loadContents();
-                        /** @var \TYPO3\CMS\Core\Resource\File[] $collectionFiles */
-                        $collectionFiles = $collection->getItems();
-                        if ($folder === null) {
-                            $files += $collectionFiles;
-                        } else {
-                            foreach ($collectionFiles as $file) {
-                                if ($file->getStorage() === $folder->getStorage()) {
-                                    // TODO: Check if this is the correct way to filter out files with non-local storages
-                                    if (GeneralUtility::isFirstPartOfStr($file->getIdentifier(), $folder->getIdentifier())) {
-                                        $files[] = $file;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                break;
+                case 'FILE_COLLECTIONS':
+                    $this->populateFromFileCollections($files);
+                    break;
+            }
+        } catch (\Exception $e) {
+            return sprintf('<p class="bg-danger">%s</p>', htmlspecialchars($e->getMessage()));
         }
 
         // Sort folders and files
@@ -200,6 +137,104 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'folders' => $subfolders,
             'files' => $orderedFiles,
         ]);
+    }
+
+    /**
+     * Populates files and folders from a configured root path.
+     *
+     * @param string $path Optional subpath of $this->settings['path']
+     * @param \TYPO3\CMS\Core\Resource\File[] &$files
+     * @param Folder[] &$subfolders
+     * @param Folder &$parentFolder
+     * @param array &$breadcrumb
+     * @return void
+     * @throws \InvalidArgumentException|\TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
+     */
+    protected function populateFromFolder($path, array &$files, array &$subfolders, Folder &$parentFolder = null, array &$breadcrumb)
+    {
+        if (!(bool)$this->settings['includeSubfolders']) {
+            // No way!
+            $path = '';
+        }
+
+        $rootFolder = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
+
+        $folder = null;
+        if (!empty($path) && preg_match('/^file:(\d+):(.*)$/', $this->settings['path'], $matches)) {
+            $storageUid = (int)$matches[1];
+            $rootIdentifier = $matches[2];
+            // Security check before blindly accepting the requested folder's content
+            if ($path === $rootIdentifier) {
+                $path = '';
+            }
+            if (!empty($path) && GeneralUtility::isFirstPartOfStr($path, $rootIdentifier)) {
+                $identifier = 'file:' . $storageUid . ':' . $path;
+                $folder = $this->fileRepository->getFolderByIdentifier($identifier);
+            }
+        }
+        if ($folder === null) {
+            $folder = $rootFolder;
+        }
+
+        // Retrieve the list of files
+        $files = $folder->getFiles();
+
+        // In a subfolder, so retrieve parent folder
+        if (!empty($path)) {
+            $parentFolder = $folder->getParentFolder();
+        }
+
+        if ((bool)$this->settings['includeSubfolders']) {
+            $subfolders = $folder->getSubfolders();
+
+            // Prepare the breadcrumb data
+            $f = $folder;
+            while ($this->settings['path'] !== 'file:' . $f->getCombinedIdentifier()) {
+                array_unshift($breadcrumb, [ 'folder' => $f ]);
+                $f = $f->getParentFolder();
+            }
+            array_unshift($breadcrumb, [ 'folder' => $rootFolder, 'isRoot' => true ]);
+            $breadcrumb[count($breadcrumb) - 1]['state'] = 'active';
+        }
+    }
+
+    /**
+     * Populates files from a list of file collections.
+     *
+     * @param \TYPO3\CMS\Core\Resource\File[] $files
+     * @return void
+     * @throws \InvalidArgumentException|\TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
+     */
+    protected function populateFromFileCollections(array &$files)
+    {
+        /** @var FileCollectionRepository $fileCollectionRepository */
+        $fileCollectionRepository = $this->objectManager->get(FileCollectionRepository::class);
+        if (!empty($this->settings['rootPath'])) {
+            // Returned files needs to be within a given root path
+            $folder = $this->fileRepository->getFolderByIdentifier($this->settings['rootPath']);
+        }
+
+        $collectionUids = GeneralUtility::intExplode(',', $this->settings['file_collections'], true);
+        foreach ($collectionUids as $uid) {
+            $collection = $fileCollectionRepository->findByUid($uid);
+            if ($collection !== null) {
+                $collection->loadContents();
+                /** @var \TYPO3\CMS\Core\Resource\File[] $collectionFiles */
+                $collectionFiles = $collection->getItems();
+                if ($folder === null) {
+                    $files += $collectionFiles;
+                } else {
+                    foreach ($collectionFiles as $file) {
+                        if ($file->getStorage() === $folder->getStorage()) {
+                            // TODO: Check if this is the correct way to filter out files with non-local storages
+                            if (GeneralUtility::isFirstPartOfStr($file->getIdentifier(), $folder->getIdentifier())) {
+                                $files[] = $file;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }
