@@ -66,9 +66,12 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $parentFolder = null;
         $breadcrumb = [];
 
-        // Sanitize configuration
+        // Sanitize configuration and do security checks
         if (!empty($this->settings['path'])) {
             $this->settings['path'] = rtrim($this->settings['path'], '/') . '/';
+        } elseif (!empty($this->settings['root'])) {
+            // No directory was configured, fallback to the global restriction anyway!
+            $this->settings['path'] = rtrim($this->settings['root'], '/') . '/';
         }
 
         // Security check
