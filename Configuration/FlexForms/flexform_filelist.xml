@@ -32,11 +32,10 @@
 					<settings.path>
 						<TCEforms>
 							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.path</label>
-							<displayCond>FIELD:settings.mode:=:FOLDER</displayCond>
 							<config>
 								<type>input</type>
 								<size>48</size>
-								<eval>required,trim</eval>
+								<eval>trim</eval>
 								<wizards type="array">
 									<_PADDING>2</_PADDING>
 									<link type="array">
@@ -65,32 +64,6 @@
 							</config>
 						</TCEforms>
 					</settings.includeSubfolders>
-					<settings.rootPath>
-						<TCEforms>
-							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.rootPath</label>
-							<displayCond>FIELD:settings.mode:!=:FOLDER</displayCond>
-							<config>
-								<type>input</type>
-								<size>48</size>
-								<eval>trim</eval>
-								<wizards type="array">
-									<_PADDING>2</_PADDING>
-									<link type="array">
-										<type>popup</type>
-										<title>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.path.wizards.link.title</title>
-										<icon>link_popup.gif</icon>
-										<module type="array">
-											<name>wizard_link</name>
-										</module>
-										<params type="array">
-											<blindLinkOptions>page,url,mail,spec,file</blindLinkOptions>
-										</params>
-										<JSopenParams>height=500,width=400,status=0,menubar=0,scrollbars=1</JSopenParams>
-									</link>
-								</wizards>
-							</config>
-						</TCEforms>
-					</settings.rootPath>
 					<settings.file_collections>
 						<TCEforms>
 							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.file_collections</label>

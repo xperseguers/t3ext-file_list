@@ -26,7 +26,7 @@ File List
 
     :Description:
         This extension provides a frontend plugin which shows a list of files and folders in a specified directory
-        on the file system (comparable to Apache's directory listing) or using more advanced FAL selectors (categories,
+        on the file system (comparable to Apache directory listing) or using more advanced FAL selectors (categories,
         collection of files, ...). This extension may also be used for creating image galleries.
 
     :Keywords:

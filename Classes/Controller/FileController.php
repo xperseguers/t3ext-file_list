@@ -209,9 +209,9 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         /** @var FileCollectionRepository $fileCollectionRepository */
         $fileCollectionRepository = $this->objectManager->get(FileCollectionRepository::class);
-        if (!empty($this->settings['rootPath'])) {
+        if (!empty($this->settings['path'])) {
             // Returned files needs to be within a given root path
-            $folder = $this->fileRepository->getFolderByIdentifier($this->settings['rootPath']);
+            $folder = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
         }
 
         $collectionUids = GeneralUtility::intExplode(',', $this->settings['file_collections'], true);
