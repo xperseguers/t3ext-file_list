@@ -12,7 +12,10 @@
  * The TYPO3 project - inspiring people to share!
  */
 
+namespace Causal\FileList;
+
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 
 /**
  * Update class for the 'file_list' extension.
@@ -33,7 +36,15 @@ class ext_update extends \TYPO3\CMS\Backend\Module\BaseScriptClass
      */
     public function access()
     {
-        return count($this->getPluginsWithOldConfiguration()) > 0;
+        $showUpgradeWizard = false;
+
+        $settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['file_list']);
+        if (isset($settings['enableLegacyPlugin']) && (bool)$settings['enableLegacyPlugin']) {
+            $legacyPlugins = $this->getLegacyPlugins(true);
+            $showUpgradeWizard = count($legacyPlugins['canUpgrade']) + count($legacyPlugins['cannotUpgrade']) > 0;
+        }
+
+        return $showUpgradeWizard;
     }
 
     /**
@@ -46,21 +57,20 @@ class ext_update extends \TYPO3\CMS\Backend\Module\BaseScriptClass
     {
         $this->content = '';
 
-        $this->doc = GeneralUtility::makeInstance('TYPO3\\CMS\\Backend\\Template\\StandardDocumentTemplate');
+        $this->doc = GeneralUtility::makeInstance(\TYPO3\CMS\Backend\Template\DocumentTemplate::class);
         $this->doc->backPath = $GLOBALS['BACK_PATH'];
         $this->doc->form = '<form action="" method="post">';
 
         $title = 'File List Plugin Configuration';
         $this->content .= $this->doc->startPage($title);
         $this->content .= $this->doc->header($title);
-        $this->content .= $this->doc->spacer(5);
 
         $this->content .= $this->doc->section('',
-            'This extension does not need any dedicated columns in table tt_content anymore.  ' .
-            'These columns were used to store the plugin configuration.  This update wizard ' .
-            'detected that you still have plugins whose configuration has not yet been upgrade.  ' .
+            'This extension has been rewritten from scratch using Extbase and Fluid-based templates.  ' .
+            'This upgrade wizard detected that you still use the legacy plugin.  Although this is perfectly ' .
+            'fine for the time being, you should stop using it and switch to the new plugin.  ' .
             'This form allows you to upgrade your existing file_list plugins to use the new ' .
-            'FlexForm configuration.'
+            'modern plugin.'
         );
 
         if (GeneralUtility::_GET('upgrade')) {
@@ -79,13 +89,36 @@ class ext_update extends \TYPO3\CMS\Backend\Module\BaseScriptClass
      */
     protected function prepareUpgrade()
     {
-        $oldPlugins = $this->getPluginsWithOldConfiguration();
+        $legacyPlugins = $this->getLegacyPlugins();
 
-        return $this->doc->section('Configuration Upgrade',
-            count($oldPlugins) . ' plugins with old configuration were found.  ' .
-            '<a href="' . GeneralUtility::linkThisScript(array('upgrade' => 1)) . '">Click here</a> ' .
-            'to start the upgrade process.'
-        );
+        $content = [];
+        $content[] = '<h4>Automatic upgrade</h4>';
+
+        $upgradeLink = GeneralUtility::linkThisScript(array('upgrade' => 1));
+        $content[] = '<p><strong>' . count($legacyPlugins['canUpgrade']) . '</strong> legacy plugins without dedicated ' .
+            'template were found.';
+        if (count($legacyPlugins['canUpgrade']) > 0) {
+            $content[] = '  <a href="' . htmlspecialchars($upgradeLink) . '">Click here</a> to start the upgrade ' .
+            'process.';
+        }
+        $content[] = '</p>';
+
+        if (count($legacyPlugins['cannotUpgrade']) > 0) {
+            $content[] = '<h4>Manual upgrade</h4>';
+            $pages = [];
+            foreach ($legacyPlugins['cannotUpgrade'] as $row) {
+                $pages[] = $row['pid'];
+            }
+            $pages = array_unique($pages);
+
+            $content[] = '<p><strong>' . count($legacyPlugins['cannotUpgrade']) . '</strong> legacy plugins with dedicated ' .
+                'template were found.  Unfortunately these plugins cannot be safely upgraded.<br />';
+            $content[] = 'Please either remove the dedicated template and then run this upgrade wizard again or upgrade ' .
+                'them to the new plugin manually.<br />';
+            $content[] = 'These legacy plugins are located on following pages: ' . implode(', ', $pages) . '.</p>';
+        }
+
+        return $this->doc->section('Configuration Upgrade', implode(LF, $content));
     }
 
     /**
@@ -95,7 +128,33 @@ class ext_update extends \TYPO3\CMS\Backend\Module\BaseScriptClass
      */
     protected function upgrade()
     {
-        $oldPlugins = $this->getPluginsWithOldConfiguration();
+        $legacyPlugins = $this->getLegacyPlugins();
+        $databaseConnection = $this->getDatabaseConnection();
+        $upgradedPlugins = 0;
+
+        foreach ($legacyPlugins['canUpgrade'] as $row) {
+            $newFlexForm = $this->upgradeFlexFormConfiguration($row['pi_flexform']);
+            if ($newFlexForm !== null) {
+                $databaseConnection->exec_UPDATEquery(
+                    'tt_content',
+                    'uid=' . $row['uid'],
+                    [
+                        'tstamp' => time(),
+                        'list_type' => 'filelist_filelist',
+                        'pi_flexform' => $newFlexForm,
+                    ]
+                );
+                if ($databaseConnection->sql_affected_rows() > 0) {
+                    $upgradedPlugins++;
+                }
+            }
+        }
+
+        return $this->doc->section('Configuration Upgrade',
+            '<strong>' . $upgradedPlugins . '</strong> plugins were upgraded.'
+        );
+
+        $oldPlugins = $this->WithOldConfiguration();
         foreach ($oldPlugins as $plugin) {
             $this->getDatabaseConnection()->exec_UPDATEquery(
                 'tt_content',
@@ -107,90 +166,162 @@ class ext_update extends \TYPO3\CMS\Backend\Module\BaseScriptClass
                 )
             );
         }
+    }
 
-        return $this->doc->section('Configuration Upgrade',
-            count($oldPlugins) . ' plugins were upgraded.  You should now consider ' .
-            'opening the Install Tool and removing deprecated file_list columns from ' .
-            'table tt_content by running the Compare tool.'
-        );
+    /**
+     * Upgrade the FlexForm configuration from a legacy plugin to be compatible
+     * with the new modern one.
+     *
+     * @param array $flexForm
+     * @return string|null
+     */
+    protected function upgradeFlexFormConfiguration(array $flexForm)
+    {
+        static $storage = null;
+
+        $path = $this->getFieldFromFlexForm($flexForm, 'path');
+        $orderBy = $this->getFieldFromFlexForm($flexForm, 'order_by');
+        $sortDirection = $this->getFieldFromFlexForm($flexForm, 'sort_direction');
+        $newDuration = (int)$this->getFieldFromFlexForm($flexForm, 'new_duration');
+
+        // Make path FAL compatible if needed
+        if (!preg_match('/^file:\d+:.*$/', $path)) {
+            list($topDirectory, $subdirectory) = explode('/', $path, 2);
+            if ($topDirectory !== 'fileadmin') {
+                // Upgrade is not (yet?) supported
+                return null;
+            }
+            if ($storage === null) {
+                /** @var \TYPO3\CMS\Core\Resource\StorageRepository $storageRepository */
+                $storageRepository = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Resource\StorageRepository::class);
+                $localStorages = $storageRepository->findByStorageType('Local');
+                foreach ($localStorages as $localStorage) {
+                    if ($localStorage->isOnline()) {
+                        $storage = $localStorage;
+                        break;
+                    }
+                }
+                if ($storage === null) {
+                    // Upgrade is NOT supported
+                    return null;
+                }
+            }
+
+            $path = 'file:' . $storage->getUid() . ':/' . rtrim($subdirectory, '/') . '/';
+        }
+
+        $configuration = $this->getFlexFormConfiguration($path, $orderBy, $sortDirection, $newDuration);
+
+        return $configuration;
     }
 
     /**
      * Returns a FlexForm configuration template.
      *
-     * @param array $config
+     * @param string $path
+     * @param string $orderBy
+     * @param string $sortDirection
+     * @param int $newDuration
      * @return string
      */
-    protected function getFlexFormConfiguration(array $config)
+    protected function getFlexFormConfiguration($path, $orderBy, $sortDirection, $newDuration)
     {
-        $flexform = '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+        $templateFlexForm = '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3FlexForms>
     <data>
         <sheet index="sDEF">
             <language index="lDEF">
-                <field index="path">
+                <field index="settings.mode">
+                    <value index="vDEF">FOLDER</value>
+                </field>
+                <field index="settings.path">
                     <value index="vDEF">%s</value>
                 </field>
-                <field index="order_by">
+                <field index="settings.orderBy">
                     <value index="vDEF">%s</value>
                 </field>
-                <field index="sort_direction">
+                <field index="settings.sortDirection">
                     <value index="vDEF">%s</value>
                 </field>
-                <field index="new_duration">
+            </language>
+        </sheet>
+        <sheet index="display">
+            <language index="lDEF">
+                <field index="settings.newDuration">
                     <value index="vDEF">%s</value>
                 </field>
-                <field index="fe_sort">
-                    <value index="vDEF">%s</value>
+                <field index="settings.templateLayout">
+                    <value index="vDEF">Simple</value>
                 </field>
             </language>
         </sheet>
     </data>
 </T3FlexForms>';
 
-        $path = $config['tx_filelist_path'];
-        switch ($config['tx_filelist_order_by']) {
-            case '1':
-                $order_by = 'date';
-                break;
-            case '2':
-                $order_by = 'size';
-                break;
-            default:
-                $order_by = 'name';
-        }
-        $direction = $config['tx_filelist_order_sort'] == '1' ? 'desc' : 'asc';
-        $duration = (int)$config['tx_filelist_show_new'];
-        $fe_sort = (int)$config['tx_filelist_fe_user_sort'];
-
-        return sprintf($flexform, $path, $order_by, $direction, $duration, $fe_sort);
+        return sprintf(
+            $templateFlexForm,
+            $path,
+            strtoupper($orderBy),
+            strtoupper($sortDirection),
+            (int)$newDuration
+        );
     }
 
     /**
      * Returns a list of plugins that have not yet been upgraded to use the FlexForm configuration.
      *
-     * @return array Array of "light" tt_content rows
+     * @param bool $firstRow
+     * @return array Array of tt_content rows
      */
-    protected function getPluginsWithOldConfiguration()
+    protected function getLegacyPlugins($firstRow = false)
     {
-        // Do not take deleted flag into account as we wish to upgrade ALL plugins
-        $records = \TYPO3\CMS\Backend\Utility\BackendUtility::getRecordsByField('tt_content', 'list_type', 'file_list_pi1');
-        if (!is_array($records)) {
-            $records = array();
+        $rows = BackendUtility::getRecordsByField('tt_content', 'list_type', 'file_list_pi1', ' AND CType=\'list\'');
+        if (!is_array($rows)) {
+            $rows = array();
         }
-        $fields = GeneralUtility::trimExplode(',', 'uid,pid,tx_filelist_path,tx_filelist_order_by,tx_filelist_order_sort,tx_filelist_show_new,tx_filelist_fe_user_sort');
-        $plugins = [];
-        foreach ($records as $record) {
-            if (isset($record['tx_filelist_path']) && $record['tx_filelist_path'] !== '') {
-                $plugin = [];
-                foreach ($fields as $field) {
-                    $plugin[$field] = $record[$field];
+
+        $plugins = [
+            'canUpgrade' => [],
+            'cannotUpgrade' => [],
+        ];
+        if (!empty($rows) && $firstRow) {
+            $plugins['canUpgrade'][] = $rows[0];
+        } else {
+            foreach ($rows as $row) {
+                $flexForm = GeneralUtility::xml2array($row['pi_flexform']);
+                $templateFile = $this->getFieldFromFlexForm($flexForm, 'templateFile');
+                if (empty($templateFile)) {
+                    // Do not do the work twice when upgrading, store FlexForm as an array right away
+                    $row['pi_flexform'] = $flexForm;
+                    $plugins['canUpgrade'][] = $row;
+                } else {
+                    $plugins['cannotUpgrade'][] = $row;
                 }
-                $plugins[] = $plugin;
             }
         }
 
         return $plugins;
+    }
+
+    /**
+     * Returns a field value from the FlexForm configuration.
+     *
+     * @param string $key The name of the key
+     * @param string $sheet The name of the sheet
+     * @return string|null The value if found, otherwise null
+     */
+    protected function getFieldFromFlexForm(array $flexForm, $key, $sheet = 'sDEF')
+    {
+        if (isset($flexForm['data'])) {
+            $flexForm = $flexForm['data'];
+            if (is_array($flexForm) && is_array($flexForm[$sheet]) && is_array($flexForm[$sheet]['lDEF'])
+                && is_array($flexForm[$sheet]['lDEF'][$key]) && isset($flexForm[$sheet]['lDEF'][$key]['vDEF'])
+            ) {
+                return $flexForm[$sheet]['lDEF'][$key]['vDEF'];
+            }
+        }
+
+        return null;
     }
 
     /**
