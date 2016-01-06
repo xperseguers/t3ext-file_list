@@ -18,6 +18,7 @@ use Causal\FileList\Domain\Repository\FileRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
 use TYPO3\CMS\Core\Resource\Folder;
+use TYPO3\CMS\Core\Resource\FolderInterface;
 
 /**
  * File controller.
@@ -197,7 +198,18 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         if ((bool)$this->settings['includeSubfolders']) {
-            $subfolders = $folder->getSubfolders();
+            $tempSubfolders = $folder->getSubfolders();
+            foreach ($tempSubfolders as $subfolder) {
+                switch ($subfolder->getRole()) {
+                    case FolderInterface::ROLE_RECYCLER:
+                    case FolderInterface::ROLE_PROCESSING:
+                    case FolderInterface::ROLE_TEMPORARY:
+                        // Special folder, should not be shown in Frontend
+                        break;
+                    default:
+                        $subfolders[] = $subfolder;
+                }
+            }
 
             // Prepare the breadcrumb data
             $f = $folder;
