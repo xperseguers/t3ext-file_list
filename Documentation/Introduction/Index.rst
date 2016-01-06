@@ -109,3 +109,14 @@ a hook (:file:`Resources/Private/Samples/multilingual/`):
 
 .. image:: ../Images/list-multilingual.png
     :alt: Multilingual list of files (legacy plugin)
+
+
+Icons
+^^^^^
+
+Icons have been created by:
+
+- To Uyen
+- Cristian Bogdan Rosu
+- Erik Ragnar Eliasson
+- Laurent Baumann
