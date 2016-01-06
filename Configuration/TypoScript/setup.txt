@@ -7,6 +7,9 @@ plugin.tx_filelist {
 	}
 
 	settings {
+		# Base root directory (path must be within this directory). E.g., "file:1:/path/to/some-dir/"
+		root =
+
 		dateFormat = {$plugin.tx_filelist.settings.dateFormat}
 
 		fileIconRootPath = {$plugin.tx_filelist.settings.fileIconRootPath}

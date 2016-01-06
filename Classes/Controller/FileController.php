@@ -70,6 +70,15 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         if (!empty($this->settings['path'])) {
             $this->settings['path'] = rtrim($this->settings['path'], '/') . '/';
         }
+
+        // Security check
+        if (!empty($this->settings['root'])) {
+            $this->settings['root'] = rtrim($this->settings['root'], '/') . '/';
+            if (!GeneralUtility::isFirstPartOfStr($this->settings['path'], $this->settings['root'])) {
+                return $this->error(sprintf('Could not open directory "%s"', $this->settings['path']));
+            }
+        }
+
         if (!empty($path)) {
             $path = rtrim($path, '/') . '/';
         }
@@ -85,7 +94,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     break;
             }
         } catch (\Exception $e) {
-            return sprintf('<p class="bg-danger">%s</p>', htmlspecialchars($e->getMessage()));
+            return $this->error($e->getMessage());
         }
 
         // Sort folders and files
@@ -235,6 +244,28 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 }
             }
         }
+    }
+
+    /**
+     * Returns an error message for frontend output.
+     *
+     * @param string $string Error message input
+     * @return string
+     */
+    protected function error($string)
+    {
+        return '
+			<!-- ' . __CLASS__ . ' ERROR message: -->
+			<div style="
+					border: 2px red solid;
+					background-color: yellow;
+					color: black;
+					text-align: center;
+					padding: 20px 20px 20px 20px;
+					margin: 20px 20px 20px 20px;
+					">' .
+        '<strong>' . __CLASS__ . ' ERROR:</strong><br /><br />' . nl2br(trim($string)) .
+        '</div>';
     }
 
 }
