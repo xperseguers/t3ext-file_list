@@ -50,6 +50,7 @@ $boot = function ($_EXTKEY) {
         'LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.templateLayout.thumbnailDescription',
         'ThumbnailDescription'
     ];
+
 };
 
 $boot($_EXTKEY);

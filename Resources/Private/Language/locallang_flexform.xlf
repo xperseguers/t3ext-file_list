@@ -6,6 +6,9 @@
 			<trans-unit id="filelist_title">
 				<source>File List - List of files</source>
 			</trans-unit>
+			<trans-unit id="filelist_wizard_description">
+				<source>Makes a list of files and folders.</source>
+			</trans-unit>
 
 			<trans-unit id="tabs.appearance">
 				<source>Listing Appearance</source>
