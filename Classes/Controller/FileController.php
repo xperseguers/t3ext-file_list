@@ -57,7 +57,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * Listing of files.
      *
-     * @param string $path
+     * @param string $path Optional path of the subdirectory to be listed
      * @return void
      */
     public function listAction($path = '')
@@ -67,27 +67,15 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $parentFolder = null;
         $breadcrumb = [];
 
-        // Sanitize configuration and do security checks
-        if (!empty($this->settings['path'])) {
-            $this->settings['path'] = rtrim($this->settings['path'], '/') . '/';
-        } elseif (!empty($this->settings['root'])) {
-            // No directory was configured, fallback to the global restriction anyway!
-            $this->settings['path'] = rtrim($this->settings['root'], '/') . '/';
-        }
-
-        // Security check
-        if (!empty($this->settings['root'])) {
-            $this->settings['root'] = rtrim($this->settings['root'], '/') . '/';
-            if (!GeneralUtility::isFirstPartOfStr($this->settings['path'], $this->settings['root'])) {
-                return $this->error(sprintf('Could not open directory "%s"', $this->settings['path']));
-            }
-        }
-
-        if (!empty($path)) {
-            $path = rtrim($path, '/') . '/';
-        }
-
         try {
+            $this->checkConfiguration();
+
+            // Sanitize requested path
+            if (!empty($path)) {
+                $path = rtrim($path, '/') . '/';
+            }
+
+            // Collect files and folders to be shown
             switch ($this->settings['mode']) {
                 case 'FOLDER':
                     $this->populateFromFolder($path, $files, $subfolders, $parentFolder, $breadcrumb);
@@ -101,42 +89,16 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             return $this->error($e->getMessage());
         }
 
-        // Sort folders and files
-        if ($this->settings['orderBy'] === static::SORT_BY_NAME && $this->settings['sortDirection'] === static::SORT_DIRECTION_DESC) {
-            krsort($subfolders);
-        } else {
-            ksort($subfolders);
-        }
-
-        $orderedFiles = [];
-        foreach ($files as $file) {
-            switch ($this->settings['orderBy']) {
-                case static::SORT_BY_NAME:
-                    $key = $file->getName();
-                    break;
-                case static::SORT_BY_DATE:
-                    $key = $file->getProperty('modification_date');
-                    break;
-                case static::SORT_BY_SIZE:
-                    $key = $file->getSize();
-                    break;
-            }
-            $key .= TAB . $file->getUid();
-            $orderedFiles[$key] = $file;
-        }
-
-        if ($this->settings['sortDirection'] === static::SORT_DIRECTION_ASC) {
-            ksort($orderedFiles);
-        } else {
-            krsort($orderedFiles);
-        }
+        // Sort files and folders
+        $files = $this->sortFiles($files);
+        $subfolders = $this->sortFolders($subfolders);
 
         // Mark files as "new" if needed
         // BEWARE: This needs to be done at the end since it is using an internal method which
         //         may break other operations such as sorting
         if ((int)$this->settings['newDuration'] > 0) {
             $newTimestamp = $GLOBALS['EXEC_TIME'] - 86400 * (int)$this->settings['newDuration'];
-            foreach ($orderedFiles as &$file) {
+            foreach ($files as &$file) {
                 $properties = $file->getProperties();
                 $properties['tx_filelist']['isNew'] = $properties['creation_date'] >= $newTimestamp;
                 $file->updateProperties($properties);
@@ -148,8 +110,33 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'breadcrumb' => $breadcrumb,
             'parent' => $parentFolder,
             'folders' => $subfolders,
-            'files' => $orderedFiles,
+            'files' => $files,
         ]);
+    }
+
+    /**
+     * Checks plugin configuration and security settings.
+     *
+     * @return void
+     * @throws \RuntimeException
+     */
+    protected function checkConfiguration()
+    {
+        // Sanitize configuration
+        if (!empty($this->settings['path'])) {
+            $this->settings['path'] = rtrim($this->settings['path'], '/') . '/';
+        } elseif (!empty($this->settings['root'])) {
+            // No directory was configured, fallback to the global restriction anyway!
+            $this->settings['path'] = rtrim($this->settings['root'], '/') . '/';
+        }
+
+        // Security check
+        if (!empty($this->settings['root'])) {
+            $this->settings['root'] = rtrim($this->settings['root'], '/') . '/';
+            if (!GeneralUtility::isFirstPartOfStr($this->settings['path'], $this->settings['root'])) {
+                throw new \RuntimeException(sprintf('Could not open directory "%s"', $this->settings['path']), 1452143787);
+            }
+        }
     }
 
     /**
@@ -214,10 +201,10 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             // Prepare the breadcrumb data
             $f = $folder;
             while ($this->settings['path'] !== 'file:' . $f->getCombinedIdentifier()) {
-                array_unshift($breadcrumb, [ 'folder' => $f ]);
+                array_unshift($breadcrumb, ['folder' => $f]);
                 $f = $f->getParentFolder();
             }
-            array_unshift($breadcrumb, [ 'folder' => $rootFolder, 'isRoot' => true ]);
+            array_unshift($breadcrumb, ['folder' => $rootFolder, 'isRoot' => true]);
             $breadcrumb[count($breadcrumb) - 1]['state'] = 'active';
         }
     }
@@ -259,6 +246,59 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 }
             }
         }
+    }
+
+    /**
+     * Sorts files.
+     *
+     * @param \TYPO3\CMS\Core\Resource\File[] $files
+     * @return \TYPO3\CMS\Core\Resource\File[]
+     */
+    protected function sortFiles(array $files)
+    {
+        $orderedFiles = [];
+        foreach ($files as $file) {
+            switch ($this->settings['orderBy']) {
+                case static::SORT_BY_NAME:
+                    $key = $file->getName();
+                    break;
+                case static::SORT_BY_DATE:
+                    $key = $file->getProperty('modification_date');
+                    break;
+                case static::SORT_BY_SIZE:
+                    $key = $file->getSize();
+                    break;
+            }
+            $key .= TAB . $file->getUid();
+            $orderedFiles[$key] = $file;
+        }
+
+        if ($this->settings['sortDirection'] === static::SORT_DIRECTION_ASC) {
+            ksort($orderedFiles);
+        } else {
+            krsort($orderedFiles);
+        }
+
+        return $orderedFiles;
+    }
+
+    /**
+     * Sorts folders.
+     *
+     * @param Folder[] $folders Array of folders, keys are the names of the corresponding folders
+     * @return Folder[]
+     */
+    protected function sortFolders(array $folders)
+    {
+        if ($this->settings['orderBy'] === static::SORT_BY_NAME
+            && $this->settings['sortDirection'] === static::SORT_DIRECTION_DESC
+        ) {
+            krsort($folders);
+        } else {
+            ksort($folders);
+        }
+
+        return $folders;
     }
 
     /**
