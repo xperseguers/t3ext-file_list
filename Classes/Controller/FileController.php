@@ -227,6 +227,13 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             array_unshift($breadcrumb, ['folder' => $rootFolder, 'isRoot' => true]);
             $breadcrumb[count($breadcrumb) - 1]['state'] = 'active';
         }
+
+        // Tag the page cache so that FAL signal operations may be listened to in
+        // order to flush corresponding page cache
+        $cacheTags = [
+            'tx_filelist_folder_' . $folder->getHashedIdentifier(),
+        ];
+        $GLOBALS['TSFE']->addCacheTags($cacheTags);
     }
 
     /**

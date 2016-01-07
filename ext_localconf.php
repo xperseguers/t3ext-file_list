@@ -32,7 +32,7 @@ $boot = function ($_EXTKEY) {
     );
 
     /* ===========================================================================
-        Page module hook
+        Web > Page hook
     =========================================================================== */
     $extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY);
     $pluginSignature = strtolower($extensionName) . '_filelist';
@@ -40,15 +40,45 @@ $boot = function ($_EXTKEY) {
         \Causal\FileList\Hooks\PageLayoutView::class . '->getExtensionSummary';
 
     /* ===========================================================================
+        File > Filelist signals
+    =========================================================================== */
+    /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
+    $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+
+    $listenSignals = [
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFileAdd,
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFileCopy,
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFileMove,
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFileRename,
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFileReplace,
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFileCreate,
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFileDelete,
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFileSetContents,
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFolderAdd,
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFolderCopy,
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFolderMove,
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFolderRename,
+        \TYPO3\CMS\Core\Resource\ResourceStorageInterface::SIGNAL_PostFolderDelete,
+    ];
+    foreach ($listenSignals as $signal) {
+        $signalSlotDispatcher->connect(
+            \TYPO3\CMS\Core\Resource\ResourceStorage::class,
+            $signal,
+            \Causal\FileList\Slots\ResourceStorage::class,
+            $signal
+        );
+    }
+
+    /* ===========================================================================
         Register default template layouts
     =========================================================================== */
     $GLOBALS['TYPO3_CONF_VARS']['EXT']['file_list']['templateLayouts'][] = [
         'LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.templateLayout.simple',
-        'Simple'
+        'Simple',
     ];
     $GLOBALS['TYPO3_CONF_VARS']['EXT']['file_list']['templateLayouts'][] = [
         'LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.templateLayout.thumbnailDescription',
-        'ThumbnailDescription'
+        'ThumbnailDescription',
     ];
 
 };
