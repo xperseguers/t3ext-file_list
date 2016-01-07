@@ -46,12 +46,79 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $fileRepository;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Service\TypoScriptService
+     */
+    protected $typoScriptService;
+
+    /**
      * @param \Causal\FileList\Domain\Repository\FileRepository $fileRepository
      * @return void
      */
     public function injectFileRepository(FileRepository $fileRepository)
     {
         $this->fileRepository = $fileRepository;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Service\TypoScriptService $typoScriptService
+     * @return void
+     */
+    public function inject(\TYPO3\CMS\Extbase\Service\TypoScriptService $typoScriptService)
+    {
+        $this->typoScriptService = $typoScriptService;
+    }
+
+    /**
+     * Handles stdWrap on various settings.
+     *
+     * @return void
+     */
+    public function initializeAction()
+    {
+        $settings = $this->typoScriptService->convertPlainArrayToTypoScriptArray($this->settings);
+        $contentObject = $this->configurationManager->getContentObject();
+        $keys = ['path'];
+
+        foreach ($keys as $key) {
+            if (isset($settings[$key . '.'])) {
+                $value = $contentObject->stdWrap($settings[$key], $settings[$key . '.']);
+            }
+        }
+
+        // Special handling for "root" which may be either a string/stdWrap or an array
+        if (isset($settings['root.'])) {
+            if (!empty($settings['root'])) {
+                // This is a stdWrap
+                $this->settings['root'] = $contentObject->stdWrap($settings['root'], $settings['root.']);
+            } else {
+                // Apply stdWrap on the subarray
+                $this->settings['root'] = [];
+
+                foreach ($settings['root.'] as $key => $root) {
+                    if (substr($key, -1) !== '.') {
+                        if (!isset($settings['root.'][$key . '.'])) {
+                            $this->settings['root'][] = $root;
+                        }
+                        continue;
+                    }
+                    $value = isset($settings['root.'][substr($key, 0, -1)])
+                        ? $settings['root.'][substr($key, 0, -1)]
+                        : '';
+                    $value = $contentObject->stdWrap($value, $settings['root.'][$key]);
+                    $this->settings['root'][] = $value;
+                }
+            }
+        }
+        if (!is_array($this->settings['root'])) {
+            $root = $this->settings['root'];
+            $this->settings['root'] = [];
+            if (!empty($root)) {
+                $this->settings['root'][] = $root;
+            }
+        }
+        foreach ($this->settings['root'] as $key => $value) {
+            $this->settings['root'][$key] = $this->canonicalizeAndCheckFolderIdentifier($value);
+        }
     }
 
     /**
@@ -145,18 +212,31 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // Sanitize configuration
         if (!empty($this->settings['path'])) {
             $this->settings['path'] = $this->canonicalizeAndCheckFolderIdentifier($this->settings['path']);
-        } elseif (!empty($this->settings['root'])) {
-            // No directory was configured, fallback to the global restriction anyway!
-            $this->settings['path'] = $this->canonicalizeAndCheckFolderIdentifier($this->settings['root']);
         }
 
         // Security check
-        if (!empty($this->settings['root'])) {
-            $this->settings['root'] = $this->canonicalizeAndCheckFolderIdentifier($this->settings['root']);
-            if (!GeneralUtility::isFirstPartOfStr($this->settings['path'], $this->settings['root'])) {
-                throw new \RuntimeException(sprintf('Could not open directory "%s"', $this->settings['path']), 1452143787);
-            }
+        if (!empty($this->settings['path']) && !$this->isWithinRoot($this->settings['path'])) {
+            throw new \RuntimeException(sprintf('Could not open directory "%s"', $this->settings['path']), 1452143787);
         }
+    }
+
+    /**
+     * Returns true if $path is within the allowed root.
+     *
+     * @param string $path
+     * @return bool
+     */
+    protected function isWithinRoot($path)
+    {
+        // No root defined: true by definition, if not, we have to check each allowed root
+        $success = empty($this->settings['root']);
+
+        foreach ($this->settings['root'] as $root) {
+            $success |= GeneralUtility::isFirstPartOfStr($path, $root);
+            if ($success) break;
+        }
+
+        return $success;
     }
 
     /**
@@ -245,11 +325,17 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected function populateFromFileCollections(array &$files)
     {
+        $folders = [];
+
         /** @var FileCollectionRepository $fileCollectionRepository */
         $fileCollectionRepository = $this->objectManager->get(FileCollectionRepository::class);
         if (!empty($this->settings['path'])) {
             // Returned files needs to be within a given root path
-            $folder = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
+            $folders[] = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
+        } else {
+            foreach ($this->settings['root'] as $root) {
+                $folders[] = $this->fileRepository->getFolderByIdentifier($root);
+            }
         }
 
         $collectionUids = GeneralUtility::intExplode(',', $this->settings['file_collections'], true);
@@ -259,15 +345,22 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 $collection->loadContents();
                 /** @var \TYPO3\CMS\Core\Resource\File[] $collectionFiles */
                 $collectionFiles = $collection->getItems();
-                if ($folder === null) {
+                if (empty($folders)) {
                     $files += $collectionFiles;
                 } else {
                     foreach ($collectionFiles as $file) {
-                        if ($file->getStorage() === $folder->getStorage()) {
-                            // TODO: Check if this is the correct way to filter out files with non-local storages
-                            if (GeneralUtility::isFirstPartOfStr($file->getIdentifier(), $folder->getIdentifier())) {
-                                $files[] = $file;
+                        $success = false;
+                        foreach ($folders as $folder) {
+                            if ($file->getStorage() === $folder->getStorage()) {
+                                // TODO: Check if this is the correct way to filter out files with non-local storages
+                                if (GeneralUtility::isFirstPartOfStr($file->getIdentifier(), $folder->getIdentifier())) {
+                                    $success = true;
+                                    break;
+                                }
                             }
+                        }
+                        if ($success) {
+                            $files[] = $file;
                         }
                     }
                 }
