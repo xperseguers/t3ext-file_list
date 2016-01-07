@@ -72,7 +72,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
             // Sanitize requested path
             if (!empty($path)) {
-                $path = rtrim($path, '/') . '/';
+                $path = $this->canonicalizeAndCheckFolderIdentifier($path);
             }
 
             // Collect files and folders to be shown
@@ -115,6 +115,26 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
+     * Canonicalizes and (basically) checks a FAL folder identifier.
+     *
+     * @param string $identifier
+     * @return string
+     */
+    protected function canonicalizeAndCheckFolderIdentifier($identifier)
+    {
+        $prefix = '';
+        if (preg_match('/^file:(\d+):(.*)$/', $identifier, $matches)) {
+            $prefix = 'file:' . $matches[1] . ':';
+            $identifier = $matches[2];
+        }
+
+        $identifier = \TYPO3\CMS\Core\Utility\PathUtility::getCanonicalPath($identifier);
+        $identifier = $prefix . rtrim($identifier, '/') . '/';
+
+        return $identifier;
+    }
+
+    /**
      * Checks plugin configuration and security settings.
      *
      * @return void
@@ -124,15 +144,15 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         // Sanitize configuration
         if (!empty($this->settings['path'])) {
-            $this->settings['path'] = rtrim($this->settings['path'], '/') . '/';
+            $this->settings['path'] = $this->canonicalizeAndCheckFolderIdentifier($this->settings['path']);
         } elseif (!empty($this->settings['root'])) {
             // No directory was configured, fallback to the global restriction anyway!
-            $this->settings['path'] = rtrim($this->settings['root'], '/') . '/';
+            $this->settings['path'] = $this->canonicalizeAndCheckFolderIdentifier($this->settings['root']);
         }
 
         // Security check
         if (!empty($this->settings['root'])) {
-            $this->settings['root'] = rtrim($this->settings['root'], '/') . '/';
+            $this->settings['root'] = $this->canonicalizeAndCheckFolderIdentifier($this->settings['root']);
             if (!GeneralUtility::isFirstPartOfStr($this->settings['path'], $this->settings['root'])) {
                 throw new \RuntimeException(sprintf('Could not open directory "%s"', $this->settings['path']), 1452143787);
             }
