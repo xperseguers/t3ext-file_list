@@ -39,7 +39,7 @@ class ext_update extends \TYPO3\CMS\Backend\Module\BaseScriptClass
         $showUpgradeWizard = false;
 
         $settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['file_list']);
-        if (isset($settings['enableLegacyPlugin']) && (bool)$settings['enableLegacyPlugin']) {
+        if (!isset($settings['enableLegacyPlugin']) || (bool)$settings['enableLegacyPlugin']) {
             $legacyPlugins = $this->getLegacyPlugins(true);
             $showUpgradeWizard = count($legacyPlugins['canUpgrade']) + count($legacyPlugins['cannotUpgrade']) > 0;
         }
