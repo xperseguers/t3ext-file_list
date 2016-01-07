@@ -32,7 +32,6 @@
 					<settings.path>
 						<TCEforms>
 							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.path</label>
-							<displayCond>FIELD:settings.mode:=:FOLDER</displayCond>
 							<config>
 								<type>input</type>
 								<size>48</size>
