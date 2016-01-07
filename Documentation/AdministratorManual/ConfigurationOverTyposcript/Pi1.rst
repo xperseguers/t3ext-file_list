@@ -15,9 +15,9 @@ This table is an overview of the main keys in the plugin configuration ``plugin.
 
 .. only:: html
 
-	.. contents::
-		:local:
-		:depth: 1
+    .. contents::
+        :local:
+        :depth: 1
 
 
 Properties
@@ -25,19 +25,19 @@ Properties
 
 .. container:: ts-properties
 
-	===================================================== ===================================================================== ======================= ==================
-	Property                                              Data type                                                             :ref:`t3tsref:stdwrap`  Default
-	===================================================== ===================================================================== ======================= ==================
-	`extension.category.<name>`_                          :ref:`t3tsref:data-type-string`                                       no                      *empty*
-	`extension.remap.<extension>`_                        :ref:`t3tsref:data-type-string`                                       no                      *empty*
-	iconsPathFiles_                                       :ref:`t3tsref:data-type-string`                                       yes                     "EXT:file_list/Resources/Public/Icons/Files/"
-	iconsPathFolders_                                     :ref:`t3tsref:data-type-string`                                       yes                     "EXT:file_list/Resources/Public/Icons/Folders/"
-	iconsPathSorting_                                     :ref:`t3tsref:data-type-string`                                       yes                     "EXT:file_list/Resources/Public/Icons/Sorting/"
-	ignoreFileNamePattern_                                :ref:`t3tsref:data-type-string`                                       no                      "/^(\..\*\|thumbs\.db)$/i"
-	ignoreFolderNamePattern_                              :ref:`t3tsref:data-type-string`                                       no                      "/^(\..\*\|CVS)$/i"
-	root_                                                 :ref:`t3tsref:data-type-path`, :ref:`t3tsref:data-type-string`        yes                     "fileadmin/"
-	templateFile_                                         :ref:`t3tsref:data-type-string`                                       yes                     "EXT:file_list/Resources/Private/Templates/template_pi1.html"
-	===================================================== ===================================================================== ======================= ==================
+    ===================================================== ===================================================================== ======================= ==================
+    Property                                              Data type                                                             :ref:`t3tsref:stdwrap`  Default
+    ===================================================== ===================================================================== ======================= ==================
+    `extension.category.<name>`_                          :ref:`t3tsref:data-type-string`                                       no                      *empty*
+    `extension.remap.<extension>`_                        :ref:`t3tsref:data-type-string`                                       no                      *empty*
+    iconsPathFiles_                                       :ref:`t3tsref:data-type-string`                                       yes                     "EXT:file_list/Resources/Public/Icons/Files/"
+    iconsPathFolders_                                     :ref:`t3tsref:data-type-string`                                       yes                     "EXT:file_list/Resources/Public/Icons/Folders/"
+    iconsPathSorting_                                     :ref:`t3tsref:data-type-string`                                       yes                     "EXT:file_list/Resources/Public/Icons/Sorting/"
+    ignoreFileNamePattern_                                :ref:`t3tsref:data-type-string`                                       no                      "/^(\..\*\|thumbs\.db)$/i"
+    ignoreFolderNamePattern_                              :ref:`t3tsref:data-type-string`                                       no                      "/^(\..\*\|CVS)$/i"
+    root_                                                 :ref:`t3tsref:data-type-path`, :ref:`t3tsref:data-type-string`        yes                     "fileadmin/"
+    templateFile_                                         :ref:`t3tsref:data-type-string`                                       yes                     "EXT:file_list/Resources/Private/Templates/template_pi1.html"
+    ===================================================== ===================================================================== ======================= ==================
 
 
 Property details
@@ -45,9 +45,9 @@ Property details
 
 .. only:: html
 
-	.. contents::
-		:local:
-		:depth: 1
+    .. contents::
+        :local:
+        :depth: 1
 
 
 .. _ts-plugin-tx-filelist-pi1-extension-category:
@@ -59,8 +59,9 @@ extension.category.<name>
 
 Comma-separated list of extensions belonging to the category "name".
 
-When a file link is rendered, the extension searches for a dedicated icon (e.g., "docx.png" or "docx.gif" in directory
-iconsPathFiles_. If this dedicated icon is not found, the category icon will be used instead ("category\_name.png").
+When a file link is rendered, the extension searches for a dedicated icon (e.g., :file:`docx.png` or :file:`docx.gif` in
+directory iconsPathFiles_. If this dedicated icon is not found, the category icon will be used instead
+(:file:`category_name.png`).
 
 Default are categories "archive", "document", "flash", "image", "sound", "source" and "video" defined with all common
 corresponding extensions.
@@ -75,13 +76,15 @@ extension.remap.<extension>
 
 Remapping of extensions before falling back to the category icon. If "docx" is remapped to "doc" with
 
-::
+.. code-block:: typoscript
 
-	extension.remap.docx = doc
+    extension.remap.docx = doc
 
-and a ".docx" file is encountered when rendering the file link, a "docx.png" or "docx.gif" icon will be searched for.
-If not found, a "doc.png" or "doc.gif" icon will be searched for to be used instead. And if not found, the category icon
-will be used as fallback option.
+and a ".docx" file is encountered when rendering the file link, a :file:`docx.png` or :file:`docx.gif` icon will be
+searched for.
+
+If not found, a :file:`doc.png` or :file:`doc.gif` icon will be searched for to be used instead. And if not found, the
+category icon will be used as a fallback option.
 
 
 .. _ts-plugin-tx-filelist-pi1-iconsPathFiles:
@@ -125,8 +128,8 @@ ignoreFileNamePattern
 
 Perl compatible regular expression for file names which shouldn't be displayed. For further information on how to use
 Perl compatible regular expressions please visit http://php.net/manual/en/book.pcre.php. The default value avoids all
-files starting with a "." (system hidden files) as well as those named "Thumbs.db" (Microsoft Windows related thumbnail
-files) to be shown in the frontend.
+files starting with a "." (system hidden files) as well as those named :file:`Thumbs.db` (Microsoft Windows related
+thumbnail files) to be shown in the frontend.
 
 
 .. _ts-plugin-tx-filelist-pi1-ignoreFolderNamePattern:
@@ -138,8 +141,8 @@ ignoreFolderNamePattern
 
 Perl compatible regular expression for folder names which shouldn't be displayed. For further information on how to use
 Perl compatible regular expressions please visit http://php.net/manual/en/book.pcre.php. The default value avoids all
-folders starting with a "." (system hidden folders) as well as those named "CVS" (versioning system folders) to be shown
-in the frontend.
+folders starting with a "." (system hidden folders) as well as those named :file:`CVS` (versioning system folders) to be
+shown in the frontend.
 
 
 .. _ts-plugin-tx-filelist-pi1-root:

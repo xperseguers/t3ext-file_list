@@ -14,6 +14,11 @@ Configuration
 .. image:: ../../Images/configuration.png
     :alt: Configuration options
 
+.. note::
+    The path will always be checked against any configured "root" (please read
+    :ref:`TypoScript configuration <ts-plugin-tx-filelist-filelist-root>`), allowing the plugin to be used in a multi-site
+    installation without risking an editor from showing files from another website.
+
 
 .. _users-manual-configuration-legacy:
 

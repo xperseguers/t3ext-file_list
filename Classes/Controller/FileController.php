@@ -77,7 +77,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $settings = $this->typoScriptService->convertPlainArrayToTypoScriptArray($this->settings);
         $contentObject = $this->configurationManager->getContentObject();
-        $keys = ['path'];
+        $keys = ['path', 'dateFormat', 'fileIconRootPath'];
 
         foreach ($keys as $key) {
             if (isset($settings[$key . '.'])) {
