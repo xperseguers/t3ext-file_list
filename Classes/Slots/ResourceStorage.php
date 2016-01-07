@@ -18,7 +18,6 @@ use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FolderInterface;
 use TYPO3\CMS\Core\Resource\Folder;
-use TYPO3\CMS\Core\Resource\ResourceStorage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -151,10 +150,10 @@ class ResourceStorage
     /**
      * Flushes caches by folder, using tags set by \Causal\FileList\Controller\FileController.
      *
-     * @param Folder $folder
+     * @param FolderInterface $folder
      * @return void
      */
-    protected function flushCachesByFolder(Folder $folder)
+    protected function flushCachesByFolder(FolderInterface $folder)
     {
         switch ($folder->getRole()) {
             case FolderInterface::ROLE_RECYCLER:

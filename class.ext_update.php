@@ -153,19 +153,6 @@ class ext_update extends \TYPO3\CMS\Backend\Module\BaseScriptClass
         return $this->doc->section('Configuration Upgrade',
             '<strong>' . $upgradedPlugins . '</strong> plugins were upgraded.'
         );
-
-        $oldPlugins = $this->WithOldConfiguration();
-        foreach ($oldPlugins as $plugin) {
-            $this->getDatabaseConnection()->exec_UPDATEquery(
-                'tt_content',
-                'uid=' . $plugin['uid'],
-                array(
-                    'tstamp' => time(),
-                    'pi_flexform' => $this->getFlexFormConfiguration($plugin),
-                    'tx_filelist_path' => '',
-                )
-            );
-        }
     }
 
     /**
@@ -306,6 +293,7 @@ class ext_update extends \TYPO3\CMS\Backend\Module\BaseScriptClass
     /**
      * Returns a field value from the FlexForm configuration.
      *
+     * @param array $flexForm The FlexForm configuration
      * @param string $key The name of the key
      * @param string $sheet The name of the sheet
      * @return string|null The value if found, otherwise null

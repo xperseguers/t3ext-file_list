@@ -81,7 +81,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         foreach ($keys as $key) {
             if (isset($settings[$key . '.'])) {
-                $value = $contentObject->stdWrap($settings[$key], $settings[$key . '.']);
+                $this->settings[$key] = $contentObject->stdWrap($settings[$key], $settings[$key . '.']);
             }
         }
 
@@ -125,7 +125,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * Listing of files.
      *
      * @param string $path Optional path of the subdirectory to be listed
-     * @return void
+     * @return void|string
      */
     public function listAction($path = '')
     {
@@ -377,6 +377,8 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected function sortFiles(array $files)
     {
         $orderedFiles = [];
+        $key = '';
+
         foreach ($files as $file) {
             switch ($this->settings['orderBy']) {
                 case static::SORT_BY_NAME:

@@ -60,6 +60,11 @@ class tx_filelist_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
     protected $templates = [];
 
     /**
+     * @var bool
+     */
+    protected $error;
+
+    /**
      * Main-function, returns output
      *
      * @param string $content The Plugin content

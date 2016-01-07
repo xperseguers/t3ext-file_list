@@ -55,6 +55,8 @@ class Helper
      *
      * @param string $path Path to the specified directory
      * @param bool $recursive Defines whether files should be searched recursively
+     * @param string $invalidFileNamePattern
+     * @param string $invalidFolderNamePattern
      * @return array List of all files inside the directory
      */
     static public function getListOfFiles($path, $recursive = false, $invalidFileNamePattern = '', $invalidFolderNamePattern = '')

@@ -14,9 +14,7 @@
 
 namespace Causal\FileList\ViewHelpers;
 
-use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Resource\FileInterface;
-use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder;
 
 /**
