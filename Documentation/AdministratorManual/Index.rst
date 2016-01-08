@@ -18,10 +18,8 @@ your template:
 
 
 .. toctree::
-   :maxdepth: 5
+   :maxdepth: 3
    :titlesonly:
-   :glob:
 
    ConfigurationOverTyposcript/Index
-   AvailableHooks/Index
-
+   ExampleGallery/Index

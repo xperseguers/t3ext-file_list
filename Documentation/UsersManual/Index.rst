@@ -15,10 +15,8 @@ To add the plugin on a page, you can insert it as "plugin".
 
 
 .. toctree::
-   :maxdepth: 5
+   :maxdepth: 3
    :titlesonly:
-   :glob:
 
    Configuration/Index
    ChangingTheLayout/Index
-

@@ -20,7 +20,7 @@ Following fields of the plugin configuration may be extended without overriding 
 		:depth: 1
 
 
-.. _developer-manual-flexform-templateLayouts
+.. _developer-manual-flexform-templateLayouts:
 
 Additional Template Layouts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
