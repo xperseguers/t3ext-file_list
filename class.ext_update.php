@@ -276,6 +276,7 @@ class ext_update extends \TYPO3\CMS\Backend\Module\BaseScriptClass
         } else {
             foreach ($rows as $row) {
                 $flexForm = GeneralUtility::xml2array($row['pi_flexform']);
+                if (!is_array($flexForm)) continue;
                 $templateFile = $this->getFieldFromFlexForm($flexForm, 'templateFile');
                 if (empty($templateFile)) {
                     // Do not do the work twice when upgrading, store FlexForm as an array right away
