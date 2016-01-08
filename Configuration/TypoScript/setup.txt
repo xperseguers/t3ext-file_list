@@ -1,9 +1,21 @@
 plugin.tx_filelist {
 
 	view {
-		templateRootPath = {$plugin.tx_filelist.view.templateRootPath}
-		partialRootPath = {$plugin.tx_filelist.view.partialRootPath}
-		layoutRootPath = {$plugin.tx_filelist.view.layoutRootPath}
+		templateRootPaths {
+			0 = EXT:file_list/Resources/Private/Templates/
+			1 = {$plugin.tx_filelist.view.templateRootPath}
+
+		}
+
+		partialRootPaths  {
+			0 = EXT:file_list/Resources/Private/Partials/
+			1 = {$plugin.tx_filelist.view.partialRootPath}
+		}
+
+		layoutRootPaths  {
+			0 = EXT:file_list/Resources/Private/Layouts/
+			1 = {$plugin.tx_filelist.view.layoutRootPath}
+		}
 	}
 
 	settings {
