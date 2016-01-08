@@ -58,7 +58,7 @@ Create file :file:`ext_localconf.php`:
 
 We could add the few lines of TypoScript to our existing template but let do that with a staticTS, as usual.
 
-Create files file:`ext_tables.php`:
+Create files :file:`ext_tables.php`:
 
 .. code-block:: php
 
@@ -126,12 +126,17 @@ Create file :file:`Resources/Private/Partials/MyGallery.html`:
                 </f:if>
             </figcaption>
         </figure>
+
     </f:for>
 
 This is just an example of course! But it shows you how to get a lightbox-enabled gallery of images with the FAL
 description or title (or even file name) as fallback.
 
 Have fun!
+
+.. note::
+    By iterating over ``{folders}`` in addition to ``{files}`` your gallery would support nested collections of images,
+    based on folders. Just like that.
 
 .. hint::
     If you need to deal with a large list of images, you probably will want to paginate it and you may find the
