@@ -178,6 +178,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'parent' => $parentFolder,
             'folders' => $subfolders,
             'files' => $files,
+            '__contentUid' => $this->configurationManager->getContentObject()->data['uid'],
         ]);
     }
 

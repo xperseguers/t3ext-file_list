@@ -4,7 +4,6 @@ plugin.tx_filelist {
 		templateRootPaths {
 			0 = EXT:file_list/Resources/Private/Templates/
 			1 = {$plugin.tx_filelist.view.templateRootPath}
-
 		}
 
 		partialRootPaths  {
