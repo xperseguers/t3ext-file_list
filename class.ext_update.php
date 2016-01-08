@@ -230,6 +230,9 @@ class ext_update extends \TYPO3\CMS\Backend\Module\BaseScriptClass
                 <field index="settings.sortDirection">
                     <value index="vDEF">%s</value>
                 </field>
+                <field index="settings.includeSubfolders">
+                    <value index="vDEF">1</value>
+                </field>
             </language>
         </sheet>
         <sheet index="display">
