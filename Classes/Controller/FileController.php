@@ -270,6 +270,8 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             if (!empty($path) && GeneralUtility::isFirstPartOfStr($path, $rootIdentifier)) {
                 $identifier = 'file:' . $storageUid . ':' . $path;
                 $folder = $this->fileRepository->getFolderByIdentifier($identifier);
+            } else {
+                $path = '';
             }
         }
         if ($folder === null) {
@@ -299,13 +301,15 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
 
             // Prepare the breadcrumb data
-            $f = $folder;
-            while ($this->settings['path'] !== 'file:' . $f->getCombinedIdentifier()) {
-                array_unshift($breadcrumb, ['folder' => $f]);
-                $f = $f->getParentFolder();
+            if (!empty($subfolders) || !empty($path)) {
+                $f = $folder;
+                while ($this->settings['path'] !== 'file:' . $f->getCombinedIdentifier()) {
+                    array_unshift($breadcrumb, ['folder' => $f]);
+                    $f = $f->getParentFolder();
+                }
+                array_unshift($breadcrumb, ['folder' => $rootFolder, 'isRoot' => true]);
+                $breadcrumb[count($breadcrumb) - 1]['state'] = 'active';
             }
-            array_unshift($breadcrumb, ['folder' => $rootFolder, 'isRoot' => true]);
-            $breadcrumb[count($breadcrumb) - 1]['state'] = 'active';
         }
 
         // Tag the page cache so that FAL signal operations may be listened to in
