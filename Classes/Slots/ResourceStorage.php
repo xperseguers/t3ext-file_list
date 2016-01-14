@@ -103,6 +103,15 @@ class ResourceStorage
 
     /**
      * @param FileInterface $file
+     * @param string $localFilePath
+     */
+    public function postFileReplace(FileInterface $file, $localFilePath)
+    {
+        $this->flushCachesByFolder($file->getParentFolder());
+    }
+
+    /**
+     * @param FileInterface $file
      * @param mixed $content
      */
     public function postFileSetContents(FileInterface $file, $content)
