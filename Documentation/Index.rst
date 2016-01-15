@@ -69,3 +69,4 @@ File List
     AdministratorManual/Index
     DeveloperManual/Index
     KnownProblems/Index
+    Links
