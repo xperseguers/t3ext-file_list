@@ -14,17 +14,16 @@
 
 namespace Causal\FileList\ViewHelpers;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- * View helper to filter the list of files based on a list of extensions.
+ * View helper to limit the list of files based on a list of extensions.
  *
  * = Examples =
  *
  * <code title="Example">
-  * <f:for each="{files -> fl:filter(extensions:'jpg, jpeg, png, gif')}" as="file">
+  * <f:for each="{files -> fl:limit(offset:0, length:4)}" as="file">
  *      // whatever
  * </f:for>
   * </code>
@@ -36,17 +35,18 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
-class FilterViewHelper extends AbstractViewHelper
+class LimitViewHelper extends AbstractViewHelper
 {
 
     /**
-     * Filters the list of files.
+     * Limits the list of files.
      *
      * @param File[]|null $subject
-     * @param string|array $extensions
+     * @param int $offset
+     * @param int $length
      * @return File[]
      */
-    public function render($subject = null, $extensions = null)
+    public function render($subject = null, $offset = 0, $length = 9999)
     {
         /** @var File[] $subject */
         if ($subject === null) {
@@ -55,13 +55,7 @@ class FilterViewHelper extends AbstractViewHelper
         if (!is_array($subject)) {
             $subject = [];
         }
-        if (!is_array($extensions)) {
-            $extensions = GeneralUtility::trimExplode(',', $extensions, true);
-        }
-        array_walk($extensions, function (&$extension) { $extension = strtolower($extension); });
-        $items = array_filter($subject, function ($file) use ($extensions) {
-            return in_array(strtolower($file->getExtension()), $extensions);
-        });
+        $items = array_slice($subject, $offset, (int)$length);
         return $items;
     }
 
