@@ -386,14 +386,15 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         foreach ($files as $file) {
             switch ($this->settings['orderBy']) {
-                case static::SORT_BY_NAME:
-                    $key = $file->getName();
-                    break;
                 case static::SORT_BY_DATE:
                     $key = $file->getProperty('modification_date');
                     break;
                 case static::SORT_BY_SIZE:
                     $key = $file->getSize();
+                    break;
+                case static::SORT_BY_NAME:
+                default:
+                    $key = $file->getName();
                     break;
             }
             $key .= TAB . $file->getUid();
