@@ -41,7 +41,7 @@
 									<link type="array">
 										<type>popup</type>
 										<title>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.path.wizards.link.title</title>
-										<icon>link_popup.gif</icon>
+										<icon>EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_link.gif</icon>
 										<module type="array">
 											<name>wizard_link</name>
 										</module>
