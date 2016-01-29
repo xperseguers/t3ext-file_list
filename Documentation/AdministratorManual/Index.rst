@@ -22,4 +22,5 @@ your template:
    :titlesonly:
 
    ConfigurationOverTyposcript/Index
+   BestPractices/Index
    ExampleGallery/Index
