@@ -55,7 +55,7 @@ File List
     **Other version of this document**
 
     :PDF:
-        http://docs.typo3.org/typo3cms/extensions/file_list/2.0.1/_pdf/
+        http://docs.typo3.org/typo3cms/extensions/file_list/2.1.0/_pdf/
 
 
     **Table of Contents**
