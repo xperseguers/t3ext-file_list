@@ -109,7 +109,7 @@ Create file :file:`Resources/Private/Partials/MyGallery.html`:
 
         <figure>
             <a href="{f:uri.image(image: file, maxWidth: 1200, maxHeight: 800)}"
-                rel="lightbox[gallery_{__contentUid}]"
+                rel="lightbox[gallery_{data.uid}]"
                 title="{file.properties.description}">
 
                 <fl:thumbnail image="{file}" width="256c" height="256c" />

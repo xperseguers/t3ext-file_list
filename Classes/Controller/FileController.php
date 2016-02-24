@@ -178,6 +178,8 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'parent' => $parentFolder,
             'folders' => $subfolders,
             'files' => $files,
+            'data' => $this->configurationManager->getContentObject()->data,
+            // __contentUid is deprecated and will be removed in version 2.3.0
             '__contentUid' => $this->configurationManager->getContentObject()->data['uid'],
         ]);
     }
