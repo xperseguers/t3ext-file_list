@@ -5,7 +5,7 @@
         </f:link.action>
         <f:link.action action="list" arguments="{path: folder.identifier}">{folder.name}</f:link.action>
     </td>
-    <td>
+    <td class="text-right">
         <f:switch expression="{folder.files -> f:count()}">
             <f:case value="0">
                 <f:translate key="directory_size.no_files" />
