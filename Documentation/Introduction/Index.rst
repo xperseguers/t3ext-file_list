@@ -19,8 +19,8 @@ What does it do?
 This extension provides a frontend plugin which shows a list of files and folders in a specified directory on the file
 system or using more advanced FAL selectors such as categories or collections of files.
 
-You can sort the files in this directory over the Backend by name, size or creation date. The files will be sorted by
-name by default.
+You can sort the files in this directory over the Backend by file name, title, description, size or creation date. The
+files will be sorted by file name by default.
 
 There is also an option to display files as "new" (with a localized text after the name).
 

@@ -40,6 +40,12 @@
 			<trans-unit id="filelist.orderBy.name">
 				<source>Name</source>
 			</trans-unit>
+			<trans-unit id="filelist.orderBy.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="filelist.orderBy.description">
+				<source>Description</source>
+			</trans-unit>
 			<trans-unit id="filelist.orderBy.date">
 				<source>Date</source>
 			</trans-unit>

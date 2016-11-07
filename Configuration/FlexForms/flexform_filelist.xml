@@ -91,10 +91,18 @@
 										<numIndex index="1">NAME</numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy.title</numIndex>
+										<numIndex index="1">TITLE</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy.description</numIndex>
+										<numIndex index="1">DESCRIPTION</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
 										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy.date</numIndex>
 										<numIndex index="1">DATE</numIndex>
 									</numIndex>
-									<numIndex index="2" type="array">
+									<numIndex index="4" type="array">
 										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy.size</numIndex>
 										<numIndex index="1">SIZE</numIndex>
 									</numIndex>

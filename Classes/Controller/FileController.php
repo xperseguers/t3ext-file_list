@@ -34,6 +34,8 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
     const SORT_BY_NAME = 'NAME';
+    const SORT_BY_TITLE = 'TITLE';
+    const SORT_BY_DESCRIPTION = 'DESCRIPTION';
     const SORT_BY_DATE = 'DATE';
     const SORT_BY_SIZE = 'SIZE';
 
@@ -391,6 +393,20 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             switch ($this->settings['orderBy']) {
                 case static::SORT_BY_DATE:
                     $key = $file->getProperty('modification_date');
+                    break;
+                case static::SORT_BY_TITLE:
+                    $key = $file->getProperty('title');
+                    if (empty($key)) {
+                        // Fall-back onto file name
+                        $key = $file->getName();
+                    }
+                    break;
+                case static::SORT_BY_DESCRIPTION:
+                    $key = $file->getProperty('description');
+                    if (empty($key)) {
+                        // Fall-back onto file name
+                        $key = $file->getName();
+                    }
                     break;
                 case static::SORT_BY_SIZE:
                     $key = $file->getSize();
