@@ -3,13 +3,6 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2015-05-28T07:56:41Z" product-name="file_list">
 		<header/>
 		<body>
-			<trans-unit id="config.enableLegacyPlugin">
-				<source>Enable legacy plugin: If ticked, the legacy plugin will be available.</source>
-			</trans-unit>
-			<trans-unit id="config.noCache">
-				<source>Do not cache this plugin: [legacy] Please note that this will prevent indexed_search from indexing files.</source>
-			</trans-unit>
-
 			<trans-unit id="filename">
 				<source>Filename</source>
 			</trans-unit>

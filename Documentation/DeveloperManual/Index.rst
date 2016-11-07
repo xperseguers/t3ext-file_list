@@ -16,4 +16,3 @@ Developer manual
     :titlesonly:
 
     ExtendFlexForm/Index
-    AvailableHooks/Index

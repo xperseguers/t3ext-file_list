@@ -2,21 +2,6 @@
 defined('TYPO3_MODE') || die();
 
 $boot = function ($_EXTKEY) {
-    $settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$_EXTKEY]);
-
-    /* ===========================================================================
-        Legacy plugin (pibase-based)
-    =========================================================================== */
-    if (!isset($settings['enableLegacyPlugin']) || (bool)$settings['enableLegacyPlugin']) {
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPItoST43(
-            $_EXTKEY,
-            'Classes/Controller/Pi1/Pi1Controller.php',
-            '_pi1',
-            'list_type',
-            $settings['noCache'] ? 0 : 1
-        );
-    }
-
     /* ===========================================================================
         Extbase-based plugin
     =========================================================================== */

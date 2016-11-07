@@ -2,30 +2,6 @@
 defined('TYPO3_MODE') || die();
 
 $boot = function ($_EXTKEY) {
-    $settings = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$_EXTKEY]);
-
-    /* ===========================================================================
-        Legacy plugin (pibase-based)
-    =========================================================================== */
-    if (!isset($settings['enableLegacyPlugin']) || (bool)$settings['enableLegacyPlugin']) {
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
-            [
-                'LLL:EXT:file_list/Resources/Private/Language/locallang_db.xml:tt_content.list_type_pi1',
-                $_EXTKEY . '_pi1'
-            ],
-            'list_type'
-        );
-
-        $pluginSignature = $_EXTKEY . '_pi1';
-
-        // Disable the display of layout, select_key and page fields
-        $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'layout,select_key,pages,recursive';
-
-        // Activate the display of the plugin FlexForm field and set FlexForm definition
-        $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_pi1.xml');
-    }
-
     /* ===========================================================================
         Extbase-based plugin
     =========================================================================== */
