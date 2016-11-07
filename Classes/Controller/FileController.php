@@ -385,6 +385,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $orderedFiles = [];
         $key = '';
+        $isNumericSorting = false;
 
         foreach ($files as $file) {
             switch ($this->settings['orderBy']) {
@@ -393,6 +394,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     break;
                 case static::SORT_BY_SIZE:
                     $key = $file->getSize();
+                    $isNumericSorting = true;
                     break;
                 case static::SORT_BY_NAME:
                 default:
@@ -404,12 +406,45 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         if ($this->settings['sortDirection'] === static::SORT_DIRECTION_ASC) {
-            ksort($orderedFiles);
+            if ($isNumericSorting) {
+                $this->natksort($orderedFiles);
+            } else {
+                ksort($orderedFiles);
+            }
         } else {
-            krsort($orderedFiles);
+            if ($isNumericSorting) {
+                $this->natksort($orderedFiles, true);
+            } else {
+                krsort($orderedFiles);
+            }
         }
 
         return $orderedFiles;
+    }
+
+    /**
+     * Sorts an array by key using a "natural order" algorithm
+     * @link http://php.net/manual/en/function.natsort.php
+     *
+     * @param array $array
+     * @param bool $reverse If true then the keys will be sorted in reverse order
+     * @return bool true on success or false on failure.
+     */
+    protected function natksort(array &$array, $reverse = false) {
+        // Like ksort but uses natural sort instead
+        $keys = array_keys($array);
+        natsort($keys);
+
+        if ($reverse) {
+            $keys = array_reverse($keys);
+        }
+
+        foreach ($keys as $k) {
+            $new_array[$k] = $array[$k];
+        }
+
+        $array = $new_array;
+        return true;
     }
 
     /**
