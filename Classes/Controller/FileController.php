@@ -418,7 +418,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     break;
             }
             $key .= TAB . $file->getUid();
-            $orderedFiles[$key] = $file;
+            $orderedFiles[strtolower($key)] = $file;
         }
 
         if ($this->settings['sortDirection'] === static::SORT_DIRECTION_ASC) {
