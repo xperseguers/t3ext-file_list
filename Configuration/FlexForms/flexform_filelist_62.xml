@@ -52,7 +52,7 @@
 										<params type="array">
 											<blindLinkOptions>page,url,mail,spec,file</blindLinkOptions>
 										</params>
-										<JSopenParams>height=500,width=400,status=0,menubar=0,scrollbars=1</JSopenParams>
+										<JSopenParams>height=600,width=800,status=0,menubar=0,scrollbars=1</JSopenParams>
 									</link>
 								</wizards>
 							</config>
