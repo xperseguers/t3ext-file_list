@@ -162,7 +162,7 @@ class ResourceStorage
      * @param FolderInterface $folder
      * @return void
      */
-    protected function flushCachesByFolder(FolderInterface $folder)
+    public function flushCachesByFolder(FolderInterface $folder)
     {
         switch ($folder->getRole()) {
             case FolderInterface::ROLE_RECYCLER:
