@@ -94,7 +94,7 @@ dateFormat
 
 .. code-block:: typoscript
 
-    plugin.tx_filelist.settings.fileIconRootPath = d.m.Y H:i:s
+    plugin.tx_filelist.settings.dateFormat = d.m.Y H:i:s
 
 Format used by the default templates to show file's creation date.
 
@@ -127,7 +127,7 @@ directory fileIconRootPath_. If this dedicated icon is not found, the category i
 (:file:`category_name.png`).
 
 Default are categories "archive", "document", "flash", "image", "sound", "source" and "video" defined with all common
-corresponding extensions.
+corresponding file extensions.
 
 
 .. _ts-plugin-tx-filelist-filelist-extension-remap:
