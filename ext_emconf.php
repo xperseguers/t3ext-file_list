@@ -10,7 +10,7 @@
  * writing. "version" and "dependencies" must not be touched!
  ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
     'title' => 'File List',
     'description' => 'This extension provides a frontend plugin which shows a list of files and folders in a specified directory on the file system (comparable to Apache directory listing) or using more advanced FAL selectors (categories, collection of files, ...). This extension may also be used for creating image galleries. Default templates are Bootstrap-ready.',
     'category' => 'plugin',
@@ -30,13 +30,13 @@ $EM_CONF[$_EXTKEY] = array(
     'author_company' => 'Causal Sàrl',
     'CGLcompliance' => '',
     'CGLcompliance_note' => '',
-    'constraints' => array(
-        'depends' => array(
+    'constraints' => [
+        'depends' => [
             'typo3' => '6.2.16-8.99.99',
-            'php' => '5.5.0-7.0.99',
-        ),
-        'conflicts' => array(),
-        'suggests' => array(),
-    ),
+            'php' => '5.5.0-7.1.99',
+        ],
+        'conflicts' => [],
+        'suggests' => [],
+    ],
     '_md5_values_when_last_written' => '',
-);
+];
