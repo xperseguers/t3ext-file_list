@@ -195,6 +195,19 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected function canonicalizeAndCheckFolderIdentifier($identifier)
     {
         $prefix = '';
+
+        // New format since TYPO3 v8
+        if (preg_match('#^t3://#', $identifier)) {
+            /** @var \TYPO3\CMS\Core\LinkHandling\LinkService $linkService */
+            $linkService = GeneralUtility::makeInstance(\TYPO3\CMS\Core\LinkHandling\LinkService::class);
+            $data = $linkService->resolveByStringRepresentation($identifier);
+            if ($data['type'] === 'folder') {
+                /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
+                $folder = $data['folder'];
+                $identifier = 'file:' . $folder->getCombinedIdentifier();
+            }
+        }
+
         if (preg_match('/^file:(\d+):(.*)$/', $identifier, $matches)) {
             $prefix = 'file:' . $matches[1] . ':';
             $identifier = $matches[2];
