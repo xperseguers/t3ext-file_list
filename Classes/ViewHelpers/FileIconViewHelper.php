@@ -35,6 +35,11 @@ class FileIconViewHelper extends AbstractViewHelper implements CompilableInterfa
 {
 
     /**
+     * @var bool
+     */
+    protected $escapeOutput = false;
+
+    /**
      * Renders the icon of the supplied file resource.
      *
      * @param File $file The incoming data to convert, or NULL if VH children should be used
