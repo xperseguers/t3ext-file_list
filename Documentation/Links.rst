@@ -14,6 +14,9 @@ Links
 :TER:
 	https://typo3.org/extensions/repository/view/file_list
 
+:Packagist:
+	https://packagist.org/packages/causal/file_list
+
 :Bug Tracker:
 	https://forge.typo3.org/projects/extension-file_list/issues
 
