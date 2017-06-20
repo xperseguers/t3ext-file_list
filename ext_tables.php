@@ -19,12 +19,7 @@ $boot = function ($_EXTKEY) {
 
     // Activate the display of the plugin FlexForm field and set FlexForm definition
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-    if (version_compare(TYPO3_version, '7.6', '>=')) {
-        $flexform = 'flexform_filelist.xml';
-    } else {
-        $flexform = 'flexform_filelist_62.xml';
-    }
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/' . $flexform);
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_filelist.xml');
 
     // Register the wizard for new content element
     $GLOBALS['TBE_MODULES_EXT']['xMOD_db_new_content_el']['addElClasses'][\Causal\FileList\Controller\FileControllerWizard::class] =

@@ -44,19 +44,15 @@ class FileControllerWizard
             'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=filelist_filelist'
         ];
 
-        if (version_compare(TYPO3_version, '7.5', '>=')) {
-            /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
-            $iconRegistry = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-            $iconRegistry->registerIcon('extensions-filelist-wizard',
-                'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\BitmapIconProvider',
-                [
-                    'source' => 'EXT:file_list/Resources/Public/Icons/ce_wizard.png',
-                ]
-            );
-            $wizardItem['iconIdentifier'] = 'extensions-filelist-wizard';
-        } else {
-            $wizardItem['icon'] = ExtensionManagementUtility::extRelPath('file_list') . 'Resources/Public/Icons/ce_wizard_62.png';
-        }
+        /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
+        $iconRegistry = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+        $iconRegistry->registerIcon('extensions-filelist-wizard',
+            'TYPO3\\CMS\\Core\\Imaging\\IconProvider\\BitmapIconProvider',
+            [
+                'source' => 'EXT:file_list/Resources/Public/Icons/ce_wizard.png',
+            ]
+        );
+        $wizardItem['iconIdentifier'] = 'extensions-filelist-wizard';
 
         $wizardItems['plugins_tx_indexed_search'] = $wizardItem;
 

@@ -42,9 +42,6 @@ class TemplateLayoutSelector
 
         $items = [];
         foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['file_list']['templateLayouts'] as $item) {
-            if (version_compare(TYPO3_version, '6.2.99', '<=')) {
-                $item[0] = $GLOBALS['LANG']->sL($item[0]);
-            }
             $items[] = $item;
         }
 
