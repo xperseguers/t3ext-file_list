@@ -79,7 +79,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $settings = $this->typoScriptService->convertPlainArrayToTypoScriptArray($this->settings);
         $contentObject = $this->configurationManager->getContentObject();
-        $keys = ['path', 'dateFormat', 'fileIconRootPath'];
+        $keys = ['path', 'dateFormat', 'fileIconRootPath', 'newDurationMaxSubfolders'];
 
         foreach ($keys as $key) {
             if (isset($settings[$key . '.'])) {

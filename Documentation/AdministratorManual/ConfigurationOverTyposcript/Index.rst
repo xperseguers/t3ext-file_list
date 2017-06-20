@@ -34,11 +34,11 @@ Properties
     ===================================================== ===================================================================== ======================= ==================
     Property                                              Data type                                                             :ref:`t3tsref:stdwrap`  Default
     ===================================================== ===================================================================== ======================= ==================
-    path_                                                 :ref:`t3tsref:data-type-string`                                       no                      *empty*
+    path_                                                 :ref:`t3tsref:data-type-string`                                       yes                     *empty*
     root_                                                 :ref:`t3tsref:data-type-string`, array                                yes                     *empty*
-    dateFormat_                                           :ref:`t3tsref:data-type-string`                                       no                      "d.m.Y H:i"
-    fileIconRootPath_                                     :ref:`t3tsref:data-type-string`                                       no                      "EXT:file_list/Resources/Public/Icons/Files/"
-    newDurationMaxSubfolders_                             :ref:`t3tsref:data-type-integer`                                      no                      3
+    dateFormat_                                           :ref:`t3tsref:data-type-string`                                       yes                     "d.m.Y H:i"
+    fileIconRootPath_                                     :ref:`t3tsref:data-type-string`                                       yes                     "EXT:file_list/Resources/Public/Icons/Files/"
+    newDurationMaxSubfolders_                             :ref:`t3tsref:data-type-integer`                                      yes                     3
     `extension.category.<name>`_                          :ref:`t3tsref:data-type-string`                                       no                      *empty*
     `extension.remap.<extension>`_                        :ref:`t3tsref:data-type-string`                                       no                      *empty*
     ===================================================== ===================================================================== ======================= ==================
