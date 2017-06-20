@@ -25,6 +25,9 @@ plugin.tx_filelist {
 
 		fileIconRootPath = {$plugin.tx_filelist.settings.fileIconRootPath}
 
+		# Maximum number of subdirectory levels to check for new files
+		newDurationMaxSubfolders = 3
+
 		### Extension <-> Icon mapping
 
 		# You should create an icon with the name of your category if you create other categories

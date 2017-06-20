@@ -172,6 +172,16 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 $properties['tx_filelist']['isNew'] = $properties['creation_date'] >= $newTimestamp;
                 $file->updateProperties($properties);
             }
+
+            $newDurationMaxSubfolders = max(0, (int)$this->settings['newDurationMaxSubfolders']);
+            foreach ($subfolders as &$folder) {
+                /** @var \Causal\FileList\Domain\Model\Folder $folder */
+                if ($folder->hasFileNewerThan($newTimestamp, $newDurationMaxSubfolders)) {
+                    $properties = $folder->getProperties();
+                    $properties['tx_filelist']['isNew'] = true;
+                    $folder->updateProperties($properties);
+                }
+            }
         }
 
         $this->view->assignMultiple([
@@ -312,7 +322,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         // Special folder, should not be shown in Frontend
                         break;
                     default:
-                        $subfolders[] = $subfolder;
+                        $subfolders[] = \Causal\FileList\Utility\Helper::cast($subfolder, \Causal\FileList\Domain\Model\Folder::class);
                 }
             }
 

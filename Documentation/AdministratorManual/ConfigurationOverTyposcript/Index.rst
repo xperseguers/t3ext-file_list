@@ -34,10 +34,11 @@ Properties
     ===================================================== ===================================================================== ======================= ==================
     Property                                              Data type                                                             :ref:`t3tsref:stdwrap`  Default
     ===================================================== ===================================================================== ======================= ==================
-    path_                                                 :ref:`t3tsref:data-type-string`                                       yes                     *empty*
+    path_                                                 :ref:`t3tsref:data-type-string`                                       no                      *empty*
     root_                                                 :ref:`t3tsref:data-type-string`, array                                yes                     *empty*
-    dateFormat_                                           :ref:`t3tsref:data-type-string`                                       yes                     "d.m.Y H:i"
-    fileIconRootPath_                                     :ref:`t3tsref:data-type-string`                                       yes                     "EXT:file_list/Resources/Public/Icons/Files/"
+    dateFormat_                                           :ref:`t3tsref:data-type-string`                                       no                      "d.m.Y H:i"
+    fileIconRootPath_                                     :ref:`t3tsref:data-type-string`                                       no                      "EXT:file_list/Resources/Public/Icons/Files/"
+    newDurationMaxSubfolders_                             :ref:`t3tsref:data-type-integer`                                      no                      3
     `extension.category.<name>`_                          :ref:`t3tsref:data-type-string`                                       no                      *empty*
     `extension.remap.<extension>`_                        :ref:`t3tsref:data-type-string`                                       no                      *empty*
     ===================================================== ===================================================================== ======================= ==================
@@ -109,6 +110,18 @@ fileIconRootPath
     plugin.tx_filelist.settings.fileIconRootPath = EXT:<extension-key>/Resources/Public/Icons/FileTypes/
 
 Path to the directory containing icons for file types (either relative to site root or prefixed with an extension name).
+
+
+.. _ts-plugin-tx-filelist-filelist-newDurationMaxSubfolders:
+
+newDurationMaxSubfolders
+""""""""""""""""""""""""
+
+.. code-block:: typoscript
+
+    plugin.tx_filelist.settings.newDurationMaxSubfolders = 3
+
+Number of subdirectory levels to check for new files (in order to show a "new" badge for folders).
 
 
 .. _ts-plugin-tx-filelist-filelist-extension-category:
