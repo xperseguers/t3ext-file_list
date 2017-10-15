@@ -16,6 +16,7 @@ namespace Causal\FileList\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -42,12 +43,16 @@ class FileIconViewHelper extends AbstractViewHelper implements CompilableInterfa
     /**
      * Renders the icon of the supplied file resource.
      *
-     * @param File $file The incoming data to convert, or NULL if VH children should be used
+     * @param File|FileReference $file The incoming data to convert, or NULL if VH children should be used
      * @return string Image tag
      * @api
      */
-    public function render(File $file = null)
+    public function render($file = null)
     {
+        if ($file !== null && !($file instanceof File || $file instanceof FileReference)) {
+            throw new \InvalidArgumentException('$file must be an instance of ' . File::class . ' or ' . FileReference::class .
+                ' but is of type ' . get_class($file), 1509369347);
+        }
         return static::renderStatic(
             array(
                 'file' => $file,

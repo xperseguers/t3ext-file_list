@@ -170,7 +170,11 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             foreach ($files as &$file) {
                 $properties = $file->getProperties();
                 $properties['tx_filelist']['isNew'] = $properties['creation_date'] >= $newTimestamp;
-                $file->updateProperties($properties);
+                if ($file instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+                    $file->getOriginalFile()->updateProperties($properties);
+                } else {
+                    $file->updateProperties($properties);
+                }
             }
 
             $newDurationMaxSubfolders = max(0, (int)$this->settings['newDurationMaxSubfolders']);
