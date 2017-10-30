@@ -496,7 +496,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected function sortFolders(array $folders)
     {
-        if ($this->settings['orderBy'] === static::SORT_BY_NAME
+        if (in_array($this->settings['orderBy'], [static::SORT_BY_NAME, static::SORT_BY_TITLE], true)
             && $this->settings['sortDirection'] === static::SORT_DIRECTION_DESC
         ) {
             krsort($folders);
