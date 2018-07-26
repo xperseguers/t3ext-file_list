@@ -43,7 +43,7 @@ class FileIconViewHelper extends AbstractViewHelper implements CompilableInterfa
     /**
      * Renders the icon of the supplied file resource.
      *
-     * @param File|FileReference $file The incoming data to convert, or NULL if VH children should be used
+     * @param object $file The incoming data to convert, or NULL if VH children should be used
      * @return string Image tag
      * @api
      */

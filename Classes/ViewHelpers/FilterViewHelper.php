@@ -42,8 +42,8 @@ class FilterViewHelper extends AbstractViewHelper
     /**
      * Filters the list of files.
      *
-     * @param File[]|null $subject
-     * @param string|array $extensions
+     * @param mixed $subject
+     * @param mixed $extensions
      * @return File[]
      */
     public function render($subject = null, $extensions = null)
