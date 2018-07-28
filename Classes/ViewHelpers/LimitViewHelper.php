@@ -41,7 +41,7 @@ class LimitViewHelper extends AbstractViewHelper
     /**
      * Limits the list of files.
      *
-     * @param File[]|null $subject
+     * @param mixed $subject
      * @param int $offset
      * @param int $length
      * @return File[]
