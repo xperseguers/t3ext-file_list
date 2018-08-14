@@ -442,7 +442,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     $key = $file->getName();
                     break;
             }
-            $key .= TAB . $file->getUid();
+            $key .= "\t" . $file->getUid();
             $orderedFiles[strtolower($key)] = $file;
         }
 
