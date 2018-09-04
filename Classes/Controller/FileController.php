@@ -155,7 +155,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     break;
             }
         } catch (\Exception $e) {
-            return $this->error($e->getMessage());
+            return $this->error('The configuration of the file_list plugin is incorrect: ' . $e->getMessage());
         }
 
         // Sort files and folders
