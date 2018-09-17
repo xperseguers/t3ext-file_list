@@ -57,26 +57,26 @@ class PageLayoutView
      */
     public function getExtensionSummary(array $params)
     {
-        $content = '<strong>' . $this->sL('filelist_title') . '</strong><br /><br />';
+        $content = '<strong>' . htmlspecialchars($this->sL('filelist_title')) . '</strong><br /><br />';
 
         if ($params['row']['list_type'] === 'filelist_filelist') {
             $this->flexFormData = GeneralUtility::xml2array($params['row']['pi_flexform']);
 
             if (is_array($this->flexFormData)) {
                 $mode = $this->getFieldFromFlexForm('settings.mode');
-                $modeDescription = $this->sL('filelist.mode.' . strtolower($mode));
-                $content .= $this->sL('filelist.mode') . ': <strong>' . $modeDescription . '</strong>';
+                $modeDescription = htmlspecialchars($this->sL('filelist.mode.' . strtolower($mode)));
+                $content .= htmlspecialchars($this->sL('filelist.mode')) . ': <strong>' . $modeDescription . '</strong>';
 
                 switch ($mode) {
                     case 'FOLDER':
                         $content .= '<br />';
-                        $content .= $this->sL('filelist.path.summary') . ': <strong>' . htmlspecialchars($this->getFieldFromFlexForm('settings.path')) . '</strong>';
+                        $content .= htmlspecialchars($this->sL('filelist.path.summary')) . ': <strong>' . htmlspecialchars($this->getFieldFromFlexForm('settings.path')) . '</strong>';
                         break;
                 }
 
                 $templateLayout = $this->getTemplateLayout();
                 $content .= '<br />';
-                $content .= $this->sL('filelist.templateLayout') . ': <strong>' . htmlspecialchars($templateLayout) . '</strong>';
+                $content .= htmlspecialchars($this->sL('filelist.templateLayout')) . ': <strong>' . htmlspecialchars($templateLayout) . '</strong>';
             }
         }
 
@@ -107,12 +107,12 @@ class PageLayoutView
      * Translates a label.
      *
      * @param string $key
-     * @param bool $hsc
      * @return string
      */
-    protected function sL($key, $hsc = true)
+    protected function sL(string $key) : string
     {
-        return $this->languageService->sL(static::LL_PATH . $key, $hsc);
+        $label = $this->languageService->sL(static::LL_PATH . $key);
+        return $label;
     }
 
     /**
