@@ -47,7 +47,7 @@ $boot = function ($_EXTKEY) {
     ];
     foreach ($listenSignals as $signal) {
         $signalSlotDispatcher->connect(
-            \TYPO3\CMS\Core\Resource\ResourceStorage::class,
+            'TYPO3\\CMS\\Core\\Resource\\ResourceStorage',
             $signal,
             \Causal\FileList\Slots\ResourceStorage::class,
             $signal
