@@ -12,4 +12,4 @@ Known problems
 ==============
 
 .. note::
-    Please use the extension's bug tracker on Forge to report bugs: https://forge.typo3.org/projects/extension-file_list/issues
+    Please use the extension's bug tracker on GitHub to report bugs: https://github.com/xperseguers/t3ext-file_list/issues

@@ -14,6 +14,7 @@
 
 namespace Causal\FileList\Hooks;
 
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use Causal\FileList\Slots\ResourceStorage;
@@ -46,27 +47,22 @@ class DataHandler
                 $id = $parentObject->substNEWwithIDs[$id];
             }
 
-            $row = $this->getDatabaseConnection()->exec_SELECTgetSingleRow(
-                'file',
-                'sys_file_metadata',
-                'uid=' . (int)$id
-            );
+            $row = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('sys_file_metadata')
+                ->select(
+                    ['file'],
+                    'sys_file_metadata',
+                    [
+                        'uid' => (int)$id,
+                    ]
+                )
+                ->fetch();
 
             $file = GeneralUtility::makeInstance(FileRepository::class)->findByUid($row['file']);
+
             /** @var ResourceStorage $resourceStorageSlot */
             $resourceStorageSlot = GeneralUtility::makeInstance(ResourceStorage::class);
             $resourceStorageSlot->flushCachesByFolder($file->getParentFolder());
         }
-    }
-
-    /**
-     * Returns the database connection.
-     *
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
-     */
-    protected function getDatabaseConnection()
-    {
-        return $GLOBALS['TYPO3_DB'];
     }
 
 }
