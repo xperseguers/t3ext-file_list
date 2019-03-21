@@ -18,9 +18,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Utility\PathUtility;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\CMS\Fluid\Core\ViewHelper\Facets\CompilableInterface;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * View helper for the icon associated to a file.
@@ -32,7 +31,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\Facets\CompilableInterface;
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
-class FileIconViewHelper extends AbstractViewHelper implements CompilableInterface
+class FileIconViewHelper extends AbstractViewHelper
 {
 
     /**
@@ -41,14 +40,20 @@ class FileIconViewHelper extends AbstractViewHelper implements CompilableInterfa
     protected $escapeOutput = false;
 
     /**
-     * Renders the icon of the supplied file resource.
-     *
-     * @param object $file The incoming data to convert, or NULL if VH children should be used
-     * @return string Image tag
-     * @api
+     * Initialize arguments.
      */
-    public function render($file = null)
+    public function initializeArguments()
     {
+        parent::initializeArguments();
+        $this->registerArgument('file', 'object', 'File to show icon', false);
+    }
+
+    /**
+     * Renders the icon of the supplied file resource.
+     */
+    public function render()
+    {
+        $file = $this->arguments['file'];
         if ($file !== null && !($file instanceof File || $file instanceof FileReference)) {
             throw new \InvalidArgumentException('$file must be an instance of ' . File::class . ' or ' . FileReference::class .
                 ' but is of type ' . get_class($file), 1509369347);
@@ -67,7 +72,7 @@ class FileIconViewHelper extends AbstractViewHelper implements CompilableInterfa
      *
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
-     * @param \TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
+     * @param RenderingContextInterface $renderingContext
      * @return string
      */
     public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
@@ -78,7 +83,10 @@ class FileIconViewHelper extends AbstractViewHelper implements CompilableInterfa
             $file = $renderChildrenClosure();
         }
 
-        $settings = $renderingContext->getTemplateVariableContainer()->get('settings');
+        $settings = $renderingContext->getVariableProvider()->get('settings');
+        if (empty($settings['fileIconRootPath'])) {
+            return '';
+        }
         $settings['fileIconRootPath'] = GeneralUtility::getFileAbsFileName($settings['fileIconRootPath']);
         $fileName = $file->getProperty('name');
         $iconFileName = static::getFileTypeIcon($settings, $fileName);

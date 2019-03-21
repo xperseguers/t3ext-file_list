@@ -15,7 +15,7 @@
 namespace Causal\FileList\ViewHelpers;
 
 use TYPO3\CMS\Core\Resource\File;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * View helper to limit the list of files based on a list of extensions.
@@ -39,15 +39,27 @@ class LimitViewHelper extends AbstractViewHelper
 {
 
     /**
+     * Initialize arguments.
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('subject', 'mixed', 'Array of File object or single File', false);
+        $this->registerArgument('offset', 'int', 'Offset within the array of files', false, 0);
+        $this->registerArgument('length', 'int', 'Number of files to return', false, 9999);
+    }
+
+    /**
      * Limits the list of files.
      *
-     * @param mixed $subject
-     * @param int $offset
-     * @param int $length
      * @return File[]
      */
-    public function render($subject = null, $offset = 0, $length = 9999)
+    public function render()
     {
+        $subject = $this->arguments['subject'] ?? null;
+        $offset = (int)$this->arguments['offset'];
+        $length = (int)$this->arguments['length'];
+
         /** @var File[] $subject */
         if ($subject === null) {
             $subject = $this->renderChildren();

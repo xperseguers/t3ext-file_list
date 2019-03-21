@@ -16,7 +16,7 @@ namespace Causal\FileList\ViewHelpers;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\File;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * View helper to filter the list of files based on a list of extensions.
@@ -40,14 +40,25 @@ class FilterViewHelper extends AbstractViewHelper
 {
 
     /**
+     * Initialize arguments.
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('subject', 'mixed', 'Array of File object or single File', false);
+        $this->registerArgument('extensions', 'mixed', 'Array or comma-separated list of file extensions', false);
+    }
+
+    /**
      * Filters the list of files.
      *
-     * @param mixed $subject
-     * @param mixed $extensions
      * @return File[]
      */
-    public function render($subject = null, $extensions = null)
+    public function render()
     {
+        $subject = $this->arguments['subject'] ?? null;
+        $extensions = $this->arguments['extensions'] ?? '';
+
         /** @var File[] $subject */
         if ($subject === null) {
             $subject = $this->renderChildren();

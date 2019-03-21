@@ -14,9 +14,6 @@
 
 namespace Causal\FileList\ViewHelpers;
 
-use TYPO3\CMS\Core\Resource\FileInterface;
-use TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder;
-
 /**
  * Resizes a given image (if required) and renders the respective img tag
  *
@@ -78,7 +75,7 @@ class ThumbnailViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
         $html = parent::render();
 
         if (strpos($html, ' width="0" ') !== false) {
-            $html = '<img src="' . htmlspecialchars($default) . '" alt="" />';
+            $html = '<img src="' . htmlspecialchars($this->arguments['default']) . '" alt="" />';
         }
 
         return $html;
