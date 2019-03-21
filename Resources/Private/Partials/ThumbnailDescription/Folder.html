@@ -16,9 +16,9 @@
             <f:case value="1">
                 {folder.files -> f:count()} <f:translate key="directory_size.one_file" />
             </f:case>
-            <f:case default="true">
+            <f:defaultCase>
                 {folder.files -> f:count()} <f:translate key="directory_size.multiple_files" />
-            </f:case>
+            </f:defaultCase>
         </f:switch>
     </div>
 </div>
