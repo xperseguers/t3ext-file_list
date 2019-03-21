@@ -13,5 +13,5 @@ $boot = function ($_EXTKEY) {
 
 };
 
-$boot($_EXTKEY);
+$boot('file_list');
 unset($boot);
