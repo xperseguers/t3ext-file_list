@@ -4,10 +4,10 @@
 
 ---
 conf.py:
-  copyright: 2008-2018
+  copyright: 2008-2019
   project: File List
   version: 2.3
-  release: 2.3.0-dev
+  release: 2.3.0
   latex_documents:
   - - Index
     - file_list.tex
