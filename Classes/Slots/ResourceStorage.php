@@ -140,6 +140,19 @@ class ResourceStorage
         $this->flushCachesByFolder($originalFolder);
     }
 
+     /**
+     * @param Folder $folder
+     * @param Folder $targetFolder
+     * @param $newName
+     */
+    public function postFolderCopy(Folder $folder, Folder $targetFolder, $newName) {
+        $this->flushCachesByFolder($folder);
+        $this->flushCachesByFolder($targetFolder);
+    }
+
+    /**
+     * @param Folder $folder
+     */
     public function postFolderDelete(Folder $folder)
     {
         $this->flushCachesByFolder($folder);
