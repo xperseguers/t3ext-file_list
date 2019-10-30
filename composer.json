@@ -32,7 +32,6 @@
     }
   },
   "replace": {
-    "file_list": "self.version",
     "typo3-ter/file-list": "self.version"
   },
   "config": {
@@ -50,6 +49,7 @@
       "dev-master": "2.3.x-dev"
     },
     "typo3/cms": {
+      "extension-key": "file_list",
       "cms-package-dir": "{$vendor-dir}/typo3/cms",
       "web-dir": ".Build/Web"
     }
