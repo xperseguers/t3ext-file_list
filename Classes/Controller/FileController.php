@@ -525,7 +525,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 					padding: 20px 20px 20px 20px;
 					margin: 20px 20px 20px 20px;
 					">' .
-        '<strong>' . __CLASS__ . ' ERROR:</strong><br /><br />' . nl2br(trim($string)) .
+        '<strong>' . __CLASS__ . ' ERROR:</strong><br /><br />' . nl2br(htmlspecialchars(trim($string))) .
         '</div>';
     }
 
