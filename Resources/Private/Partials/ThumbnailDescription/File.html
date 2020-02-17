@@ -4,18 +4,18 @@
 
 <div class="media">
     <div class="media-left">
-        <f:link.page pageUid="{file.publicUrl}">
+         <f:link.typolink parameter="{file.publicUrl}" target="_blank">
             <fl:thumbnail image="{file}" width="128c" height="128c" default="{f:uri.resource(path:'Icons/Files/blank_thumbnail.png')}" />
-        </f:link.page>
+        </f:link.typolink>
     </div>
     <div class="media-body">
         <h4 class="media-heading">
-            <f:link.page pageUid="{file.publicUrl}">
+             <f:link.typolink parameter="{file.publicUrl}" target="_blank">
                 <f:if condition="{file.properties.title}">
                     <f:then>{file.properties.title}</f:then>
                     <f:else>{file.name}</f:else>
                 </f:if>
-            </f:link.page>
+            </f:link.typolink>
             <f:if condition="{file.properties.tx_filelist.isNew}">
                 <span class="label label-default"><f:translate key="newFile" /></span>
             </f:if>
