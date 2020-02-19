@@ -160,7 +160,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         // Filter files
-        $files = $this->filterFiles($files);
+        $files = \Causal\FileList\Utility\Helper::filterInaccessibleFiles($files);
 
         // Sort files and folders
         $files = $this->sortFiles($files);
@@ -404,36 +404,6 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 }
             }
         }
-    }
-
-    /**
-     * Filters files.
-     *
-     * @param \TYPO3\CMS\Core\Resource\File[] $files
-     * @return \TYPO3\CMS\Core\Resource\File[]
-     */
-    protected function filterFiles(array $files): array
-    {
-        $filteredFiles = [];
-
-        $userGroups = GeneralUtility::intExplode(',', $GLOBALS['TSFE']->gr_list, true);
-
-        foreach ($files as $file) {
-            $isVisible = (bool)$file->getProperty('visible');
-            if (!$isVisible) continue;
-
-            $accessGroups = $file->getProperty('fe_groups');
-            if (!empty($accessGroups)) {
-                $accessGroups = GeneralUtility::intExplode(',', $accessGroups, true);
-                if (empty(array_intersect($accessGroups, $userGroups))) {
-                    continue;
-                }
-            }
-
-            $filteredFiles[] = $file;
-        }
-
-        return $filteredFiles;
     }
 
     /**

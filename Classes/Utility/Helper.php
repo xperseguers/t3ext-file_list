@@ -14,6 +14,8 @@
 
 namespace Causal\FileList\Utility;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Helper class for the 'file_list' extension.
  *
@@ -44,6 +46,40 @@ class Helper
         } else {
             return false;
         }
+    }
+
+    /**
+     * Filters out inaccessible files for the current Frontend user.
+     *
+     * @param \TYPO3\CMS\Core\Resource\File[] $files
+     * @return \TYPO3\CMS\Core\Resource\File[]
+     */
+    static public function filterInaccessibleFiles(array $files): array
+    {
+        if (TYPO3_MODE !== 'FE') {
+            return $files;
+        }
+
+        $filteredFiles = [];
+
+        $userGroups = GeneralUtility::intExplode(',', $GLOBALS['TSFE']->gr_list, true);
+
+        foreach ($files as $file) {
+            $isVisible = (bool)$file->getProperty('visible');
+            if (!$isVisible) continue;
+
+            $accessGroups = $file->getProperty('fe_groups');
+            if (!empty($accessGroups)) {
+                $accessGroups = GeneralUtility::intExplode(',', $accessGroups, true);
+                if (empty(array_intersect($accessGroups, $userGroups))) {
+                    continue;
+                }
+            }
+
+            $filteredFiles[] = $file;
+        }
+
+        return $filteredFiles;
     }
 
 }
