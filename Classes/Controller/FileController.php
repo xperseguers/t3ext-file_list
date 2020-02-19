@@ -159,6 +159,9 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             return $this->error('The configuration of the file_list plugin is incorrect: ' . $e->getMessage());
         }
 
+        // Filter files
+        $files = $this->filterFiles($files);
+
         // Sort files and folders
         $files = $this->sortFiles($files);
         $subfolders = $this->sortFolders($subfolders);
@@ -404,15 +407,33 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
+     * Filters files.
+     *
+     * @param \TYPO3\CMS\Core\Resource\File[] $files
+     * @return \TYPO3\CMS\Core\Resource\File[]
+     */
+    protected function filterFiles(array $files): array
+    {
+        $filteredFiles = [];
+
+        foreach ($files as $file) {
+            $isVisible = (bool)$file->getProperty('visible');
+            if (!$isVisible) continue;
+            $filteredFiles[] = $file;
+        }
+
+        return $filteredFiles;
+    }
+
+    /**
      * Sorts files.
      *
      * @param \TYPO3\CMS\Core\Resource\File[] $files
      * @return \TYPO3\CMS\Core\Resource\File[]
      */
-    protected function sortFiles(array $files)
+    protected function sortFiles(array $files): array
     {
         $orderedFiles = [];
-        $key = '';
         $isNumericSorting = false;
 
         foreach ($files as $file) {
