@@ -416,9 +416,20 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $filteredFiles = [];
 
+        $userGroups = GeneralUtility::intExplode(',', $GLOBALS['TSFE']->gr_list, true);
+
         foreach ($files as $file) {
             $isVisible = (bool)$file->getProperty('visible');
             if (!$isVisible) continue;
+
+            $accessGroups = $file->getProperty('fe_groups');
+            if (!empty($accessGroups)) {
+                $accessGroups = GeneralUtility::intExplode(',', $accessGroups, true);
+                if (empty(array_intersect($accessGroups, $userGroups))) {
+                    continue;
+                }
+            }
+
             $filteredFiles[] = $file;
         }
 
