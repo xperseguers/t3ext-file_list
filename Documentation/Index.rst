@@ -33,7 +33,7 @@ File List
         list, file, directory, files, directories, gallery, bootstrap
 
     :Copyright:
-        2008-2019
+        2008-2020
 
     :Author:
         Xavier Perseguers
