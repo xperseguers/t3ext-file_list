@@ -10,6 +10,9 @@
 				<source>Makes a list of files and folders.</source>
 			</trans-unit>
 
+			<trans-unit id="tabs.general">
+				<source>General</source>
+			</trans-unit>
 			<trans-unit id="tabs.appearance">
 				<source>Listing Appearance</source>
 			</trans-unit>

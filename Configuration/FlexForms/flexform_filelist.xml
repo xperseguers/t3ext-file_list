@@ -6,7 +6,7 @@
 		<sDEF>
 			<ROOT>
 				<TCEforms>
-					<sheetTitle>LLL:EXT:lang/locallang_core.xlf:labels.generalTab</sheetTitle>
+					<sheetTitle>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:tabs.general</sheetTitle>
 				</TCEforms>
 				<type>array</type>
 				<el>
