@@ -103,6 +103,10 @@
 										<numIndex index="1">DATE</numIndex>
 									</numIndex>
 									<numIndex index="4" type="array">
+										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy.crdate</numIndex>
+										<numIndex index="1">CRDATE</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
 										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy.size</numIndex>
 										<numIndex index="1">SIZE</numIndex>
 									</numIndex>

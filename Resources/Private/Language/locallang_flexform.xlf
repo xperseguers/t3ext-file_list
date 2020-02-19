@@ -50,7 +50,10 @@
 				<source>Description</source>
 			</trans-unit>
 			<trans-unit id="filelist.orderBy.date">
-				<source>Date</source>
+				<source>Modification Date</source>
+			</trans-unit>
+			<trans-unit id="filelist.orderBy.crdate">
+				<source>Creation Date</source>
 			</trans-unit>
 			<trans-unit id="filelist.orderBy.size">
 				<source>Size</source>

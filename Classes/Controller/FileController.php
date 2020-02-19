@@ -37,6 +37,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     const SORT_BY_TITLE = 'TITLE';
     const SORT_BY_DESCRIPTION = 'DESCRIPTION';
     const SORT_BY_DATE = 'DATE';
+    const SORT_BY_CRDATE = 'CRDATE';
     const SORT_BY_SIZE = 'SIZE';
 
     const SORT_DIRECTION_ASC = 'ASC';
@@ -417,7 +418,10 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         foreach ($files as $file) {
             switch ($this->settings['orderBy']) {
                 case static::SORT_BY_DATE:
-                    $key = $file->getProperty('modification_date');
+                    $key = sprintf('%010d', $file->getProperty('modification_date'));
+                    break;
+                case static::SORT_BY_CRDATE:
+                    $key = sprintf('%010d', $file->getProperty('creation_date'));
                     break;
                 case static::SORT_BY_TITLE:
                     $key = $file->getProperty('title');
