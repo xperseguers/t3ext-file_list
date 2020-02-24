@@ -89,7 +89,11 @@ class ResourceStorage
      */
     public function postFileDelete(FileInterface $file)
     {
-        $this->flushCachesByFolder($file->getParentFolder());
+        try {
+            $this->flushCachesByFolder($file->getParentFolder());
+        } catch (\Exception $e) {
+            // Exception may happen when a file is moved to /_recycler_/ but the user has no access to it
+        }
     }
 
     /**
