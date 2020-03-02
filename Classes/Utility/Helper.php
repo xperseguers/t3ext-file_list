@@ -65,7 +65,7 @@ class Helper
         $userGroups = GeneralUtility::intExplode(',', $GLOBALS['TSFE']->gr_list, true);
 
         foreach ($files as $file) {
-            $isVisible = (bool)$file->getProperty('visible');
+            $isVisible = $file->hasProperty('visible') ? (bool)$file->getProperty('visible') : true;
             if (!$isVisible) continue;
 
             $accessGroups = $file->getProperty('fe_groups');
