@@ -85,6 +85,7 @@
 							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy.name</numIndex>
@@ -120,6 +121,7 @@
 							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.sortDirection</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.sortDirection.asc</numIndex>
@@ -160,6 +162,7 @@
 							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.templateLayout</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array"></items>
 								<itemsProcFunc>Causal\FileList\Tca\TemplateLayoutSelector->render</itemsProcFunc>
 							</config>
