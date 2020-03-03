@@ -63,10 +63,10 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Service\TypoScriptService $typoScriptService
+     * @param \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService
      * @return void
      */
-    public function inject(\TYPO3\CMS\Extbase\Service\TypoScriptService $typoScriptService)
+    public function inject(\TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService)
     {
         $this->typoScriptService = $typoScriptService;
     }
@@ -78,7 +78,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function initializeAction()
     {
-        $settings = $this->typoScriptService->convertPlainArrayToTypoScriptArray($this->settings);
+        $settings = $this->convertPlainArrayToTypoScriptArray($this->settings);
         $contentObject = $this->configurationManager->getContentObject();
         $keys = ['path', 'dateFormat', 'fileIconRootPath', 'newDurationMaxSubfolders'];
 
@@ -531,8 +531,37 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 					padding: 20px 20px 20px 20px;
 					margin: 20px 20px 20px 20px;
 					">' .
-        '<strong>' . __CLASS__ . ' ERROR:</strong><br /><br />' . nl2br(htmlspecialchars(trim($string))) .
-        '</div>';
+            '<strong>' . __CLASS__ . ' ERROR:</strong><br /><br />' . nl2br(htmlspecialchars(trim($string))) .
+            '</div>';
+    }
+
+    /**
+     * Returns an array with Typoscript the old way (with dot).
+     *
+     * Extbase converts the "classical" TypoScript (with trailing dot) to a format without trailing dot,
+     * to be more future-proof and not to have any conflicts with Fluid object accessor syntax.
+     * However, if you want to call legacy TypoScript objects, you somehow need the "old" syntax (because this is what TYPO3 is used to).
+     * With this method, you can convert the extbase TypoScript to classical TYPO3 TypoScript which is understood by the rest of TYPO3.
+     *
+     * @param array $plainArray An TypoScript Array with Extbase Syntax (without dot but with _typoScriptNodeValue)
+     * @return array array with TypoScript as usual (with dot)
+     * @see \TYPO3\CMS\Core\TypoScript\TypoScriptService::convertPlainArrayToTypoScriptArray() in TYPO3 v8
+     */
+    protected function convertPlainArrayToTypoScriptArray(array $plainArray): array
+    {
+        $typoScriptArray = [];
+        foreach ($plainArray as $key => $value) {
+            if (is_array($value)) {
+                if (isset($value['_typoScriptNodeValue'])) {
+                    $typoScriptArray[$key] = $value['_typoScriptNodeValue'];
+                    unset($value['_typoScriptNodeValue']);
+                }
+                $typoScriptArray[$key . '.'] = $this->convertPlainArrayToTypoScriptArray($value);
+            } else {
+                $typoScriptArray[$key] = $value === null ? '' : $value;
+            }
+        }
+        return $typoScriptArray;
     }
 
 }

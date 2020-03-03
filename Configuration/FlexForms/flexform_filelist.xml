@@ -16,6 +16,7 @@
 							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.mode.folder</numIndex>
@@ -37,7 +38,6 @@
 								<size>48</size>
 								<eval>trim</eval>
 								<wizards type="array">
-									<_PADDING>2</_PADDING>
 									<link type="array">
 										<type>popup</type>
 										<title>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.path.wizards.link.title</title>
