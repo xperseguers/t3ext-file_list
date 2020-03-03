@@ -16,6 +16,7 @@
 							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.mode.folder</numIndex>
@@ -34,23 +35,17 @@
 							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.path</label>
 							<config>
 								<type>input</type>
+								<renderType>inputLink</renderType>
 								<size>48</size>
 								<eval>trim</eval>
-								<wizards type="array">
-									<_PADDING>2</_PADDING>
-									<link type="array">
-										<type>popup</type>
-										<title>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.path.wizards.link.title</title>
-										<icon>EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_link.gif</icon>
-										<module type="array">
-											<name>wizard_link</name>
-										</module>
-										<params type="array">
-											<blindLinkOptions>page,url,mail,spec,file</blindLinkOptions>
-										</params>
-										<JSopenParams>height=600,width=800,status=0,menubar=0,scrollbars=1</JSopenParams>
-									</link>
-								</wizards>
+								<fieldControl>
+									<linkPopup>
+										<options>
+											<blindLinkOptions>page,url,mail,spec,file,telephone</blindLinkOptions>
+											<blindLinkFields>class,target,title,params</blindLinkFields>
+										</options>
+									</linkPopup>
+								</fieldControl>
 							</config>
 						</TCEforms>
 					</settings.path>
@@ -85,6 +80,7 @@
 							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy.name</numIndex>
@@ -120,6 +116,7 @@
 							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.sortDirection</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
 										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.sortDirection.asc</numIndex>
@@ -160,6 +157,7 @@
 							<label>LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.templateLayout</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array"></items>
 								<itemsProcFunc>Causal\FileList\Tca\TemplateLayoutSelector->render</itemsProcFunc>
 							</config>
