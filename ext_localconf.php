@@ -16,6 +16,20 @@ $boot = function ($_EXTKEY) {
         []
     );
 
+    /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
+    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+    $iconRegistry->registerIcon(
+        'extensions-filelist-wizard',
+        \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+        [
+            'source' => 'EXT:file_list/Resources/Public/Icons/ce_wizard.png',
+        ]
+    );
+
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:file_list/Configuration/TsConfig/Page/Mod/Wizards/NewContentElement.tsconfig">'
+    );
+
     /* ===========================================================================
         Web > Page hook
     =========================================================================== */

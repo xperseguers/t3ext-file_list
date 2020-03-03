@@ -1,0 +1,17 @@
+mod.wizards {
+    newContentElement.wizardItems {
+        plugins {
+            elements {
+                filelist_filelist {
+                    iconIdentifier = extensions-filelist-wizard
+                    title = LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist_title
+                    description = LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist_wizard_description
+                    tt_content_defValues {
+                        CType = list
+                        list_type = filelist_filelist
+                    }
+                }
+            }
+        }
+    }
+}
