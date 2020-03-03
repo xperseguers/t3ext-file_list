@@ -7,7 +7,7 @@ conf.py:
   copyright: 2008-2020
   project: File List
   version: 2.4
-  release: 2.4.0
+  release: 2.4.1
   latex_documents:
   - - Index
     - file_list.tex
@@ -20,7 +20,7 @@ conf.py:
     preamble: \usepackage{typo3}
   intersphinx_mapping:
     t3tsref:
-    - https://docs.typo3.org/typo3cms/TyposcriptReference/
+    - https://docs.typo3.org/m/typo3/reference-typoscript/master/en-us/
     - null
   extensions:
     - sphinx.ext.intersphinx
