@@ -42,7 +42,7 @@ class DataHandler
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $parentObject
      */
     public function processDatamap_afterDatabaseOperations($operation, $table, $id, array $fields, \TYPO3\CMS\Core\DataHandling\DataHandler $parentObject) {
-        if ($table === 'sys_file_metadata') {
+        if ($table === 'sys_file_metadata' && !$parentObject->isImporting) {
             if (!is_numeric($id)) {
                 $id = $parentObject->substNEWwithIDs[$id];
             }
