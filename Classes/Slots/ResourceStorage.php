@@ -23,6 +23,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Hooks into \TYPO3\CMS\Core\Resource\ResourceStorage.
  *
+ *
+ * THIS SLOT HAS BEEN MIGRATED TO PSR-14 FOR TYPO3 v10:
+ * @see \Causal\FileList\EventListener\CoreResourceStorageEventListener
+ *
  * @category    Slots
  * @package     TYPO3
  * @subpackage  tx_filelist
@@ -151,7 +155,7 @@ class ResourceStorage
      */
     public function postFolderCopy(Folder $folder, Folder $targetFolder, $newName) {
         $this->flushCachesByFolder($folder);
-        $this->flushCachesByFolder($targetFolder);
+        $this->flushCachesByFolder($targetFolder->getParentFolder());
     }
 
     /**
@@ -177,9 +181,8 @@ class ResourceStorage
      * Flushes caches by folder, using tags set by \Causal\FileList\Controller\FileController.
      *
      * @param FolderInterface $folder
-     * @return void
      */
-    public function flushCachesByFolder(FolderInterface $folder)
+    protected function flushCachesByFolder(FolderInterface $folder)
     {
         switch ($folder->getRole()) {
             case FolderInterface::ROLE_RECYCLER:

@@ -14,6 +14,7 @@
 
 namespace Causal\FileList\Hooks;
 
+use Causal\FileList\EventListener\CoreResourceStorageEventListener;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
@@ -59,9 +60,9 @@ class DataHandler
 
             $file = GeneralUtility::makeInstance(FileRepository::class)->findByUid($row['file']);
 
-            /** @var ResourceStorage $resourceStorageSlot */
-            $resourceStorageSlot = GeneralUtility::makeInstance(ResourceStorage::class);
-            $resourceStorageSlot->flushCachesByFolder($file->getParentFolder());
+            /** @var CoreResourceStorageEventListener $coreResourceStorageEventListener */
+            $coreResourceStorageEventListener = GeneralUtility::makeInstance(CoreResourceStorageEventListener::class);
+            $coreResourceStorageEventListener->flushCachesByFolder($file->getParentFolder());
         }
     }
 
