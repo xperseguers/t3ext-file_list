@@ -68,7 +68,7 @@ class LimitViewHelper extends AbstractViewHelper
             $subject = [];
         }
         $items = array_slice($subject, $offset, (int)$length);
-        return $items;
+        return array_values($items);
     }
 
 }
