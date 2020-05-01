@@ -31,6 +31,7 @@ use TYPO3\CMS\Core\Resource\Event\AfterFolderDeletedEvent;
 use TYPO3\CMS\Core\Resource\Event\AfterFolderMovedEvent;
 use TYPO3\CMS\Core\Resource\Event\AfterFolderRenamedEvent;
 use TYPO3\CMS\Core\Resource\FolderInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class CoreResourceStorageEventListener
 {
@@ -45,8 +46,12 @@ class CoreResourceStorageEventListener
      *
      * @param CacheManager $cacheManager
      */
-    public function __construct(CacheManager $cacheManager)
+    public function __construct(CacheManager $cacheManager = null)
     {
+        if ($cacheManager === null) {
+            // We are before TYPO3 v10 where DI is taken care of
+            $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+        }
         $this->pageCache = $cacheManager;
     }
 
