@@ -6,19 +6,29 @@ $boot = function ($_EXTKEY) {
         ? (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch()
         : TYPO3_branch;
 
-    /* ===========================================================================
-        Extbase-based plugin
-    =========================================================================== */
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'Causal.' . $_EXTKEY,
-        'Filelist',
-        // cacheable actions
-        [
-            'File' => 'list',
-        ],
-        // non-cacheable actions
-        []
-    );
+    if (version_compare($typo3Branch, '10.0', '>=')) {
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            $_EXTKEY,
+            'Filelist',
+            // cacheable actions
+            [
+                \Causal\FileList\Controller\FileController::class => 'list',
+            ],
+            // non-cacheable actions
+            []
+        );
+    } else {
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'Causal.' . $_EXTKEY,
+            'Filelist',
+            // cacheable actions
+            [
+                'File' => 'list',
+            ],
+            // non-cacheable actions
+            []
+        );
+    }
 
     /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
     $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
