@@ -35,8 +35,11 @@ class Helper
      * @param string $toClass
      * @return bool|object
      */
-    static public function cast($object, $toClass)
+    static public function cast($object, string $toClass)
     {
+        if ($toClass === \Causal\FileList\Domain\Model\Folder::class) {
+            return GeneralUtility::makeInstance($toClass, $object->getStorage(), $object->getIdentifier(), $object->getName());
+        }
         if (class_exists($toClass)) {
             $objIn = serialize($object);
             $classIn = get_class($object);
