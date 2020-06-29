@@ -49,7 +49,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $fileRepository;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Service\TypoScriptService
+     * @var \TYPO3\CMS\Core\TypoScript\TypoScriptService
      */
     protected $typoScriptService;
 
