@@ -20,15 +20,13 @@ use TYPO3\CMS\Core\Routing\Aspect\StaticMappableAspectInterface;
  *         _arguments:
  *         path: path
  *       defaultController: 'File::list'
- *       defaults:
- *         path: '/fileadmin/downloads'
  *       requirements:
  *         path: '[a-zA-Z0-9_\-\/].*'
  *       aspects:
  *         path:
- *           type: FilelistFolderMapper
+ *           type: FileListFolderMapper
  */
-class FilelistFolderMapper implements StaticMappableAspectInterface
+class FileListFolderMapper implements StaticMappableAspectInterface
 {
     use AspectTrait;
 
