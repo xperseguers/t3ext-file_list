@@ -96,7 +96,10 @@ $boot = function ($_EXTKEY) {
     if (TYPO3_MODE === 'BE') {
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][$_EXTKEY] = \Causal\FileList\Hooks\DataHandler::class;
     }
-
+    
+    if (version_compare($typo3Branch, '9.5', '>=')) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['FileListFolderMapper'] = \Causal\FileList\Routing\Aspect\FileListFolderMapper::class;
+    }
 };
 
 $boot('file_list');
