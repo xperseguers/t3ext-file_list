@@ -41,7 +41,7 @@ Create file :file:`ext_localconf.php`:
     <?php
     defined('TYPO3_MODE') || die();
 
-    $boot = function ($_EXTKEY) {
+    $boot = function (string $_EXTKEY) {
 
         /* ===========================================================================
             Register an "image gallery" layout
@@ -53,7 +53,7 @@ Create file :file:`ext_localconf.php`:
 
     };
 
-    $boot($_EXTKEY);
+    $boot('<your_extension_key>');
     unset($boot);
 
 We could add the few lines of TypoScript to our existing template but let do that with a staticTS, as usual.
@@ -65,7 +65,7 @@ Create files :file:`ext_tables.php`:
     <?php
     defined('TYPO3_MODE') || die();
 
-    $boot = function ($_EXTKEY) {
+    $boot = function (string $_EXTKEY) {
 
         /* ===========================================================================
             Register default TypoScript
@@ -78,7 +78,7 @@ Create files :file:`ext_tables.php`:
 
     };
 
-    $boot($_EXTKEY);
+    $boot('<your_extension_key>');
     unset($boot);
 
 and :file:`Configuration/TypoScript/setup.txt`:
@@ -103,31 +103,36 @@ Create file :file:`Resources/Private/Partials/MyGallery.html`:
 
 .. code-block:: html
 
-    {namespace fl=Causal\FileList\ViewHelpers}
+    <html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+          xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+          xmlns:fl="http://typo3.org/ns/Causal/FileList/ViewHelpers"
+          data-namespace-typo3-fluid="true">
 
-    <f:for each="{files}" as="file">
+        <f:for each="{files}" as="file">
 
-        <figure>
-            <a href="{f:uri.image(image: file, maxWidth: 1200, maxHeight: 800)}"
-                rel="lightbox[gallery_{data.uid}]"
-                title="{file.properties.description}">
+            <figure>
+                <a href="{f:uri.image(image: file, maxWidth: 1200, maxHeight: 800)}"
+                    rel="lightbox[gallery_{data.uid}]"
+                    title="{file.properties.description}">
 
-                <fl:thumbnail image="{file}" width="256c" height="256c" />
-            </a>
-            <figcaption>
-                <f:if condition="{file.properties.description}">
-                    <f:then>{file.properties.description}</f:then>
-                    <f:else>
-                        <f:if condition="{file.properties.title}">
-                            <f:then>{file.properties.title}</f:then>
-                            <f:else>{file.name}</f:else>
-                        </f:if>
-                    </f:else>
-                </f:if>
-            </figcaption>
-        </figure>
+                    <fl:thumbnail image="{file}" width="256c" height="256c" />
+                </a>
+                <figcaption>
+                    <f:if condition="{file.properties.description}">
+                        <f:then>{file.properties.description}</f:then>
+                        <f:else>
+                            <f:if condition="{file.properties.title}">
+                                <f:then>{file.properties.title}</f:then>
+                                <f:else>{file.name}</f:else>
+                            </f:if>
+                        </f:else>
+                    </f:if>
+                </figcaption>
+            </figure>
 
-    </f:for>
+        </f:for>
+
+    </html>
 
 This is just an example of course! But it shows you how to get a lightbox-enabled gallery of images with the FAL
 description or title (or even file name) as fallback.
