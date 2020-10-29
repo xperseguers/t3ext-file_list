@@ -155,7 +155,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     $this->populateFromFileCollections($files);
                     break;
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return $this->error('The configuration of the file_list plugin is incorrect: ' . $e->getMessage());
         }
 
