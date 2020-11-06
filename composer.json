@@ -9,9 +9,9 @@
     "directories",
     "gallery"
   ],
-  "homepage": "https://forge.typo3.org/projects/extension-file_list",
+  "homepage": "https://github.com/xperseguers/t3ext-file_list",
   "support": {
-    "issues": "https://forge.typo3.org/projects/extension-file_list/issues"
+    "issues": "https://github.com/xperseguers/t3ext-file_list/issues"
   },
   "authors": [
     {
