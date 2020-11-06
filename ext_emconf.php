@@ -36,7 +36,9 @@ $EM_CONF[$_EXTKEY] = [
             'php' => '7.2.0-7.4.99',
         ],
         'conflicts' => [],
-        'suggests' => [],
+        'suggests' => [
+            'fal_protect' => ''
+        ],
     ],
     '_md5_values_when_last_written' => '',
 ];
