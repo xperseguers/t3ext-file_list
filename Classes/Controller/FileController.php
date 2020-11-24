@@ -14,8 +14,10 @@
 
 namespace Causal\FileList\Controller;
 
+use Causal\FalProtect\Utility\AccessSecurity;
 use Causal\FileList\Domain\Repository\FileRepository;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
 use TYPO3\CMS\Core\Resource\Folder;
@@ -323,6 +325,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         if ((bool)$this->settings['includeSubfolders']) {
+            $hasFalProtect = ExtensionManagementUtility::isLoaded('fal_protect');
             $tempSubfolders = $folder->getSubfolders();
             foreach ($tempSubfolders as $subfolder) {
                 switch ($subfolder->getRole()) {
@@ -332,7 +335,9 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         // Special folder, should not be shown in Frontend
                         break;
                     default:
-                        $subfolders[] = \Causal\FileList\Utility\Helper::cast($subfolder, \Causal\FileList\Domain\Model\Folder::class);
+                        if (!$hasFalProtect || AccessSecurity::isFolderAccessible($subfolder)) {
+                            $subfolders[] = \Causal\FileList\Utility\Helper::cast($subfolder, \Causal\FileList\Domain\Model\Folder::class);
+                        }
                 }
             }
 
