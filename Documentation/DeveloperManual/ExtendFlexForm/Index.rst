@@ -1,17 +1,12 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: ../../Includes.txt
-
+﻿.. include:: ../../Includes.rst.txt
 
 .. _developer-manual-flexform:
 
 Extend FlexForm
 ---------------
 
-Following fields of the plugin configuration may be extended without overriding the complete FlexForm configuration.
+Following fields of the plugin configuration may be extended without overriding
+the complete FlexForm configuration.
 
 .. only:: html
 
@@ -25,10 +20,13 @@ Following fields of the plugin configuration may be extended without overriding 
 Additional Template Layouts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-By default this extension provides two different "layouts" available in a drop-down list:
+By default this extension provides two different "layouts" available in a
+drop-down list:
 
 .. image:: ../../Images/template-layout.png
-    :alt: Template Layout of the plugin
+   :alt: Template Layout of the plugin
+   :align: center
+   :class: with-border with-shadow
 
 If you need other options, you may register them easily using following code:
 
@@ -39,5 +37,5 @@ If you need other options, you may register them easily using following code:
         'my value'
     ];
 
-You can then access the variable in your template with ``{settings.templateLayout}`` and use it for a condition or
-whatever.
+You can then access the variable in your template with
+``{settings.templateLayout}`` and use it for a condition or whatever.

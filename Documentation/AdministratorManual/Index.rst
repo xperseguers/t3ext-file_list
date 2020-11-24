@@ -1,10 +1,4 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: ../Includes.txt
-
+﻿.. include:: ../Includes.rst.txt
 
 .. _admin-manual:
 
@@ -15,6 +9,8 @@ This plugin comes with a static TypoScript which should be added to
 your template:
 
 .. image:: ../Images/static-ts.png
+   :align: center
+   :class: with-border with-shadow
 
 
 .. toctree::

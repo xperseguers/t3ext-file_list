@@ -1,10 +1,4 @@
-﻿.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
-.. include:: ../Includes.txt
-
+﻿.. include:: ../Includes.rst.txt
 
 .. _users-manual:
 
@@ -20,9 +14,13 @@ Configuration
 -------------
 
 .. image:: ../Images/configuration.png
-    :alt: Configuration options
+   :alt: Configuration options
+   :align: center
+   :class: with-border with-shadow
 
 .. note::
-    The path will always be checked against any configured "root" (please read
-    :ref:`TypoScript configuration <ts-plugin-tx-filelist-filelist-root>`), allowing the plugin to be used in a multi-site
-    installation without risking an editor from showing files from another website.
+
+   The path will always be checked against any configured "root" (please read
+   :ref:`TypoScript configuration <ts-plugin-tx-filelist-filelist-root>`),
+   allowing the plugin to be used in a multi-site installation without risking
+   an editor from showing files from another website.
