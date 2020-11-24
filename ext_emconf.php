@@ -37,7 +37,7 @@ $EM_CONF[$_EXTKEY] = [
         ],
         'conflicts' => [],
         'suggests' => [
-            'fal_protect' => ''
+            'fal_protect' => '1.1.0-'
         ],
     ],
     '_md5_values_when_last_written' => '',

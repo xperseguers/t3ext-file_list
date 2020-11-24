@@ -14,6 +14,8 @@
 
 namespace Causal\FileList\Utility;
 
+use Causal\FalProtect\Utility\AccessSecurity;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -65,21 +67,31 @@ class Helper
 
         $filteredFiles = [];
 
-        $userGroups = GeneralUtility::intExplode(',', $GLOBALS['TSFE']->gr_list, true);
-
-        foreach ($files as $file) {
-            $isVisible = $file->hasProperty('visible') ? (bool)$file->getProperty('visible') : true;
-            if (!$isVisible) continue;
-
-            $accessGroups = $file->getProperty('fe_groups');
-            if (!empty($accessGroups)) {
-                $accessGroups = GeneralUtility::intExplode(',', $accessGroups, true);
-                if (empty(array_intersect($accessGroups, $userGroups))) {
-                    continue;
+        if (ExtensionManagementUtility::isLoaded('fal_protect')) {
+            // Enhanced support of file protection when using EXT:fal_protect
+            // See: https://extensions.typo3.org/extension/fal_protect/
+            foreach ($files as $file) {
+                if (AccessSecurity::isFileAccessible($file)) {
+                    $filteredFiles[] = $file;
                 }
             }
+        } else {
+            $userGroups = GeneralUtility::intExplode(',', $GLOBALS['TSFE']->gr_list, true);
 
-            $filteredFiles[] = $file;
+            foreach ($files as $file) {
+                $isVisible = $file->hasProperty('visible') ? (bool)$file->getProperty('visible') : true;
+                if (!$isVisible) continue;
+
+                $accessGroups = $file->getProperty('fe_groups');
+                if (!empty($accessGroups)) {
+                    $accessGroups = GeneralUtility::intExplode(',', $accessGroups, true);
+                    if (empty(array_intersect($accessGroups, $userGroups))) {
+                        continue;
+                    }
+                }
+
+                $filteredFiles[] = $file;
+            }
         }
 
         return $filteredFiles;
