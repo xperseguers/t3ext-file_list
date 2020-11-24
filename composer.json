@@ -39,7 +39,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.3.x-dev"
+      "dev-master": "2.5.x-dev"
     },
     "typo3/cms": {
       "extension-key": "file_list"
