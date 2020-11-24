@@ -15,10 +15,12 @@
 namespace Causal\FileList\Controller;
 
 use Causal\FileList\Domain\Repository\FileRepository;
+use TYPO3\CMS\Core\LinkHandling\LinkService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\FolderInterface;
+use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * File controller.
@@ -55,26 +57,22 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * @param \Causal\FileList\Domain\Repository\FileRepository $fileRepository
-     * @return void
      */
-    public function injectFileRepository(FileRepository $fileRepository)
+    public function injectFileRepository(FileRepository $fileRepository): void
     {
         $this->fileRepository = $fileRepository;
     }
 
     /**
      * @param \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService
-     * @return void
      */
-    public function inject(\TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService)
+    public function inject(\TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService): void
     {
         $this->typoScriptService = $typoScriptService;
     }
 
     /**
      * Handles stdWrap on various settings.
-     *
-     * @return void
      */
     public function initializeAction()
     {
@@ -130,7 +128,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param string $path Optional path of the subdirectory to be listed
      * @return void|string
      */
-    public function listAction($path = '')
+    public function listAction(string $path = '')
     {
         $files = [];
         $subfolders = [];
@@ -208,14 +206,14 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param string $identifier
      * @return string
      */
-    protected function canonicalizeAndCheckFolderIdentifier($identifier)
+    protected function canonicalizeAndCheckFolderIdentifier(string $identifier): string
     {
         $prefix = '';
 
         // New format since TYPO3 v8
         if (preg_match('#^t3://#', $identifier)) {
-            /** @var \TYPO3\CMS\Core\LinkHandling\LinkService $linkService */
-            $linkService = GeneralUtility::makeInstance(\TYPO3\CMS\Core\LinkHandling\LinkService::class);
+            /** @var LinkService $linkService */
+            $linkService = GeneralUtility::makeInstance(LinkService::class);
             $data = $linkService->resolveByStringRepresentation($identifier);
             if ($data['type'] === 'folder') {
                 /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
@@ -229,7 +227,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $identifier = $matches[2];
         }
 
-        $identifier = \TYPO3\CMS\Core\Utility\PathUtility::getCanonicalPath($identifier);
+        $identifier = PathUtility::getCanonicalPath($identifier);
         $identifier = $prefix . rtrim($identifier, '/') . '/';
 
         return $identifier;
@@ -238,10 +236,9 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * Checks plugin configuration and security settings.
      *
-     * @return void
      * @throws \RuntimeException
      */
-    protected function checkConfiguration()
+    protected function checkConfiguration(): void
     {
         // Sanitize configuration
         if (!empty($this->settings['path'])) {
@@ -260,7 +257,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param string $path
      * @return bool
      */
-    protected function isWithinRoot($path)
+    protected function isWithinRoot(string $path): bool
     {
         // No root defined: true by definition, if not, we have to check each allowed root
         $success = empty($this->settings['root']);
@@ -279,12 +276,17 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param string $path Optional subpath of $this->settings['path']
      * @param \TYPO3\CMS\Core\Resource\File[] &$files
      * @param Folder[] &$subfolders
-     * @param Folder &$parentFolder
+     * @param Folder|null &$parentFolder
      * @param array &$breadcrumb
-     * @return void
      * @throws \InvalidArgumentException|\TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
      */
-    protected function populateFromFolder($path, array &$files, array &$subfolders, Folder &$parentFolder = null, array &$breadcrumb)
+    protected function populateFromFolder(
+        string $path,
+        array &$files,
+        array &$subfolders,
+        Folder &$parentFolder = null,
+        array &$breadcrumb
+    ): void
     {
         if (!(bool)$this->settings['includeSubfolders']) {
             // No way!
@@ -358,10 +360,9 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * Populates files from a list of file collections.
      *
      * @param \TYPO3\CMS\Core\Resource\File[] $files
-     * @return void
      * @throws \InvalidArgumentException|\TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
      */
-    protected function populateFromFileCollections(array &$files)
+    protected function populateFromFileCollections(array &$files): void
     {
         $folders = [];
 
@@ -477,7 +478,8 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param bool $reverse If true then the keys will be sorted in reverse order
      * @return bool true on success or false on failure.
      */
-    protected function natksort(array &$array, $reverse = false) {
+    protected function natksort(array &$array, $reverse = false): bool
+    {
         // Like ksort but uses natural sort instead
         $keys = array_keys($array);
         natsort($keys);
@@ -500,7 +502,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param Folder[] $folders Array of folders, keys are the names of the corresponding folders
      * @return Folder[]
      */
-    protected function sortFolders(array $folders)
+    protected function sortFolders(array $folders): array
     {
         if (in_array($this->settings['orderBy'], [static::SORT_BY_NAME, static::SORT_BY_TITLE], true)
             && $this->settings['sortDirection'] === static::SORT_DIRECTION_DESC
@@ -519,7 +521,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param string $string Error message input
      * @return string
      */
-    protected function error($string)
+    protected function error(string $string): string
     {
         return '
 			<!-- ' . __CLASS__ . ' ERROR message: -->

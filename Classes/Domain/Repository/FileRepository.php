@@ -37,9 +37,8 @@ class FileRepository
 
     /**
      * @param \TYPO3\CMS\Core\Resource\StorageRepository $storageRepository
-     * @return void
      */
-    public function injectStorageRepository(StorageRepository $storageRepository)
+    public function injectStorageRepository(StorageRepository $storageRepository): void
     {
         $this->storageRepository = $storageRepository;
     }
@@ -51,7 +50,7 @@ class FileRepository
      * @return Folder
      * @throws \InvalidArgumentException|\TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
      */
-    public function getFolderByIdentifier($identifier)
+    public function getFolderByIdentifier(string $identifier): ?Folder
     {
         $folder = null;
 

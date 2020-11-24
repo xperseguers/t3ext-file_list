@@ -34,7 +34,7 @@ class TemplateLayoutSelector
      * @param object $pObj
      * @return array
      */
-    public function render(array $conf = [], $pObj)
+    public function render(array $conf = [], $pObj): array
     {
         if (empty($conf)) {
             $conf = ['items' => []];

@@ -37,7 +37,6 @@ class Folder extends \TYPO3\CMS\Core\Resource\Folder
      * and purpose is to support custom properties solely.
      *
      * @param array $properties
-     * @return void
      */
     public function updateProperties(array $properties)
     {
@@ -47,7 +46,7 @@ class Folder extends \TYPO3\CMS\Core\Resource\Folder
     /**
      * @return array
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         return $this->properties;
     }
@@ -58,7 +57,7 @@ class Folder extends \TYPO3\CMS\Core\Resource\Folder
      * @param int $depth (internal)
      * @return bool
      */
-    public function hasFileNewerThan($newTimestamp, $maxDepth = 3, $depth = 0)
+    public function hasFileNewerThan(int $newTimestamp, int $maxDepth = 3, int $depth = 0): bool
     {
         $files = $this->getFiles();
         foreach ($files as $file) {
