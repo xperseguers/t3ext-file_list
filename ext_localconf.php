@@ -1,7 +1,7 @@
 <?php
 defined('TYPO3_MODE') || die();
 
-$boot = function ($_EXTKEY) {
+(static function (string $_EXTKEY) {
     $typo3Branch = class_exists(\TYPO3\CMS\Core\Information\Typo3Version::class)
         ? (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch()
         : TYPO3_branch;
@@ -100,7 +100,4 @@ $boot = function ($_EXTKEY) {
     if (version_compare($typo3Branch, '9.5', '>=')) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['FileListFolderMapper'] = \Causal\FileList\Routing\Aspect\FileListFolderMapper::class;
     }
-};
-
-$boot('file_list');
-unset($boot);
+})('file_list');
