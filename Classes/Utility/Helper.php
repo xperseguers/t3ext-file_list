@@ -82,11 +82,13 @@ class Helper
                 $isVisible = $file->hasProperty('visible') ? (bool)$file->getProperty('visible') : true;
                 if (!$isVisible) continue;
 
-                $accessGroups = $file->getProperty('fe_groups');
-                if (!empty($accessGroups)) {
-                    $accessGroups = GeneralUtility::intExplode(',', $accessGroups, true);
-                    if (empty(array_intersect($accessGroups, $userGroups))) {
-                        continue;
+                if($file->hasProperty('fe_groups')){
+                    $accessGroups = $file->getProperty('fe_groups');
+                    if (!empty($accessGroups)) {
+                        $accessGroups = GeneralUtility::intExplode(',', $accessGroups, true);
+                        if (empty(array_intersect($accessGroups, $userGroups))) {
+                            continue;
+                        }
                     }
                 }
 
