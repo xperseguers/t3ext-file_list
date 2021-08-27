@@ -18,8 +18,6 @@ namespace Causal\FileList\Tca;
  * Template layout selector.
  *
  * @category    Tca
- * @package     TYPO3
- * @subpackage  tx_filelist
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
@@ -49,5 +47,4 @@ class TemplateLayoutSelector
 
         return $conf;
     }
-
 }

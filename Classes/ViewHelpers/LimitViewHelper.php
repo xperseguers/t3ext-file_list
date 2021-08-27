@@ -29,8 +29,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
   * </code>
  *
  * @category    ViewHelpers
- * @package     TYPO3
- * @subpackage  tx_filelist
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
@@ -70,5 +68,4 @@ class LimitViewHelper extends AbstractViewHelper
         $items = array_slice($subject, $offset, (int)$length);
         return array_values($items);
     }
-
 }

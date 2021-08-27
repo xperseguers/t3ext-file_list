@@ -14,9 +14,9 @@
 
 namespace Causal\FileList\ViewHelpers;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileReference;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -25,8 +25,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  * View helper for the icon associated to a file.
  *
  * @category    ViewHelpers
- * @package     TYPO3
- * @subpackage  tx_filelist
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
@@ -59,9 +57,9 @@ class FileIconViewHelper extends AbstractViewHelper
                 ' but is of type ' . get_class($file), 1509369347);
         }
         return static::renderStatic(
-            array(
+            [
                 'file' => $file,
-            ),
+            ],
             $this->buildRenderChildrenClosure(),
             $this->renderingContext
         );
@@ -127,7 +125,8 @@ class FileIconViewHelper extends AbstractViewHelper
             }
             if (is_file($settings['fileIconRootPath'] . $ext . '.png')) {
                 return $ext . '.png';
-            } elseif (is_file($settings['fileIconRootPath'] . $ext . '.gif')) {
+            }
+            if (is_file($settings['fileIconRootPath'] . $ext . '.gif')) {
                 return $ext . '.gif';
             }
         }
@@ -142,5 +141,4 @@ class FileIconViewHelper extends AbstractViewHelper
         // Fallback icon
         return 'blank_document.png';
     }
-
 }

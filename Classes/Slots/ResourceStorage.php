@@ -16,8 +16,8 @@ namespace Causal\FileList\Slots;
 
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Resource\FileInterface;
-use TYPO3\CMS\Core\Resource\FolderInterface;
 use TYPO3\CMS\Core\Resource\Folder;
+use TYPO3\CMS\Core\Resource\FolderInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -28,8 +28,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @see \Causal\FileList\EventListener\CoreResourceStorageEventListener
  *
  * @category    Slots
- * @package     TYPO3
- * @subpackage  tx_filelist
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
@@ -148,12 +146,13 @@ class ResourceStorage
         $this->flushCachesByFolder($originalFolder);
     }
 
-     /**
+    /**
      * @param Folder $folder
      * @param Folder $targetFolder
      * @param $newName
      */
-    public function postFolderCopy(Folder $folder, Folder $targetFolder, $newName) {
+    public function postFolderCopy(Folder $folder, Folder $targetFolder, $newName)
+    {
         $this->flushCachesByFolder($folder);
         $this->flushCachesByFolder($targetFolder->getParentFolder());
     }
@@ -194,5 +193,4 @@ class ResourceStorage
                 $this->pageCache->flushCachesByTag('tx_filelist_folder_' . $folder->getHashedIdentifier());
         }
     }
-
 }

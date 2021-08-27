@@ -22,8 +22,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Helper class for the 'file_list' extension.
  *
  * @category    Utility
- * @package     TYPO3
- * @subpackage  tx_filelist
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
@@ -37,7 +35,7 @@ class Helper
      * @param string $toClass
      * @return bool|object
      */
-    static public function cast($object, string $toClass)
+    public static function cast($object, string $toClass)
     {
         if ($toClass === \Causal\FileList\Domain\Model\Folder::class) {
             return GeneralUtility::makeInstance($toClass, $object->getStorage(), $object->getIdentifier(), $object->getName());
@@ -48,9 +46,8 @@ class Helper
             $prefixChars = strlen((string)strlen($classIn)) + 6 + strlen($classIn);
             $objOut = 'O:' . strlen($toClass) . ':"' . $toClass . '":' . substr($objIn, $prefixChars);
             return unserialize($objOut);
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -59,7 +56,7 @@ class Helper
      * @param \TYPO3\CMS\Core\Resource\File[] $files
      * @return \TYPO3\CMS\Core\Resource\File[]
      */
-    static public function filterInaccessibleFiles(array $files): array
+    public static function filterInaccessibleFiles(array $files): array
     {
         if (TYPO3_MODE !== 'FE') {
             return $files;
@@ -80,7 +77,9 @@ class Helper
 
             foreach ($files as $file) {
                 $isVisible = $file->hasProperty('visible') ? (bool)$file->getProperty('visible') : true;
-                if (!$isVisible) continue;
+                if (!$isVisible) {
+                    continue;
+                }
 
                 $accessGroups = $file->getProperty('fe_groups');
                 if (!empty($accessGroups)) {
@@ -96,5 +95,4 @@ class Helper
 
         return $filteredFiles;
     }
-
 }

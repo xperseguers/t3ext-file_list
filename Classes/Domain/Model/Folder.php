@@ -18,8 +18,6 @@ namespace Causal\FileList\Domain\Model;
  * Folder.
  *
  * @category    Domain\Model
- * @package     TYPO3
- * @subpackage  tx_filelist
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
@@ -105,5 +103,4 @@ class Folder extends \TYPO3\CMS\Core\Resource\Folder
         $files = \Causal\FileList\Utility\Helper::filterInaccessibleFiles($files);
         return $files;
     }
-
 }

@@ -14,8 +14,8 @@
 
 namespace Causal\FileList\ViewHelpers;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -30,8 +30,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
   * </code>
  *
  * @category    ViewHelpers
- * @package     TYPO3
- * @subpackage  tx_filelist
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
@@ -75,5 +73,4 @@ class FilterViewHelper extends AbstractViewHelper
         });
         return $items;
     }
-
 }

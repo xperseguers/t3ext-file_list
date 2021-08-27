@@ -16,16 +16,13 @@ namespace Causal\FileList\Hooks;
 
 use Causal\FileList\EventListener\CoreResourceStorageEventListener;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileRepository;
-use Causal\FileList\Slots\ResourceStorage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Hooks into \TYPO3\CMS\Core\DataHandling\DataHandler.
  *
  * @category    Hooks
- * @package     TYPO3
- * @subpackage  tx_filelist
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
@@ -42,7 +39,8 @@ class DataHandler
      * @param array $fields
      * @param \TYPO3\CMS\Core\DataHandling\DataHandler $parentObject
      */
-    public function processDatamap_afterDatabaseOperations($operation, $table, $id, array $fields, \TYPO3\CMS\Core\DataHandling\DataHandler $parentObject) {
+    public function processDatamap_afterDatabaseOperations($operation, $table, $id, array $fields, \TYPO3\CMS\Core\DataHandling\DataHandler $parentObject)
+    {
         if ($table === 'sys_file_metadata' && !$parentObject->isImporting) {
             if (!is_numeric($id)) {
                 $id = $parentObject->substNEWwithIDs[$id];
@@ -65,5 +63,4 @@ class DataHandler
             $coreResourceStorageEventListener->flushCachesByFolder($file->getParentFolder());
         }
     }
-
 }

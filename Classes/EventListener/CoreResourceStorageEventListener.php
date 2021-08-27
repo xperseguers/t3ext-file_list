@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -212,5 +213,4 @@ class CoreResourceStorageEventListener
                 $this->pageCache->flushCachesByTag('tx_filelist_folder_' . $folder->getHashedIdentifier());
         }
     }
-
 }

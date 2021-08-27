@@ -20,15 +20,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Hooks into \TYPO3\CMS\Backend\View\PageLayoutView.
  *
  * @category    Hooks
- * @package     TYPO3
- * @subpackage  tx_filelist
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
 class PageLayoutView
 {
-
     const LL_PATH = 'LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:';
 
     /**
@@ -109,7 +106,7 @@ class PageLayoutView
      * @param string $key
      * @return string
      */
-    protected function sL(string $key) : string
+    protected function sL(string $key): string
     {
         $label = $this->languageService->sL(static::LL_PATH . $key);
         return $label;
@@ -136,5 +133,4 @@ class PageLayoutView
 
         return null;
     }
-
 }

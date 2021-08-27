@@ -17,26 +17,23 @@ namespace Causal\FileList\Controller;
 use Causal\FalProtect\Utility\AccessSecurity;
 use Causal\FileList\Domain\Repository\FileRepository;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\FolderInterface;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * File controller.
  *
  * @category    Controller
- * @package     TYPO3
- * @subpackage  tx_filelist
  * @author      Xavier Perseguers <xavier@causal.ch>
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
 class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-
     const SORT_BY_NAME = 'NAME';
     const SORT_BY_TITLE = 'TITLE';
     const SORT_BY_DESCRIPTION = 'DESCRIPTION';
@@ -266,7 +263,9 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         foreach ($this->settings['root'] as $root) {
             $success |= GeneralUtility::isFirstPartOfStr($path, $root);
-            if ($success) break;
+            if ($success) {
+                break;
+            }
         }
 
         return $success;
@@ -288,8 +287,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         array &$subfolders,
         Folder &$parentFolder = null,
         array &$breadcrumb
-    ): void
-    {
+    ): void {
         if (!(bool)$this->settings['includeSubfolders']) {
             // No way!
             $path = '';
@@ -570,5 +568,4 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
         return $typoScriptArray;
     }
-
 }

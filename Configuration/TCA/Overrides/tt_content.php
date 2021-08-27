@@ -1,4 +1,5 @@
 <?php
+
 defined('TYPO3_MODE') || die();
 
 $typo3Branch = class_exists(\TYPO3\CMS\Core\Information\Typo3Version::class)
