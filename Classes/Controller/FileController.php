@@ -388,7 +388,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 /** @var \TYPO3\CMS\Core\Resource\File[] $collectionFiles */
                 $collectionFiles = $collection->getItems();
                 if (empty($folders)) {
-                    $files += $collectionFiles;
+                    $files = array_merge($files, $collectionFiles);
                 } else {
                     foreach ($collectionFiles as $file) {
                         $success = false;
