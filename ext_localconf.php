@@ -1,6 +1,6 @@
 <?php
 
-defined('TYPO3') || die();
+defined('TYPO3_MODE') || die();
 
 (static function (string $_EXTKEY) {
     $typo3Branch = class_exists(\TYPO3\CMS\Core\Information\Typo3Version::class)
