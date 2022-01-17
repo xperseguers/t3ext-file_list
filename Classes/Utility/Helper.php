@@ -15,6 +15,7 @@
 namespace Causal\FileList\Utility;
 
 use Causal\FalProtect\Utility\AccessSecurity;
+use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -58,8 +59,15 @@ class Helper
      */
     public static function filterInaccessibleFiles(array $files): array
     {
-        if (TYPO3_MODE !== 'FE') {
-            return $files;
+
+        if (class_exists(ApplicationType::class)) {
+            if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend() === false) {
+                return $files;
+            }
+        } else {
+            if (TYPO3_MODE !== 'FE') {
+                return $files;
+            }
         }
 
         $filteredFiles = [];
