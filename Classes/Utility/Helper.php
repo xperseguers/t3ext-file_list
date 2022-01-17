@@ -84,8 +84,7 @@ class Helper
         } else {
             if (class_exists(Context::class)) {
                 $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-                $groupIds = $context->getPropertyFromAspect('frontend.user', 'groupIds');
-                $userGroups = GeneralUtility::intExplode(',', $groupIds, true);
+                $userGroups = $context->getPropertyFromAspect('frontend.user', 'groupIds');
             } else {
                 $userGroups = GeneralUtility::intExplode(',', $GLOBALS['TSFE']->gr_list, true);
             }
