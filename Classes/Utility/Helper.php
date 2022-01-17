@@ -15,6 +15,7 @@
 namespace Causal\FileList\Utility;
 
 use Causal\FalProtect\Utility\AccessSecurity;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -81,7 +82,13 @@ class Helper
                 }
             }
         } else {
-            $userGroups = GeneralUtility::intExplode(',', $GLOBALS['TSFE']->gr_list, true);
+            if (class_exists(Context::class)) {
+                $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+                $groupIds = $context->getPropertyFromAspect('frontend.user', 'groupIds');
+                $userGroups = GeneralUtility::intExplode(',', $groupIds, true);
+            } else {
+                $userGroups = GeneralUtility::intExplode(',', $GLOBALS['TSFE']->gr_list, true);
+            }
 
             foreach ($files as $file) {
                 $isVisible = $file->hasProperty('visible') ? (bool)$file->getProperty('visible') : true;
