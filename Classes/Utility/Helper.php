@@ -94,11 +94,14 @@ class Helper
                     continue;
                 }
 
-                $accessGroups = $file->getProperty('fe_groups');
-                if (!empty($accessGroups)) {
-                    $accessGroups = GeneralUtility::intExplode(',', $accessGroups, true);
-                    if (empty(array_intersect($accessGroups, $userGroups))) {
-                        continue;
+                // Happens if EXT:filemetadata is not present
+                if ($file->hasProperty('fe_groups')) {
+                    $accessGroups = $file->getProperty('fe_groups');
+                    if (!empty($accessGroups)) {
+                        $accessGroups = GeneralUtility::intExplode(',', $accessGroups, true);
+                        if (empty(array_intersect($accessGroups, $userGroups))) {
+                            continue;
+                        }
                     }
                 }
 
