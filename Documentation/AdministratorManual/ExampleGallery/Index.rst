@@ -34,7 +34,7 @@ Create file :file:`ext_localconf.php`:
 .. code-block:: php
 
    <?php
-   defined('TYPO3_MODE') || die();
+   defined('TYPO3') || die();
 
    $boot = function (string $_EXTKEY) {
 
@@ -59,7 +59,7 @@ Create files :file:`ext_tables.php`:
 .. code-block:: php
 
    <?php
-   defined('TYPO3_MODE') || die();
+   defined('TYPO3') || die();
 
    $boot = function (string $_EXTKEY) {
 

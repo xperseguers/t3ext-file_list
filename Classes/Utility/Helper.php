@@ -15,6 +15,8 @@
 namespace Causal\FileList\Utility;
 
 use Causal\FalProtect\Utility\AccessSecurity;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -58,8 +60,14 @@ class Helper
      */
     public static function filterInaccessibleFiles(array $files): array
     {
-        if (TYPO3_MODE !== 'FE') {
-            return $files;
+        if (class_exists(ApplicationType::class)) {
+            if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend() === false) {
+                return $files;
+            }
+        } else {
+            if (TYPO3_MODE !== 'FE') {
+                return $files;
+            }
         }
 
         $filteredFiles = [];
@@ -73,7 +81,12 @@ class Helper
                 }
             }
         } else {
-            $userGroups = GeneralUtility::intExplode(',', $GLOBALS['TSFE']->gr_list, true);
+            if (class_exists(Context::class)) {
+                $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+                $userGroups = $context->getPropertyFromAspect('frontend.user', 'groupIds');
+            } else {
+                $userGroups = GeneralUtility::intExplode(',', $GLOBALS['TSFE']->gr_list, true);
+            }
 
             foreach ($files as $file) {
                 $isVisible = $file->hasProperty('visible') ? (bool)$file->getProperty('visible') : true;
