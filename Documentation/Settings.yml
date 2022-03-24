@@ -4,7 +4,7 @@
 
 ---
 conf.py:
-  copyright: 2008-2020
+  copyright: 2008-2022
   project: File List
   version: 2.5
   release: 2.5.0
