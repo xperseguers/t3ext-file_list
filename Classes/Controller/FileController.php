@@ -109,8 +109,8 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 }
             }
         }
-        if (!is_array($this->settings['root'])) {
-            $root = $this->settings['root'];
+        if (!is_array($this->settings['root'] ?? null)) {
+            $root = $this->settings['root'] ?? null;
             $this->settings['root'] = [];
             if (!empty($root)) {
                 $this->settings['root'][] = $root;
