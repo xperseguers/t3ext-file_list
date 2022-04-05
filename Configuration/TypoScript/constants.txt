@@ -1,20 +1,2 @@
-plugin.tx_filelist {
-
-    view {
-        # cat=plugin.tx_filelist/file; type=string; label=Path to template root (FE)
-        templateRootPath = EXT:file_list/Resources/Private/Templates/
-        # cat=plugin.tx_filelist/file; type=string; label=Path to template partials (FE)
-        partialRootPath = EXT:file_list/Resources/Private/Partials/
-        # cat=plugin.tx_filelist/file; type=string; label=Path to template layouts (FE)
-        layoutRootPath = EXT:file_list/Resources/Private/Layouts/
-    }
-
-    settings {
-        # cat=plugin.tx_filelist; type=string; label=Format for dates
-        dateFormat = d.m.Y H:i
-
-        # cat=plugin.tx_filelist/file; type=string; label=Path to file icons
-        fileIconRootPath = EXT:file_list/Resources/Public/Icons/Files/
-    }
-
-}
+# LEGACY, please include constants.typoscript instead!
+<INCLUDE_TYPOSCRIPT: source="FILE: ./constants.typoscript">
