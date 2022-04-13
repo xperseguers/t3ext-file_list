@@ -286,7 +286,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         array &$files,
         array &$subfolders,
         Folder &$parentFolder = null,
-        array &$breadcrumb
+        array &$breadcrumb = []
     ): void {
         if (!(bool)$this->settings['includeSubfolders']) {
             // No way!
