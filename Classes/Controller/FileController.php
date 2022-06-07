@@ -16,6 +16,7 @@ namespace Causal\FileList\Controller;
 
 use Causal\FalProtect\Utility\AccessSecurity;
 use Causal\FileList\Domain\Repository\FileRepository;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
 use TYPO3\CMS\Core\Resource\Folder;
@@ -163,21 +164,14 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $files = $this->sortFiles($files);
         $subfolders = $this->sortFolders($subfolders);
 
-        // Mark files as "new" if needed
+        // Mark folders as "new" if needed
         // BEWARE: This needs to be done at the end since it is using an internal method which
         //         may break other operations such as sorting
+	/** @var Context $context */
+        $context = GeneralUtility::makeInstance(Context::class);
+        $currentTimestamp = $context->getPropertyFromAspect('date', 'timestamp');
+        $newTimestamp = $currentTimestamp - 86400 * (int)$this->settings['newDuration'];
         if ((int)$this->settings['newDuration'] > 0) {
-            $newTimestamp = $GLOBALS['EXEC_TIME'] - 86400 * (int)$this->settings['newDuration'];
-            foreach ($files as &$file) {
-                $properties = $file->getProperties();
-                $properties['tx_filelist']['isNew'] = $properties['creation_date'] >= $newTimestamp;
-                if ($file instanceof \TYPO3\CMS\Core\Resource\FileReference) {
-                    $file->getOriginalFile()->updateProperties($properties);
-                } else {
-                    $file->updateProperties($properties);
-                }
-            }
-
             $newDurationMaxSubfolders = max(0, (int)$this->settings['newDurationMaxSubfolders']);
             foreach ($subfolders as &$folder) {
                 /** @var \Causal\FileList\Domain\Model\Folder $folder */
@@ -195,6 +189,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'parent' => $parentFolder,
             'folders' => $subfolders,
             'files' => $files,
+            'newTimestamp' => $newTimestamp,
             'data' => $this->configurationManager->getContentObject()->data,
         ]);
     }

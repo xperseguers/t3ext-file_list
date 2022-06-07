@@ -21,7 +21,7 @@
             <f:render partial="Simple/Folder" arguments="{folder: folder}" />
         </f:for>
         <f:for each="{files}" as="file">
-            <f:render partial="Simple/File" arguments="{file: file}" />
+            <f:render partial="Simple/File" arguments="{file: file, newTimestamp: newTimestamp}" />
         </f:for>
     </tbody>
 </table>

@@ -16,7 +16,7 @@
                     <f:else>{file.name}</f:else>
                 </f:if>
             </f:link.typolink>
-            <f:if condition="{file.properties.tx_filelist.isNew}">
+            <f:if condition="{settings.newDuration && file.properties.creation_date >= newTimestamp}">
                 <span class="label label-default badge badge-secondary"><f:translate key="newFile" /></span>
             </f:if>
         </h4>
