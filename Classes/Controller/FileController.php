@@ -209,7 +209,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             /** @var LinkService $linkService */
             $linkService = GeneralUtility::makeInstance(LinkService::class);
             $data = $linkService->resolveByStringRepresentation($identifier);
-            if ($data['type'] === 'folder') {
+            if ($data['type'] === 'folder' && $data['folder'] !== null) {
                 /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
                 $folder = $data['folder'];
                 $identifier = 'file:' . $folder->getCombinedIdentifier();
