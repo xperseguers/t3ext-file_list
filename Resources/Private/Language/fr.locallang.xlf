@@ -3,41 +3,41 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2015-05-28T07:56:41Z" product-name="file_list" target-language="fr">
     <header/>
     <body>
-      <trans-unit id="filename">
+      <trans-unit id="filename" approved="yes">
         <source>Filename</source>
-        <target state="needs-translation">Filename</target>
+        <target state="final">Nom du fichier</target>
       </trans-unit>
       <trans-unit id="info">
         <source>Info</source>
         <target state="needs-translation">Info</target>
       </trans-unit>
-      <trans-unit id="date">
+      <trans-unit id="date" approved="yes">
         <source>Modified</source>
-        <target state="needs-translation">Modified</target>
+        <target state="final">Modifié</target>
       </trans-unit>
-      <trans-unit id="no_files">
+      <trans-unit id="no_files" approved="yes">
         <source>No files or folders found in this directory!</source>
-        <target state="needs-translation">No files or folders found in this directory!</target>
+        <target state="final">Aucun fichier ou répertoire trouvé dans ce répertoire !</target>
       </trans-unit>
-      <trans-unit id="breadcrumb.home">
+      <trans-unit id="breadcrumb.home" approved="yes">
         <source>Home</source>
-        <target state="needs-translation">Home</target>
+        <target state="final">Racine</target>
       </trans-unit>
-      <trans-unit id="directory_size.no_files">
+      <trans-unit id="directory_size.no_files" approved="yes">
         <source>No files</source>
-        <target state="needs-translation">No files</target>
+        <target state="final">Aucun fichier</target>
       </trans-unit>
-      <trans-unit id="directory_size.one_file">
+      <trans-unit id="directory_size.one_file" approved="yes">
         <source>File</source>
-        <target state="needs-translation">File</target>
+        <target state="final">Fichier</target>
       </trans-unit>
-      <trans-unit id="directory_size.multiple_files">
+      <trans-unit id="directory_size.multiple_files" approved="yes">
         <source>Files</source>
-        <target state="needs-translation">Files</target>
+        <target state="final">Fichiers</target>
       </trans-unit>
-      <trans-unit id="newFile">
+      <trans-unit id="newFile" approved="yes">
         <source>new</source>
-        <target state="needs-translation">new</target>
+        <target state="final">nouveau</target>
       </trans-unit>
     </body>
   </file>
