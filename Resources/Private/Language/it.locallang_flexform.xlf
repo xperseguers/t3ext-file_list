@@ -3,13 +3,13 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2014-11-03T13:48:41Z" product-name="file_list" target-language="it">
     <header/>
     <body>
-      <trans-unit id="filelist_title">
+      <trans-unit id="filelist_title" approved="yes">
         <source>File List - List of files</source>
-        <target state="needs-translation">File List - List of files</target>
+        <target state="final">File List - Lista file</target>
       </trans-unit>
-      <trans-unit id="filelist_wizard_description">
+      <trans-unit id="filelist_wizard_description" approved="yes">
         <source>Makes a list of files and folders.</source>
-        <target state="needs-translation">Makes a list of files and folders.</target>
+        <target state="final">Crea una lista di file e cartelle.</target>
       </trans-unit>
       <trans-unit id="tabs.general">
         <source>General</source>
@@ -17,11 +17,11 @@
       </trans-unit>
       <trans-unit id="tabs.appearance">
         <source>Listing Appearance</source>
-        <target state="needs-translation">Listing Appearance</target>
+        <target state="translated">Aspetto della Lista</target>
       </trans-unit>
-      <trans-unit id="filelist.mode">
+      <trans-unit id="filelist.mode" approved="yes">
         <source>Mode</source>
-        <target state="needs-translation">Mode</target>
+        <target state="final">Modalità</target>
       </trans-unit>
       <trans-unit id="filelist.mode.folder">
         <source>Files within a folder</source>
