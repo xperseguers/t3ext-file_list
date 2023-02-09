@@ -34,7 +34,7 @@ File List
       list, file, directory, files, directories, gallery, bootstrap
 
    :Copyright:
-      2008-2022
+      2008-2023
 
    :Author:
       Xavier Perseguers
