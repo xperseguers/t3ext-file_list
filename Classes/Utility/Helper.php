@@ -60,15 +60,10 @@ class Helper
      */
     public static function filterInaccessibleFiles(array $files): array
     {
-        if (class_exists(ApplicationType::class)) {
-            if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend() === false) {
-                return $files;
-            }
-        } else {
-            if (TYPO3_MODE !== 'FE') {
-                return $files;
-            }
+        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend() === false) {
+            return $files;
         }
+
 
         $filteredFiles = [];
 

@@ -112,7 +112,7 @@ Create file :file:`Resources/Private/Partials/MyGallery.html`:
                    rel="lightbox[gallery_{data.uid}]"
                    title="{file.properties.description}">
 
-                   <fl:thumbnail image="{file}" width="256c" height="256c" />
+                   <f:image image="{file}" width="256c" height="256c" />
                </a>
                <figcaption>
                    <f:if condition="{file.properties.description}">

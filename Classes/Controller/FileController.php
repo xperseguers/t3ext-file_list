@@ -24,6 +24,7 @@ use TYPO3\CMS\Core\Resource\FolderInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * File controller.
@@ -128,7 +129,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param string $path Optional path of the subdirectory to be listed
      * @return void|string
      */
-    public function listAction(string $path = '')
+    public function listAction(string $path = ''): ResponseInterface
     {
         $files = [];
         $subfolders = [];
@@ -192,6 +193,8 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'newTimestamp' => $newTimestamp,
             'data' => $this->configurationManager->getContentObject()->data,
         ]);
+
+        return $this->htmlResponse();
     }
 
     /**

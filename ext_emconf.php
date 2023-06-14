@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'title' => 'File List',
     'description' => 'This extension provides a frontend plugin which shows a list of files and folders in a specified directory on the file system (comparable to Apache directory listing) or using more advanced FAL selectors (categories, collection of files, ...). This extension may also be used for creating image galleries. Default templates are Bootstrap-ready.',
     'category' => 'plugin',
-    'version' => '2.6.0',
+    'version' => '3.0.0',
     'state' => 'stable',
     'uploadfolder' => 0,
     'createDirs' => '',
@@ -24,7 +24,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'Causal Sàrl',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5.0-11.5.99',
+            'typo3' => '12.4.0-12.4.99',
             'php' => '7.2.0-8.2.99',
         ],
         'conflicts' => [],
