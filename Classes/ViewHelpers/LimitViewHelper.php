@@ -23,10 +23,10 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  * = Examples =
  *
  * <code title="Example">
-  * <f:for each="{files -> fl:limit(offset:0, length:4)}" as="file">
+ * <f:for each="{files -> fl:limit(offset:0, length:4)}" as="file">
  *      // whatever
  * </f:for>
-  * </code>
+ * </code>
  *
  * @category    ViewHelpers
  * @author      Xavier Perseguers <xavier@causal.ch>
@@ -35,7 +35,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class LimitViewHelper extends AbstractViewHelper
 {
-
     /**
      * Initialize arguments.
      */

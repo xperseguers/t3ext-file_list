@@ -27,7 +27,6 @@ use TYPO3\CMS\Core\Resource\StorageRepository;
  */
 class FileRepository
 {
-
     /**
      * @var \TYPO3\CMS\Core\Resource\StorageRepository
      */

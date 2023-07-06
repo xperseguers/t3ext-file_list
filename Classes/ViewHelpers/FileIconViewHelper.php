@@ -31,7 +31,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class FileIconViewHelper extends AbstractViewHelper
 {
-
     /**
      * @var bool
      */

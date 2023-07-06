@@ -24,7 +24,6 @@ namespace Causal\FileList\Tca;
  */
 class TemplateLayoutSelector
 {
-
     /**
      * Renders a list of available template layouts.
      *

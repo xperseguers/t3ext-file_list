@@ -52,7 +52,6 @@ namespace Causal\FileList\ViewHelpers;
  */
 class ThumbnailViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
 {
-
     /**
      * Initialize arguments.
      */

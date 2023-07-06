@@ -24,10 +24,10 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  * = Examples =
  *
  * <code title="Example">
-  * <f:for each="{files -> fl:filter(extensions:'jpg, jpeg, png, gif')}" as="file">
+ * <f:for each="{files -> fl:filter(extensions:'jpg, jpeg, png, gif')}" as="file">
  *      // whatever
  * </f:for>
-  * </code>
+ * </code>
  *
  * @category    ViewHelpers
  * @author      Xavier Perseguers <xavier@causal.ch>
@@ -36,7 +36,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class FilterViewHelper extends AbstractViewHelper
 {
-
     /**
      * Initialize arguments.
      */
@@ -67,7 +66,9 @@ class FilterViewHelper extends AbstractViewHelper
         if (!is_array($extensions)) {
             $extensions = GeneralUtility::trimExplode(',', $extensions, true);
         }
-        array_walk($extensions, function (&$extension) { $extension = strtolower($extension); });
+        array_walk($extensions, function (&$extension) {
+            $extension = strtolower($extension);
+        });
         $items = array_filter($subject, function ($file) use ($extensions) {
             return in_array(strtolower($file->getExtension()), $extensions);
         });

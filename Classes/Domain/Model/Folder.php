@@ -24,7 +24,6 @@ namespace Causal\FileList\Domain\Model;
  */
 class Folder extends \TYPO3\CMS\Core\Resource\Folder
 {
-
     /**
      * @var array
      */

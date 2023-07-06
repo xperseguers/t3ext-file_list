@@ -164,7 +164,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // Mark folders as "new" if needed
         // BEWARE: This needs to be done at the end since it is using an internal method which
         //         may break other operations such as sorting
-	    /** @var Context $context */
+        /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
         $currentTimestamp = $context->getPropertyFromAspect('date', 'timestamp');
         $newDuration = (int)($this->settings['newDuration'] ?? 0);
@@ -281,11 +281,12 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected function populateFromFolder(
         string $path,
-        array &$files,
-        array &$subfolders,
+        array  &$files,
+        array  &$subfolders,
         Folder &$parentFolder = null,
-        array &$breadcrumb = []
-    ): void {
+        array  &$breadcrumb = []
+    ): void
+    {
         $includeSubfolder = (bool)($this->settings['includeSubfolders'] ?? false);
         if (!$includeSubfolder) {
             // No way!

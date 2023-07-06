@@ -29,7 +29,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class DataHandler
 {
-
     /**
      * Hooks into \TYPO3\CMS\Core\DataHandling\DataHandler after records have been saved to the database.
      *
