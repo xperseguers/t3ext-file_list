@@ -82,7 +82,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         foreach ($keys as $key) {
             if (isset($settings[$key . '.'])) {
-                $this->settings[$key] = $contentObject->stdWrap($settings[$key], $settings[$key . '.']);
+                $this->settings[$key] = $contentObject->stdWrap($settings[$key] ?? '', $settings[$key . '.']);
             }
         }
 
@@ -102,9 +102,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         }
                         continue;
                     }
-                    $value = isset($settings['root.'][substr($key, 0, -1)])
-                        ? $settings['root.'][substr($key, 0, -1)]
-                        : '';
+                    $value = $settings['root.'][substr($key, 0, -1)] ?? '';
                     $value = $contentObject->stdWrap($value, $settings['root.'][$key]);
                     $this->settings['root'][] = $value;
                 }
@@ -126,7 +124,6 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * Listing of files.
      *
      * @param string $path Optional path of the subdirectory to be listed
-     * @return void|string
      */
     public function listAction(string $path = '')
     {
@@ -144,7 +141,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
 
             // Collect files and folders to be shown
-            switch ($this->settings['mode']) {
+            switch ($this->settings['mode'] ?? null) {
                 case 'FOLDER':
                     $this->populateFromFolder($path, $files, $subfolders, $parentFolder, $breadcrumb);
                     break;
@@ -167,12 +164,13 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // Mark folders as "new" if needed
         // BEWARE: This needs to be done at the end since it is using an internal method which
         //         may break other operations such as sorting
-	/** @var Context $context */
+	    /** @var Context $context */
         $context = GeneralUtility::makeInstance(Context::class);
         $currentTimestamp = $context->getPropertyFromAspect('date', 'timestamp');
-        $newTimestamp = $currentTimestamp - 86400 * (int)$this->settings['newDuration'];
-        if ((int)$this->settings['newDuration'] > 0) {
-            $newDurationMaxSubfolders = max(0, (int)$this->settings['newDurationMaxSubfolders']);
+        $newDuration = (int)($this->settings['newDuration'] ?? 0);
+        $newTimestamp = $currentTimestamp - 86400 * $newDuration;
+        if ($newDuration) {
+            $newDurationMaxSubfolders = max(0, (int)($this->settings['newDurationMaxSubfolders'] ?? 0));
             foreach ($subfolders as &$folder) {
                 /** @var \Causal\FileList\Domain\Model\Folder $folder */
                 if ($folder->hasFileNewerThan($newTimestamp, $newDurationMaxSubfolders)) {
@@ -288,7 +286,8 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         Folder &$parentFolder = null,
         array &$breadcrumb = []
     ): void {
-        if (!(bool)$this->settings['includeSubfolders']) {
+        $includeSubfolder = (bool)($this->settings['includeSubfolders'] ?? false);
+        if (!$includeSubfolder) {
             // No way!
             $path = '';
         }
@@ -327,7 +326,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $parentFolder = $folder->getParentFolder();
         }
 
-        if ((bool)$this->settings['includeSubfolders']) {
+        if ($includeSubfolder) {
             $hasFalProtect = ExtensionManagementUtility::isLoaded('fal_protect');
             $tempSubfolders = $folder->getSubfolders();
             foreach ($tempSubfolders as $subfolder) {
@@ -491,7 +490,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param bool $reverse If true then the keys will be sorted in reverse order
      * @return bool true on success or false on failure.
      */
-    protected function natksort(array &$array, $reverse = false): bool
+    protected function natksort(array &$array, bool $reverse = false): bool
     {
         // Like ksort but uses natural sort instead
         $keys = array_keys($array);
@@ -573,7 +572,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 }
                 $typoScriptArray[$key . '.'] = $this->convertPlainArrayToTypoScriptArray($value);
             } else {
-                $typoScriptArray[$key] = $value === null ? '' : $value;
+                $typoScriptArray[$key] = $value ?? '';
             }
         }
         return $typoScriptArray;
