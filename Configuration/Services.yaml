@@ -4,6 +4,9 @@ services:
     autoconfigure: true
     public: false
 
+  Causal\FileList\:
+    resource: '../Classes/*'
+
   Causal\FileList\EventListener\CoreResourceStorageEventListener:
     tags:
       - name: event.listener

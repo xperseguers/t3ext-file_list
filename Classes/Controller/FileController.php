@@ -190,6 +190,13 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'newTimestamp' => $newTimestamp,
             'data' => $this->configurationManager->getContentObject()->data,
         ]);
+
+        $typo3Branch = class_exists(\TYPO3\CMS\Core\Information\Typo3Version::class)
+            ? (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch()
+            : TYPO3_branch;
+        if (version_compare($typo3Branch, '11.5', '>=')) {
+            return $this->htmlResponse();
+        }
     }
 
     /**
