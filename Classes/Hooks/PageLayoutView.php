@@ -118,9 +118,9 @@ class PageLayoutView
      *
      * @param string $key The name of the key
      * @param string $sheet The name of the sheet
-     * @return string|null The value if found, otherwise null
+     * @return string The value, if found, or an empty string, if nothing found
      */
-    protected function getFieldFromFlexForm($key, $sheet = 'sDEF')
+    protected function getFieldFromFlexForm($key, $sheet = 'sDEF'): string
     {
         $flexForm = $this->flexFormData;
         if (ArrayUtility::isValidPath($flexForm, 'data/' . $sheet . '/lDEF/' . $key . 'vDEF')) {
