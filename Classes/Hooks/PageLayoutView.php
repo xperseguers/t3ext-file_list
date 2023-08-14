@@ -14,6 +14,7 @@
 
 namespace Causal\FileList\Hooks;
 
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -122,15 +123,9 @@ class PageLayoutView
     protected function getFieldFromFlexForm($key, $sheet = 'sDEF')
     {
         $flexForm = $this->flexFormData;
-        if (isset($flexForm['data'])) {
-            $flexForm = $flexForm['data'];
-            if (is_array($flexForm) && is_array($flexForm[$sheet]) && is_array($flexForm[$sheet]['lDEF'])
-                && is_array($flexForm[$sheet]['lDEF'][$key]) && isset($flexForm[$sheet]['lDEF'][$key]['vDEF'])
-            ) {
-                return $flexForm[$sheet]['lDEF'][$key]['vDEF'];
-            }
+        if (ArrayUtility::isValidPath($flexForm, 'data/' . $sheet . '/lDEF/' . $key . 'vDEF')) {
+            return $flexForm['data'][$sheet]['lDEF'][$key]['vDEF'];
         }
-
-        return null;
+        return '';
     }
 }
