@@ -14,6 +14,7 @@
 
 namespace Causal\FileList\Hooks;
 
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -117,20 +118,14 @@ class PageLayoutView
      *
      * @param string $key The name of the key
      * @param string $sheet The name of the sheet
-     * @return string|null The value if found, otherwise null
+     * @return string The value, if found, or an empty string, if nothing found
      */
-    protected function getFieldFromFlexForm($key, $sheet = 'sDEF')
+    protected function getFieldFromFlexForm($key, $sheet = 'sDEF'): string
     {
         $flexForm = $this->flexFormData;
-        if (isset($flexForm['data'])) {
-            $flexForm = $flexForm['data'];
-            if (is_array($flexForm) && is_array($flexForm[$sheet]) && is_array($flexForm[$sheet]['lDEF'])
-                && is_array($flexForm[$sheet]['lDEF'][$key]) && isset($flexForm[$sheet]['lDEF'][$key]['vDEF'])
-            ) {
-                return $flexForm[$sheet]['lDEF'][$key]['vDEF'];
-            }
+        if (ArrayUtility::isValidPath($flexForm, 'data/' . $sheet . '/lDEF/' . $key . 'vDEF')) {
+            return $flexForm['data'][$sheet]['lDEF'][$key]['vDEF'];
         }
-
-        return null;
+        return '';
     }
 }
