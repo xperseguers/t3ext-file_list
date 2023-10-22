@@ -9,9 +9,10 @@
     "directories",
     "gallery"
   ],
-  "homepage": "https://github.com/xperseguers/t3ext-file_list",
   "support": {
-    "issues": "https://github.com/xperseguers/t3ext-file_list/issues"
+    "docs": "https://docs.typo3.org/p/causal/file_list/main/en-us/",
+    "issues": "https://github.com/xperseguers/t3ext-file_list/issues",
+    "source": "https://github.com/xperseguers/t3ext-file_list"
   },
   "authors": [
     {
