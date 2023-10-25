@@ -17,8 +17,8 @@ $typo3Branch = class_exists(\TYPO3\CMS\Core\Information\Typo3Version::class)
 
 $pluginSignature = 'filelist_filelist';
 
-// Disable the display of layout, select_key and page fields
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'layout,select_key,pages,recursive';
+// Disable the display of layout and page fields
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'layout,pages,recursive';
 
 // Activate the display of the plugin FlexForm field and set FlexForm definition
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
