@@ -5,6 +5,7 @@ defined('TYPO3') || die();
     'LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist_title',
     'filelist_filelist',
     'extensions-filelist-wizard',
+    'special'
 ], 'CType', 'file_list');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
