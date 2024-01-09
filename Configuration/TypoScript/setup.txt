@@ -1,2 +1,0 @@
-# LEGACY, please include setup.typoscript instead!
-<INCLUDE_TYPOSCRIPT: source="FILE: ./setup.typoscript">

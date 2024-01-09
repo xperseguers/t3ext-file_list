@@ -1,2 +1,0 @@
-# LEGACY, please include constants.typoscript instead!
-<INCLUDE_TYPOSCRIPT: source="FILE: ./constants.typoscript">
