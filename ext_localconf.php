@@ -10,7 +10,8 @@ defined('TYPO3') || die();
             \Causal\FileList\Controller\FileController::class => 'list',
         ],
         // non-cacheable actions
-        []
+        [],
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
@@ -50,4 +51,7 @@ defined('TYPO3') || die();
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][$_EXTKEY] = \Causal\FileList\Hooks\DataHandler::class;
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['routing']['aspects']['FileListFolderMapper'] = \Causal\FileList\Routing\Aspect\FileListFolderMapper::class;
+
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['TxFileListPlugins']
+        = \Causal\FileList\Updates\PluginsUpdater::class;
 })('file_list');
