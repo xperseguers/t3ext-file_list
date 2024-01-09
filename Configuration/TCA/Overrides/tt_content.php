@@ -1,16 +1,9 @@
 <?php
-
-defined('TYPO3_MODE') || defined('TYPO3') || die();
-
-$typo3Branch = class_exists(\TYPO3\CMS\Core\Information\Typo3Version::class)
-    ? (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch()
-    : TYPO3_branch;
+defined('TYPO3') || die();
 
 // Register Frontend plugin
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    version_compare($typo3Branch, '10.0', '>=')
-        ? 'file_list'
-        : 'Causal.file_list',
+    'file_list',
     'Filelist',
     'LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist_title'
 );
