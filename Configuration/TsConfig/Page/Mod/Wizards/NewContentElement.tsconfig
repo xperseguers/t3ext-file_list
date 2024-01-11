@@ -7,11 +7,11 @@ mod.wizards {
                     title = LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist_title
                     description = LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist_wizard_description
                     tt_content_defValues {
-                        CType = list
-                        list_type = filelist_filelist
+                        CType = filelist_filelist
                     }
                 }
             }
+            show := addToList(filelist_filelist)
         }
     }
 }
