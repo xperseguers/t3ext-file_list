@@ -34,3 +34,10 @@ $GLOBALS['TCA']['tt_content']['types']['filelist_filelist']['showitem'] = '
             rowDescription,
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended,
     ';
+
+/**
+ * Configure a custom preview renderer for the plugins
+ * @see https://docs.typo3.org/m/typo3/reference-coreapi/11.5/en-us/ApiOverview/ContentElements/CustomBackendPreview.html
+ */
+$GLOBALS['TCA']['tt_content']['types']['filelist_filelist']['previewRenderer']
+    = \Causal\FileList\Preview\FileListPreviewRenderer::class;

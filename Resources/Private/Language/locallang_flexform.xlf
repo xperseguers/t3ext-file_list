@@ -31,6 +31,9 @@
 			<trans-unit id="filelist.path.summary">
 				<source>Path</source>
 			</trans-unit>
+			<trans-unit id="filelist.path.summary.errorEmpty">
+				<source>No path selected</source>
+			</trans-unit>
 			<trans-unit id="filelist.path.wizards.link.title">
 				<source>Folder selector</source>
 			</trans-unit>
