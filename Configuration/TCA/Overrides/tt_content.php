@@ -8,6 +8,11 @@ defined('TYPO3') || die();
     'special'
 ], 'CType', 'file_list');
 
+$typo3Branch = (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch();
+if (version_compare($typo3Branch, '11.0', '<')) {
+    $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['filelist_filelist'] = 'extensions-filelist-wizard';
+}
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     '*',
     'FILE:EXT:file_list/Configuration/FlexForms/flexform_filelist.xml',
