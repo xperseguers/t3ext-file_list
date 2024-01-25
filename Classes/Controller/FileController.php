@@ -17,6 +17,7 @@ namespace Causal\FileList\Controller;
 use Causal\FalProtect\Utility\AccessSecurity;
 use Causal\FileList\Domain\Repository\FileRepository;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
 use TYPO3\CMS\Core\Resource\Folder;
@@ -188,7 +189,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'folders' => $subfolders,
             'files' => $files,
             'newTimestamp' => $newTimestamp,
-            'data' => $this->configurationManager->getContentObject()->data,
+            'data' => $this->getContentObjectData(),
         ]);
 
         $typo3Branch = (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch();
@@ -582,5 +583,15 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
         }
         return $typoScriptArray;
+    }
+
+    protected function getContentObjectData(): array
+    {
+        $typo3Version = (new Typo3Version())->getMajorVersion();
+        if ($typo3Version >= 12) {
+            return $this->request->getAttribute('currentContentObject')->data;
+        } else {
+            return $this->configurationManager->getContentObject()->data;
+        }
     }
 }
