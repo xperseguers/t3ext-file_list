@@ -7,7 +7,7 @@ conf.py:
   copyright: 2008-2024
   project: File List
   version: 3.0
-  release: 3.0.0
+  release: 3.0.1
   latex_documents:
   - - Index
     - file_list.tex
