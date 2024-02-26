@@ -13,11 +13,19 @@ if (version_compare($typo3Branch, '11.0', '<')) {
     $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['filelist_filelist'] = 'extensions-filelist-wizard';
 }
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
-    '*',
-    'FILE:EXT:file_list/Configuration/FlexForms/flexform_filelist.xml',
-    'filelist_filelist'
-);
+if (version_compare($typo3Branch, '12.0', '>=')) {
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+        '*',
+        'FILE:EXT:file_list/Configuration/FlexForms/flexform_filelist_v12.xml',
+        'filelist_filelist'
+    );
+} else {
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+        '*',
+        'FILE:EXT:file_list/Configuration/FlexForms/flexform_filelist.xml',
+        'filelist_filelist'
+    );
+}
 
 $GLOBALS['TCA']['tt_content']['types']['filelist_filelist']['showitem'] = '
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,

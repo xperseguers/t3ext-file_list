@@ -46,4 +46,9 @@ defined('TYPO3') || die();
 
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['TxFileListPlugins']
         = \Causal\FileList\Updates\PluginsUpdater::class;
+
+    if (version_compare((new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch(), '12.4', '>=')) {
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['TxFileListPath']
+            = \Causal\FileList\Updates\PathUpdater::class;
+    }
 })('file_list');

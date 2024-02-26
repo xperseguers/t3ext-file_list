@@ -226,6 +226,11 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
         }
 
+        // New format in FlexForm since TYPO3 v12
+        if (preg_match('/^(\d+):(.*)$/', $identifier, $matches)) {
+            $identifier = 'file:' . $identifier;
+        }
+
         if (preg_match('/^file:(\d+):(.*)$/', $identifier, $matches)) {
             $prefix = 'file:' . $matches[1] . ':';
             $identifier = $matches[2];

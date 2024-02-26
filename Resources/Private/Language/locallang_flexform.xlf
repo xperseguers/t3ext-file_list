@@ -26,7 +26,7 @@
 				<source>Files from file collections</source>
 			</trans-unit>
 			<trans-unit id="filelist.path">
-				<source>Restrict to folder path (example: file:1:/user_upload/)</source>
+				<source>Restrict to folder path (example: 1:/user_upload/)</source>
 			</trans-unit>
 			<trans-unit id="filelist.path.summary">
 				<source>Path</source>
