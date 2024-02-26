@@ -380,8 +380,14 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $folders = [];
 
-        /** @var FileCollectionRepository $fileCollectionRepository */
-        $fileCollectionRepository = $this->objectManager->get(FileCollectionRepository::class);
+        $typo3Branch = (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch();
+        if (version_compare($typo3Branch, '11.5', '>=')) {
+            $fileCollectionRepository = GeneralUtility::makeInstance(FileCollectionRepository::class);
+        } else {
+            // TYPO3 v10
+            /** @var FileCollectionRepository $fileCollectionRepository */
+            $fileCollectionRepository = $this->objectManager->get(FileCollectionRepository::class);
+        }
         if (!empty($this->settings['path'])) {
             // Returned files needs to be within a given root path
             $folders[] = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
