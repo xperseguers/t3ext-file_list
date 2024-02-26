@@ -26,6 +26,7 @@ use TYPO3\CMS\Core\Resource\FolderInterface;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * File controller.
@@ -79,7 +80,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function initializeAction(): void
     {
         $settings = $this->convertPlainArrayToTypoScriptArray($this->settings);
-        $contentObject = $this->configurationManager->getContentObject();
+        $contentObject = $this->getContentObject();
         $keys = ['path', 'dateFormat', 'fileIconRootPath', 'newDurationMaxSubfolders'];
 
         foreach ($keys as $key) {
@@ -195,7 +196,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'folders' => $subfolders,
             'files' => $files,
             'newTimestamp' => $newTimestamp,
-            'data' => $this->getContentObjectData(),
+            'data' => $this->getContentObject()->data,
         ]);
 
         $typo3Branch = (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch();
@@ -602,13 +603,13 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         return $typoScriptArray;
     }
 
-    protected function getContentObjectData(): array
+    protected function getContentObject(): ContentObjectRenderer
     {
         $typo3Version = (new Typo3Version())->getMajorVersion();
         if ($typo3Version >= 12) {
-            return $this->request->getAttribute('currentContentObject')->data;
+            return $this->request->getAttribute('currentContentObject');
         } else {
-            return $this->configurationManager->getContentObject()->data;
+            return $this->configurationManager->getContentObject();
         }
     }
 }
