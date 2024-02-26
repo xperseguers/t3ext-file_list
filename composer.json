@@ -25,7 +25,7 @@
   "license": "GPL-2.0-or-later",
   "require": {
     "php": ">= 7.4.0, <= 8.3.99",
-    "typo3/cms-core": "^10 || ^11 || ^12"
+    "typo3/cms-core": "^10 || ^11 || ^12 || ^13"
   },
   "suggest": {
     "causal/fal-protect": "Used to prevent direct access to protected files"
@@ -35,12 +35,10 @@
       "Causal\\FileList\\": "Classes/"
     }
   },
-  "replace": {
-    "typo3-ter/file-list": "self.version"
-  },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "3.0.x-dev",
+      "dev-feature/TYPO3v13": "3.1.x-dev"
     },
     "typo3/cms": {
       "extension-key": "file_list"
