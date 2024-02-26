@@ -76,7 +76,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * Handles stdWrap on various settings.
      */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         $settings = $this->convertPlainArrayToTypoScriptArray($this->settings);
         $contentObject = $this->configurationManager->getContentObject();
