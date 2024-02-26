@@ -17,6 +17,7 @@ namespace Causal\FileList\Controller;
 use Causal\FalProtect\Utility\AccessSecurity;
 use Causal\FileList\Domain\Repository\FileRepository;
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
 use TYPO3\CMS\Core\Resource\FileCollectionRepository;
@@ -152,7 +153,12 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     break;
             }
         } catch (\Throwable $e) {
-            return $this->error('The configuration of the file_list plugin is incorrect: ' . $e->getMessage());
+            $errorMessage = $this->error('The configuration of the file_list plugin is incorrect: ' . $e->getMessage());
+            $typo3Branch = (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch();
+            if (version_compare($typo3Branch, '11.5', '>=')) {
+                return new HtmlResponse($errorMessage);
+            }
+            return $errorMessage;
         }
 
         // Filter files
