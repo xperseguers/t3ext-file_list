@@ -98,6 +98,8 @@ class Folder extends \TYPO3\CMS\Core\Resource\Folder
      */
     public function getFiles($start = 0, $numberOfItems = 0, $filterMode = self::FILTER_MODE_USE_OWN_AND_STORAGE_FILTERS, $recursive = false, $sort = '', $sortRev = false)
     {
+        // We want to search for files recursively
+        $recursive = true;
         $files = parent::getFiles($start, $numberOfItems, $filterMode, $recursive, $sort, $sortRev);
         $files = \Causal\FileList\Utility\Helper::filterInaccessibleFiles($files);
         return $files;
