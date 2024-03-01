@@ -1,4 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:fl="http://typo3.org/ns/Causal/FileList/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
 <tr>
@@ -24,7 +25,12 @@
             </f:defaultCase>
         </f:switch>
     </td>
-    <td></td>
+    <td>
+        <f:variable name="folderLastModification" value="{fl:folder.lastModificationDate(folder:folder)}" />
+        <f:if condition="{folderLastModification}">
+            <f:format.date format="{settings.dateFormat}">@{folderLastModification}</f:format.date>
+        </f:if>
+    </td>
 </tr>
 
 </html>
