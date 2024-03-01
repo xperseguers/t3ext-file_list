@@ -53,7 +53,7 @@ class DataHandler
                         'uid' => (int)$id,
                     ]
                 )
-                ->fetch();
+                ->fetchAssociative();
 
             $file = GeneralUtility::makeInstance(FileRepository::class)->findByUid($row['file']);
 
