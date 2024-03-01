@@ -2,6 +2,15 @@
       xmlns:fl="http://typo3.org/ns/Causal/FileList/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
+<f:if condition="{file.properties.content_creation_date}">
+    <f:then><f:variable name="file_creation_date" value="{file.properties.content_creation_date}" /></f:then>
+    <f:else><f:variable name="file_creation_date" value="{file.properties.creation_date}" /></f:else>
+</f:if>
+<f:if condition="{file.properties.content_modification_date}">
+    <f:then><f:variable name="file_modification_date" value="{file.properties.content_modification_date}" /></f:then>
+    <f:else><f:variable name="file_modification_date" value="{file.properties.modification_date}" /></f:else>
+</f:if>
+
 <tr>
     <td>
         <fl:fileIcon file="{file}" />
@@ -10,14 +19,14 @@
                 <f:then>{file.properties.title}</f:then>
                 <f:else>{file.name}</f:else>
             </f:if>
-            <f:if condition="{settings.newDuration && file.properties.creation_date >= newTimestamp}">
+            <f:if condition="{settings.newDuration && file_creation_date >= newTimestamp}">
                 <span class="label label-default badge badge-secondary"><f:translate key="newFile" /></span>
             </f:if>
         </f:link.typolink>
     </td>
     <td class="text-right">{file.properties.size -> f:format.bytes()}</td>
     <td>
-        <f:format.date format="{settings.dateFormat}">@{file.properties.modification_date}</f:format.date>
+        <f:format.date format="{settings.dateFormat}">@{file_modification_date}</f:format.date>
     </td>
 </tr>
 

@@ -458,10 +458,26 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         foreach ($files as $file) {
             switch ($this->settings['orderBy']) {
                 case static::SORT_BY_DATE:
-                    $key = sprintf('%010d', $file->getProperty('modification_date'));
+                    $date = 0;
+                    if ($file->hasProperty('content_modification_date')) {
+                        $date = $file->getProperty('content_modification_date');
+                    }
+                    if ($date === 0) {
+                        // It's fair enough to consider content_modification_date is unlikely to be 1970-01-01 at midnight
+                        $date = $file->getProperty('modification_date');
+                    }
+                    $key = sprintf('%010d', $date);
                     break;
                 case static::SORT_BY_CRDATE:
-                    $key = sprintf('%010d', $file->getProperty('creation_date'));
+                    $date = 0;
+                    if ($file->hasProperty('content_creation_date')) {
+                        $date = $file->getProperty('content_creation_date');
+                    }
+                    if ($date === 0) {
+                        // It's fair enough to consider content_creation_date is unlikely to be 1970-01-01 at midnight
+                        $date = $file->getProperty('creation_date');
+                    }
+                    $key = sprintf('%010d', $date);
                     break;
                 case static::SORT_BY_TITLE:
                     $key = $file->getProperty('title');
