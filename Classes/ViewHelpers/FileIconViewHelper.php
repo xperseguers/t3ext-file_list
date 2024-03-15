@@ -16,8 +16,10 @@ namespace Causal\FileList\ViewHelpers;
 
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileReference;
+use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
@@ -82,7 +84,15 @@ class FileIconViewHelper extends AbstractViewHelper
 
         $settings = $renderingContext->getVariableProvider()->get('settings');
         if (empty($settings['fileIconRootPath'])) {
-            return '';
+            // Maybe used in the context of another extension
+            if ($GLOBALS['TSFE'] ?? null instanceof TypoScriptFrontendController) {
+                $settings = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_filelist.']['settings.'] ?? [];
+                $typoscriptService = GeneralUtility::makeInstance(TypoScriptService::class);
+                $settings = $typoscriptService->convertTypoScriptArrayToPlainArray($settings);
+            }
+            if (empty($settings['fileIconRootPath'])) {
+                return '';
+            }
         }
         $settings['fileIconRootPath'] = GeneralUtility::getFileAbsFileName($settings['fileIconRootPath']);
         $fileName = $file->getProperty('name');
@@ -104,10 +114,10 @@ class FileIconViewHelper extends AbstractViewHelper
     protected static function getFileTypeIcon(array $settings, $fileName)
     {
         $categories = [];
-        foreach ($settings['extension']['category'] as $category => $extensions) {
+        foreach ($settings['extension']['category'] ?? [] as $category => $extensions) {
             $categories[$category] = GeneralUtility::trimExplode(',', $extensions, true);
         }
-        $remapExtensions = $settings['extension']['remap'];
+        $remapExtensions = $settings['extension']['remap'] ?? [];
 
         // Extract the file extension
         $ext = strtolower(substr($fileName, strrpos($fileName, '.') + 1));
