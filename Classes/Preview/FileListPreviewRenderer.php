@@ -131,6 +131,6 @@ class FileListPreviewRenderer extends StandardContentPreviewRenderer
             }
         }
 
-        return $templateLayout;
+        return $templateLayout ?? '';
     }
 }
