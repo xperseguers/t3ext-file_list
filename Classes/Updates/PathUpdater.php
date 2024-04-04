@@ -57,7 +57,7 @@ class PathUpdater implements UpgradeWizardInterface
             $flexFormData = GeneralUtility::xml2array($row['pi_flexform']);
             $path = &$flexFormData['data']['sDEF']['lDEF']['settings.path']['vDEF'] ?? '';
             if (preg_match('#^t3://folder\?storage=(\d+)&identifier=(.*)$#', $path, $matches)) {
-                $path = $matches[1] . ':' . $matches[2];
+                $path = $matches[1] . ':' . urldecode($matches[2]);
                 $newFlexFormData = $flexFormTools->flexArray2Xml($flexFormData, true);
 
                 $tableConnection->update(
