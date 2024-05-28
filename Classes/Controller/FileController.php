@@ -311,10 +311,10 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $path = '';
         }
 
-        $rootFolder = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
+        $rootFolder = $this->fileRepository->getFolderByIdentifier($this->settings['path'] ?? '');
 
         $folder = null;
-        if (!empty($path) && preg_match('/^file:(\d+):(.*)$/', $this->settings['path'], $matches)) {
+        if (!empty($path) && preg_match('/^file:(\d+):(.*)$/', $this->settings['path'] ?? '', $matches)) {
             $storageUid = (int)$matches[1];
             $rootIdentifier = $matches[2];
             // Security check before blindly accepting the requested folder's content
