@@ -179,7 +179,7 @@ class ThumbnailViewHelper extends AbstractTagBasedViewHelper
         }
         $html = $this->tag->render();
         if (strpos($html, ' width="0" ') !== false) {
-            $html = '<img src="' . htmlspecialchars($this->arguments['default']) . '" alt="" />';
+            $html = '<img src="' . htmlspecialchars($this->arguments['default'] ?? '') . '" alt="" />';
         }
         return $html;
     }
