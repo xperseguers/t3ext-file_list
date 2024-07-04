@@ -1,0 +1,20 @@
+# This route enhancer config is not final
+# But you can simply include it in your site configuration:
+# imports:
+#  - { resource: "EXT:file_list/Configuration/Routes/Default.yaml" }
+routeEnhancers:
+  FileList:
+    type: Extbase
+    extension: FileList
+    plugin: Filelist
+    routes:
+      - routePath: '/directory{path}'
+        _controller: 'File::list'
+        _arguments:
+          path: path
+    defaultController: 'File::list'
+    requirements:
+      path: '[a-zA-Z0-9_\-\/].*'
+    aspects:
+      path:
+        type: FileListFolderMapper

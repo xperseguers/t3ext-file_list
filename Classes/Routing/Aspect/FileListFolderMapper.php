@@ -28,9 +28,9 @@ use TYPO3\CMS\Core\Routing\Aspect\StaticMappableAspectInterface;
  *       plugin: Filelist
  *       routes:
  *         - routePath: '/directory{path}'
- *         _controller: 'File::list'
- *         _arguments:
- *         path: path
+ *           _controller: 'File::list'
+ *           _arguments:
+ *             path: path
  *       defaultController: 'File::list'
  *       requirements:
  *         path: '[a-zA-Z0-9_\-\/].*'
