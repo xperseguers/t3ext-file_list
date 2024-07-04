@@ -16,6 +16,7 @@ namespace Causal\FileList\Controller;
 
 use Causal\FalProtect\Utility\AccessSecurity;
 use Causal\FileList\Domain\Repository\FileRepository;
+use Causal\FileList\Utility\Helper;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Information\Typo3Version;
@@ -155,7 +156,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
         } catch (\Throwable $e) {
             $errorMessage = $this->error('The configuration of the file_list plugin is incorrect: ' . $e->getMessage());
-            $typo3Branch = (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch();
+            $typo3Branch = (new Typo3Version())->getBranch();
             if (version_compare($typo3Branch, '11.5', '>=')) {
                 return new HtmlResponse($errorMessage);
             }
@@ -163,7 +164,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         // Filter files
-        $files = \Causal\FileList\Utility\Helper::filterInaccessibleFiles($files);
+        $files = Helper::filterInaccessibleFiles($files);
 
         // Sort files and folders
         $files = $this->sortFiles($files);
@@ -199,7 +200,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'data' => $this->getContentObject()->data,
         ]);
 
-        $typo3Branch = (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch();
+        $typo3Branch = (new Typo3Version())->getBranch();
         if (version_compare($typo3Branch, '11.5', '>=')) {
             return $this->htmlResponse();
         }
@@ -357,7 +358,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         break;
                     default:
                         if (!$hasFalProtect || AccessSecurity::isFolderAccessible($subfolder)) {
-                            $subfolders[] = \Causal\FileList\Utility\Helper::cast($subfolder, \Causal\FileList\Domain\Model\Folder::class);
+                            $subfolders[] = Helper::cast($subfolder, \Causal\FileList\Domain\Model\Folder::class);
                         }
                 }
             }
@@ -392,7 +393,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $folders = [];
 
-        $typo3Branch = (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch();
+        $typo3Branch = (new Typo3Version())->getBranch();
         if (version_compare($typo3Branch, '11.5', '>=')) {
             $fileCollectionRepository = GeneralUtility::makeInstance(FileCollectionRepository::class);
         } else {
