@@ -8,7 +8,7 @@ routeEnhancers:
     extension: FileList
     plugin: Filelist
     routes:
-      - routePath: '/directory{path}'
+      - routePath: '/directory{path}files'
         _controller: 'File::list'
         _arguments:
           path: path
