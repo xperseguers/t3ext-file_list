@@ -14,6 +14,8 @@
 
 namespace Causal\FileList\Domain\Model;
 
+use Causal\FileList\Utility\Helper;
+
 /**
  * Folder.
  *
@@ -68,7 +70,7 @@ class Folder extends \TYPO3\CMS\Core\Resource\Folder
         if ($depth < $maxDepth) {
             $subfolders = $this->getSubfolders();
             foreach ($subfolders as $subfolder) {
-                $hasNew = \Causal\FileList\Utility\Helper::cast($subfolder, __CLASS__)->hasFileNewerThan($newTimestamp, $maxDepth, $depth + 1);
+                $hasNew = Helper::cast($subfolder, __CLASS__)->hasFileNewerThan($newTimestamp, $maxDepth, $depth + 1);
                 if ($hasNew) {
                     return true;
                 }
@@ -101,7 +103,7 @@ class Folder extends \TYPO3\CMS\Core\Resource\Folder
         // We want to search for files recursively
         $recursive = true;
         $files = parent::getFiles($start, $numberOfItems, $filterMode, $recursive, $sort, $sortRev);
-        $files = \Causal\FileList\Utility\Helper::filterInaccessibleFiles($files);
+        $files = Helper::filterInaccessibleFiles($files);
         return $files;
     }
 }
