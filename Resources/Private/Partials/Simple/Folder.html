@@ -7,7 +7,7 @@
         <f:link.action action="list" arguments="{path: folder.identifier}">
             <img src="{f:uri.resource(path:'Icons/Folders/folder.png')}" alt="{folder.name}" />
         </f:link.action>
-        <f:link.action action="list" arguments="{path: folder.identifier}">{folder.name}</f:link.action>
+        <f:link.action action="list" arguments="{path: folder.properties.identifier}">{folder.name}</f:link.action>
         <f:if condition="{folder.properties.tx_filelist.isNew}">
             <span class="label label-default badge badge-secondary"><f:translate key="newFile" /></span>
         </f:if>

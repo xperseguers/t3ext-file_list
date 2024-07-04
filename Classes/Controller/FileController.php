@@ -140,7 +140,16 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->checkConfiguration();
 
             // Sanitize requested path
+            if ($path === '/') {
+                $path = '';
+            }
             if (!empty($path)) {
+                if ($path[0] !== '/') {
+                    $rootFolder = $this->fileRepository->getFolderByIdentifier($this->settings['path'] ?? '');
+                    if ($rootFolder !== null) {
+                        $path = $this->getRootPrefix($rootFolder) . '/' . $path;
+                    }
+                }
                 $path = $this->canonicalizeAndCheckFolderIdentifier($path);
             }
 
@@ -293,8 +302,8 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @param string $path Optional subpath of $this->settings['path']
      * @param \TYPO3\CMS\Core\Resource\File[] &$files
-     * @param Folder[] &$subfolders
-     * @param Folder|null &$parentFolder
+     * @param \Causal\FileList\Domain\Model\Folder[] &$subfolders
+     * @param \Causal\FileList\Domain\Model\Folder|null &$parentFolder
      * @param array &$breadcrumb
      * @throws \InvalidArgumentException|\TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
      */
@@ -302,7 +311,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         string $path,
         array  &$files,
         array  &$subfolders,
-        Folder &$parentFolder = null,
+        ?\Causal\FileList\Domain\Model\Folder &$parentFolder = null,
         array  &$breadcrumb = []
     ): void
     {
@@ -313,6 +322,10 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         $rootFolder = $this->fileRepository->getFolderByIdentifier($this->settings['path'] ?? '');
+        if ($rootFolder === null) {
+            return;
+        }
+        $rootPrefix = $this->getRootPrefix($rootFolder);
 
         $folder = null;
         if (!empty($path) && preg_match('/^file:(\d+):(.*)$/', $this->settings['path'] ?? '', $matches)) {
@@ -343,7 +356,13 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         // In a subfolder, so retrieve parent folder
         if (!empty($path)) {
-            $parentFolder = $folder->getParentFolder();
+            $parentFolder = Helper::cast($folder->getParentFolder(), \Causal\FileList\Domain\Model\Folder::class);
+            $properties = $parentFolder->getProperties();
+            $relativeIdentifier = $rootPrefix === null
+                ? $parentFolder->getIdentifier()
+                : substr($parentFolder->getIdentifier(), strlen($rootPrefix) + 1);
+            $properties['identifier'] = $relativeIdentifier ?: '/';    // Relative to root folder and without leading slash
+            $parentFolder->updateProperties($properties);
         }
 
         if ($includeSubfolder) {
@@ -358,7 +377,14 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         break;
                     default:
                         if (!$hasFalProtect || AccessSecurity::isFolderAccessible($subfolder)) {
-                            $subfolders[] = Helper::cast($subfolder, \Causal\FileList\Domain\Model\Folder::class);
+                            $cFolder = Helper::cast($subfolder, \Causal\FileList\Domain\Model\Folder::class);
+                            $properties = $cFolder->getProperties();
+                            $relativeIdentifier = $rootPrefix === null
+                                ? $subfolder->getIdentifier()
+                                : substr($subfolder->getIdentifier(), strlen($rootPrefix) + 1);
+                            $properties['identifier'] = $relativeIdentifier;    // Relative to root folder and without leading slash
+                            $cFolder->updateProperties($properties);
+                            $subfolders[] = $cFolder;
                         }
                 }
             }
@@ -628,5 +654,12 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         } else {
             return $this->configurationManager->getContentObject();
         }
+    }
+
+    protected function getRootPrefix(Folder $rootFolder): ?string
+    {
+        return $rootFolder->getStorage()->getDriverType() === 'Local'
+            ? rtrim($rootFolder->getIdentifier(), '/')
+            : null;
     }
 }
