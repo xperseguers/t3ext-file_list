@@ -2,6 +2,7 @@
 defined('TYPO3') || die();
 
 (static function (string $_EXTKEY) {
+    $typo3Version = (new \TYPO3\CMS\Core\Information\Typo3Version())->getMajorVersion();
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         $_EXTKEY,
         'Filelist',
@@ -14,15 +15,17 @@ defined('TYPO3') || die();
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
-    /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
-    $iconRegistry->registerIcon(
-        'extensions-filelist-wizard',
-        \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
-        [
-            'source' => 'EXT:file_list/Resources/Public/Icons/ce_wizard.png',
-        ]
-    );
+    if ($typo3Version < 11) {
+        /** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
+        $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+        $iconRegistry->registerIcon(
+            'extensions-filelist-wizard',
+            \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+            [
+                'source' => 'EXT:file_list/Resources/Public/Icons/ce_wizard.png',
+            ]
+        );
+    }
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
         '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:file_list/Configuration/TsConfig/Page/Mod/Wizards/NewContentElement.tsconfig">'
@@ -47,7 +50,7 @@ defined('TYPO3') || die();
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['TxFileListPlugins']
         = \Causal\FileList\Updates\PluginsUpdater::class;
 
-    if (version_compare((new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch(), '12.4', '>=')) {
+    if ($typo3Version >= 12) {
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['TxFileListPath']
             = \Causal\FileList\Updates\PathUpdater::class;
     }
