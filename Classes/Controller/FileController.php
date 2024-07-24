@@ -525,12 +525,19 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     $isNumericSorting = true;
                     break;
                 case static::SORT_BY_NAME:
+                case 'none':
+                    $key = '';
+                    break;
                 default:
                     $key = $file->getName();
                     break;
             }
-            $key .= "\t" . $file->getUid();
-            $orderedFiles[strtolower($key)] = $file;
+            if (!$key) {
+                $orderedFiles[]=$file;
+            } else {
+                $key .= "\t" . $file->getUid();
+                $orderedFiles[strtolower($key)] = $file;
+            }
         }
 
         if ($this->settings['sortDirection'] === static::SORT_DIRECTION_ASC) {
