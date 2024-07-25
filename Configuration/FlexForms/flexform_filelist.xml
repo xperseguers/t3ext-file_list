@@ -106,6 +106,10 @@
 										<numIndex index="0">LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:filelist.orderBy.size</numIndex>
 										<numIndex index="1">SIZE</numIndex>
 									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0"></numIndex>
+										<numIndex index="1">NONE</numIndex>
+									</numIndex>
 								</items>
 								<default>NAME</default>
 							</config>
