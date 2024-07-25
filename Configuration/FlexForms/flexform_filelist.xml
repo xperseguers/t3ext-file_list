@@ -108,7 +108,7 @@
 									</numIndex>
 									<numIndex index="6" type="array">
 										<numIndex index="0"></numIndex>
-										<numIndex index="1">none</numIndex>
+										<numIndex index="1">NONE</numIndex>
 									</numIndex>
 								</items>
 								<default>NAME</default>

@@ -45,6 +45,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     const SORT_BY_DATE = 'DATE';
     const SORT_BY_CRDATE = 'CRDATE';
     const SORT_BY_SIZE = 'SIZE';
+    const SORT_NONE = 'NONE';
 
     const SORT_DIRECTION_ASC = 'ASC';
     const SORT_DIRECTION_DESC = 'DESC';
@@ -524,7 +525,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     $key = $file->getSize();
                     $isNumericSorting = true;
                     break;
-                case 'none':
+                case static::SORT_NONE:
                     $key = '';
                     break;
                 case static::SORT_BY_NAME:
@@ -533,7 +534,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     break;
             }
             if (!$key) {
-                $orderedFiles[]=$file;
+                $orderedFiles[] = $file;
             } else {
                 $key .= "\t" . $file->getUid();
                 $orderedFiles[strtolower($key)] = $file;
