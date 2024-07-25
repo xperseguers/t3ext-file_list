@@ -524,10 +524,10 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     $key = $file->getSize();
                     $isNumericSorting = true;
                     break;
-                case static::SORT_BY_NAME:
                 case 'none':
                     $key = '';
                     break;
+                case static::SORT_BY_NAME:
                 default:
                     $key = $file->getName();
                     break;
