@@ -20,16 +20,13 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
+#[UpgradeWizard('fileList_pluginsUpdater')]
 class PluginsUpdater implements UpgradeWizardInterface
 {
-    public function getIdentifier(): string
-    {
-        return 'TxFileListPlugins';
-    }
-
     public function getTitle(): string
     {
         return 'EXT:file_list: Migrate plugins';
