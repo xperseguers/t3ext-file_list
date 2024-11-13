@@ -50,7 +50,7 @@ class PathUpdater implements UpgradeWizardInterface
 
         $rows = $queryBuilder
             ->select('*')
-            ->execute()
+            ->executeQuery()
             ->fetchAllAssociative();
 
         foreach ($rows as $row) {
@@ -81,7 +81,7 @@ class PathUpdater implements UpgradeWizardInterface
 
         return $ttContentQueryBuilder
             ->count('*')
-            ->execute()
+            ->executeQuery()
             ->fetchOne() > 0;
     }
 
