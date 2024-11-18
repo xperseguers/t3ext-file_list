@@ -43,9 +43,9 @@ class CoreResourceStorageEventListener
     /**
      * CoreResourceStorageEventListener constructor.
      *
-     * @param CacheManager $cacheManager
+     * @param CacheManager|null $cacheManager
      */
-    public function __construct(CacheManager $cacheManager = null)
+    public function __construct(?CacheManager $cacheManager = null)
     {
         if ($cacheManager === null) {
             // We are before TYPO3 v10 where DI is taken care of
