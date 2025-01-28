@@ -86,7 +86,7 @@ class FileListPreviewRenderer extends StandardContentPreviewRenderer
         $languageService = $this->getLanguageService();
 
         $label = $languageService->sL($this->labelPrefix . 'filelist.mode');
-        $mode = $this->getFieldFromFlexForm('settings.mode');
+        $mode = $this->getFieldFromFlexForm('settings.mode') ?? 'folder';
         $description = htmlspecialchars($languageService->sL($this->labelPrefix . 'filelist.mode.' . strtolower($mode)));
         $out[] = $this->addTableRow($label, $description);
 
