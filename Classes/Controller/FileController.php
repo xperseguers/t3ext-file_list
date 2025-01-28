@@ -541,7 +541,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
         }
 
-        if ($this->settings['sortDirection'] === static::SORT_DIRECTION_ASC) {
+        if (($this->settings['sortDirection'] ?? '') === static::SORT_DIRECTION_ASC) {
             if ($isNumericSorting) {
                 $this->natksort($orderedFiles);
             } else {
