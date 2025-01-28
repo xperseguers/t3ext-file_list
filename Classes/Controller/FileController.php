@@ -437,7 +437,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
         }
 
-        $collectionUids = GeneralUtility::intExplode(',', $this->settings['file_collections'], true);
+        $collectionUids = GeneralUtility::intExplode(',', $this->settings['file_collections'] ?? '', true);
         foreach ($collectionUids as $uid) {
             $collection = $fileCollectionRepository->findByUid($uid);
             if ($collection !== null) {
