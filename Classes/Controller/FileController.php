@@ -166,11 +166,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
         } catch (\Throwable $e) {
             $errorMessage = $this->error('The configuration of the file_list plugin is incorrect: ' . $e->getMessage());
-            $typo3Branch = (new Typo3Version())->getBranch();
-            if (version_compare($typo3Branch, '11.5', '>=')) {
-                return new HtmlResponse($errorMessage);
-            }
-            return $errorMessage;
+            return new HtmlResponse($errorMessage);
         }
 
         // Filter files
@@ -210,10 +206,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'data' => $this->getContentObject()->data,
         ]);
 
-        $typo3Branch = (new Typo3Version())->getBranch();
-        if (version_compare($typo3Branch, '11.5', '>=')) {
-            return $this->htmlResponse();
-        }
+        return $this->htmlResponse();
     }
 
     /**
@@ -419,15 +412,8 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected function populateFromFileCollections(array &$files): void
     {
         $folders = [];
+        $fileCollectionRepository = GeneralUtility::makeInstance(FileCollectionRepository::class);
 
-        $typo3Branch = (new Typo3Version())->getBranch();
-        if (version_compare($typo3Branch, '11.5', '>=')) {
-            $fileCollectionRepository = GeneralUtility::makeInstance(FileCollectionRepository::class);
-        } else {
-            // TYPO3 v10
-            /** @var FileCollectionRepository $fileCollectionRepository */
-            $fileCollectionRepository = $this->objectManager->get(FileCollectionRepository::class);
-        }
         if (!empty($this->settings['path'])) {
             // Returned files needs to be within a given root path
             $folders[] = $this->fileRepository->getFolderByIdentifier($this->settings['path']);
