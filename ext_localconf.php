@@ -15,9 +15,11 @@ defined('TYPO3') || die();
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-        '@import \'EXT:file_list/Configuration/TsConfig/Page/Mod/Wizards/NewContentElement.tsconfig\''
-    );
+    if ($typo3Version < 13) {
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+            '@import \'EXT:file_list/Configuration/TsConfig/Page/Mod/Wizards/NewContentElement.tsconfig\''
+        );
+    }
 
     /* ===========================================================================
         Register default template layouts
