@@ -8,8 +8,8 @@ defined('TYPO3') || die();
     'special'
 ], 'CType', 'file_list');
 
-$typo3Branch = (new \TYPO3\CMS\Core\Information\Typo3Version())->getBranch();
-if (version_compare($typo3Branch, '12.0', '>=')) {
+$typo3Version = (new \TYPO3\CMS\Core\Information\Typo3Version())->getMajorVersion();
+if ($typo3Version >= 12) {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
         '*',
         'FILE:EXT:file_list/Configuration/FlexForms/flexform_filelist_v12.xml',
