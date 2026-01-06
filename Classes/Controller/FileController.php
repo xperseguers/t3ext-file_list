@@ -196,7 +196,15 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
         }
 
+        if (class_exists(Context::class)) {
+            $context = GeneralUtility::makeInstance(Context::class);
+            $feUserUid = $context->getPropertyFromAspect('frontend.user', 'id');
+        } else {
+            $feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'] ?? 0;
+        }
+
         $this->view->assignMultiple([
+            'isAuthenticated' => $feUserUid > 0,
             'isEmpty' => $parentFolder === null && empty($subfolders) && empty($files),
             'breadcrumb' => $breadcrumb,
             'parent' => $parentFolder,
