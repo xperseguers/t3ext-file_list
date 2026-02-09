@@ -41,7 +41,7 @@ class FileIconViewHelper extends AbstractViewHelper
     /**
      * Initialize arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('file', 'object', 'File to show icon', false);
@@ -50,7 +50,7 @@ class FileIconViewHelper extends AbstractViewHelper
     /**
      * Renders the icon of the supplied file resource.
      */
-    public function render()
+    public function render(): string
     {
         $file = $this->arguments['file'];
         if ($file !== null && !($file instanceof File || $file instanceof FileReference)) {
@@ -74,7 +74,7 @@ class FileIconViewHelper extends AbstractViewHelper
      * @param RenderingContextInterface $renderingContext
      * @return string
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
+    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext): string
     {
         /** @var File $file */
         $file = $arguments['file'];

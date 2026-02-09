@@ -38,7 +38,7 @@ class LimitViewHelper extends AbstractViewHelper
     /**
      * Initialize arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('subject', 'mixed', 'Array of File object or single File', false);
@@ -51,7 +51,7 @@ class LimitViewHelper extends AbstractViewHelper
      *
      * @return File[]
      */
-    public function render()
+    public function render(): array
     {
         $subject = $this->arguments['subject'] ?? null;
         $offset = (int)$this->arguments['offset'];
