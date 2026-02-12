@@ -410,7 +410,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'tx_filelist_folder_' . $folder->getHashedIdentifier(),
         ];
         $typo3Version = (new Typo3Version())->getMajorVersion();
-        if ($typo3Version >= 12) {
+        if ($typo3Version >= 14) {
             $cacheDataCollector = $this->request->getAttribute('frontend.cache.collector');
             $cacheTags = array_map(fn(string $cacheTag) => new CacheTag($cacheTag), $cacheTags);
             $cacheDataCollector->addCacheTags(...$cacheTags);

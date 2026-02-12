@@ -15,6 +15,7 @@
 namespace Causal\FileList\Domain\Model;
 
 use Causal\FileList\Utility\Helper;
+use TYPO3\CMS\Core\Information\Typo3Version;
 
 /**
  * Folder.
@@ -24,7 +25,7 @@ use Causal\FileList\Utility\Helper;
  * @copyright   Causal Sàrl
  * @license     http://www.gnu.org/copyleft/gpl.html
  */
-class Folder extends \TYPO3\CMS\Core\Resource\Folder
+abstract class FileListAbstractFolder extends \TYPO3\CMS\Core\Resource\Folder
 {
     /**
      * @var array
@@ -79,31 +80,30 @@ class Folder extends \TYPO3\CMS\Core\Resource\Folder
 
         return false;
     }
+}
 
-    /**
-     * Returns a list of files in this folder, optionally filtered. There are several filter modes available, see the
-     * FILTER_MODE_* constants for more information.
-     *
-     * For performance reasons the returned items can also be limited to a given range
-     *
-     * @param int $start The item to start at
-     * @param int $numberOfItems The number of items to return
-     * @param int $filterMode The filter mode to use for the filelist.
-     * @param bool $recursive
-     * @param string $sort Property name used to sort the items.
-     *                     Among them may be: '' (empty, no sorting), name,
-     *                     fileext, size, tstamp and rw.
-     *                     If a driver does not support the given property, it
-     *                     should fall back to "name".
-     * @param bool $sortRev TRUE to indicate reverse sorting (last to first)
-     * @return \TYPO3\CMS\Core\Resource\File[]
-     */
-    public function getFiles(int $start = 0, int $numberOfItems = 0, int $filterMode = self::FILTER_MODE_USE_OWN_AND_STORAGE_FILTERS, bool $recursive = false, string $sort = '', bool $sortRev = false): array
+if ((new Typo3Version())->getMajorVersion() >= 14) {
+    class Folder extends FileListAbstractFolder
     {
-        // We want to search for files recursively
-        $forceRecursive = true;
-        $files = parent::getFiles($start, $numberOfItems, $filterMode, $forceRecursive, $sort, $sortRev);
-        $files = Helper::filterInaccessibleFiles($files);
-        return $files;
+        public function getFiles(int $start = 0, int $numberOfItems = 0, int $filterMode = self::FILTER_MODE_USE_OWN_AND_STORAGE_FILTERS, bool $recursive = false, string $sort = '', bool $sortRev = false): array
+        {
+            // We want to search for files recursively
+            $forceRecursive = true;
+            $files = parent::getFiles($start, $numberOfItems, $filterMode, $forceRecursive, $sort, $sortRev);
+            $files = Helper::filterInaccessibleFiles($files);
+            return $files;
+        }
+    }
+} else {
+    class Folder extends FileListAbstractFolder
+    {
+        public function getFiles($start = 0, $numberOfItems = 0, $filterMode = self::FILTER_MODE_USE_OWN_AND_STORAGE_FILTERS, $recursive = false, $sort = '', $sortRev = false)
+        {
+            // We want to search for files recursively
+            $forceRecursive = true;
+            $files = parent::getFiles($start, $numberOfItems, $filterMode, $forceRecursive, $sort, $sortRev);
+            $files = Helper::filterInaccessibleFiles($files);
+            return $files;
+        }
     }
 }
