@@ -152,7 +152,7 @@ class PluginsUpdater implements UpgradeWizardInterface
         $queryBuilder
             ->from('be_groups')
             ->where(
-                $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->or(
                     $queryBuilder->expr()->like('explicit_allowdeny', $queryBuilder->quote('%tt_content:list_type:filelist_filelist:ALLOW%')),
                     $queryBuilder->expr()->like('explicit_allowdeny', $queryBuilder->quote('%tt_content:list_type:filelist_filelist:DENY%'))
                 )

@@ -59,14 +59,8 @@ class Helper
      */
     public static function filterInaccessibleFiles(array $files): array
     {
-        if (class_exists(ApplicationType::class)) {
-            if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend() === false) {
-                return $files;
-            }
-        } else {
-            if (TYPO3_MODE !== 'FE') {
-                return $files;
-            }
+        if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend() === false) {
+            return $files;
         }
 
         $filteredFiles = [];
@@ -80,12 +74,8 @@ class Helper
                 }
             }
         } else {
-            if (class_exists(Context::class)) {
-                $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
-                $userGroups = $context->getPropertyFromAspect('frontend.user', 'groupIds');
-            } else {
-                $userGroups = GeneralUtility::intExplode(',', $GLOBALS['TSFE']->gr_list, true);
-            }
+            $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+            $userGroups = $context->getPropertyFromAspect('frontend.user', 'groupIds');
 
             foreach ($files as $file) {
                 $isVisible = $file->hasProperty('visible') ? (bool)$file->getProperty('visible') : true;
