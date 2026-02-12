@@ -18,16 +18,21 @@ namespace Causal\FileList\Preview;
 
 use TYPO3\CMS\Backend\Preview\StandardContentPreviewRenderer;
 use TYPO3\CMS\Backend\View\BackendLayout\Grid\GridColumnItem;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class FileListPreviewRenderer extends StandardContentPreviewRenderer
 {
+    protected $typo3Version;
+
     protected $flexFormData;
 
     protected $labelPrefix;
 
     public function renderPageModulePreviewContent(GridColumnItem $item): string
     {
+        $this->typo3Version = (new Typo3Version())->getMajorVersion();
+
         $out = [];
         $languageService = $this->getLanguageService();
         $this->labelPrefix = 'LLL:EXT:file_list/Resources/Private/Language/locallang_flexform.xlf:';
@@ -35,10 +40,21 @@ class FileListPreviewRenderer extends StandardContentPreviewRenderer
         $pluginTitle = $languageService->sL($this->labelPrefix . 'filelist_title');
         $out[] = '<strong>' . htmlspecialchars($pluginTitle) . '</strong>';
 
-        $record = $item->getRecord();
-        $this->flexFormData = GeneralUtility::xml2array($record['pi_flexform']);
-        if (is_array($this->flexFormData)) {
-            $out[] = '<table class="table table-sm mt-3 mb-0">';
+        if ($this->typo3Version >= 14) {
+            $record = $item->getRecord()->toArray();
+            $this->flexFormData = $record['pi_flexform'];
+        } else {
+            $record = $item->getRecord();
+            $this->flexFormData = GeneralUtility::xml2array($record['pi_flexform']);
+        }
+
+        if (is_array($this->flexFormData) || $this->flexFormData instanceof \ArrayAccess) {
+            if ($this->typo3Version >= 14) {
+                $cssClasses = 'table table-sm table-vertical-top mt-3 mb-0';
+            } else {
+                $cssClasses = 'table table-sm mt-3 mb-0';
+            }
+            $out[] = '<table class="' . $cssClasses . '">';
             $this->renderFlexFormPreviewContent($record, $out);
             $out[] = '</table>';
         }
@@ -54,10 +70,27 @@ class FileListPreviewRenderer extends StandardContentPreviewRenderer
 
     protected function getFieldFromFlexForm(string $key, string $sheet = 'sDEF'): ?string
     {
-        $flexForm = $this->flexFormData;
-        if (isset($flexForm['data'])) {
-            $flexForm = $flexForm['data'];
-            return $flexForm[$sheet]['lDEF'][$key]['vDEF'] ?? null;
+        if ($this->typo3Version >= 14) {
+            $sheets = $this->flexFormData->getSheets();
+            $keyParts = explode('.', $key);
+            $value = null;
+            if (isset($sheets[$sheet])) {
+                $current = $sheets[$sheet];
+                foreach ($keyParts as $part) {
+                    if (isset($current[$part])) {
+                        $current = $current[$part];
+                    } else {
+                        return null;
+                    }
+                }
+                return is_array($current) ? implode(',', $current) : (string)$current;
+            }
+        } else {
+            $flexForm = $this->flexFormData;
+            if (isset($flexForm['data'])) {
+                $flexForm = $flexForm['data'];
+                return $flexForm[$sheet]['lDEF'][$key]['vDEF'] ?? null;
+            }
         }
 
         return null;
@@ -65,9 +98,11 @@ class FileListPreviewRenderer extends StandardContentPreviewRenderer
 
     protected function addTableRow(string $label, string $content): string
     {
+        $cssClasses = $this->typo3Version >= 14 ? '' : 'align-top';
+
         $out[] = '<tr>';
-        $out[] = '<td class="align-top">' . htmlspecialchars($label) . '</td>';
-        $out[] = '<td class="align-top" style="font-weight: bold">' . $content . '</td>';
+        $out[] = '<td class="' . $cssClasses . '">' . htmlspecialchars($label) . '</td>';
+        $out[] = '<td class="' . $cssClasses . '" style="font-weight: bold">' . $content . '</td>';
         $out[] = '</tr>';
 
         return implode(LF, $out);
