@@ -15,12 +15,18 @@
                 </f:then>
                 <f:else>
                     <li class="breadcrumb-item">
-                        <f:link.action action="list" arguments="{path: item.folder.identifier}">
-                            <f:if condition="{item.isRoot}">
-                                <f:then><f:translate key="breadcrumb.home"/></f:then>
-                                <f:else>{item.folder.name}</f:else>
-                            </f:if>
-                        </f:link.action>
+                        <f:if condition="{item.isRoot}">
+                            <f:then>
+                                <f:link.page>
+                                    <f:translate key="breadcrumb.home"/>
+                                </f:link.page>
+                            </f:then>
+                            <f:else>
+                                <f:link.action action="list" arguments="{path: item.folder.identifier}">
+                                    {item.folder.name}
+                                </f:link.action>
+                            </f:else>
+                        </f:if>
                     </li>
                 </f:else>
             </f:if>
