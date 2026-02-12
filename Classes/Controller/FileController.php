@@ -350,6 +350,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         // In a subfolder, so retrieve parent folder
         if (!empty($path)) {
+            /** @var \Causal\FileList\Domain\Model\Folder $parentFolder */
             $parentFolder = Helper::cast($folder->getParentFolder(), \Causal\FileList\Domain\Model\Folder::class);
             $properties = $parentFolder->getProperties();
             $relativeIdentifier = $rootPrefix === null
@@ -371,6 +372,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         break;
                     default:
                         if (!$hasFalProtect || AccessSecurity::isFolderAccessible($subfolder)) {
+                            /** @var \Causal\FileList\Domain\Model\Folder $cFolder */
                             $cFolder = Helper::cast($subfolder, \Causal\FileList\Domain\Model\Folder::class);
                             $properties = $cFolder->getProperties();
                             $relativeIdentifier = $rootPrefix === null

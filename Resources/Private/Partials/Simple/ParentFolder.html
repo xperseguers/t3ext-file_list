@@ -3,10 +3,20 @@
 
 <tr>
     <td>
-        <f:link.action action="list" arguments="{path: folder.properties.identifier}">
-            <img src="{f:uri.resource(path:'Icons/Folders/move_up.png')}" alt=".." />
-        </f:link.action>
-        <f:link.action action="list" arguments="{path: folder.properties.identifier}">..</f:link.action>
+        <f:if condition="{folder.properties.identifier}=='/'">
+            <f:then>
+                <f:link.page>
+                    <img src="{f:uri.resource(path:'Icons/Folders/move_up.png')}" alt=".." />
+                </f:link.page>
+                <f:link.page>..</f:link.page>
+            </f:then>
+            <f:else>
+                <f:link.action action="list" arguments="{path: folder.properties.identifier}">
+                    <img src="{f:uri.resource(path:'Icons/Folders/move_up.png')}" alt=".." />
+                </f:link.action>
+                <f:link.action action="list" arguments="{path: folder.properties.identifier}">..</f:link.action>
+            </f:else>
+        </f:if>
     </td>
     <td></td>
     <td></td>

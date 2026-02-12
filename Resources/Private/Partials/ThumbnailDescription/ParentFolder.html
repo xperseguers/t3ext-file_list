@@ -3,13 +3,20 @@
 
 <div class="media">
     <div class="media-left">
-        <f:link.action action="list" arguments="{path: folder.identifier}">
+        <f:link.action action="list" arguments="{path: folder.properties.identifier}">
             <img src="{f:uri.resource(path:'Icons/Folders/move_up_thumbnail.png')}" />
         </f:link.action>
     </div>
     <div class="media-body">
         <h4 class="media-heading">
-            <f:link.action action="list" arguments="{path: folder.identifier}">..</f:link.action>
+            <f:if condition="{folder.properties.identifier}=='/'">
+                <f:then>
+                    <f:link.page>..</f:link.page>
+                </f:then>
+                <f:else>
+                    <f:link.action action="list" arguments="{path: folder.properties.identifier}">..</f:link.action>
+                </f:else>
+            </f:if>
         </h4>
     </div>
 </div>
