@@ -8,20 +8,11 @@ defined('TYPO3') || die();
     'special'
 ], 'CType', 'file_list');
 
-$typo3Version = (new \TYPO3\CMS\Core\Information\Typo3Version())->getMajorVersion();
-if ($typo3Version >= 12) {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
-        '*',
-        'FILE:EXT:file_list/Configuration/FlexForms/flexform_filelist_v12.xml',
-        'filelist_filelist'
-    );
-} else {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
-        '*',
-        'FILE:EXT:file_list/Configuration/FlexForms/flexform_filelist.xml',
-        'filelist_filelist'
-    );
-}
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:file_list/Configuration/FlexForms/flexform_filelist.xml',
+    'filelist_filelist'
+);
 
 $GLOBALS['TCA']['tt_content']['types']['filelist_filelist']['showitem'] = '
         --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
