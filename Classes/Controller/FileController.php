@@ -286,12 +286,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $success = empty($this->settings['root']);
 
         foreach ($this->settings['root'] as $root) {
-            if (PHP_VERSION_ID >= 80000) {
-                $success |= str_starts_with($path, $root);
-            } else {
-                $success |= GeneralUtility::isFirstPartOfStr($path, $root);
-            }
-
+            $success |= str_starts_with($path, $root);
             if ($success) {
                 break;
             }
@@ -338,11 +333,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             if ($path === $rootIdentifier) {
                 $path = '';
             }
-            if (PHP_VERSION_ID >= 80000) {
-                $isFirstPartOfStr = str_starts_with($path, $rootIdentifier);
-            } else {
-                $isFirstPartOfStr = GeneralUtility::isFirstPartOfStr($path, $rootIdentifier);
-            }
+            $isFirstPartOfStr = str_starts_with($path, $rootIdentifier);
             if (!empty($path) && $isFirstPartOfStr) {
                 $identifier = 'file:' . $storageUid . ':' . $path;
                 $folder = $this->fileRepository->getFolderByIdentifier($identifier);
@@ -454,11 +445,7 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                         foreach ($folders as $folder) {
                             if ($file->getStorage() === $folder->getStorage()) {
                                 // TODO: Check if this is the correct way to filter out files with non-local storages
-                                if (PHP_VERSION_ID >= 80000) {
-                                    $isFirstPartOfStr = str_starts_with($file->getIdentifier(), $folder->getIdentifier());
-                                } else {
-                                    $isFirstPartOfStr = GeneralUtility::isFirstPartOfStr($file->getIdentifier(), $folder->getIdentifier());
-                                }
+                                $isFirstPartOfStr = str_starts_with($file->getIdentifier(), $folder->getIdentifier());
                                 if ($isFirstPartOfStr) {
                                     $success = true;
                                     break;
