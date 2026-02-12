@@ -25,7 +25,7 @@ class LastModificationDateViewHelper extends AbstractViewHelper
     /**
      * Initialize arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('folder', Folder::class, 'Folder', true);
@@ -36,7 +36,7 @@ class LastModificationDateViewHelper extends AbstractViewHelper
      *
      * @return int
      */
-    public function render()
+    public function render(): int
     {
         /** @var Folder $folder */
         $folder = $this->arguments['folder'];

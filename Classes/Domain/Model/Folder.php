@@ -37,7 +37,7 @@ class Folder extends \TYPO3\CMS\Core\Resource\Folder
      *
      * @param array $properties
      */
-    public function updateProperties(array $properties)
+    public function updateProperties(array $properties): void
     {
         $this->properties = $properties;
     }
@@ -98,7 +98,7 @@ class Folder extends \TYPO3\CMS\Core\Resource\Folder
      * @param bool $sortRev TRUE to indicate reverse sorting (last to first)
      * @return \TYPO3\CMS\Core\Resource\File[]
      */
-    public function getFiles($start = 0, $numberOfItems = 0, $filterMode = self::FILTER_MODE_USE_OWN_AND_STORAGE_FILTERS, $recursive = false, $sort = '', $sortRev = false)
+    public function getFiles(int $start = 0, int $numberOfItems = 0, int $filterMode = self::FILTER_MODE_USE_OWN_AND_STORAGE_FILTERS, bool $recursive = false, string $sort = '', bool $sortRev = false): array
     {
         // We want to search for files recursively
         $forceRecursive = true;
