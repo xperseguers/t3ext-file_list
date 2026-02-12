@@ -389,7 +389,15 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             if (!empty($subfolders) || !empty($path)) {
                 $f = $folder;
                 while ($this->settings['path'] !== 'file:' . $f->getCombinedIdentifier()) {
-                    array_unshift($breadcrumb, ['folder' => $f]);
+                    /** @var \Causal\FileList\Domain\Model\Folder $cFolder */
+                    $cFolder = Helper::cast($f, \Causal\FileList\Domain\Model\Folder::class);
+                    $properties = $cFolder->getProperties();
+                    $relativeIdentifier = $rootPrefix === null
+                        ? $f->getIdentifier()
+                        : substr($f->getIdentifier(), strlen($rootPrefix) + 1);
+                    $properties['identifier'] = $relativeIdentifier;    // Relative to root folder and without leading slash
+                    $cFolder->updateProperties($properties);
+                    array_unshift($breadcrumb, ['folder' => $cFolder]);
                     $f = $f->getParentFolder();
                 }
                 array_unshift($breadcrumb, ['folder' => $rootFolder, 'isRoot' => true]);
