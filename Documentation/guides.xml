@@ -9,5 +9,5 @@
                edit-on-github-branch="master"
                edit-on-github="xperseguers/t3ext-file_list"
                typo3-core-preferred="stable"/>
-    <project title="File List" release="3.4.0" version="3.4" copyright="2008-2025"/>
+    <project title="File List" release="3.4.0" version="3.4" copyright="2008-2026"/>
 </guides>
