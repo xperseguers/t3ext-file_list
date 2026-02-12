@@ -14,6 +14,7 @@
 
 namespace Causal\FileList\ViewHelpers;
 
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
@@ -85,10 +86,20 @@ class FileIconViewHelper extends AbstractViewHelper
         $settings = $renderingContext->getVariableProvider()->get('settings');
         if (empty($settings['fileIconRootPath'])) {
             // Maybe used in the context of another extension
-            if ($GLOBALS['TSFE'] ?? null instanceof TypoScriptFrontendController) {
-                $settings = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_filelist.']['settings.'] ?? [];
-                $typoscriptService = GeneralUtility::makeInstance(TypoScriptService::class);
-                $settings = $typoscriptService->convertTypoScriptArrayToPlainArray($settings);
+            $typo3Version = (new Typo3Version())->getMajorVersion();
+            if ($typo3Version >= 13) {
+                $frontendTypoScript = $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.typoscript');
+                $settings = $frontendTypoScript->getSetupArray()['plugin.']['tx_filelist.']['settings.'] ?? [];
+            } else {
+                if ($GLOBALS['TSFE'] ?? null instanceof TypoScriptFrontendController) {
+                    $settings = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_filelist.']['settings.'] ?? [];
+                    $typoscriptService = GeneralUtility::makeInstance(TypoScriptService::class);
+                    $settings = $typoscriptService->convertTypoScriptArrayToPlainArray($settings);
+                    // Mimic the behavior of newer versions of TYPO3
+                    $settings['extension.']['category.'] = $settings['extension']['category'] ?? [];
+                    $settings['extension.']['remap.'] = $settings['extension']['remap'] ?? [];
+                    unset($settings['extension']);
+                }
             }
             if (empty($settings['fileIconRootPath'])) {
                 return '';
@@ -111,20 +122,20 @@ class FileIconViewHelper extends AbstractViewHelper
      * @param string $fileName Name of the specified file
      * @return string File name of the icon
      */
-    protected static function getFileTypeIcon(array $settings, $fileName)
+    protected static function getFileTypeIcon(array $settings, string $fileName): string
     {
         $categories = [];
-        foreach ($settings['extension']['category'] ?? [] as $category => $extensions) {
+        foreach ($settings['extension.']['category.'] ?? [] as $category => $extensions) {
             $categories[$category] = GeneralUtility::trimExplode(',', $extensions, true);
         }
-        $remapExtensions = $settings['extension']['remap'] ?? [];
+        $remapExtensions = $settings['extension.']['remap.'] ?? [];
 
         // Extract the file extension
         $ext = strtolower(substr($fileName, strrpos($fileName, '.') + 1));
 
         // Try to find a dedicated icon
         for ($i = 0; $i < 2; $i++) {
-            if ($i == 1) {
+            if ($i === 1) {
                 // Remap the extension
                 if (isset($remapExtensions[$ext])) {
                     $ext = $remapExtensions[$ext];
@@ -142,7 +153,7 @@ class FileIconViewHelper extends AbstractViewHelper
 
         // Try to find a file type category icon
         foreach ($categories as $cat => $extensions) {
-            if (in_array($ext, $extensions)) {
+            if (in_array($ext, $extensions, true)) {
                 return 'category_' . $cat . '.png';
             }
         }
