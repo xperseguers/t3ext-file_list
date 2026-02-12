@@ -28,7 +28,6 @@ class TemplateLayoutSelector
      * Renders a list of available template layouts.
      *
      * @param array $conf
-     * @param object $pObj
      * @return array
      */
     public function render(array $conf = []): array
