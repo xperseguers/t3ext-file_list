@@ -17,6 +17,7 @@ namespace Causal\FileList\Controller;
 use Causal\FalProtect\Utility\AccessSecurity;
 use Causal\FileList\Domain\Repository\FileRepository;
 use Causal\FileList\Utility\Helper;
+use TYPO3\CMS\Core\Cache\CacheTag;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Information\Typo3Version;
@@ -400,7 +401,14 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $cacheTags = [
             'tx_filelist_folder_' . $folder->getHashedIdentifier(),
         ];
-        $GLOBALS['TSFE']->addCacheTags($cacheTags);
+        $typo3Version = (new Typo3Version())->getMajorVersion();
+        if ($typo3Version >= 12) {
+            $cacheDataCollector = $this->request->getAttribute('frontend.cache.collector');
+            $cacheTags = array_map(fn(string $cacheTag) => new CacheTag($cacheTag), $cacheTags);
+            $cacheDataCollector->addCacheTags(...$cacheTags);
+        } else {
+            $GLOBALS['TSFE']->addCacheTags($cacheTags);
+        }
     }
 
     /**
