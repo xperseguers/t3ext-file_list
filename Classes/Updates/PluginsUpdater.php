@@ -48,7 +48,7 @@ class PluginsUpdater implements UpgradeWizardInterface
 
         $rows = $queryBuilder
             ->select('*')
-            ->execute()
+            ->executeQuery()
             ->fetchAllAssociative();
 
         foreach ($rows as $row) {
@@ -70,7 +70,7 @@ class PluginsUpdater implements UpgradeWizardInterface
 
         $rows = $queryBuilder
             ->select('*')
-            ->execute()
+            ->executeQuery()
             ->fetchAllAssociative();
 
         foreach ($rows as $row) {
@@ -106,11 +106,11 @@ class PluginsUpdater implements UpgradeWizardInterface
 
         $recordsToUpdate = $ttContentQueryBuilder
             ->count('*')
-            ->execute()
+            ->executeQuery()
             ->fetchOne();
         $recordsToUpdate += $beGroupsQueryBuilder
             ->count('*')
-            ->execute()
+            ->executeQuery()
             ->fetchOne();
 
         return $recordsToUpdate > 0;
