@@ -71,7 +71,7 @@ abstract class FileListAbstractFolder extends \TYPO3\CMS\Core\Resource\Folder
         if ($depth < $maxDepth) {
             $subfolders = $this->getSubfolders();
             foreach ($subfolders as $subfolder) {
-                $hasNew = Helper::cast($subfolder, __CLASS__)->hasFileNewerThan($newTimestamp, $maxDepth, $depth + 1);
+                $hasNew = Helper::cast($subfolder, static::class)->hasFileNewerThan($newTimestamp, $maxDepth, $depth + 1);
                 if ($hasNew) {
                     return true;
                 }
