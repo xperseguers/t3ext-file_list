@@ -1,7 +1,7 @@
 {
   "name": "causal/file_list",
   "type": "typo3-cms-extension",
-  "description": "This extension provides a frontend plugin which shows a list of files and folders in a specified directory on the file system (comparable to Apache directory listing) or using more advanced FAL selectors (categories, collection of files, ...). This extension may also be used for creating image galleries.",
+  "description": "File List - This extension provides a frontend plugin which shows a list of files and folders in a specified directory on the file system (comparable to Apache directory listing) or using more advanced FAL selectors (categories, collection of files, ...). This extension may also be used for creating image galleries.",
   "keywords": [
     "TYPO3 CMS",
     "list",
