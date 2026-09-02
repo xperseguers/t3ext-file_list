@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2014-11-03T13:48:41Z" product-name="file_list" target-language="ar">
+    <header/>
+    <body>
+      <trans-unit id="filelist_title">
+        <source>File List - List of files</source>
+        <target state="needs-translation">File List - List of files</target>
+      </trans-unit>
+      <trans-unit id="filelist_wizard_description">
+        <source>Makes a list of files and folders.</source>
+        <target state="needs-translation">Makes a list of files and folders.</target>
+      </trans-unit>
+      <trans-unit id="tabs.general">
+        <source>General</source>
+        <target state="needs-translation">General</target>
+      </trans-unit>
+      <trans-unit id="tabs.appearance">
+        <source>Listing Appearance</source>
+        <target state="needs-translation">Listing Appearance</target>
+      </trans-unit>
+      <trans-unit id="filelist.mode">
+        <source>Mode</source>
+        <target state="needs-translation">Mode</target>
+      </trans-unit>
+      <trans-unit id="filelist.mode.folder">
+        <source>Files within a folder</source>
+        <target state="needs-translation">Files within a folder</target>
+      </trans-unit>
+      <trans-unit id="filelist.mode.file_collections">
+        <source>Files from file collections</source>
+        <target state="needs-translation">Files from file collections</target>
+      </trans-unit>
+      <trans-unit id="filelist.path">
+        <source>Restrict to folder path (example: file:1:/user_upload/)</source>
+        <target state="needs-translation">Restrict to folder path (example: file:1:/user_upload/)</target>
+      </trans-unit>
+      <trans-unit id="filelist.path.summary">
+        <source>Path</source>
+        <target state="needs-translation">Path</target>
+      </trans-unit>
+      <trans-unit id="filelist.path.wizards.link.title">
+        <source>Folder selector</source>
+        <target state="needs-translation">Folder selector</target>
+      </trans-unit>
+      <trans-unit id="filelist.includeSubfolders">
+        <source>Allow browsing to subfolders</source>
+        <target state="needs-translation">Allow browsing to subfolders</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy">
+        <source>Sort files by</source>
+        <target state="needs-translation">Sort files by</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.name">
+        <source>Name</source>
+        <target state="needs-translation">Name</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.title">
+        <source>Title</source>
+        <target state="needs-translation">Title</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.description">
+        <source>Description</source>
+        <target state="needs-translation">Description</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.date">
+        <source>Modification Date</source>
+        <target state="needs-translation">Modification Date</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.crdate">
+        <source>Creation Date</source>
+        <target state="needs-translation">Creation Date</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.size">
+        <source>Size</source>
+        <target state="needs-translation">Size</target>
+      </trans-unit>
+      <trans-unit id="filelist.sortDirection">
+        <source>Sort sequence</source>
+        <target state="needs-translation">Sort sequence</target>
+      </trans-unit>
+      <trans-unit id="filelist.sortDirection.asc">
+        <source>Ascending</source>
+        <target state="needs-translation">Ascending</target>
+      </trans-unit>
+      <trans-unit id="filelist.sortDirection.desc">
+        <source>Descending</source>
+        <target state="needs-translation">Descending</target>
+      </trans-unit>
+      <trans-unit id="filelist.file_collections">
+        <source>Select file collections</source>
+        <target state="needs-translation">Select file collections</target>
+      </trans-unit>
+      <trans-unit id="filelist.newDuration">
+        <source>Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled)</source>
+        <target state="needs-translation">Amount of days between a files creation date and the frontend visit date within which a file should be displayed as "new" (0 = disabled)</target>
+      </trans-unit>
+      <trans-unit id="filelist.templateLayout">
+        <source>Layout</source>
+        <target state="needs-translation">Layout</target>
+      </trans-unit>
+      <trans-unit id="filelist.templateLayout.simple">
+        <source>Simple listing</source>
+        <target state="needs-translation">Simple listing</target>
+      </trans-unit>
+      <trans-unit id="filelist.templateLayout.thumbnailDescription">
+        <source>Thumbnail + description</source>
+        <target state="needs-translation">Thumbnail + description</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

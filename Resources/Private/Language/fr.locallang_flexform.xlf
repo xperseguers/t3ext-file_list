@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2014-11-03T13:48:41Z" product-name="file_list" target-language="fr">
+    <header/>
+    <body>
+      <trans-unit id="filelist_title" approved="yes">
+        <source>File List - List of files</source>
+        <target state="final">File List - Liste de fichiers</target>
+      </trans-unit>
+      <trans-unit id="filelist_wizard_description" approved="yes">
+        <source>Makes a list of files and folders.</source>
+        <target state="final">Crée une liste de fichiers et de dossiers.</target>
+      </trans-unit>
+      <trans-unit id="tabs.general" approved="yes">
+        <source>General</source>
+        <target state="final">Général</target>
+      </trans-unit>
+      <trans-unit id="tabs.appearance" approved="yes">
+        <source>Listing Appearance</source>
+        <target state="final">Apparence de la liste</target>
+      </trans-unit>
+      <trans-unit id="filelist.mode">
+        <source>Mode</source>
+        <target state="needs-translation">Mode</target>
+      </trans-unit>
+      <trans-unit id="filelist.mode.folder" approved="yes">
+        <source>Files within a folder</source>
+        <target state="final">Fichiers à l'intérieur d'un dossier</target>
+      </trans-unit>
+      <trans-unit id="filelist.mode.file_collections" approved="yes">
+        <source>Files from file collections</source>
+        <target state="final">Fichiers depuis une collection de fichiers</target>
+      </trans-unit>
+      <trans-unit id="filelist.path" approved="yes">
+        <source>Restrict to folder path (example: file:1:/user_upload/)</source>
+        <target state="final">Restreindre au chemin du dossier (par ex. : file:1:/user_upload/)</target>
+      </trans-unit>
+      <trans-unit id="filelist.path.summary" approved="yes">
+        <source>Path</source>
+        <target state="final">Chemin</target>
+      </trans-unit>
+      <trans-unit id="filelist.path.wizards.link.title" approved="yes">
+        <source>Folder selector</source>
+        <target state="final">Sélecteur de dossier</target>
+      </trans-unit>
+      <trans-unit id="filelist.includeSubfolders" approved="yes">
+        <source>Allow browsing to subfolders</source>
+        <target state="final">Autoriser la navigation dans les sous-dossiers</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy" approved="yes">
+        <source>Sort files by</source>
+        <target state="final">Trier les fichiers par</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.name" approved="yes">
+        <source>Name</source>
+        <target state="final">Nom</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.title" approved="yes">
+        <source>Title</source>
+        <target state="final">Titre</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.description">
+        <source>Description</source>
+        <target state="needs-translation">Description</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.date" approved="yes">
+        <source>Modification Date</source>
+        <target state="final">Date de modification</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.crdate" approved="yes">
+        <source>Creation Date</source>
+        <target state="final">Date de création</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.size" approved="yes">
+        <source>Size</source>
+        <target state="final">Taille</target>
+      </trans-unit>
+      <trans-unit id="filelist.sortDirection" approved="yes">
+        <source>Sort sequence</source>
+        <target state="final">Sens du tri</target>
+      </trans-unit>
+      <trans-unit id="filelist.sortDirection.asc" approved="yes">
+        <source>Ascending</source>
+        <target state="final">Croissant</target>
+      </trans-unit>
+      <trans-unit id="filelist.sortDirection.desc" approved="yes">
+        <source>Descending</source>
+        <target state="final">Décroissant</target>
+      </trans-unit>
+      <trans-unit id="filelist.file_collections" approved="yes">
+        <source>Select file collections</source>
+        <target state="final">Sélectionnez des collections de fichiers</target>
+      </trans-unit>
+      <trans-unit id="filelist.newDuration" approved="yes">
+        <source>Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled)</source>
+        <target state="final">Nombre de jours entre la date de création du fichier et la date de visite pendant lesquels le fichier devrait être marqué comme "nouveau" (0 = désactivé)</target>
+      </trans-unit>
+      <trans-unit id="filelist.templateLayout" approved="yes">
+        <source>Layout</source>
+        <target state="final">Mise en page</target>
+      </trans-unit>
+      <trans-unit id="filelist.templateLayout.simple" approved="yes">
+        <source>Simple listing</source>
+        <target state="final">Liste simple</target>
+      </trans-unit>
+      <trans-unit id="filelist.templateLayout.thumbnailDescription" approved="yes">
+        <source>Thumbnail + description</source>
+        <target state="final">Miniature + description</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

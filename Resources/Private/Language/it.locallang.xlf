@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2015-05-28T07:56:41Z" product-name="file_list" target-language="it">
+    <header/>
+    <body>
+      <trans-unit id="filename" approved="yes">
+        <source>Filename</source>
+        <target state="final">Nome file</target>
+      </trans-unit>
+      <trans-unit id="info" approved="yes">
+        <source>Info</source>
+        <target state="final">Informazioni</target>
+      </trans-unit>
+      <trans-unit id="date" approved="yes">
+        <source>Modified</source>
+        <target state="final">Modificato</target>
+      </trans-unit>
+      <trans-unit id="no_files" approved="yes">
+        <source>No files or folders found in this directory!</source>
+        <target state="final">Non sono stati trovati file o cartelle in questa directory!</target>
+      </trans-unit>
+      <trans-unit id="breadcrumb.home">
+        <source>Home</source>
+        <target state="needs-translation">Home</target>
+      </trans-unit>
+      <trans-unit id="directory_size.no_files" approved="yes">
+        <source>No files</source>
+        <target state="final">Nessun file</target>
+      </trans-unit>
+      <trans-unit id="directory_size.one_file">
+        <source>File</source>
+        <target state="needs-translation">File</target>
+      </trans-unit>
+      <trans-unit id="directory_size.multiple_files" approved="yes">
+        <source>Files</source>
+        <target state="final">File</target>
+      </trans-unit>
+      <trans-unit id="newFile" approved="yes">
+        <source>new</source>
+        <target state="final">nuovo</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
