@@ -195,14 +195,11 @@ class FileController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     $folder->updateProperties($properties);
                 }
             }
+            unset($folder);
         }
 
-        if (class_exists(Context::class)) {
-            $context = GeneralUtility::makeInstance(Context::class);
-            $feUserUid = $context->getPropertyFromAspect('frontend.user', 'id');
-        } else {
-            $feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'] ?? 0;
-        }
+        $context = GeneralUtility::makeInstance(Context::class);
+        $feUserUid = $context->getPropertyFromAspect('frontend.user', 'id');
 
         $this->view->assignMultiple([
             'isAuthenticated' => $feUserUid > 0,
