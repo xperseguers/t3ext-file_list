@@ -7,9 +7,9 @@
         <source>Filename</source>
         <target state="final">Dateiname</target>
       </trans-unit>
-      <trans-unit id="info">
+      <trans-unit id="info" approved="yes">
         <source>Info</source>
-        <target state="needs-translation">Info</target>
+        <target state="final">Info</target>
       </trans-unit>
       <trans-unit id="date" approved="yes">
         <source>Modified</source>
@@ -21,7 +21,7 @@
       </trans-unit>
       <trans-unit id="breadcrumb.home" approved="yes">
         <source>Home</source>
-        <target state="final">Wurzel</target>
+        <target state="final">Stammverzeichnis</target>
       </trans-unit>
       <trans-unit id="directory_size.no_files" approved="yes">
         <source>No files</source>
