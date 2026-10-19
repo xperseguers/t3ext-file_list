@@ -5,7 +5,7 @@
     <body>
       <trans-unit id="filename">
         <source>Filename</source>
-        <target state="needs-translation">Filename</target>
+        <target state="translated">Fil-navn</target>
       </trans-unit>
       <trans-unit id="info">
         <source>Info</source>
