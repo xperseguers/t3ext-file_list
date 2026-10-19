@@ -32,12 +32,16 @@
         <target state="needs-translation">Files from file collections</target>
       </trans-unit>
       <trans-unit id="filelist.path">
-        <source>Restrict to folder path (example: file:1:/user_upload/)</source>
-        <target state="needs-translation">Restrict to folder path (example: file:1:/user_upload/)</target>
+        <source>Restrict to folder path (example: 1:/user_upload/)</source>
+        <target state="needs-translation">Restrict to folder path (example: 1:/user_upload/)</target>
       </trans-unit>
       <trans-unit id="filelist.path.summary">
         <source>Path</source>
         <target state="needs-translation">Path</target>
+      </trans-unit>
+      <trans-unit id="filelist.path.summary.errorEmpty">
+        <source>No path selected</source>
+        <target state="needs-translation">No path selected</target>
       </trans-unit>
       <trans-unit id="filelist.path.wizards.link.title">
         <source>Folder selector</source>
