@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2014-11-03T13:48:41Z" product-name="file_list" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="filelist_title">
+        <source>File List - List of files</source>
+        <target>crwdns227825:0crwdne227825:0</target>
+      </trans-unit>
+      <trans-unit id="filelist_wizard_description">
+        <source>Makes a list of files and folders.</source>
+        <target>crwdns227827:0crwdne227827:0</target>
+      </trans-unit>
+      <trans-unit id="tabs.general">
+        <source>General</source>
+        <target>crwdns227829:0crwdne227829:0</target>
+      </trans-unit>
+      <trans-unit id="tabs.appearance">
+        <source>Listing Appearance</source>
+        <target>crwdns227831:0crwdne227831:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.mode">
+        <source>Mode</source>
+        <target>crwdns227833:0crwdne227833:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.mode.folder">
+        <source>Files within a folder</source>
+        <target>crwdns227835:0crwdne227835:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.mode.file_collections">
+        <source>Files from file collections</source>
+        <target>crwdns227837:0crwdne227837:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.path">
+        <source>Restrict to folder path (example: 1:/user_upload/)</source>
+        <target>crwdns415857:0crwdne415857:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.path.summary">
+        <source>Path</source>
+        <target>crwdns227841:0crwdne227841:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.path.summary.errorEmpty">
+        <source>No path selected</source>
+        <target>crwdns415859:0crwdne415859:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.path.wizards.link.title">
+        <source>Folder selector</source>
+        <target>crwdns227843:0crwdne227843:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.includeSubfolders">
+        <source>Allow browsing to subfolders</source>
+        <target>crwdns227845:0crwdne227845:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy">
+        <source>Sort files by</source>
+        <target>crwdns227847:0crwdne227847:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.name">
+        <source>Name</source>
+        <target>crwdns227849:0crwdne227849:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.title">
+        <source>Title</source>
+        <target>crwdns227851:0crwdne227851:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.description">
+        <source>Description</source>
+        <target>crwdns227853:0crwdne227853:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.date">
+        <source>Modification Date</source>
+        <target>crwdns227855:0crwdne227855:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.crdate">
+        <source>Creation Date</source>
+        <target>crwdns227857:0crwdne227857:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.orderBy.size">
+        <source>Size</source>
+        <target>crwdns227859:0crwdne227859:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.sortDirection">
+        <source>Sort sequence</source>
+        <target>crwdns227861:0crwdne227861:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.sortDirection.asc">
+        <source>Ascending</source>
+        <target>crwdns227863:0crwdne227863:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.sortDirection.desc">
+        <source>Descending</source>
+        <target>crwdns227865:0crwdne227865:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.file_collections">
+        <source>Select file collections</source>
+        <target>crwdns227867:0crwdne227867:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.newDuration">
+        <source>Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled)</source>
+        <target>crwdns227869:0crwdne227869:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.templateLayout">
+        <source>Layout</source>
+        <target>crwdns227871:0crwdne227871:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.templateLayout.simple">
+        <source>Simple listing</source>
+        <target>crwdns227873:0crwdne227873:0</target>
+      </trans-unit>
+      <trans-unit id="filelist.templateLayout.thumbnailDescription">
+        <source>Thumbnail + description</source>
+        <target>crwdns227875:0crwdne227875:0</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
