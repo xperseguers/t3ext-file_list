@@ -40,7 +40,11 @@
       "dev-master": "3.4.x-dev"
     },
     "typo3/cms": {
-      "extension-key": "file_list"
+      "extension-key": "file_list",
+      "version": "3.4.1",
+      "Package": {
+        "providesPackages": {}
+      }
     }
   }
 }
