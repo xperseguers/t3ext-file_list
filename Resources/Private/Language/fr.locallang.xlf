@@ -7,9 +7,9 @@
         <source>Filename</source>
         <target state="final">Nom du fichier</target>
       </trans-unit>
-      <trans-unit id="info">
+      <trans-unit id="info" approved="yes">
         <source>Info</source>
-        <target state="needs-translation">Info</target>
+        <target state="final">Info</target>
       </trans-unit>
       <trans-unit id="date" approved="yes">
         <source>Modified</source>
