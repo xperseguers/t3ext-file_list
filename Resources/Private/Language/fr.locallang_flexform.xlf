@@ -19,9 +19,9 @@
         <source>Listing Appearance</source>
         <target state="final">Apparence de la liste</target>
       </trans-unit>
-      <trans-unit id="filelist.mode">
+      <trans-unit id="filelist.mode" approved="yes">
         <source>Mode</source>
-        <target state="needs-translation">Mode</target>
+        <target state="final">Mode</target>
       </trans-unit>
       <trans-unit id="filelist.mode.folder" approved="yes">
         <source>Files within a folder</source>
@@ -31,13 +31,17 @@
         <source>Files from file collections</source>
         <target state="final">Fichiers depuis une collection de fichiers</target>
       </trans-unit>
-      <trans-unit id="filelist.path" approved="yes">
-        <source>Restrict to folder path (example: file:1:/user_upload/)</source>
-        <target state="final">Restreindre au chemin du dossier (par ex. : file:1:/user_upload/)</target>
+      <trans-unit id="filelist.path">
+        <source>Restrict to folder path (example: 1:/user_upload/)</source>
+        <target state="needs-translation">Restrict to folder path (example: 1:/user_upload/)</target>
       </trans-unit>
       <trans-unit id="filelist.path.summary" approved="yes">
         <source>Path</source>
         <target state="final">Chemin</target>
+      </trans-unit>
+      <trans-unit id="filelist.path.summary.errorEmpty">
+        <source>No path selected</source>
+        <target state="needs-translation">No path selected</target>
       </trans-unit>
       <trans-unit id="filelist.path.wizards.link.title" approved="yes">
         <source>Folder selector</source>
@@ -59,9 +63,9 @@
         <source>Title</source>
         <target state="final">Titre</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.description">
+      <trans-unit id="filelist.orderBy.description" approved="yes">
         <source>Description</source>
-        <target state="needs-translation">Description</target>
+        <target state="final">Description</target>
       </trans-unit>
       <trans-unit id="filelist.orderBy.date" approved="yes">
         <source>Modification Date</source>
