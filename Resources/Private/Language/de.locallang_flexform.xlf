@@ -31,17 +31,17 @@
         <source>Files from file collections</source>
         <target state="final">Dateien von Dateisammlung</target>
       </trans-unit>
-      <trans-unit id="filelist.path">
+      <trans-unit id="filelist.path" approved="yes">
         <source>Restrict to folder path (example: 1:/user_upload/)</source>
-        <target state="needs-translation">Restrict to folder path (example: 1:/user_upload/)</target>
+        <target state="final">Auf Ordnerpfad beschränken (Beispiel: 1:/user_upload/)</target>
       </trans-unit>
       <trans-unit id="filelist.path.summary" approved="yes">
         <source>Path</source>
         <target state="final">Pfad</target>
       </trans-unit>
-      <trans-unit id="filelist.path.summary.errorEmpty">
+      <trans-unit id="filelist.path.summary.errorEmpty" approved="yes">
         <source>No path selected</source>
-        <target state="needs-translation">No path selected</target>
+        <target state="final">Kein Pfad ausgewählt</target>
       </trans-unit>
       <trans-unit id="filelist.path.wizards.link.title" approved="yes">
         <source>Folder selector</source>
