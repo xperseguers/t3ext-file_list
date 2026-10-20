@@ -3,41 +3,41 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2015-05-28T07:56:41Z" product-name="file_list" target-language="hu">
     <header/>
     <body>
-      <trans-unit id="filename">
+      <trans-unit id="filename" approved="yes">
         <source>Filename</source>
-        <target state="translated">Fájlnév</target>
+        <target state="final">Fájlnév</target>
       </trans-unit>
-      <trans-unit id="info">
+      <trans-unit id="info" approved="yes">
         <source>Info</source>
-        <target state="translated">Információ</target>
+        <target state="final">Információ</target>
       </trans-unit>
-      <trans-unit id="date">
+      <trans-unit id="date" approved="yes">
         <source>Modified</source>
-        <target state="translated">Módosítva</target>
+        <target state="final">Módosítva</target>
       </trans-unit>
-      <trans-unit id="no_files">
+      <trans-unit id="no_files" approved="yes">
         <source>No files or folders found in this directory!</source>
-        <target state="translated">Ebben a könyvtárban nem található fájl vagy mappa!</target>
+        <target state="final">Ebben a könyvtárban nem található fájl vagy mappa!</target>
       </trans-unit>
-      <trans-unit id="breadcrumb.home">
+      <trans-unit id="breadcrumb.home" approved="yes">
         <source>Home</source>
-        <target state="translated">Kezdőlap</target>
+        <target state="final">Kezdőlap</target>
       </trans-unit>
-      <trans-unit id="directory_size.no_files">
+      <trans-unit id="directory_size.no_files" approved="yes">
         <source>No files</source>
-        <target state="translated">Nincs fájl</target>
+        <target state="final">Nincs fájl</target>
       </trans-unit>
-      <trans-unit id="directory_size.one_file">
+      <trans-unit id="directory_size.one_file" approved="yes">
         <source>File</source>
-        <target state="translated">Fájl</target>
+        <target state="final">Fájl</target>
       </trans-unit>
-      <trans-unit id="directory_size.multiple_files">
+      <trans-unit id="directory_size.multiple_files" approved="yes">
         <source>Files</source>
-        <target state="translated">Fájlok</target>
+        <target state="final">Fájlok</target>
       </trans-unit>
-      <trans-unit id="newFile">
+      <trans-unit id="newFile" approved="yes">
         <source>new</source>
-        <target state="translated">új</target>
+        <target state="final">új</target>
       </trans-unit>
     </body>
   </file>
