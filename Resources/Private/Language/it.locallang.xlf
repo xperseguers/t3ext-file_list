@@ -19,17 +19,17 @@
         <source>No files or folders found in this directory!</source>
         <target state="final">Non sono stati trovati file o cartelle in questa directory!</target>
       </trans-unit>
-      <trans-unit id="breadcrumb.home">
+      <trans-unit id="breadcrumb.home" approved="yes">
         <source>Home</source>
-        <target state="needs-translation">Home</target>
+        <target state="final">Casa</target>
       </trans-unit>
       <trans-unit id="directory_size.no_files" approved="yes">
         <source>No files</source>
         <target state="final">Nessun file</target>
       </trans-unit>
-      <trans-unit id="directory_size.one_file">
+      <trans-unit id="directory_size.one_file" approved="yes">
         <source>File</source>
-        <target state="needs-translation">File</target>
+        <target state="final">File</target>
       </trans-unit>
       <trans-unit id="directory_size.multiple_files" approved="yes">
         <source>Files</source>
