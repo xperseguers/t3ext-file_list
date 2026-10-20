@@ -3,41 +3,41 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2015-05-28T07:56:41Z" product-name="file_list" target-language="pt-PT">
     <header/>
     <body>
-      <trans-unit id="filename">
+      <trans-unit id="filename" approved="yes">
         <source>Filename</source>
-        <target state="needs-translation">Filename</target>
+        <target state="final">Nome do ficheiro</target>
       </trans-unit>
-      <trans-unit id="info">
+      <trans-unit id="info" approved="yes">
         <source>Info</source>
-        <target state="needs-translation">Info</target>
+        <target state="final">Informações</target>
       </trans-unit>
-      <trans-unit id="date">
+      <trans-unit id="date" approved="yes">
         <source>Modified</source>
-        <target state="needs-translation">Modified</target>
+        <target state="final">Modificado</target>
       </trans-unit>
-      <trans-unit id="no_files">
+      <trans-unit id="no_files" approved="yes">
         <source>No files or folders found in this directory!</source>
-        <target state="needs-translation">No files or folders found in this directory!</target>
+        <target state="final">Não foram encontrados ficheiros ou pastas nesta pasta!</target>
       </trans-unit>
-      <trans-unit id="breadcrumb.home">
+      <trans-unit id="breadcrumb.home" approved="yes">
         <source>Home</source>
-        <target state="needs-translation">Home</target>
+        <target state="final">Início</target>
       </trans-unit>
-      <trans-unit id="directory_size.no_files">
+      <trans-unit id="directory_size.no_files" approved="yes">
         <source>No files</source>
-        <target state="needs-translation">No files</target>
+        <target state="final">Sem ficheiros</target>
       </trans-unit>
-      <trans-unit id="directory_size.one_file">
+      <trans-unit id="directory_size.one_file" approved="yes">
         <source>File</source>
-        <target state="needs-translation">File</target>
+        <target state="final">Ficheiro</target>
       </trans-unit>
-      <trans-unit id="directory_size.multiple_files">
+      <trans-unit id="directory_size.multiple_files" approved="yes">
         <source>Files</source>
-        <target state="needs-translation">Files</target>
+        <target state="final">Ficheiros</target>
       </trans-unit>
-      <trans-unit id="newFile">
+      <trans-unit id="newFile" approved="yes">
         <source>new</source>
-        <target state="needs-translation">new</target>
+        <target state="final">novo</target>
       </trans-unit>
     </body>
   </file>
