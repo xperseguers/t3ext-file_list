@@ -3,113 +3,113 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2014-11-03T13:48:41Z" product-name="file_list" target-language="hu">
     <header/>
     <body>
-      <trans-unit id="filelist_title">
+      <trans-unit id="filelist_title" approved="yes">
         <source>File List - List of files</source>
-        <target state="translated">Fájllista – fájlok listája</target>
+        <target state="final">Fájllista – fájlok listája</target>
       </trans-unit>
-      <trans-unit id="filelist_wizard_description">
+      <trans-unit id="filelist_wizard_description" approved="yes">
         <source>Makes a list of files and folders.</source>
-        <target state="translated">Fájlok és mappák listáját készíti el.</target>
+        <target state="final">Fájlok és mappák listáját készíti el.</target>
       </trans-unit>
-      <trans-unit id="tabs.general">
+      <trans-unit id="tabs.general" approved="yes">
         <source>General</source>
-        <target state="translated">Általános</target>
+        <target state="final">Általános</target>
       </trans-unit>
-      <trans-unit id="tabs.appearance">
+      <trans-unit id="tabs.appearance" approved="yes">
         <source>Listing Appearance</source>
-        <target state="translated">Lista megjelenése</target>
+        <target state="final">Lista megjelenése</target>
       </trans-unit>
-      <trans-unit id="filelist.mode">
+      <trans-unit id="filelist.mode" approved="yes">
         <source>Mode</source>
-        <target state="translated">Mód</target>
+        <target state="final">Mód</target>
       </trans-unit>
-      <trans-unit id="filelist.mode.folder">
+      <trans-unit id="filelist.mode.folder" approved="yes">
         <source>Files within a folder</source>
-        <target state="translated">Fájlok egy mappán belül</target>
+        <target state="final">Fájlok egy mappán belül</target>
       </trans-unit>
-      <trans-unit id="filelist.mode.file_collections">
+      <trans-unit id="filelist.mode.file_collections" approved="yes">
         <source>Files from file collections</source>
-        <target state="translated">Fájlok fájlgyűjteményekből</target>
+        <target state="final">Fájlok fájlgyűjteményekből</target>
       </trans-unit>
       <trans-unit id="filelist.path">
         <source>Restrict to folder path (example: 1:/user_upload/)</source>
         <target state="needs-translation">Restrict to folder path (example: 1:/user_upload/)</target>
       </trans-unit>
-      <trans-unit id="filelist.path.summary">
+      <trans-unit id="filelist.path.summary" approved="yes">
         <source>Path</source>
-        <target state="translated">Elérési út</target>
+        <target state="final">Elérési út</target>
       </trans-unit>
       <trans-unit id="filelist.path.summary.errorEmpty">
         <source>No path selected</source>
         <target state="needs-translation">No path selected</target>
       </trans-unit>
-      <trans-unit id="filelist.path.wizards.link.title">
+      <trans-unit id="filelist.path.wizards.link.title" approved="yes">
         <source>Folder selector</source>
-        <target state="translated">Mappaválasztó</target>
+        <target state="final">Mappaválasztó</target>
       </trans-unit>
-      <trans-unit id="filelist.includeSubfolders">
+      <trans-unit id="filelist.includeSubfolders" approved="yes">
         <source>Allow browsing to subfolders</source>
-        <target state="translated">Almappákba való böngészés engedélyezése</target>
+        <target state="final">Almappákba való böngészés engedélyezése</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy">
+      <trans-unit id="filelist.orderBy" approved="yes">
         <source>Sort files by</source>
-        <target state="translated">Fájlok rendezése a következő szerint</target>
+        <target state="final">Fájlok rendezése a következő szerint</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.name">
+      <trans-unit id="filelist.orderBy.name" approved="yes">
         <source>Name</source>
-        <target state="translated">Név</target>
+        <target state="final">Név</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.title">
+      <trans-unit id="filelist.orderBy.title" approved="yes">
         <source>Title</source>
-        <target state="translated">Cím</target>
+        <target state="final">Cím</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.description">
+      <trans-unit id="filelist.orderBy.description" approved="yes">
         <source>Description</source>
-        <target state="translated">Leírás</target>
+        <target state="final">Leírás</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.date">
+      <trans-unit id="filelist.orderBy.date" approved="yes">
         <source>Modification Date</source>
-        <target state="translated">Módosítás dátuma</target>
+        <target state="final">Módosítás dátuma</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.crdate">
+      <trans-unit id="filelist.orderBy.crdate" approved="yes">
         <source>Creation Date</source>
-        <target state="translated">Létrehozás dátuma</target>
+        <target state="final">Létrehozás dátuma</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.size">
+      <trans-unit id="filelist.orderBy.size" approved="yes">
         <source>Size</source>
-        <target state="translated">Méret</target>
+        <target state="final">Méret</target>
       </trans-unit>
-      <trans-unit id="filelist.sortDirection">
+      <trans-unit id="filelist.sortDirection" approved="yes">
         <source>Sort sequence</source>
-        <target state="translated">Rendezési sorrend</target>
+        <target state="final">Rendezési sorrend</target>
       </trans-unit>
-      <trans-unit id="filelist.sortDirection.asc">
+      <trans-unit id="filelist.sortDirection.asc" approved="yes">
         <source>Ascending</source>
-        <target state="translated">Növekvő</target>
+        <target state="final">Növekvő</target>
       </trans-unit>
-      <trans-unit id="filelist.sortDirection.desc">
+      <trans-unit id="filelist.sortDirection.desc" approved="yes">
         <source>Descending</source>
-        <target state="translated">Csökkenő</target>
+        <target state="final">Csökkenő</target>
       </trans-unit>
-      <trans-unit id="filelist.file_collections">
+      <trans-unit id="filelist.file_collections" approved="yes">
         <source>Select file collections</source>
-        <target state="translated">Fájlgyűjtemények kiválasztása</target>
+        <target state="final">Fájlgyűjtemények kiválasztása</target>
       </trans-unit>
-      <trans-unit id="filelist.newDuration">
+      <trans-unit id="filelist.newDuration" approved="yes">
         <source>Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled)</source>
-        <target state="translated">A napok száma a fájl létrehozásának dátuma és a frontend látogatásának dátuma között, amíg a fájlt "új" jelöléssel kell megjeleníteni (0 = letiltva)</target>
+        <target state="final">A napok száma a fájl létrehozásának dátuma és a frontend látogatásának dátuma között, amíg a fájlt "új" jelöléssel kell megjeleníteni (0 = letiltva)</target>
       </trans-unit>
-      <trans-unit id="filelist.templateLayout">
+      <trans-unit id="filelist.templateLayout" approved="yes">
         <source>Layout</source>
-        <target state="translated">Elrendezés</target>
+        <target state="final">Elrendezés</target>
       </trans-unit>
-      <trans-unit id="filelist.templateLayout.simple">
+      <trans-unit id="filelist.templateLayout.simple" approved="yes">
         <source>Simple listing</source>
-        <target state="translated">Egyszerű lista</target>
+        <target state="final">Egyszerű lista</target>
       </trans-unit>
-      <trans-unit id="filelist.templateLayout.thumbnailDescription">
+      <trans-unit id="filelist.templateLayout.thumbnailDescription" approved="yes">
         <source>Thumbnail + description</source>
-        <target state="translated">Bélyegkép + leírás</target>
+        <target state="final">Bélyegkép + leírás</target>
       </trans-unit>
     </body>
   </file>
