@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2015-05-28T07:56:41Z" product-name="file_list" target-language="el">
+    <header/>
+    <body>
+      <trans-unit id="filename" approved="yes">
+        <source>Filename</source>
+        <target state="final">Όνομα αρχείου</target>
+      </trans-unit>
+      <trans-unit id="info" approved="yes">
+        <source>Info</source>
+        <target state="final">Πληροφορίες</target>
+      </trans-unit>
+      <trans-unit id="date" approved="yes">
+        <source>Modified</source>
+        <target state="final">Τροποποιήθηκε</target>
+      </trans-unit>
+      <trans-unit id="no_files" approved="yes">
+        <source>No files or folders found in this directory!</source>
+        <target state="final">Δεν βρέθηκαν αρχεία ή φάκελοι σε αυτόν τον κατάλογο!</target>
+      </trans-unit>
+      <trans-unit id="breadcrumb.home" approved="yes">
+        <source>Home</source>
+        <target state="final">Ρίζα</target>
+      </trans-unit>
+      <trans-unit id="directory_size.no_files" approved="yes">
+        <source>No files</source>
+        <target state="final">Κανένα αρχείο</target>
+      </trans-unit>
+      <trans-unit id="directory_size.one_file" approved="yes">
+        <source>File</source>
+        <target state="final">Αρχείο</target>
+      </trans-unit>
+      <trans-unit id="directory_size.multiple_files" approved="yes">
+        <source>Files</source>
+        <target state="final">Αρχεία</target>
+      </trans-unit>
+      <trans-unit id="newFile" approved="yes">
+        <source>new</source>
+        <target state="final">νέο</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

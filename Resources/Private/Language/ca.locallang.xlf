@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2015-05-28T07:56:41Z" product-name="file_list" target-language="ca">
+    <header/>
+    <body>
+      <trans-unit id="filename" approved="yes">
+        <source>Filename</source>
+        <target state="final">Nom del fitxer</target>
+      </trans-unit>
+      <trans-unit id="info" approved="yes">
+        <source>Info</source>
+        <target state="final">Info</target>
+      </trans-unit>
+      <trans-unit id="date" approved="yes">
+        <source>Modified</source>
+        <target state="final">Modificat</target>
+      </trans-unit>
+      <trans-unit id="no_files" approved="yes">
+        <source>No files or folders found in this directory!</source>
+        <target state="final">No s'ha trobat cap fitxer ni carpeta en aquest directori!</target>
+      </trans-unit>
+      <trans-unit id="breadcrumb.home" approved="yes">
+        <source>Home</source>
+        <target state="final">Arrel</target>
+      </trans-unit>
+      <trans-unit id="directory_size.no_files" approved="yes">
+        <source>No files</source>
+        <target state="final">Cap fitxer</target>
+      </trans-unit>
+      <trans-unit id="directory_size.one_file" approved="yes">
+        <source>File</source>
+        <target state="final">Fitxer</target>
+      </trans-unit>
+      <trans-unit id="directory_size.multiple_files" approved="yes">
+        <source>Files</source>
+        <target state="final">Fitxers</target>
+      </trans-unit>
+      <trans-unit id="newFile" approved="yes">
+        <source>new</source>
+        <target state="final">nou</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

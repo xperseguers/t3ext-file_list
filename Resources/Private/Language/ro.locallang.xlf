@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2015-05-28T07:56:41Z" product-name="file_list" target-language="ro">
+    <header/>
+    <body>
+      <trans-unit id="filename">
+        <source>Filename</source>
+        <target state="needs-translation">Filename</target>
+      </trans-unit>
+      <trans-unit id="info">
+        <source>Info</source>
+        <target state="needs-translation">Info</target>
+      </trans-unit>
+      <trans-unit id="date">
+        <source>Modified</source>
+        <target state="needs-translation">Modified</target>
+      </trans-unit>
+      <trans-unit id="no_files">
+        <source>No files or folders found in this directory!</source>
+        <target state="needs-translation">No files or folders found in this directory!</target>
+      </trans-unit>
+      <trans-unit id="breadcrumb.home">
+        <source>Home</source>
+        <target state="needs-translation">Home</target>
+      </trans-unit>
+      <trans-unit id="directory_size.no_files">
+        <source>No files</source>
+        <target state="needs-translation">No files</target>
+      </trans-unit>
+      <trans-unit id="directory_size.one_file">
+        <source>File</source>
+        <target state="needs-translation">File</target>
+      </trans-unit>
+      <trans-unit id="directory_size.multiple_files">
+        <source>Files</source>
+        <target state="needs-translation">Files</target>
+      </trans-unit>
+      <trans-unit id="newFile">
+        <source>new</source>
+        <target state="needs-translation">new</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
