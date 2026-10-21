@@ -3,113 +3,113 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2014-11-03T13:48:41Z" product-name="file_list" target-language="el">
     <header/>
     <body>
-      <trans-unit id="filelist_title">
+      <trans-unit id="filelist_title" approved="yes">
         <source>File List - List of files</source>
-        <target state="translated">File List - Λίστα αρχείων</target>
+        <target state="final">File List - Λίστα αρχείων</target>
       </trans-unit>
-      <trans-unit id="filelist_wizard_description">
+      <trans-unit id="filelist_wizard_description" approved="yes">
         <source>Makes a list of files and folders.</source>
-        <target state="translated">Δημιουργεί μια λίστα αρχείων και φακέλων.</target>
+        <target state="final">Δημιουργεί μια λίστα αρχείων και φακέλων.</target>
       </trans-unit>
-      <trans-unit id="tabs.general">
+      <trans-unit id="tabs.general" approved="yes">
         <source>General</source>
-        <target state="translated">Γενικά</target>
+        <target state="final">Γενικά</target>
       </trans-unit>
-      <trans-unit id="tabs.appearance">
+      <trans-unit id="tabs.appearance" approved="yes">
         <source>Listing Appearance</source>
-        <target state="translated">Εμφάνιση λίστας</target>
+        <target state="final">Εμφάνιση λίστας</target>
       </trans-unit>
-      <trans-unit id="filelist.mode">
+      <trans-unit id="filelist.mode" approved="yes">
         <source>Mode</source>
-        <target state="translated">Λειτουργία</target>
+        <target state="final">Λειτουργία</target>
       </trans-unit>
-      <trans-unit id="filelist.mode.folder">
+      <trans-unit id="filelist.mode.folder" approved="yes">
         <source>Files within a folder</source>
-        <target state="translated">Αρχεία μέσα σε φάκελο</target>
+        <target state="final">Αρχεία μέσα σε φάκελο</target>
       </trans-unit>
-      <trans-unit id="filelist.mode.file_collections">
+      <trans-unit id="filelist.mode.file_collections" approved="yes">
         <source>Files from file collections</source>
-        <target state="translated">Αρχεία από συλλογές αρχείων</target>
+        <target state="final">Αρχεία από συλλογές αρχείων</target>
       </trans-unit>
-      <trans-unit id="filelist.path">
+      <trans-unit id="filelist.path" approved="yes">
         <source>Restrict to folder path (example: 1:/user_upload/)</source>
-        <target state="translated">Περιορισμός στη διαδρομή φακέλου (παράδειγμα: 1:/user_upload/)</target>
+        <target state="final">Περιορισμός στη διαδρομή φακέλου (παράδειγμα: 1:/user_upload/)</target>
       </trans-unit>
-      <trans-unit id="filelist.path.summary">
+      <trans-unit id="filelist.path.summary" approved="yes">
         <source>Path</source>
-        <target state="translated">Διαδρομή</target>
+        <target state="final">Διαδρομή</target>
       </trans-unit>
-      <trans-unit id="filelist.path.summary.errorEmpty">
+      <trans-unit id="filelist.path.summary.errorEmpty" approved="yes">
         <source>No path selected</source>
-        <target state="translated">Δεν έχει επιλεγεί διαδρομή</target>
+        <target state="final">Δεν έχει επιλεγεί διαδρομή</target>
       </trans-unit>
-      <trans-unit id="filelist.path.wizards.link.title">
+      <trans-unit id="filelist.path.wizards.link.title" approved="yes">
         <source>Folder selector</source>
-        <target state="translated">Επιλογέας φακέλου</target>
+        <target state="final">Επιλογέας φακέλου</target>
       </trans-unit>
-      <trans-unit id="filelist.includeSubfolders">
+      <trans-unit id="filelist.includeSubfolders" approved="yes">
         <source>Allow browsing to subfolders</source>
-        <target state="translated">Να επιτρέπεται η περιήγηση σε υποφακέλους</target>
+        <target state="final">Να επιτρέπεται η περιήγηση σε υποφακέλους</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy">
+      <trans-unit id="filelist.orderBy" approved="yes">
         <source>Sort files by</source>
-        <target state="translated">Ταξινόμηση αρχείων κατά</target>
+        <target state="final">Ταξινόμηση αρχείων κατά</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.name">
+      <trans-unit id="filelist.orderBy.name" approved="yes">
         <source>Name</source>
-        <target state="translated">Όνομα</target>
+        <target state="final">Όνομα</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.title">
+      <trans-unit id="filelist.orderBy.title" approved="yes">
         <source>Title</source>
-        <target state="translated">Τίτλος</target>
+        <target state="final">Τίτλος</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.description">
+      <trans-unit id="filelist.orderBy.description" approved="yes">
         <source>Description</source>
-        <target state="translated">Περιγραφή</target>
+        <target state="final">Περιγραφή</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.date">
+      <trans-unit id="filelist.orderBy.date" approved="yes">
         <source>Modification Date</source>
-        <target state="translated">Ημερομηνία τροποποίησης</target>
+        <target state="final">Ημερομηνία τροποποίησης</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.crdate">
+      <trans-unit id="filelist.orderBy.crdate" approved="yes">
         <source>Creation Date</source>
-        <target state="translated">Ημερομηνία δημιουργίας</target>
+        <target state="final">Ημερομηνία δημιουργίας</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.size">
+      <trans-unit id="filelist.orderBy.size" approved="yes">
         <source>Size</source>
-        <target state="translated">Μέγεθος</target>
+        <target state="final">Μέγεθος</target>
       </trans-unit>
-      <trans-unit id="filelist.sortDirection">
+      <trans-unit id="filelist.sortDirection" approved="yes">
         <source>Sort sequence</source>
-        <target state="translated">Σειρά ταξινόμησης</target>
+        <target state="final">Σειρά ταξινόμησης</target>
       </trans-unit>
-      <trans-unit id="filelist.sortDirection.asc">
+      <trans-unit id="filelist.sortDirection.asc" approved="yes">
         <source>Ascending</source>
-        <target state="translated">Αύξουσα</target>
+        <target state="final">Αύξουσα</target>
       </trans-unit>
-      <trans-unit id="filelist.sortDirection.desc">
+      <trans-unit id="filelist.sortDirection.desc" approved="yes">
         <source>Descending</source>
-        <target state="translated">Φθίνουσα</target>
+        <target state="final">Φθίνουσα</target>
       </trans-unit>
-      <trans-unit id="filelist.file_collections">
+      <trans-unit id="filelist.file_collections" approved="yes">
         <source>Select file collections</source>
-        <target state="translated">Επιλέξτε συλλογές αρχείων</target>
+        <target state="final">Επιλέξτε συλλογές αρχείων</target>
       </trans-unit>
-      <trans-unit id="filelist.newDuration">
+      <trans-unit id="filelist.newDuration" approved="yes">
         <source>Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled)</source>
-        <target state="translated">Αριθμός ημερών μεταξύ της ημερομηνίας δημιουργίας ενός αρχείου και της ημερομηνίας επίσκεψης στο frontend, εντός των οποίων ένα αρχείο θα εμφανίζεται ως «νέο» (0 = απενεργοποιημένο)</target>
+        <target state="final">Αριθμός ημερών μεταξύ της ημερομηνίας δημιουργίας ενός αρχείου και της ημερομηνίας επίσκεψης στο frontend, εντός των οποίων ένα αρχείο θα εμφανίζεται ως «νέο» (0 = απενεργοποιημένο)</target>
       </trans-unit>
-      <trans-unit id="filelist.templateLayout">
+      <trans-unit id="filelist.templateLayout" approved="yes">
         <source>Layout</source>
-        <target state="translated">Διάταξη</target>
+        <target state="final">Διάταξη</target>
       </trans-unit>
-      <trans-unit id="filelist.templateLayout.simple">
+      <trans-unit id="filelist.templateLayout.simple" approved="yes">
         <source>Simple listing</source>
-        <target state="translated">Απλή λίστα</target>
+        <target state="final">Απλή λίστα</target>
       </trans-unit>
-      <trans-unit id="filelist.templateLayout.thumbnailDescription">
+      <trans-unit id="filelist.templateLayout.thumbnailDescription" approved="yes">
         <source>Thumbnail + description</source>
-        <target state="translated">Μικρογραφία + περιγραφή</target>
+        <target state="final">Μικρογραφία + περιγραφή</target>
       </trans-unit>
     </body>
   </file>
