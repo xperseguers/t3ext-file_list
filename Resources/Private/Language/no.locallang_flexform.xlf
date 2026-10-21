@@ -3,113 +3,113 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2014-11-03T13:48:41Z" product-name="file_list" target-language="no">
     <header/>
     <body>
-      <trans-unit id="filelist_title">
+      <trans-unit id="filelist_title" approved="yes">
         <source>File List - List of files</source>
-        <target state="translated">File List - Liste over filer</target>
+        <target state="final">File List - Liste over filer</target>
       </trans-unit>
-      <trans-unit id="filelist_wizard_description">
+      <trans-unit id="filelist_wizard_description" approved="yes">
         <source>Makes a list of files and folders.</source>
-        <target state="translated">Lager en liste over filer og mapper.</target>
+        <target state="final">Lager en liste over filer og mapper.</target>
       </trans-unit>
-      <trans-unit id="tabs.general">
+      <trans-unit id="tabs.general" approved="yes">
         <source>General</source>
-        <target state="translated">Generelt</target>
+        <target state="final">Generelt</target>
       </trans-unit>
-      <trans-unit id="tabs.appearance">
+      <trans-unit id="tabs.appearance" approved="yes">
         <source>Listing Appearance</source>
-        <target state="translated">Listens utseende</target>
+        <target state="final">Listens utseende</target>
       </trans-unit>
-      <trans-unit id="filelist.mode">
+      <trans-unit id="filelist.mode" approved="yes">
         <source>Mode</source>
-        <target state="translated">Modus</target>
+        <target state="final">Modus</target>
       </trans-unit>
-      <trans-unit id="filelist.mode.folder">
+      <trans-unit id="filelist.mode.folder" approved="yes">
         <source>Files within a folder</source>
-        <target state="translated">Filer i en mappe</target>
+        <target state="final">Filer i en mappe</target>
       </trans-unit>
-      <trans-unit id="filelist.mode.file_collections">
+      <trans-unit id="filelist.mode.file_collections" approved="yes">
         <source>Files from file collections</source>
-        <target state="translated">Filer fra filsamlinger</target>
+        <target state="final">Filer fra filsamlinger</target>
       </trans-unit>
-      <trans-unit id="filelist.path">
+      <trans-unit id="filelist.path" approved="yes">
         <source>Restrict to folder path (example: 1:/user_upload/)</source>
-        <target state="translated">Begrens til mappesti (eksempel: 1:/user_upload/)</target>
+        <target state="final">Begrens til mappesti (eksempel: 1:/user_upload/)</target>
       </trans-unit>
-      <trans-unit id="filelist.path.summary">
+      <trans-unit id="filelist.path.summary" approved="yes">
         <source>Path</source>
-        <target state="translated">Sti</target>
+        <target state="final">Sti</target>
       </trans-unit>
-      <trans-unit id="filelist.path.summary.errorEmpty">
+      <trans-unit id="filelist.path.summary.errorEmpty" approved="yes">
         <source>No path selected</source>
-        <target state="translated">Ingen sti valgt</target>
+        <target state="final">Ingen sti valgt</target>
       </trans-unit>
-      <trans-unit id="filelist.path.wizards.link.title">
+      <trans-unit id="filelist.path.wizards.link.title" approved="yes">
         <source>Folder selector</source>
-        <target state="translated">Mappevelger</target>
+        <target state="final">Mappevelger</target>
       </trans-unit>
-      <trans-unit id="filelist.includeSubfolders">
+      <trans-unit id="filelist.includeSubfolders" approved="yes">
         <source>Allow browsing to subfolders</source>
-        <target state="translated">Tillat navigering til undermapper</target>
+        <target state="final">Tillat navigering til undermapper</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy">
+      <trans-unit id="filelist.orderBy" approved="yes">
         <source>Sort files by</source>
-        <target state="translated">Sorter filer etter</target>
+        <target state="final">Sorter filer etter</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.name">
+      <trans-unit id="filelist.orderBy.name" approved="yes">
         <source>Name</source>
-        <target state="translated">Navn</target>
+        <target state="final">Navn</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.title">
+      <trans-unit id="filelist.orderBy.title" approved="yes">
         <source>Title</source>
-        <target state="translated">Tittel</target>
+        <target state="final">Tittel</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.description">
+      <trans-unit id="filelist.orderBy.description" approved="yes">
         <source>Description</source>
-        <target state="translated">Beskrivelse</target>
+        <target state="final">Beskrivelse</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.date">
+      <trans-unit id="filelist.orderBy.date" approved="yes">
         <source>Modification Date</source>
-        <target state="translated">Endringsdato</target>
+        <target state="final">Endringsdato</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.crdate">
+      <trans-unit id="filelist.orderBy.crdate" approved="yes">
         <source>Creation Date</source>
-        <target state="translated">Opprettelsesdato</target>
+        <target state="final">Opprettelsesdato</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.size">
+      <trans-unit id="filelist.orderBy.size" approved="yes">
         <source>Size</source>
-        <target state="translated">Størrelse</target>
+        <target state="final">Størrelse</target>
       </trans-unit>
-      <trans-unit id="filelist.sortDirection">
+      <trans-unit id="filelist.sortDirection" approved="yes">
         <source>Sort sequence</source>
-        <target state="translated">Sorteringsrekkefølge</target>
+        <target state="final">Sorteringsrekkefølge</target>
       </trans-unit>
-      <trans-unit id="filelist.sortDirection.asc">
+      <trans-unit id="filelist.sortDirection.asc" approved="yes">
         <source>Ascending</source>
-        <target state="translated">Stigende</target>
+        <target state="final">Stigende</target>
       </trans-unit>
-      <trans-unit id="filelist.sortDirection.desc">
+      <trans-unit id="filelist.sortDirection.desc" approved="yes">
         <source>Descending</source>
-        <target state="translated">Synkende</target>
+        <target state="final">Synkende</target>
       </trans-unit>
-      <trans-unit id="filelist.file_collections">
+      <trans-unit id="filelist.file_collections" approved="yes">
         <source>Select file collections</source>
-        <target state="translated">Velg filsamlinger</target>
+        <target state="final">Velg filsamlinger</target>
       </trans-unit>
-      <trans-unit id="filelist.newDuration">
+      <trans-unit id="filelist.newDuration" approved="yes">
         <source>Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled)</source>
-        <target state="translated">Antall dager mellom en fils opprettelsesdato og frontend-besøksdatoen der en fil skal vises som «ny» (0 = deaktivert)</target>
+        <target state="final">Antall dager mellom en fils opprettelsesdato og frontend-besøksdatoen der en fil skal vises som «ny» (0 = deaktivert)</target>
       </trans-unit>
-      <trans-unit id="filelist.templateLayout">
+      <trans-unit id="filelist.templateLayout" approved="yes">
         <source>Layout</source>
-        <target state="translated">Layout</target>
+        <target state="final">Layout</target>
       </trans-unit>
-      <trans-unit id="filelist.templateLayout.simple">
+      <trans-unit id="filelist.templateLayout.simple" approved="yes">
         <source>Simple listing</source>
-        <target state="translated">Enkel liste</target>
+        <target state="final">Enkel liste</target>
       </trans-unit>
-      <trans-unit id="filelist.templateLayout.thumbnailDescription">
+      <trans-unit id="filelist.templateLayout.thumbnailDescription" approved="yes">
         <source>Thumbnail + description</source>
-        <target state="translated">Miniatyrbilde + beskrivelse</target>
+        <target state="final">Miniatyrbilde + beskrivelse</target>
       </trans-unit>
     </body>
   </file>
