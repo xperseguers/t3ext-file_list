@@ -3,113 +3,113 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2014-11-03T13:48:41Z" product-name="file_list" target-language="ar">
     <header/>
     <body>
-      <trans-unit id="filelist_title">
+      <trans-unit id="filelist_title" approved="yes">
         <source>File List - List of files</source>
-        <target state="translated">File List - قائمة الملفات</target>
+        <target state="final">File List - قائمة الملفات</target>
       </trans-unit>
-      <trans-unit id="filelist_wizard_description">
+      <trans-unit id="filelist_wizard_description" approved="yes">
         <source>Makes a list of files and folders.</source>
-        <target state="translated">ينشئ قائمة بالملفات والمجلدات.</target>
+        <target state="final">ينشئ قائمة بالملفات والمجلدات.</target>
       </trans-unit>
-      <trans-unit id="tabs.general">
+      <trans-unit id="tabs.general" approved="yes">
         <source>General</source>
-        <target state="translated">عام</target>
+        <target state="final">عام</target>
       </trans-unit>
-      <trans-unit id="tabs.appearance">
+      <trans-unit id="tabs.appearance" approved="yes">
         <source>Listing Appearance</source>
-        <target state="translated">مظهر القائمة</target>
+        <target state="final">مظهر القائمة</target>
       </trans-unit>
-      <trans-unit id="filelist.mode">
+      <trans-unit id="filelist.mode" approved="yes">
         <source>Mode</source>
-        <target state="translated">الوضع</target>
+        <target state="final">الوضع</target>
       </trans-unit>
-      <trans-unit id="filelist.mode.folder">
+      <trans-unit id="filelist.mode.folder" approved="yes">
         <source>Files within a folder</source>
-        <target state="translated">الملفات داخل مجلد</target>
+        <target state="final">الملفات داخل مجلد</target>
       </trans-unit>
-      <trans-unit id="filelist.mode.file_collections">
+      <trans-unit id="filelist.mode.file_collections" approved="yes">
         <source>Files from file collections</source>
-        <target state="translated">الملفات من مجموعات الملفات</target>
+        <target state="final">الملفات من مجموعات الملفات</target>
       </trans-unit>
-      <trans-unit id="filelist.path">
+      <trans-unit id="filelist.path" approved="yes">
         <source>Restrict to folder path (example: 1:/user_upload/)</source>
-        <target state="translated">التقييد بمسار المجلد (مثال: 1:/user_upload/)</target>
+        <target state="final">التقييد بمسار المجلد (مثال: 1:/user_upload/)</target>
       </trans-unit>
-      <trans-unit id="filelist.path.summary">
+      <trans-unit id="filelist.path.summary" approved="yes">
         <source>Path</source>
-        <target state="translated">المسار</target>
+        <target state="final">المسار</target>
       </trans-unit>
-      <trans-unit id="filelist.path.summary.errorEmpty">
+      <trans-unit id="filelist.path.summary.errorEmpty" approved="yes">
         <source>No path selected</source>
-        <target state="translated">لم يتم تحديد مسار</target>
+        <target state="final">لم يتم تحديد مسار</target>
       </trans-unit>
-      <trans-unit id="filelist.path.wizards.link.title">
+      <trans-unit id="filelist.path.wizards.link.title" approved="yes">
         <source>Folder selector</source>
-        <target state="translated">محدد المجلد</target>
+        <target state="final">محدد المجلد</target>
       </trans-unit>
-      <trans-unit id="filelist.includeSubfolders">
+      <trans-unit id="filelist.includeSubfolders" approved="yes">
         <source>Allow browsing to subfolders</source>
-        <target state="translated">السماح بالتصفح في المجلدات الفرعية</target>
+        <target state="final">السماح بالتصفح في المجلدات الفرعية</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy">
+      <trans-unit id="filelist.orderBy" approved="yes">
         <source>Sort files by</source>
-        <target state="translated">ترتيب الملفات حسب</target>
+        <target state="final">ترتيب الملفات حسب</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.name">
+      <trans-unit id="filelist.orderBy.name" approved="yes">
         <source>Name</source>
-        <target state="translated">الاسم</target>
+        <target state="final">الاسم</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.title">
+      <trans-unit id="filelist.orderBy.title" approved="yes">
         <source>Title</source>
-        <target state="translated">العنوان</target>
+        <target state="final">العنوان</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.description">
+      <trans-unit id="filelist.orderBy.description" approved="yes">
         <source>Description</source>
-        <target state="translated">الوصف</target>
+        <target state="final">الوصف</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.date">
+      <trans-unit id="filelist.orderBy.date" approved="yes">
         <source>Modification Date</source>
-        <target state="translated">تاريخ التعديل</target>
+        <target state="final">تاريخ التعديل</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.crdate">
+      <trans-unit id="filelist.orderBy.crdate" approved="yes">
         <source>Creation Date</source>
-        <target state="translated">تاريخ الإنشاء</target>
+        <target state="final">تاريخ الإنشاء</target>
       </trans-unit>
-      <trans-unit id="filelist.orderBy.size">
+      <trans-unit id="filelist.orderBy.size" approved="yes">
         <source>Size</source>
-        <target state="translated">الحجم</target>
+        <target state="final">الحجم</target>
       </trans-unit>
-      <trans-unit id="filelist.sortDirection">
+      <trans-unit id="filelist.sortDirection" approved="yes">
         <source>Sort sequence</source>
-        <target state="translated">ترتيب الفرز</target>
+        <target state="final">ترتيب الفرز</target>
       </trans-unit>
-      <trans-unit id="filelist.sortDirection.asc">
+      <trans-unit id="filelist.sortDirection.asc" approved="yes">
         <source>Ascending</source>
-        <target state="translated">تصاعدي</target>
+        <target state="final">تصاعدي</target>
       </trans-unit>
-      <trans-unit id="filelist.sortDirection.desc">
+      <trans-unit id="filelist.sortDirection.desc" approved="yes">
         <source>Descending</source>
-        <target state="translated">تنازلي</target>
+        <target state="final">تنازلي</target>
       </trans-unit>
-      <trans-unit id="filelist.file_collections">
+      <trans-unit id="filelist.file_collections" approved="yes">
         <source>Select file collections</source>
-        <target state="translated">اختيار مجموعات الملفات</target>
+        <target state="final">اختيار مجموعات الملفات</target>
       </trans-unit>
-      <trans-unit id="filelist.newDuration">
+      <trans-unit id="filelist.newDuration" approved="yes">
         <source>Amount of days between a files creation date and the frontend visit date within which a file should be displayed as &quot;new&quot; (0 = disabled)</source>
-        <target state="translated">عدد الأيام بين تاريخ إنشاء الملف وتاريخ زيارة الواجهة الأمامية التي يجب خلالها عرض الملف على أنه "جديد" (0 = معطّل)</target>
+        <target state="final">عدد الأيام بين تاريخ إنشاء الملف وتاريخ زيارة الواجهة الأمامية التي يجب خلالها عرض الملف على أنه "جديد" (0 = معطّل)</target>
       </trans-unit>
-      <trans-unit id="filelist.templateLayout">
+      <trans-unit id="filelist.templateLayout" approved="yes">
         <source>Layout</source>
-        <target state="translated">التخطيط</target>
+        <target state="final">التخطيط</target>
       </trans-unit>
-      <trans-unit id="filelist.templateLayout.simple">
+      <trans-unit id="filelist.templateLayout.simple" approved="yes">
         <source>Simple listing</source>
-        <target state="translated">قائمة بسيطة</target>
+        <target state="final">قائمة بسيطة</target>
       </trans-unit>
-      <trans-unit id="filelist.templateLayout.thumbnailDescription">
+      <trans-unit id="filelist.templateLayout.thumbnailDescription" approved="yes">
         <source>Thumbnail + description</source>
-        <target state="translated">صورة مصغرة + وصف</target>
+        <target state="final">صورة مصغرة + وصف</target>
       </trans-unit>
     </body>
   </file>
