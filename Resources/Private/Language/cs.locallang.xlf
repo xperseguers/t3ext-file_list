@@ -3,41 +3,41 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2015-05-28T07:56:41Z" product-name="file_list" target-language="cs">
     <header/>
     <body>
-      <trans-unit id="filename">
+      <trans-unit id="filename" approved="yes">
         <source>Filename</source>
-        <target state="translated">Název souboru</target>
+        <target state="final">Název souboru</target>
       </trans-unit>
-      <trans-unit id="info">
+      <trans-unit id="info" approved="yes">
         <source>Info</source>
-        <target state="translated">Info</target>
+        <target state="final">Info</target>
       </trans-unit>
-      <trans-unit id="date">
+      <trans-unit id="date" approved="yes">
         <source>Modified</source>
-        <target state="translated">Změněno</target>
+        <target state="final">Změněno</target>
       </trans-unit>
-      <trans-unit id="no_files">
+      <trans-unit id="no_files" approved="yes">
         <source>No files or folders found in this directory!</source>
-        <target state="translated">V tomto adresáři nebyly nalezeny žádné soubory ani složky!</target>
+        <target state="final">V tomto adresáři nebyly nalezeny žádné soubory ani složky!</target>
       </trans-unit>
-      <trans-unit id="breadcrumb.home">
+      <trans-unit id="breadcrumb.home" approved="yes">
         <source>Home</source>
-        <target state="translated">Kořen</target>
+        <target state="final">Kořen</target>
       </trans-unit>
-      <trans-unit id="directory_size.no_files">
+      <trans-unit id="directory_size.no_files" approved="yes">
         <source>No files</source>
-        <target state="translated">Žádné soubory</target>
+        <target state="final">Žádné soubory</target>
       </trans-unit>
-      <trans-unit id="directory_size.one_file">
+      <trans-unit id="directory_size.one_file" approved="yes">
         <source>File</source>
-        <target state="translated">Soubor</target>
+        <target state="final">Soubor</target>
       </trans-unit>
-      <trans-unit id="directory_size.multiple_files">
+      <trans-unit id="directory_size.multiple_files" approved="yes">
         <source>Files</source>
-        <target state="translated">Soubory</target>
+        <target state="final">Soubory</target>
       </trans-unit>
-      <trans-unit id="newFile">
+      <trans-unit id="newFile" approved="yes">
         <source>new</source>
-        <target state="translated">nové</target>
+        <target state="final">nové</target>
       </trans-unit>
     </body>
   </file>
