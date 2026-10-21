@@ -7,37 +7,37 @@
         <source>Filename</source>
         <target state="translated">Fil-navn</target>
       </trans-unit>
-      <trans-unit id="info">
+      <trans-unit id="info" approved="yes">
         <source>Info</source>
-        <target state="translated">Info</target>
+        <target state="final">Info</target>
       </trans-unit>
-      <trans-unit id="date">
+      <trans-unit id="date" approved="yes">
         <source>Modified</source>
-        <target state="translated">Ændret</target>
+        <target state="final">Ændret</target>
       </trans-unit>
-      <trans-unit id="no_files">
+      <trans-unit id="no_files" approved="yes">
         <source>No files or folders found in this directory!</source>
-        <target state="translated">Der blev ikke fundet nogen filer eller mapper i denne mappe!</target>
+        <target state="final">Der blev ikke fundet nogen filer eller mapper i denne mappe!</target>
       </trans-unit>
-      <trans-unit id="breadcrumb.home">
+      <trans-unit id="breadcrumb.home" approved="yes">
         <source>Home</source>
-        <target state="translated">Rod</target>
+        <target state="final">Rod</target>
       </trans-unit>
-      <trans-unit id="directory_size.no_files">
+      <trans-unit id="directory_size.no_files" approved="yes">
         <source>No files</source>
-        <target state="translated">Ingen filer</target>
+        <target state="final">Ingen filer</target>
       </trans-unit>
-      <trans-unit id="directory_size.one_file">
+      <trans-unit id="directory_size.one_file" approved="yes">
         <source>File</source>
-        <target state="translated">Fil</target>
+        <target state="final">Fil</target>
       </trans-unit>
-      <trans-unit id="directory_size.multiple_files">
+      <trans-unit id="directory_size.multiple_files" approved="yes">
         <source>Files</source>
-        <target state="translated">Filer</target>
+        <target state="final">Filer</target>
       </trans-unit>
-      <trans-unit id="newFile">
+      <trans-unit id="newFile" approved="yes">
         <source>new</source>
-        <target state="translated">ny</target>
+        <target state="final">ny</target>
       </trans-unit>
     </body>
   </file>
