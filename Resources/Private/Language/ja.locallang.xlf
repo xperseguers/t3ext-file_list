@@ -5,39 +5,39 @@
     <body>
       <trans-unit id="filename">
         <source>Filename</source>
-        <target state="needs-translation">Filename</target>
+        <target state="translated">ファイル名</target>
       </trans-unit>
       <trans-unit id="info">
         <source>Info</source>
-        <target state="needs-translation">Info</target>
+        <target state="translated">情報</target>
       </trans-unit>
       <trans-unit id="date">
         <source>Modified</source>
-        <target state="needs-translation">Modified</target>
+        <target state="translated">更新日時</target>
       </trans-unit>
       <trans-unit id="no_files">
         <source>No files or folders found in this directory!</source>
-        <target state="needs-translation">No files or folders found in this directory!</target>
+        <target state="translated">このディレクトリにファイルやフォルダが見つかりません。</target>
       </trans-unit>
       <trans-unit id="breadcrumb.home">
         <source>Home</source>
-        <target state="needs-translation">Home</target>
+        <target state="translated">ルート</target>
       </trans-unit>
       <trans-unit id="directory_size.no_files">
         <source>No files</source>
-        <target state="needs-translation">No files</target>
+        <target state="translated">ファイルなし</target>
       </trans-unit>
       <trans-unit id="directory_size.one_file">
         <source>File</source>
-        <target state="needs-translation">File</target>
+        <target state="translated">ファイル</target>
       </trans-unit>
       <trans-unit id="directory_size.multiple_files">
         <source>Files</source>
-        <target state="needs-translation">Files</target>
+        <target state="translated">ファイル</target>
       </trans-unit>
       <trans-unit id="newFile">
         <source>new</source>
-        <target state="needs-translation">new</target>
+        <target state="translated">新規</target>
       </trans-unit>
     </body>
   </file>
